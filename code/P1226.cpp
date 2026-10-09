@@ -1,13 +1,15 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    long long a, b, p; cin >> a >> b >> p;
-    long long original = b, base = a % p, result = 1 % p;
+    int a, b, p;
+    cin >> a >> b >> p;
+    int original = b, base = a % p, result = 1 % p;
     while (b > 0) {
-        if (b & 1) result = result * base % p; // 选择当前二进制位对应的幂。
+        if (b & 1)
+            result = result * base % p; // 选择当前二进制位对应的幂。
         base = base * base % p;
         b >>= 1; // 下一轮处理更高的指数位。
     }

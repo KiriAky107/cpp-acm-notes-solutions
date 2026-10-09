@@ -1,16 +1,28 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    int m, n; cin >> m >> n;
+    int m, n;
+    cin >> m >> n;
     vector<int> order(m * n);
-    for (int& x : order) { cin >> x; --x; }
+    for (int& x : order) {
+        cin >> x;
+        --x;
+    }
     vector<vector<int>> machine(n, vector<int>(m)), duration(n, vector<int>(m));
-    for (auto& row : machine) for (int& x : row) { cin >> x; --x; }
+    for (auto& row : machine)
+        for (int& x : row) {
+            cin >> x;
+            --x;
+        }
     int total = 0;
-    for (auto& row : duration) for (int& x : row) { cin >> x; total += x; }
+    for (auto& row : duration)
+        for (int& x : row) {
+            cin >> x;
+            total += x;
+        }
     vector<vector<bool>> busy(m, vector<bool>(total, false));
     vector<int> next(n, 0), ready(n, 0);
     int answer = 0;
@@ -20,11 +32,16 @@ void solve() {
         while (true) {
             int used = -1;
             for (int t = start; t < start + length; ++t)
-                if (busy[id][t]) { used = t; break; }
-            if (used == -1) break; // 这一段完全空闲。
+                if (busy[id][t]) {
+                    used = t;
+                    break;
+                }
+            if (used == -1)
+                break;        // 这一段完全空闲。
             start = used + 1; // 越过导致放不下的占用时刻。
         }
-        for (int t = start; t < start + length; ++t) busy[id][t] = true;
+        for (int t = start; t < start + length; ++t)
+            busy[id][t] = true;
         ready[job] = start + length;
         answer = max(answer, ready[job]);
     }

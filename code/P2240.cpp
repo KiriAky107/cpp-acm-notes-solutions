@@ -1,14 +1,19 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
-struct Item { long long weight, value; };
+struct Item {
+    int weight, value;
+};
 
 void solve() {
-    int n; double capacity; cin >> n >> capacity;
+    int n;
+    double capacity;
+    cin >> n >> capacity;
     vector<Item> a(n);
-    for (auto& item : a) cin >> item.weight >> item.value;
+    for (auto& item : a)
+        cin >> item.weight >> item.value;
     sort(a.begin(), a.end(), [](Item x, Item y) {
         return x.value * y.weight > y.value * x.weight; // 比较单位重量价值。
     });
@@ -17,7 +22,8 @@ void solve() {
         double taken = min(capacity, double(item.weight));
         answer += taken * item.value / item.weight;
         capacity -= taken;
-        if (capacity == 0) break;
+        if (capacity == 0)
+            break;
     }
     cout << fixed << setprecision(2) << answer << '\n';
 }

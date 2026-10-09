@@ -1,16 +1,20 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    int n; cin >> n;
+    int n;
+    cin >> n;
     map<string, int> count;
     while (n--) {
-        string name; cin >> name;
+        string name;
+        cin >> name;
         int& seen = count[name]; // 首次访问会建立值为 0 的记录。
-        if (seen == 0) cout << "OK\n";
-        else cout << name << seen << '\n';
+        if (seen == 0)
+            cout << "OK\n";
+        else
+            cout << name << seen << '\n';
         ++seen; // 下次重复使用下一个后缀。
     }
 }

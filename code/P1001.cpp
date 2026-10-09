@@ -1,11 +1,11 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    long long a, b;
-    cin >> a >> b; // 一次读取题目给出的两个整数。
+    int a, b;
+    cin >> a >> b;         // 一次读取题目给出的两个整数。
     cout << a + b << '\n'; // 加法表达式的结果就是输出目标。
 }
 

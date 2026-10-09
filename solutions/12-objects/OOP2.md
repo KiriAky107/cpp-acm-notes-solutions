@@ -21,21 +21,37 @@
 [完整源文件](../../code/OOP2.cpp)
 
 ```cpp
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
-class Score{
-    int number=0;
-public:
-    bool set(int x){if(x<0||x>100)return false;number=x;return true;} // 检查通过才修改成员。
-    int value()const{return number;} // 读取成绩不会改变对象。
+class Score {
+    int number = 0;
+
+  public:
+    bool set(int x) {
+        if (x < 0 || x > 100)
+            return false;
+        number = x;
+        return true;
+    } // 检查通过才修改成员。
+
+    int value() const {
+        return number;
+    } // 读取成绩不会改变对象。
 };
 
 void solve() {
-    Score score;int n;cin>>n;
-    while(n--){int x;cin>>x;bool ok=score.set(x);cout<<(ok?"OK":"Rejected")<<' '<<score.value()<<'\n';}
+    Score score;
+    int n;
+    cin >> n;
+    while (n--) {
+        int x;
+        cin >> x;
+        bool ok = score.set(x);
+        cout << (ok ? "OK" : "Rejected") << ' ' << score.value() << '\n';
+    }
 }
 
 signed main() {
@@ -48,8 +64,6 @@ signed main() {
         solve();
 }
 ```
-
-头文件 `<bits/stdc++.h>` 汇总 GNU C++ 的常用标准库，包含本程序使用的流、容器与算法；这是序言竞赛模板中的包含方式。
 
 ## （五） 复杂度
 

@@ -1,14 +1,16 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    string s; cin >> s;
+    string s;
+    cin >> s;
     vector<bool> matched(s.size(), false);
     stack<int> left;
     for (int i = 0; i < (int)s.size(); ++i) {
-        if (s[i] == '(' || s[i] == '[') left.push(i);
+        if (s[i] == '(' || s[i] == '[')
+            left.push(i);
         else if (!left.empty()) {
             char c = s[left.top()];
             if ((c == '(' && s[i] == ')') || (c == '[' && s[i] == ']')) {
@@ -18,8 +20,10 @@ void solve() {
         }
     }
     for (int i = 0; i < (int)s.size(); ++i)
-        if (matched[i]) cout << s[i];
-        else cout << ((s[i] == '(' || s[i] == ')') ? "()" : "[]");
+        if (matched[i])
+            cout << s[i];
+        else
+            cout << ((s[i] == '(' || s[i] == ')') ? "()" : "[]");
     cout << '\n';
 }
 

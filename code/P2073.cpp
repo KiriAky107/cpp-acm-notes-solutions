@@ -1,19 +1,24 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    map<long long, long long> flowers;
-    long long beauty = 0, cost = 0;
+    map<int, int> flowers;
+    int beauty = 0, cost = 0;
     int op;
     while (cin >> op && op != -1) {
         if (op == 1) {
-            long long w, c; cin >> w >> c;
-            if (flowers.emplace(c, w).second) { beauty += w; cost += c; } // 重复价格不加入。
+            int w, c;
+            cin >> w >> c;
+            if (flowers.emplace(c, w).second) {
+                beauty += w;
+                cost += c;
+            } // 重复价格不加入。
         } else if (!flowers.empty()) {
             auto it = op == 2 ? prev(flowers.end()) : flowers.begin();
-            cost -= it->first; beauty -= it->second;
+            cost -= it->first;
+            beauty -= it->second;
             flowers.erase(it); // 总和与实际记录同步修改。
         }
     }

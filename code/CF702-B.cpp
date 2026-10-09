@@ -1,17 +1,20 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    int n; cin >> n;
-    unordered_map<long long, long long> past;
-    long long answer = 0;
+    int n;
+    cin >> n;
+    unordered_map<int, int> past;
+    int answer = 0;
     while (n--) {
-        long long x; cin >> x;
-        for (long long p = 1; p <= (1LL << 30); p <<= 1) {
+        int x;
+        cin >> x;
+        for (int p = 1; p <= (1LL << 30); p <<= 1) {
             auto it = past.find(p - x);
-            if (it != past.end()) answer += it->second; // 查询范围只有此前的位置。
+            if (it != past.end())
+                answer += it->second; // 查询范围只有此前的位置。
         }
         ++past[x]; // 查询结束后才进入历史。
     }

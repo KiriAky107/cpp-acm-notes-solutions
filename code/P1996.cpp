@@ -1,16 +1,22 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    int n, m; cin >> n >> m;
+    int n, m;
+    cin >> n >> m;
     queue<int> q;
-    for (int i = 1; i <= n; ++i) q.push(i);
+    for (int i = 1; i <= n; ++i)
+        q.push(i);
     while (!q.empty()) {
         int skip = (m - 1) % q.size(); // 完整绕圈不会改变队列，只移动余下的人。
-        while (skip--) { q.push(q.front()); q.pop(); }
-        cout << q.front() << ' '; q.pop(); // 数到 m 的人出圈。
+        while (skip--) {
+            q.push(q.front());
+            q.pop();
+        }
+        cout << q.front() << ' ';
+        q.pop(); // 数到 m 的人出圈。
     }
     cout << '\n';
 }

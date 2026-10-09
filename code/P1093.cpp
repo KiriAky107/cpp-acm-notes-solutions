@@ -1,9 +1,11 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
-struct Student { int id, chinese, total; };
+struct Student {
+    int id, chinese, total;
+};
 
 void solve() {
     int n;
@@ -16,11 +18,14 @@ void solve() {
         a[i].total = a[i].chinese + math + english;
     }
     sort(a.begin(), a.end(), [](const Student& x, const Student& y) {
-        if (x.total != y.total) return x.total > y.total; // 第一排序字段。
-        if (x.chinese != y.chinese) return x.chinese > y.chinese; // 第二字段。
-        return x.id < y.id; // 同分时按学号决定先后。
+        if (x.total != y.total)
+            return x.total > y.total; // 第一排序字段。
+        if (x.chinese != y.chinese)
+            return x.chinese > y.chinese; // 第二字段。
+        return x.id < y.id;               // 同分时按学号决定先后。
     });
-    for (int i = 0; i < 5; ++i) cout << a[i].id << ' ' << a[i].total << '\n';
+    for (int i = 0; i < 5; ++i)
+        cout << a[i].id << ' ' << a[i].total << '\n';
 }
 
 signed main() {

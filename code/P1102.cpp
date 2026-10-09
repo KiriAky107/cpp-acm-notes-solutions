@@ -1,17 +1,23 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
-    int n; long long c; cin >> n >> c;
-    vector<long long> a(n);
-    map<long long, long long> count;
-    for (auto& x : a) { cin >> x; ++count[x]; }
-    long long answer = 0;
-    for (long long x : a) {
+    int n;
+    int c;
+    cin >> n >> c;
+    vector<int> a(n);
+    map<int, int> count;
+    for (auto& x : a) {
+        cin >> x;
+        ++count[x];
+    }
+    int answer = 0;
+    for (int x : a) {
         auto it = count.find(x - c); // 查出每个 A 能配上的 B 的位置数。
-        if (it != count.end()) answer += it->second;
+        if (it != count.end())
+            answer += it->second;
     }
     cout << answer << '\n';
 }

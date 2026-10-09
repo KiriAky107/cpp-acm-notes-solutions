@@ -1,6 +1,6 @@
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
 void solve() {
@@ -10,7 +10,7 @@ void solve() {
     for (int row = 0; row < n; ++row) {
         for (int col = 0; col < n - row; ++col)
             cout << setw(2) << value++; // setw 作用于紧接着的这一个数。
-        cout << '\n'; // 每行长度比上一行少 1。
+        cout << '\n';                   // 每行长度比上一行少 1。
     }
 }
 

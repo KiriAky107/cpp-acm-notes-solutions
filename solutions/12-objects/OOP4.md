@@ -23,24 +23,33 @@
 [完整源文件](../../code/OOP4.cpp)
 
 ```cpp
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
-struct Node{
-    int value;unique_ptr<Node> left,right;
-    explicit Node(int x):value(x){}
+struct Node {
+    int value;
+    unique_ptr<Node> left, right;
+
+    explicit Node(int x) : value(x) {
+    }
 };
-void preorder(const Node* node){
-    if(!node)return;
-    cout<<node->value<<' ';preorder(node->left.get());preorder(node->right.get()); // 按根、左、右访问。
+
+void preorder(const Node* node) {
+    if (!node)
+        return;
+    cout << node->value << ' ';
+    preorder(node->left.get());
+    preorder(node->right.get()); // 按根、左、右访问。
 }
 
 void solve() {
-    auto root=make_unique<Node>(1);
-    root->left=make_unique<Node>(2);root->right=make_unique<Node>(3); // 所有权由父节点成员持有。
-    preorder(root.get());cout<<'\n'; // get 只提供访问指针，不转移所有权。
+    auto root = make_unique<Node>(1);
+    root->left = make_unique<Node>(2);
+    root->right = make_unique<Node>(3); // 所有权由父节点成员持有。
+    preorder(root.get());
+    cout << '\n'; // get 只提供访问指针，不转移所有权。
 }
 
 signed main() {
@@ -53,8 +62,6 @@ signed main() {
         solve();
 }
 ```
-
-头文件 `<bits/stdc++.h>` 汇总 GNU C++ 的常用标准库，包含本程序使用的流、容器与算法；这是序言竞赛模板中的包含方式。
 
 ## （五） 复杂度
 

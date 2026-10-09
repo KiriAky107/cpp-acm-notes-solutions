@@ -23,27 +23,34 @@ Shape 声明虚函数 area，Triangle 覆盖它并保存底、高。容器保存
 [完整源文件](../../code/OOP3.cpp)
 
 ```cpp
-#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
-#define int long long   // 统一使用较大的整数类型。
-#define endl '\n'       // 普通输出换行，避免逐行刷新。
+#include <bits/stdc++.h>
+#define int long long
+#define endl '\n'
 using namespace std;
 
-struct Shape{
-    virtual double area()const=0;
-    virtual ~Shape()=default; // 通过基类指针销毁时完成派生对象的销毁。
+struct Shape {
+    virtual double area() const = 0;
+    virtual ~Shape() = default; // 通过基类指针销毁时完成派生对象的销毁。
 };
-class Triangle:public Shape{
-    double base,height;
-public:
-    Triangle(double b,double h):base(b),height(h){}
-    double area()const override{return base*height/2;}
+
+class Triangle : public Shape {
+    double base, height;
+
+  public:
+    Triangle(double b, double h) : base(b), height(h) {
+    }
+
+    double area() const override {
+        return base * height / 2;
+    }
 };
 
 void solve() {
     vector<unique_ptr<Shape>> shapes;
-    shapes.push_back(make_unique<Triangle>(4,3));
-    shapes.push_back(make_unique<Triangle>(6,5));
-    for(const auto& shape:shapes)cout<<fixed<<setprecision(2)<<shape->area()<<'\n'; // 同一接口调用不同对象。
+    shapes.push_back(make_unique<Triangle>(4, 3));
+    shapes.push_back(make_unique<Triangle>(6, 5));
+    for (const auto& shape : shapes)
+        cout << fixed << setprecision(2) << shape->area() << '\n'; // 同一接口调用不同对象。
 }
 
 signed main() {
@@ -56,8 +63,6 @@ signed main() {
         solve();
 }
 ```
-
-头文件 `<bits/stdc++.h>` 汇总 GNU C++ 的常用标准库，包含本程序使用的流、容器与算法；这是序言竞赛模板中的包含方式。
 
 ## （五） 复杂度
 
