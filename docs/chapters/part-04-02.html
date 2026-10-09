@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（二） 大整数的加减乘除 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-04-02.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-04-02.html" data-page-title="（二） 大整数的加减乘除" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details open><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="current" href="../chapters/part-04-02.html" aria-current=page>（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 四、批量输入、大整数运算与提交检查</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0245">（二） 大整数的加减乘除</h3>
+<p>缓冲输入解决“一次读很多数”的问题，数本身有几百位时，还需要改变保存和计算的方式。例如 <code>99999999999999999999+1</code>，答案是 <code>100000000000000000000</code>；每一位都要保留下来。把输入读成 string，再用已学的数组、循环和函数模拟竖式，就能逐步构建<strong>高精度整数运算</strong>。</p>
+<p>这里先让四种运算处理数的绝对值，再单独处理正负号。这样，加法的进位、减法的借位和除法的余数都能分别看清楚。</p>
+<h4 id="n-0246">1. 完整示例：大整数四则计算器</h4>
+<p><strong>题目原文（自拟）：</strong> 第一行输入操作次数 T，接下来 T 行，每行输入一个运算符 op 和两个十进制整数 A、B。op 是 <code>+</code>、<code>-</code>、<code>*</code>、<code>/</code> 之一。<span class="math inline">\(1\le T\le20\)</span>；A、B 的数字部分各有 1 到 2000 位，可以带一个正号或负号，也可以包含前导零。</p>
+<p>加、减、乘操作分别输出和、差、积。除法输出整数商与余数，用一个空格分隔；商向零截断，余数随被除数的符号。例如 <code>-17/5</code> 输出 <code>-3 -2</code>，因为 <span class="math inline">\(-17=(-3)\times5+(-2)\)</span>。B 为零时，除法输出 <code>DIV0</code>。每个操作的结果占一行，数字按通常的十进制形式输出。</p>
+<p><strong>样例输入：</strong></p>
+<pre class="text"><code>8
++ 999 87
+- 1000 728
+* 123 45
+/ 12045 37
+- 728 1000
++ -999 87
+/ -17 5
+/ 0012 -000</code></pre>
+<p><strong>样例输出：</strong></p>
+<pre class="text"><code>1086
+272
+5535
+325 20
+-272
+-912
+-3 -2
+DIV0</code></pre>
+<p><strong>分析路线：</strong> 先保存数字位；加减从个位向高位处理；乘法展开每一对位的贡献；除法从最高位向低位读入前缀，逐步得到商和余数；最后用绝对值大小和符号决定调用哪种运算。</p>
+<p>各段代码按本节顺序放进同一个源文件，最后接上计算器的 main。下面不会把几种运算塞进一个长代码块，而是逐段构建它们。</p>
+<h4 id="n-0247">2. 数字位的存储、比较与输出</h4>
+<p>把 <code>1203</code> 存成 <code>[3,0,2,1]</code>：<code>a[0]</code> 是个位，<code>a[1]</code> 是十位，<code>a[2]</code> 是百位。每个位置保存一个 0 到 9 的数字，数值为</p>
+<p><span class="math display">\[
+A=a[0]+10a[1]+100a[2]+\cdots=\sum_{i=0}^{n-1}a[i]10^i.
+\]</span></p>
+<p>加法产生的进位总是去下一格，减法也是从这一格向下一格借位；让低位在前，便于从下标 0 开始循环。输出时再反向读取。数字 <code>0001203</code> 和 <code>1203</code> 表示同一个数，数组末尾多余的高位零会被删除；零统一保存成 <code>[0]</code>。</p>
+<figure>
+<img alt="十进制字符串反向存入数字数组并删除多余高位零" decoding="async" loading="lazy" src="../media/notes/bigint-digit-storage.svg"/>
+<figcaption aria-hidden="true">十进制字符串反向存入数字数组并删除多余高位零</figcaption>
+</figure>
+<p>先放入头文件和下面的辅助函数。<code>&lt;string&gt;</code> 保存输入文本，<code>&lt;vector&gt;</code> 保存数字位，<code>&lt;algorithm&gt;</code> 提供 max，<code>&lt;utility&gt;</code> 提供 pair，<code>&lt;iostream&gt;</code> 负责本例的标准流输入输出。<code>using Digits = vector&lt;int&gt;</code> 是类型别名；与前面的 fread 示例各自组成一个程序。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="5"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="6"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="7"></span>
+<span data-line="8"><span class="kw">using</span> Digits <span class="op">=</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;;</span> <span class="co">// 下标 i 保存十进制的 10^i 位。</span></span>
+<span data-line="9"></span>
+<span data-line="10"><span class="dt">void</span> trim<span class="op">(</span>Digits <span class="op">&amp;</span>a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">    <span class="cf">while</span> <span class="op">(</span>a<span class="op">.</span>size<span class="op">()</span> <span class="op">&gt;</span> <span class="dv">1</span> <span class="op">&amp;&amp;</span> a<span class="op">.</span>back<span class="op">()</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">        a<span class="op">.</span>pop_back<span class="op">();</span> <span class="co">// 删除多余高位零，但给数字 0 留下一位。</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14"><span class="op">}</span></span>
+<span data-line="15"></span>
+<span data-line="16">Digits readDigits<span class="op">(</span><span class="at">const</span> string <span class="op">&amp;</span>s<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">    Digits a<span class="op">;</span></span>
+<span data-line="18">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>s<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">--</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="19">        a<span class="op">.</span>push_back<span class="op">(</span>s<span class="op">[</span>i<span class="op">]</span> <span class="op">-</span> <span class="ch">'0'</span><span class="op">);</span> <span class="co">// 字符 '7' 转成数字 7，低位先存。</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21">    trim<span class="op">(</span>a<span class="op">);</span></span>
+<span data-line="22">    <span class="cf">return</span> a<span class="op">;</span></span>
+<span data-line="23"><span class="op">}</span></span>
+<span data-line="24"></span>
+<span data-line="25">string writeDigits<span class="op">(</span><span class="at">const</span> Digits <span class="op">&amp;</span>a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="26">    string s<span class="op">;</span></span>
+<span data-line="27">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">--</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="28">        s<span class="op">.</span>push_back<span class="op">(</span><span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;(</span><span class="ch">'0'</span> <span class="op">+</span> a<span class="op">[</span>i<span class="op">]));</span> <span class="co">// 高位先输出。</span></span>
+<span data-line="29">    <span class="op">}</span></span>
+<span data-line="30">    <span class="cf">return</span> s<span class="op">;</span></span>
+<span data-line="31"><span class="op">}</span></span>
+<span data-line="32"></span>
+<span data-line="33"><span class="dt">int</span> compare<span class="op">(</span><span class="at">const</span> Digits <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> Digits <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="34">    <span class="cf">if</span> <span class="op">(</span>a<span class="op">.</span>size<span class="op">()</span> <span class="op">!=</span> b<span class="op">.</span>size<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="35">        <span class="cf">return</span> a<span class="op">.</span>size<span class="op">()</span> <span class="op">&gt;</span> b<span class="op">.</span>size<span class="op">()</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span> <span class="co">// 位数多的绝对值大。</span></span>
+<span data-line="36">    <span class="op">}</span></span>
+<span data-line="37">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">--</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="38">        <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>i<span class="op">]</span> <span class="op">!=</span> b<span class="op">[</span>i<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="39">            <span class="cf">return</span> a<span class="op">[</span>i<span class="op">]</span> <span class="op">&gt;</span> b<span class="op">[</span>i<span class="op">]</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span> <span class="co">// 第一处不同的高位决定大小。</span></span>
+<span data-line="40">        <span class="op">}</span></span>
+<span data-line="41">    <span class="op">}</span></span>
+<span data-line="42">    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 每一位都相同。</span></span>
+<span data-line="43"><span class="op">}</span></span></code></pre></div>
+<p><strong>比较过程：</strong> <code>1000</code> 有四位，<code>728</code> 有三位，所以前者更大；<code>1203</code> 与 <code>1290</code> 都有四位，千位、百位相同，十位的 0 小于 9，因此前者更小。不能从个位开始比较大小，<code>1203</code> 的个位虽较大，整个数仍较小。</p>
+<p>读入、输出和同位数比较都最多检查每一位一次，时间为 <span class="math inline">\(O(n)\)</span>。读入得到 n 个数字位，存储为 <span class="math inline">\(O(n)\)</span>。</p>
+<h4 id="n-0248">3. 加法：逐位相加与进位</h4>
+<p>先手算 <code>999+87</code>。个位相加得到 16，个位留下 6，把一个十送到十位；十位再把这个进位一起加上。</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+</colgroup>
+<thead>
+<tr>
+<th>当前位</th>
+<th>A 的数字</th>
+<th>B 的数字</th>
+<th>进入本位的进位</th>
+<th>本位总和 s</th>
+<th>写入的数字 <code>s%10</code></th>
+<th>送到下一位的进位 <code>s/10</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>个位</td>
+<td>9</td>
+<td>7</td>
+<td>0</td>
+<td>16</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>十位</td>
+<td>9</td>
+<td>8</td>
+<td>1</td>
+<td>18</td>
+<td>8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>百位</td>
+<td>9</td>
+<td>0</td>
+<td>1</td>
+<td>10</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>千位</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="999 加 87 逐位写入结果并传递进位" decoding="async" loading="lazy" src="../media/notes/bigint-add-carry.svg"/>
+<figcaption aria-hidden="true">999 加 87 逐位写入结果并传递进位</figcaption>
+</figure>
+<p>数组按顺序得到 <code>[6,8,0,1]</code>，反向输出为 <code>1086</code>。较短的数没有百位时，这一位按 0 参与相加；两个数都处理完后，千位仍收到一个进位，所以还要再走一次循环。</p>
+<p>把每行手算换成变量：本位总和为 <span class="math inline">\(s=a_i+b_i+c\)</span>。十进制分解 <span class="math inline">\(s=10\lfloor s/10\rfloor+(s\bmod10)\)</span>，因此留下余数，传递商。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">Digits addMagnitude<span class="op">(</span><span class="at">const</span> Digits <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> Digits <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    Digits result<span class="op">;</span></span>
+<span data-line="3">    <span class="dt">int</span> n <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>max<span class="op">(</span>a<span class="op">.</span>size<span class="op">(),</span> b<span class="op">.</span>size<span class="op">()));</span></span>
+<span data-line="4">    <span class="dt">int</span> carry <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="5">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n <span class="op">||</span> carry <span class="op">!=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">        <span class="dt">int</span> sum <span class="op">=</span> carry<span class="op">;</span></span>
+<span data-line="7">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">()))</span> sum <span class="op">+=</span> a<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="8">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>b<span class="op">.</span>size<span class="op">()))</span> sum <span class="op">+=</span> b<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="9">        result<span class="op">.</span>push_back<span class="op">(</span>sum <span class="op">%</span> <span class="dv">10</span><span class="op">);</span> <span class="co">// 当前位留下个位部分。</span></span>
+<span data-line="10">        carry <span class="op">=</span> sum <span class="op">/</span> <span class="dv">10</span><span class="op">;</span> <span class="co">// 十位部分成为下一格的进位。</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12">    <span class="cf">return</span> result<span class="op">;</span></span>
+<span data-line="13"><span class="op">}</span></span></code></pre></div>
+<p><strong>代码解释：</strong> carry 在一次循环开始时来自上一位，在循环结束时改为送给下一位的值。每格最多是 <code>9+9+1=19</code>，进位最多为 1；再长的输入也没有把整个大整数塞进 int。时间为 <span class="math inline">\(O(\max(n,m))\)</span>，结果空间为 <span class="math inline">\(O(\max(n,m))\)</span>，n、m 分别是两个数的位数。</p>
+<p><strong>练习：</strong> <a href="https://www.luogu.com.cn/problem/P1601" rel="noopener noreferrer">洛谷 P1601 — 高精度加法</a>。</p>
+<h4 id="n-0249">4. 减法：绝对值比较与逐位借位</h4>
+<p>先计算 <code>1000-728</code>。个位 <code>0-8</code> 不够减，就从下一位借一个十，得到 2；下一位除了减去 B 的数字，还要扣掉刚才借走的 1。</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+</colgroup>
+<thead>
+<tr>
+<th>当前位</th>
+<th>A 的数字</th>
+<th>B 的数字</th>
+<th>上一位借走的 1</th>
+<th>初步差 t</th>
+<th>本位写入</th>
+<th>从下一位借的 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>个位</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>-8</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>十位</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>-3</td>
+<td>7</td>
+<td>1</td>
+</tr>
+<tr>
+<td>百位</td>
+<td>0</td>
+<td>7</td>
+<td>1</td>
+<td>-8</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>千位</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="1000 减 728 从个位连续借位到千位" decoding="async" loading="lazy" src="../media/notes/bigint-subtract-borrow.svg"/>
+<figcaption aria-hidden="true">1000 减 728 从个位连续借位到千位</figcaption>
+</figure>
+<p>得到 <code>[2,7,2,0]</code>，去掉最高位的 0，输出 <code>272</code>。写入数字时，初步差为负就加 10，并记录借位；下一格再扣掉这个借位。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">Digits subtractMagnitude<span class="op">(</span><span class="at">const</span> Digits <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> Digits <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    Digits result<span class="op">;</span></span>
+<span data-line="3">    <span class="dt">int</span> borrow <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="4">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">        <span class="dt">int</span> difference <span class="op">=</span> a<span class="op">[</span>i<span class="op">]</span> <span class="op">-</span> borrow<span class="op">;</span></span>
+<span data-line="6">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>b<span class="op">.</span>size<span class="op">()))</span> difference <span class="op">-=</span> b<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="7">        borrow <span class="op">=</span> difference <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="8">        <span class="cf">if</span> <span class="op">(</span>borrow <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> difference <span class="op">+=</span> <span class="dv">10</span><span class="op">;</span> <span class="co">// 从下一格借来一个十。</span></span>
+<span data-line="9">        result<span class="op">.</span>push_back<span class="op">(</span>difference<span class="op">);</span></span>
+<span data-line="10">    <span class="op">}</span></span>
+<span data-line="11">    trim<span class="op">(</span>result<span class="op">);</span> <span class="co">// 1000-728 的末尾零、相等两数相减的高位零都在这里整理。</span></span>
+<span data-line="12">    <span class="cf">return</span> result<span class="op">;</span></span>
+<span data-line="13"><span class="op">}</span></span></code></pre></div>
+<p><strong>调用顺序：</strong> <code>1000-728</code> 比较后直接减；<code>728-1000</code> 则计算 <code>1000-728</code> 的幅度，再给结果加负号，得到 <code>-272</code>。所以符号处理会先用 compare 比较，随后把较大的幅度放在第一个参数。相等时逐位得到 0，最后留下 <code>[0]</code>。</p>
+<p>借位不是把下一格永久改成负数，而是用 borrow 保存“下一格要扣掉 1”。每步的差在 -10 到 9 之间，加 10 后就是一个数字位。时间为 <span class="math inline">\(O(\max(n,m))\)</span>，结果空间同阶。</p>
+<p><strong>练习：</strong> <a href="https://www.luogu.com.cn/problem/P2142" rel="noopener noreferrer">洛谷 P2142 — 高精度减法</a>。</p>
+<h4 id="n-0250">5. 乘法：位权展开与错位累加</h4>
+<p>计算 <code>123×45</code> 时，把 123 展开成 <span class="math inline">\(3+2\times10+1\times100\)</span>：</p>
+<p><span class="math display">\[
+123\times45=3\times45+2\times45\times10+1\times45\times100
+=135+900+4500=5535.
+\]</span></p>
+<p>每一行都在已有结果上继续累加。个位 3 的贡献从下标 0 开始，十位 2 的贡献从下标 1 开始，百位 1 的贡献从下标 2 开始。</p>
+<figure>
+<img alt="123 乘 45 的逐行位权展开及每一次数字累加" decoding="async" loading="lazy" src="../media/notes/bigint-multiply-rows.svg"/>
+<figcaption aria-hidden="true">123 乘 45 的逐行位权展开及每一次数字累加</figcaption>
+</figure>
+<p>再拆开一行：<code>a[i]</code> 表示 <span class="math inline">\(a_i10^i\)</span>，<code>b[j]</code> 表示 <span class="math inline">\(b_j10^j\)</span>，两者相乘贡献 <span class="math inline">\(a_i b_j10^{i+j}\)</span>，所以要累加到 <code>result[i+j]</code>。但这格可能已有前一行留下的数字，也可能收到本行上一格的进位，必须三项一起算。</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+</colgroup>
+<thead>
+<tr>
+<th>处理 A 的位 i</th>
+<th>处理 B 的位 j</th>
+<th>本格原值</th>
+<th>位乘积</th>
+<th>本行进位</th>
+<th>总和</th>
+<th>写入 / 新进位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0，数字 3</td>
+<td>0，数字 5</td>
+<td>0</td>
+<td>15</td>
+<td>0</td>
+<td>15</td>
+<td>5 / 1</td>
+</tr>
+<tr>
+<td>0，数字 3</td>
+<td>1，数字 4</td>
+<td>0</td>
+<td>12</td>
+<td>1</td>
+<td>13</td>
+<td>3 / 1，行末写下标 2 为 1</td>
+</tr>
+<tr>
+<td>1，数字 2</td>
+<td>0，数字 5</td>
+<td>3</td>
+<td>10</td>
+<td>0</td>
+<td>13</td>
+<td>3 / 1</td>
+</tr>
+<tr>
+<td>1，数字 2</td>
+<td>1，数字 4</td>
+<td>1</td>
+<td>8</td>
+<td>1</td>
+<td>10</td>
+<td>0 / 1，行末写下标 3 为 1</td>
+</tr>
+<tr>
+<td>2，数字 1</td>
+<td>0，数字 5</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>5</td>
+<td>5 / 0</td>
+</tr>
+<tr>
+<td>2，数字 1</td>
+<td>1，数字 4</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>5</td>
+<td>5 / 0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">Digits multiplyMagnitude<span class="op">(</span><span class="at">const</span> Digits <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> Digits <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    Digits result<span class="op">(</span>a<span class="op">.</span>size<span class="op">()</span> <span class="op">+</span> b<span class="op">.</span>size<span class="op">(),</span> <span class="dv">0</span><span class="op">);</span></span>
+<span data-line="3">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="4">        <span class="dt">int</span> carry <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 每一行从自己的起点开始进位。</span></span>
+<span data-line="5">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>b<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>j<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">            <span class="dt">int</span> sum <span class="op">=</span> result<span class="op">[</span>i <span class="op">+</span> j<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>i<span class="op">]</span> <span class="op">*</span> b<span class="op">[</span>j<span class="op">]</span> <span class="op">+</span> carry<span class="op">;</span></span>
+<span data-line="7">            result<span class="op">[</span>i <span class="op">+</span> j<span class="op">]</span> <span class="op">=</span> sum <span class="op">%</span> <span class="dv">10</span><span class="op">;</span> <span class="co">// 边累加边整理为一个数字位。</span></span>
+<span data-line="8">            carry <span class="op">=</span> sum <span class="op">/</span> <span class="dv">10</span><span class="op">;</span></span>
+<span data-line="9">        <span class="op">}</span></span>
+<span data-line="10">        result<span class="op">[</span>i <span class="op">+</span> b<span class="op">.</span>size<span class="op">()]</span> <span class="op">=</span> carry<span class="op">;</span> <span class="co">// 本行多出的最高位还没有被前面的行写入。</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12">    trim<span class="op">(</span>result<span class="op">);</span></span>
+<span data-line="13">    <span class="cf">return</span> result<span class="op">;</span></span>
+<span data-line="14"><span class="op">}</span></span></code></pre></div>
+<p><strong>代码解释：</strong> 外层选 A 的一位，内层让它乘 B 的每一位；<code>i+j</code> 实现竖式中的错位。算完一行，已经得到这一行与前面各行的总和，下一行在这个结果上继续加。</p>
+<p>每步已存数字最多为 9，单个位乘积最多为 81，进位最多为 9，三项总和最多为 99。及时整理每个数字位，让中间值始终很小。若先把所有位乘积堆在一个位置、最后才进位，就要另外分析那个累计值的大小。</p>
+<p>两个数有 n、m 位时，共做 nm 次位乘法，时间为 <span class="math inline">\(O(nm)\)</span>；结果最多 n+m 位，结果空间为 <span class="math inline">\(O(n+m)\)</span>。2000 位乘 2000 位约做 4000000 次位乘法。</p>
+<p><strong>练习：</strong> <a href="https://www.luogu.com.cn/problem/P1303" rel="noopener noreferrer">洛谷 P1303 — A*B Problem</a>。</p>
+<h4 id="n-0251">6. 除法：逐位确定商和余数</h4>
+<p>加、减、乘从低位开始，是因为低位产生的进位和借位要传给高位。除法要先决定高位商，因此从被除数最高位开始。手算 <code>12045÷37</code>，不是一次求出整个商，而是把数字 1、2、0、4、5 依次接到当前余数后面。</p>
+<h5 id="n-0252">6.1 从具体前缀推导下一位商</h5>
+<p>开始时，已处理前缀为 0，商为 0，余数为 0。读入数字 d 后，把原来的余数 r 扩大十倍，再接上 d，得到 <span class="math inline">\(u=10r+d\)</span>。</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+</colgroup>
+<thead>
+<tr>
+<th>读入数字 d</th>
+<th>上一步余数 r</th>
+<th>本步待除数 <code>u=10*r+d</code></th>
+<th>逐次减去 37</th>
+<th>本位商</th>
+<th>新余数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1 小于 37，不减</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>12</td>
+<td>12 小于 37，不减</td>
+<td>0</td>
+<td>12</td>
+</tr>
+<tr>
+<td>0</td>
+<td>12</td>
+<td>120</td>
+<td><code>120→83→46→9</code></td>
+<td>3</td>
+<td>9</td>
+</tr>
+<tr>
+<td>4</td>
+<td>9</td>
+<td>94</td>
+<td><code>94→57→20</code></td>
+<td>2</td>
+<td>20</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20</td>
+<td>205</td>
+<td><code>205→168→131→94→57→20</code></td>
+<td>5</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="长除法读入每一位，执行比较和减法，并写下商与余数" decoding="async" loading="lazy" src="../media/notes/bigint-division-steps.svg"/>
+<figcaption aria-hidden="true">长除法读入每一位，执行比较和减法，并写下商与余数</figcaption>
+</figure>
+<p>读出的商位依次为 <code>0、0、3、2、5</code>，整理成 <code>325</code>，余数为 20。可以反算 <span class="math inline">\(37\times325+20=12045\)</span>。</p>
+<p>为什么旧商不用重新计算？设已读前缀 P 的关系为 <span class="math inline">\(P=BQ+r\)</span>，接下一位 d 后：</p>
+<p><span class="math display">\[
+P'=10P+d=B(10Q)+(10r+d).
+\]</span></p>
+<p>再把 <span class="math inline">\(10r+d\)</span> 分成 <span class="math inline">\(Bq+r'\)</span>，得到</p>
+<p><span class="math display">\[
+P'=B(10Q+q)+r'.
+\]</span></p>
+<p>因此原来的商 Q 扩大十倍，再补一个数字 q；新余数只需由 <code>10*r+d</code> 继续计算。这就是长除法每次只处理余数的原因。</p>
+<figure>
+<img alt="从 P 等于 BQ 加 r 推出新前缀的商与余数更新" decoding="async" loading="lazy" src="../media/notes/bigint-division-derivation.svg"/>
+<figcaption aria-hidden="true">从 P 等于 BQ 加 r 推出新前缀的商与余数更新</figcaption>
+</figure>
+<p>每步减到不足一个 B 就停止，所以旧余数满足 <span class="math inline">\(0\le r&lt;B\)</span>；接入一个 0 到 9 的数字后，<span class="math inline">\(0\le10r+d&lt;10B\)</span>。因此最多减 9 次，本位商就在 0 到 9 之间。不是把整个被除数反复减到零，而是每读一位只确定一位商。</p>
+<h5 id="n-0253">6.2 大整数除以大整数的构建</h5>
+<p>商的数组也按低位在前存储。处理被除数的下标 i 时，得到的商位就写在 <code>quotient[i]</code>；最高位不足相除会写 0，末尾统一整理。</p>
+<p>余数数组 <code>[9]</code> 接上数字 4 后应表示 94，即 <code>[4,9]</code>。<code>remainder.insert(remainder.begin(),a[i])</code> 把新数字放在最低位，让原来的数字向高位移动一格，正好完成乘 10 再加新数字。余数为 <code>[0]</code> 时接入 1 得到 <code>[1,0]</code>，trim 会整理成 <code>[1]</code>。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">pair<span class="op">&lt;</span>Digits<span class="op">,</span> Digits<span class="op">&gt;</span> divideMagnitude<span class="op">(</span><span class="at">const</span> Digits <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> Digits <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    Digits quotient<span class="op">(</span>a<span class="op">.</span>size<span class="op">(),</span> <span class="dv">0</span><span class="op">);</span></span>
+<span data-line="3">    Digits remainder<span class="op">{</span><span class="dv">0</span><span class="op">};</span></span>
+<span data-line="4">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">--</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">        remainder<span class="op">.</span>insert<span class="op">(</span>remainder<span class="op">.</span>begin<span class="op">(),</span> a<span class="op">[</span>i<span class="op">]);</span> <span class="co">// 余数乘 10，再接入下一位。</span></span>
+<span data-line="6">        trim<span class="op">(</span>remainder<span class="op">);</span></span>
+<span data-line="7">        <span class="dt">int</span> digit <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="8">        <span class="cf">while</span> <span class="op">(</span>compare<span class="op">(</span>remainder<span class="op">,</span> b<span class="op">)</span> <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">            remainder <span class="op">=</span> subtractMagnitude<span class="op">(</span>remainder<span class="op">,</span> b<span class="op">);</span></span>
+<span data-line="10">            <span class="op">++</span>digit<span class="op">;</span> <span class="co">// 每减去一次除数，本位商加一。</span></span>
+<span data-line="11">        <span class="op">}</span></span>
+<span data-line="12">        quotient<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> digit<span class="op">;</span> <span class="co">// 该商位对应被除数当前的十进制位权。</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14">    trim<span class="op">(</span>quotient<span class="op">);</span></span>
+<span data-line="15">    <span class="cf">return</span> <span class="op">{</span>quotient<span class="op">,</span> remainder<span class="op">};</span> <span class="co">// 同一次长除法同时得到商和余数。</span></span>
+<span data-line="16"><span class="op">}</span></span></code></pre></div>
+<p><strong>代码解释：</strong> 每次循环结束，都保存“已读前缀＝除数×已得商＋当前余数”。下一轮只把余数接入一位，再继续减；前面已经决定的高位商不受影响。</p>
+<p><code>5÷12</code> 的第一位不减，商为 0，余数为 5；<code>1005÷5</code> 的商位依次为 <code>0、2、0、1</code>，整理成 <code>201</code>。其中中间的 0 必须保留：已经得到商 2 后，下一位待除数是 0，本位商就要写 0，不能把 <code>201</code> 压成 <code>21</code>。</p>
+<p>n 是被除数位数，m 是除数位数。每步接位、比较和减法处理至多 m+1 位的余数，本位最多做 9 次减法；因此时间为 <span class="math inline">\(O(nm)\)</span>，商和余数空间合计为 <span class="math inline">\(O(n+m)\)</span>。如果 n 小于 m，余数也只会增长到 n 位，实际工作更少。</p>
+<p>这个实现重在直接表现长除法。需要计算几十万位的乘除时，nm 次逐位工作会迅速增多；此时再学习更大的进制、快速乘法及相应除法，先把本节的每一步算清楚。</p>
+<p><strong>练习：</strong> <a href="https://www.luogu.com.cn/problem/P1932" rel="noopener noreferrer">洛谷 P1932 — A+B A-B A*B A/B A%B Problem</a>（综合练习；20000 位数据要结合工作量继续优化）。</p>
+<h5 id="n-0254">6.3 大整数除以普通整数的简化</h5>
+<p>若除数是 <code>37</code> 这样的普通整数，余数也能直接放进普通整数，不必调用数字数组的比较和减法。此时直接算出 <code>current/b</code> 和 <code>current%b</code>。</p>
+<p>例如被除数有 5000 位，除数为 <span class="math inline">\(10^9\)</span>：旧余数最多为 999999999，接一位后最多为 9999999999，用 long long 可以保存；商的每一位仍在 0 到 9 之间。</p>
+<p>下面的函数是另一种独立的除法实现，复用 Digits 与 trim。它返回商数组和 long long 余数；前面的计算器采用完整的 <code>divideMagnitude</code>，不需要把这个函数接入 main。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">pair<span class="op">&lt;</span>Digits<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> divideByInt<span class="op">(</span><span class="at">const</span> Digits <span class="op">&amp;</span>a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    Digits quotient<span class="op">(</span>a<span class="op">.</span>size<span class="op">(),</span> <span class="dv">0</span><span class="op">);</span></span>
+<span data-line="3">    <span class="dt">long</span> <span class="dt">long</span> remainder <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="4">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">--</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">        <span class="dt">long</span> <span class="dt">long</span> current <span class="op">=</span> remainder <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> a<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="6">        quotient<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>current <span class="op">/</span> b<span class="op">);</span> <span class="co">// 直接确定本位商。</span></span>
+<span data-line="7">        remainder <span class="op">=</span> current <span class="op">%</span> b<span class="op">;</span> <span class="co">// 留给下一位的余数。</span></span>
+<span data-line="8">    <span class="op">}</span></span>
+<span data-line="9">    trim<span class="op">(</span>quotient<span class="op">);</span></span>
+<span data-line="10">    <span class="cf">return</span> <span class="op">{</span>quotient<span class="op">,</span> remainder<span class="op">};</span></span>
+<span data-line="11"><span class="op">}</span></span></code></pre></div>
+<p>每一位只做一次普通整数除法和取余，时间为 <span class="math inline">\(O(n)\)</span>；商数组占 <span class="math inline">\(O(n)\)</span>，另有一个余数变量。<strong>练习：</strong> <a href="https://www.luogu.com.cn/problem/P1480" rel="noopener noreferrer">洛谷 P1480 — A/B Problem（高精度除法Ⅰ）</a>，题面的除数为 1 到 <span class="math inline">\(10^9\)</span>，可以用这一版逐位除法。</p>
+<h4 id="n-0255">7. 把正负号接到四则运算</h4>
+<p>数组保存幅度，再增加 bool negative 保存是否带负号。<code>-000</code> 的幅度整理成 <code>[0]</code>，随后去掉负号；输出得到 <code>0</code>，不是 <code>-0</code>。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="kw">struct</span> BigInteger <span class="op">{</span></span>
+<span data-line="2">    Digits digits<span class="op">;</span></span>
+<span data-line="3">    <span class="dt">bool</span> negative <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// true 表示负数，digits 只保存绝对值。</span></span>
+<span data-line="4"><span class="op">};</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">bool</span> isZero<span class="op">(</span><span class="at">const</span> Digits <span class="op">&amp;</span>a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="cf">return</span> a<span class="op">.</span>size<span class="op">()</span> <span class="op">==</span> <span class="dv">1</span> <span class="op">&amp;&amp;</span> a<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="8"><span class="op">}</span></span>
+<span data-line="9"></span>
+<span data-line="10">BigInteger makeInteger<span class="op">(</span>Digits digits<span class="op">,</span> <span class="dt">bool</span> negative<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">    <span class="cf">if</span> <span class="op">(</span>isZero<span class="op">(</span>digits<span class="op">))</span> negative <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// 所有运算得到的零都去掉负号。</span></span>
+<span data-line="12">    <span class="cf">return</span> <span class="op">{</span>digits<span class="op">,</span> negative<span class="op">};</span></span>
+<span data-line="13"><span class="op">}</span></span>
+<span data-line="14"></span>
+<span data-line="15">BigInteger readInteger<span class="op">(</span><span class="at">const</span> string <span class="op">&amp;</span>s<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">    <span class="dt">bool</span> negative <span class="op">=</span> s<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">'-'</span><span class="op">;</span></span>
+<span data-line="17">    <span class="dt">int</span> firstDigit <span class="op">=</span> <span class="op">(</span>s<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">'-'</span> <span class="op">||</span> s<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">'+'</span><span class="op">)</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="18">    <span class="cf">return</span> makeInteger<span class="op">(</span>readDigits<span class="op">(</span>s<span class="op">.</span>substr<span class="op">(</span>firstDigit<span class="op">)),</span> negative<span class="op">);</span></span>
+<span data-line="19"><span class="op">}</span></span>
+<span data-line="20"></span>
+<span data-line="21">string writeInteger<span class="op">(</span><span class="at">const</span> BigInteger <span class="op">&amp;</span>a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="22">    <span class="cf">return</span> <span class="op">(</span>a<span class="op">.</span>negative <span class="op">?</span> <span class="st">"-"</span> <span class="op">:</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span> writeDigits<span class="op">(</span>a<span class="op">.</span>digits<span class="op">);</span></span>
+<span data-line="23"><span class="op">}</span></span></code></pre></div>
+<p><code>s.substr(firstDigit)</code> 取数字部分，跳过开头的符号；makeInteger 把幅度和符号合成一个结果，同时统一零的写法。</p>
+<h5 id="n-0256">7.1 同号相加与异号相抵</h5>
+<p><code>(-999)+(-87)</code> 的两份幅度相加，结果带负号，得到 <code>-1086</code>；<code>(-999)+87</code> 则让两份幅度抵消，计算 <code>999-87=912</code>，符号来自幅度更大的 -999，得到 <code>-912</code>。</p>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>幅度计算</th>
+<th>结果符号</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>999+87</code></td>
+<td><code>999+87</code></td>
+<td>正</td>
+<td><code>1086</code></td>
+</tr>
+<tr>
+<td><code>(-999)+(-87)</code></td>
+<td><code>999+87</code></td>
+<td>负</td>
+<td><code>-1086</code></td>
+</tr>
+<tr>
+<td><code>(-999)+87</code></td>
+<td><code>999-87</code></td>
+<td>跟随幅度 999</td>
+<td><code>-912</code></td>
+</tr>
+<tr>
+<td><code>(-87)+999</code></td>
+<td><code>999-87</code></td>
+<td>跟随幅度 999</td>
+<td><code>912</code></td>
+</tr>
+<tr>
+<td><code>(-87)+87</code></td>
+<td><code>87-87</code></td>
+<td>归零后去掉负号</td>
+<td><code>0</code></td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="异号相加先比较幅度，再相减并选取结果符号" decoding="async" loading="lazy" src="../media/notes/bigint-signed-addition.svg"/>
+<figcaption aria-hidden="true">异号相加先比较幅度，再相减并选取结果符号</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">BigInteger addInteger<span class="op">(</span><span class="at">const</span> BigInteger <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> BigInteger <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    <span class="cf">if</span> <span class="op">(</span>a<span class="op">.</span>negative <span class="op">==</span> b<span class="op">.</span>negative<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">        <span class="cf">return</span> makeInteger<span class="op">(</span>addMagnitude<span class="op">(</span>a<span class="op">.</span>digits<span class="op">,</span> b<span class="op">.</span>digits<span class="op">),</span> a<span class="op">.</span>negative<span class="op">);</span></span>
+<span data-line="4">    <span class="op">}</span></span>
+<span data-line="5">    <span class="dt">int</span> order <span class="op">=</span> compare<span class="op">(</span>a<span class="op">.</span>digits<span class="op">,</span> b<span class="op">.</span>digits<span class="op">);</span></span>
+<span data-line="6">    <span class="cf">if</span> <span class="op">(</span>order <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">        <span class="co">// 异号相抵，幅度较大的 a 决定结果符号。</span></span>
+<span data-line="8">        <span class="cf">return</span> makeInteger<span class="op">(</span>subtractMagnitude<span class="op">(</span>a<span class="op">.</span>digits<span class="op">,</span> b<span class="op">.</span>digits<span class="op">),</span> a<span class="op">.</span>negative<span class="op">);</span></span>
+<span data-line="9">    <span class="op">}</span></span>
+<span data-line="10">    <span class="cf">return</span> makeInteger<span class="op">(</span>subtractMagnitude<span class="op">(</span>b<span class="op">.</span>digits<span class="op">,</span> a<span class="op">.</span>digits<span class="op">),</span> b<span class="op">.</span>negative<span class="op">);</span></span>
+<span data-line="11"><span class="op">}</span></span>
+<span data-line="12"></span>
+<span data-line="13">BigInteger subtractInteger<span class="op">(</span><span class="at">const</span> BigInteger <span class="op">&amp;</span>a<span class="op">,</span> BigInteger b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">    <span class="cf">if</span> <span class="op">(!</span>isZero<span class="op">(</span>b<span class="op">.</span>digits<span class="op">))</span> b<span class="op">.</span>negative <span class="op">=</span> <span class="op">!</span>b<span class="op">.</span>negative<span class="op">;</span></span>
+<span data-line="15">    <span class="cf">return</span> addInteger<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span> <span class="co">// A-B 等于 A+(-B)，复用已推导的加法。</span></span>
+<span data-line="16"><span class="op">}</span></span></code></pre></div>
+<p><strong>减法解释：</strong> <code>728-1000</code> 变成 <code>728+(-1000)</code>，幅度 1000 较大，计算 272 并取负号；<code>728-(-1000)</code> 变成 <code>728+1000</code>，两份正幅度相加，得到 1728。</p>
+<h5 id="n-0257">7.2 乘除符号与整数余数</h5>
+<p>乘法和除法的商，同号为正、异号为负。因此用 <code>a.negative != b.negative</code> 判断结果是否为负。除法先对两份幅度求商和余数，再为商设置乘除符号，为余数设置被除数符号。</p>
+<table>
+<thead>
+<tr>
+<th>A 与 B</th>
+<th>幅度除法</th>
+<th>带符号商 / 余数</th>
+<th>反算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>17 与 5</td>
+<td>商 3，余 2</td>
+<td><code>3 / 2</code></td>
+<td><span class="math inline">\(17=5\times3+2\)</span></td>
+</tr>
+<tr>
+<td>-17 与 5</td>
+<td>商 3，余 2</td>
+<td><code>-3 / -2</code></td>
+<td><span class="math inline">\(-17=5\times(-3)+(-2)\)</span></td>
+</tr>
+<tr>
+<td>17 与 -5</td>
+<td>商 3，余 2</td>
+<td><code>-3 / 2</code></td>
+<td><span class="math inline">\(17=(-5)\times(-3)+2\)</span></td>
+</tr>
+<tr>
+<td>-17 与 -5</td>
+<td>商 3，余 2</td>
+<td><code>3 / -2</code></td>
+<td><span class="math inline">\(-17=(-5)\times3+(-2)\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">BigInteger multiplyInteger<span class="op">(</span><span class="at">const</span> BigInteger <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> BigInteger <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    <span class="cf">return</span> makeInteger<span class="op">(</span>multiplyMagnitude<span class="op">(</span>a<span class="op">.</span>digits<span class="op">,</span> b<span class="op">.</span>digits<span class="op">),</span></span>
+<span data-line="3">                       a<span class="op">.</span>negative <span class="op">!=</span> b<span class="op">.</span>negative<span class="op">);</span> <span class="co">// 异号相乘得到负数。</span></span>
+<span data-line="4"><span class="op">}</span></span>
+<span data-line="5"></span>
+<span data-line="6">pair<span class="op">&lt;</span>BigInteger<span class="op">,</span> BigInteger<span class="op">&gt;</span> divideInteger<span class="op">(</span><span class="at">const</span> BigInteger <span class="op">&amp;</span>a<span class="op">,</span></span>
+<span data-line="7">                                          <span class="at">const</span> BigInteger <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">    <span class="kw">auto</span> <span class="op">[</span>quotient<span class="op">,</span> remainder<span class="op">]</span> <span class="op">=</span> divideMagnitude<span class="op">(</span>a<span class="op">.</span>digits<span class="op">,</span> b<span class="op">.</span>digits<span class="op">);</span></span>
+<span data-line="9">    <span class="cf">return</span> <span class="op">{</span>makeInteger<span class="op">(</span>quotient<span class="op">,</span> a<span class="op">.</span>negative <span class="op">!=</span> b<span class="op">.</span>negative<span class="op">),</span></span>
+<span data-line="10">            makeInteger<span class="op">(</span>remainder<span class="op">,</span> a<span class="op">.</span>negative<span class="op">)};</span> <span class="co">// 余数随被除数符号，零由统一函数整理。</span></span>
+<span data-line="11"><span class="op">}</span></span></code></pre></div>
+<p>这种除法得到整数商，不输出小数部分；符号处理与 C++ 整数 <code>/</code>、<code>%</code> 的向零截断结果一致。<code>(-2)/5</code> 的幅度商为 0，整理后输出 <code>0 -2</code>。</p>
+<h4 id="n-0258">8. 组装计算器与核对结果</h4>
+<p>依次放入数字辅助函数、幅度加减乘除、BigInteger 与符号函数，最后加入下面的 main。每个函数都有一个职责：解析、计算幅度、处理符号或输出。独立的 <code>divideByInt</code> 可以另存为模板，也可以放在同一文件中。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="2">    ios<span class="op">::</span>sync_with_stdio<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span data-line="3">    cin<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">);</span></span>
+<span data-line="4">    <span class="dt">int</span> t<span class="op">;</span></span>
+<span data-line="5">    cin <span class="op">&gt;&gt;</span> t<span class="op">;</span></span>
+<span data-line="6">    <span class="cf">while</span> <span class="op">(</span>t<span class="op">--)</span> <span class="op">{</span></span>
+<span data-line="7">        <span class="dt">char</span> operation<span class="op">;</span></span>
+<span data-line="8">        string first<span class="op">,</span> second<span class="op">;</span></span>
+<span data-line="9">        cin <span class="op">&gt;&gt;</span> operation <span class="op">&gt;&gt;</span> first <span class="op">&gt;&gt;</span> second<span class="op">;</span> <span class="co">// 超长整数先按文本读入。</span></span>
+<span data-line="10">        BigInteger a <span class="op">=</span> readInteger<span class="op">(</span>first<span class="op">);</span></span>
+<span data-line="11">        BigInteger b <span class="op">=</span> readInteger<span class="op">(</span>second<span class="op">);</span></span>
+<span data-line="12">        <span class="cf">if</span> <span class="op">(</span>operation <span class="op">==</span> <span class="ch">'+'</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">            cout <span class="op">&lt;&lt;</span> writeInteger<span class="op">(</span>addInteger<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="14">        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>operation <span class="op">==</span> <span class="ch">'-'</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="15">            cout <span class="op">&lt;&lt;</span> writeInteger<span class="op">(</span>subtractInteger<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="16">        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>operation <span class="op">==</span> <span class="ch">'*'</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">            cout <span class="op">&lt;&lt;</span> writeInteger<span class="op">(</span>multiplyInteger<span class="op">(</span>a<span class="op">,</span> b<span class="op">))</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="18">        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>isZero<span class="op">(</span>b<span class="op">.</span>digits<span class="op">))</span> <span class="op">{</span></span>
+<span data-line="19">            cout <span class="op">&lt;&lt;</span> <span class="st">"DIV0</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span> <span class="co">// 除数 0 在进入长除法前单独输出。</span></span>
+<span data-line="20">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="21">            <span class="kw">auto</span> <span class="op">[</span>quotient<span class="op">,</span> remainder<span class="op">]</span> <span class="op">=</span> divideInteger<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
+<span data-line="22">            cout <span class="op">&lt;&lt;</span> writeInteger<span class="op">(</span>quotient<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">' '</span></span>
+<span data-line="23">                 <span class="op">&lt;&lt;</span> writeInteger<span class="op">(</span>remainder<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="24">        <span class="op">}</span></span>
+<span data-line="25">    <span class="op">}</span></span>
+<span data-line="26"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例逐项解释：</strong> 前四项对应进位、借位、位乘积累加和长除法的过程图；第五项先比较幅度再相减，得到负数；第六项两份幅度相抵后留下 912，结果带负号；第七项给幅度商 3 与余数 2 设置符号；第八项把 <code>-000</code> 整理为零，再输出 <code>DIV0</code>。</p>
+<p>再用下面的输入检查前导零、相消、连续进位、连续借位和商中间的零：</p>
+<pre class="text"><code>6
++ 0000 -000
+- -87 -87
++ 99999999999999999999 1
+- 100000000000000000000 1
+* -00012 +003
+/ 1005 5</code></pre>
+<p>输出为：</p>
+<pre class="text"><code>0
+0
+100000000000000000000
+99999999999999999999
+-36
+201 0</code></pre>
+<p>检查除法时，还可以把输出商 Q、余数 R 代回 <span class="math inline">\(A=BQ+R\)</span>，再检查余数的幅度小于除数幅度。例如 <code>12045=37×325+20</code>，且 20 小于 37。只反算等式还不够：<code>12045=37×324+57</code> 也成立，但 57 还够再减一次 37，因此商 324 尚未算完。</p>
+<h4 id="n-0259">9. 按数字位数估算复杂度与选用模板</h4>
+<p>这里的规模是<strong>数字位数</strong>，不是整数本身的数值。两份 2000 位整数，用 n、m 表示位数；<code>n=2000</code>，而不是令 n 等于输入的大整数。</p>
+<table>
+<colgroup>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>时间</th>
+<th>结果与临时存储</th>
+<th>工作量来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>解析、输出</td>
+<td><span class="math inline">\(O(n)\)</span></td>
+<td><span class="math inline">\(O(n)\)</span></td>
+<td>每位字符处理一次</td>
+</tr>
+<tr>
+<td>比较、加法、减法</td>
+<td><span class="math inline">\(O(\max(n,m))\)</span></td>
+<td>比较 <span class="math inline">\(O(1)\)</span>；加减 <span class="math inline">\(O(\max(n,m))\)</span></td>
+<td>一趟逐位扫描与进位、借位</td>
+</tr>
+<tr>
+<td>大整数乘大整数</td>
+<td><span class="math inline">\(O(nm)\)</span></td>
+<td><span class="math inline">\(O(n+m)\)</span></td>
+<td>两层循环，共 nm 个位乘积</td>
+</tr>
+<tr>
+<td>大整数除以大整数</td>
+<td><span class="math inline">\(O(nm)\)</span></td>
+<td><span class="math inline">\(O(n+m)\)</span></td>
+<td>n 次接位，每位至多 9 次 m 位减法</td>
+</tr>
+<tr>
+<td>大整数除以普通整数</td>
+<td><span class="math inline">\(O(n)\)</span></td>
+<td>商 <span class="math inline">\(O(n)\)</span>、余数 <span class="math inline">\(O(1)\)</span></td>
+<td>余数直接用普通整数计算</td>
+</tr>
+</tbody>
+</table>
+<p>若两个整数都有 2000 位，乘法做约 400 万次位乘法；若都有 20000 位，则变成约 4 亿次。提高输入速度不会减少这些位运算，选择方法时仍要把位数代入估算。</p>
+<p>数字数组的每个 int 通常占 4 字节，2000 位约用 8000 字节；两个输入和乘积的数字存储合计约 32000 字节，另有文本、vector 本身和计算时的临时对象。用 string 保存输入，不代表把 string 转成 long long 后再计算；正是逐位数组让全部数字都能参与运算。</p>
+<p>接下来遇到阶乘、组合计数或递推结果越来越长时，可以复用高精度加乘；遇到除数较小的题目，则选逐位普通整数除法。对应练习分别见加、减、乘、除各节，综合练习可以先计算短数据核对四种结果，再逐步增加数字位数。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-04-01.html"><small>上一节</small>（一） fread 整数输入模板</a><a href="../chapters/part-04-03.html"><small>下一节</small>（三） 解题和自查顺序</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0246">1. 完整示例：大整数四则计算器</a><a class="level-4" href="#n-0247">2. 数字位的存储、比较与输出</a><a class="level-4" href="#n-0248">3. 加法：逐位相加与进位</a><a class="level-4" href="#n-0249">4. 减法：绝对值比较与逐位借位</a><a class="level-4" href="#n-0250">5. 乘法：位权展开与错位累加</a><a class="level-4" href="#n-0251">6. 除法：逐位确定商和余数</a><a class="level-5" href="#n-0252">6.1 从具体前缀推导下一位商</a><a class="level-5" href="#n-0253">6.2 大整数除以大整数的构建</a><a class="level-5" href="#n-0254">6.3 大整数除以普通整数的简化</a><a class="level-4" href="#n-0255">7. 把正负号接到四则运算</a><a class="level-5" href="#n-0256">7.1 同号相加与异号相抵</a><a class="level-5" href="#n-0257">7.2 乘除符号与整数余数</a><a class="level-4" href="#n-0258">8. 组装计算器与核对结果</a><a class="level-4" href="#n-0259">9. 按数字位数估算复杂度与选用模板</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

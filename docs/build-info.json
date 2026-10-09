@@ -1,0 +1,11 @@
+{
+  "note_sha256": "cdb9e8a518be7dbb1fd48bb0b0ef8424d8542889310e5a1cc4eef376b76aab00",
+  "pdf_sha256": "d6a41e0a2454bd390d3f1fe4d0e2853a99fe31117234466f93fd73acde93cdeb",
+  "pdf_pages": 462,
+  "chapter_pages": 83,
+  "note_headings": 480,
+  "answer_pages": 111,
+  "search_entries": 1145,
+  "note_images": 256,
+  "site": "https://kiriaky107.github.io/cpp-acm-notes-solutions/"
+}

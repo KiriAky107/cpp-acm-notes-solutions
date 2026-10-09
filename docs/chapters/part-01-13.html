@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十三） 常用标准流与输出格式 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-01-13.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-01-13.html" data-page-title="（十三） 常用标准流与输出格式" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details open><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="current" href="../chapters/part-01-13.html" aria-current=page>（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 一、C++ 语法基础</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0082">（十三） 常用标准流与输出格式</h3>
+<p>会读取整数与整行文本后，再核对题目要求怎样输出：多少位小数、是否需要补齐宽度、哪些内容属于答案。</p>
+<h4 id="n-0083">1. 标准输入输出流</h4>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span> <span class="co">// 使用标准命名空间</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="5">    cout <span class="op">&lt;&lt;</span> <span class="st">"Hello, World!"</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span> <span class="co">// 输出并换行</span></span>
+<span data-line="6">    <span class="dt">int</span> x<span class="op">;</span></span>
+<span data-line="7">    cin <span class="op">&gt;&gt;</span> x<span class="op">;</span> <span class="co">// 输入</span></span>
+<span data-line="8">    cout <span class="op">&lt;&lt;</span> <span class="st">"x = "</span> <span class="op">&lt;&lt;</span> x <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="9"><span class="op">}</span></span></code></pre></div>
+<p>也可以显式使用命名空间前缀：</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// std:: 前缀明确命名空间；endl 同时换行并刷新输出流。</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="4">    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">"Hello, World!"</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span data-line="5"><span class="op">}</span></span></code></pre></div>
+<p><strong>说明：</strong></p>
+<p><code>cin</code> 是标准输入流，通常使用 <code>&gt;&gt;</code> 按类型读取；<code>scanf</code> 按格式字符串读取，它们的用法和缓冲机制不同。</p>
+<p><code>cout</code> 是标准输出流，通常使用 <code>&lt;&lt;</code> 写出；<code>printf</code> 使用格式字符串，不能把两者的占位符规则混用。</p>
+<p><code>endl</code>：换行并刷新缓冲区。</p>
+<h4 id="n-0084">2. iomanip 格式化输出</h4>
+<p>需要头文件：</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 输出精度、宽度和填充等格式控制需要此头文件。</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iomanip&gt;</span></span></code></pre></div>
+<h5 id="n-0085">2.1 保留小数位数（<code>fixed</code> + <code>setprecision</code>）</h5>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iomanip&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">double</span> pi <span class="op">=</span> <span class="fl">3.1415926535</span><span class="op">;</span></span>
+<span data-line="7"></span>
+<span data-line="8">    cout <span class="op">&lt;&lt;</span> fixed <span class="op">&lt;&lt;</span> setprecision<span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="op">&lt;&lt;</span> pi <span class="op">&lt;&lt;</span> endl<span class="op">;</span> <span class="co">// 3.14</span></span>
+<span data-line="9">    cout <span class="op">&lt;&lt;</span> fixed <span class="op">&lt;&lt;</span> setprecision<span class="op">(</span><span class="dv">4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> pi <span class="op">&lt;&lt;</span> endl<span class="op">;</span> <span class="co">// 3.1416</span></span>
+<span data-line="10"><span class="op">}</span></span></code></pre></div>
+<p><strong>说明：</strong></p>
+<p><code>fixed &lt;&lt; setprecision(n)</code>：按定点格式显示小数点后 n 位。</p>
+<p>默认浮点格式下，<code>setprecision(n)</code> 控制有效数字；<code>scientific</code> 格式下也控制小数点后的位数。</p>
+<h5 id="n-0086">2.2 设置宽度（<code>setw</code>）</h5>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iomanip&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> a <span class="op">=</span> <span class="dv">42</span><span class="op">,</span> b <span class="op">=</span> <span class="dv">1234</span><span class="op">;</span></span>
+<span data-line="7">    cout <span class="op">&lt;&lt;</span> setw<span class="op">(</span><span class="dv">6</span><span class="op">)</span> <span class="op">&lt;&lt;</span> a <span class="op">&lt;&lt;</span> endl<span class="op">;</span> <span class="co">// 宽度为6，右对齐</span></span>
+<span data-line="8">    cout <span class="op">&lt;&lt;</span> setw<span class="op">(</span><span class="dv">6</span><span class="op">)</span> <span class="op">&lt;&lt;</span> b <span class="op">&lt;&lt;</span> endl<span class="op">;</span> <span class="co">// 字段宽度不足时自动扩展，不截断数据</span></span>
+<span data-line="9"><span class="op">}</span></span></code></pre></div>
+<h5 id="n-0087">2.3 设置填充字符（<code>setfill</code>）</h5>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iomanip&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> x <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
+<span data-line="7">    cout <span class="op">&lt;&lt;</span> setw<span class="op">(</span><span class="dv">5</span><span class="op">)</span> <span class="op">&lt;&lt;</span> setfill<span class="op">(</span><span class="ch">'0'</span><span class="op">)</span> <span class="op">&lt;&lt;</span> x <span class="op">&lt;&lt;</span> endl<span class="op">;</span> <span class="co">// 00007</span></span>
+<span data-line="8"><span class="op">}</span></span></code></pre></div>
+<h5 id="n-0088">2.4 综合示例</h5>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// fixed 后 setprecision 表示小数位数；setw 只作用于下一次格式化插入。</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;iomanip&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">double</span> score <span class="op">=</span> <span class="fl">95.6789</span><span class="op">;</span></span>
+<span data-line="8"></span>
+<span data-line="9">    cout <span class="op">&lt;&lt;</span> <span class="st">"默认输出: "</span> <span class="op">&lt;&lt;</span> score <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="10">    cout <span class="op">&lt;&lt;</span> <span class="st">"保留两位小数: "</span> <span class="op">&lt;&lt;</span> fixed <span class="op">&lt;&lt;</span> setprecision<span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="op">&lt;&lt;</span> score <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="11"></span>
+<span data-line="12">    cout <span class="op">&lt;&lt;</span> <span class="st">"宽度8，空格补齐: ["</span> <span class="op">&lt;&lt;</span> setw<span class="op">(</span><span class="dv">8</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="dv">123</span> <span class="op">&lt;&lt;</span> <span class="st">"]"</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="13">    cout <span class="op">&lt;&lt;</span> <span class="st">"宽度8，0补齐:    ["</span> <span class="op">&lt;&lt;</span> setw<span class="op">(</span><span class="dv">8</span><span class="op">)</span> <span class="op">&lt;&lt;</span> setfill<span class="op">(</span><span class="ch">'0'</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="dv">123</span> <span class="op">&lt;&lt;</span> <span class="st">"]"</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="14"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>默认输出: 95.6789
+保留两位小数: 95.68
+宽度8，空格补齐: [     123]
+宽度8，0补齐:    [00000123]</code></pre>
+<h4 id="n-0089">3. 输出格式状态的保留与重置</h4>
+<table>
+<thead>
+<tr>
+<th>设置</th>
+<th>影响</th>
+<th>后续是否保留</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fixed、scientific、defaultfloat</td>
+<td>浮点显示形式</td>
+<td>保留，直到换模式</td>
+</tr>
+<tr>
+<td>setprecision(k)</td>
+<td>精度；含义取决于显示模式</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>setfill(ch)</td>
+<td>字段不足时使用的填充字符</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>setw(k)</td>
+<td>下一次相关格式化输出的字段宽度</td>
+<td>通常在该项输出后重置为 0</td>
+</tr>
+<tr>
+<td>boolalpha、noboolalpha</td>
+<td>bool 输出文字或 0/1</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>hex、oct、dec</td>
+<td>整数输出进制</td>
+<td>保留，直到换进制</td>
+</tr>
+</tbody>
+</table>
+<p><strong>题目原文（自拟演示）：</strong> 程序无需输入。先输出 false、true 的文字，再恢复数字输出 true；最后把整数 7 用宽度 3 和字符 0 补齐，紧接着在另一对方括号内输出 8，不再设置宽度。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iomanip&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    cout <span class="op">&lt;&lt;</span> boolalpha <span class="op">&lt;&lt;</span> <span class="kw">false</span> <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> <span class="kw">true</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span>  <span class="co">// 输出 false true。</span></span>
+<span data-line="7">    cout <span class="op">&lt;&lt;</span> noboolalpha <span class="op">&lt;&lt;</span> <span class="kw">true</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span>                <span class="co">// 显式恢复，输出 1。</span></span>
+<span data-line="8">    cout <span class="op">&lt;&lt;</span> <span class="ch">'['</span> <span class="op">&lt;&lt;</span> setfill<span class="op">(</span><span class="ch">'0'</span><span class="op">)</span> <span class="op">&lt;&lt;</span> setw<span class="op">(</span><span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="dv">7</span> <span class="op">&lt;&lt;</span> <span class="ch">']'</span><span class="op">;</span> <span class="co">// 本次整数按宽度补成 007。</span></span>
+<span data-line="9">    cout <span class="op">&lt;&lt;</span> <span class="ch">'['</span> <span class="op">&lt;&lt;</span> <span class="dv">8</span> <span class="op">&lt;&lt;</span> <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span>                          <span class="co">// setw 已重置，8 不会自动变成 008。</span></span>
+<span data-line="10">    cout <span class="op">&lt;&lt;</span> setfill<span class="op">(</span><span class="ch">' '</span><span class="op">);</span>                               <span class="co">// 填充字符会保留，需要时主动恢复为空格。</span></span>
+<span data-line="11"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>false true
+1
+[007][8]</code></pre>
+<figure>
+<img alt="宽度只消费一次，填充字符与 bool 显示状态则继续保留" decoding="async" loading="lazy" src="../media/notes/basic-output-format-state.svg"/>
+<figcaption aria-hidden="true">宽度只消费一次，填充字符与 bool 显示状态则继续保留</figcaption>
+</figure>
+<p>setw 是最小字段宽度，不会把较长结果截短。fixed 与 setprecision 只改变显示，不把变量的内部值改成四舍五入后的数；需要改变数值时，应明确执行相应计算。用 <code>defaultfloat &lt;&lt; setprecision(6)</code> 可以恢复常见的默认浮点显示设置。</p>
+<h4 id="n-0090">4. 输出格式的逐字符核对</h4>
+<p>答案要求一行两个数，就检查数之间是否只有规定的空格、末尾是否换行；输出表格时再分别核对宽度和对齐。先对照样例的结构，不把调试提示一起交给评测。大量普通批量输出用 <code>'\n'</code>，交互询问按协议主动刷新；设置显示精度与刷新是不同操作。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-01-12.html"><small>上一节</small>（十二） 常用数学函数与数值计算</a><a href="../chapters/part-01-14.html"><small>下一节</small>（十四） 模板入门：从相同操作到类型参数 T</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0083">1. 标准输入输出流</a><a class="level-4" href="#n-0084">2. iomanip 格式化输出</a><a class="level-5" href="#n-0085">2.1 保留小数位数（fixed + setprecision）</a><a class="level-5" href="#n-0086">2.2 设置宽度（setw）</a><a class="level-5" href="#n-0087">2.3 设置填充字符（setfill）</a><a class="level-5" href="#n-0088">2.4 综合示例</a><a class="level-4" href="#n-0089">3. 输出格式状态的保留与重置</a><a class="level-4" href="#n-0090">4. 输出格式的逐字符核对</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

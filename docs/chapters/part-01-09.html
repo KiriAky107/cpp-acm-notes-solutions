@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（九） auto、lambda 与结构化绑定 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-01-09.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-01-09.html" data-page-title="（九） auto、lambda 与结构化绑定" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details open><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="current" href="../chapters/part-01-09.html" aria-current=page>（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 一、C++ 语法基础</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0062">（九） auto、lambda 与结构化绑定</h3>
+<p>已经能用引用访问原数据，也见过 auto 推导整数类型。现在从三个小应用理解它们如何减少重复：推导变量类型、临时写一个计算动作、给数组中的两个字段取名字。</p>
+<h4 id="n-0063">1. auto 类型推导与引用绑定</h4>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="kw">auto</span> count <span class="op">=</span> <span class="dv">10</span><span class="op">;</span>   <span class="co">// 初始化表达式为 int，所以 count 是 int。</span></span>
+<span data-line="2"><span class="kw">auto</span> price <span class="op">=</span> <span class="fl">12.5</span><span class="op">;</span> <span class="co">// price 是 double。</span></span>
+<span data-line="3"><span class="dt">int</span> value <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span data-line="4"><span class="kw">auto</span> copy <span class="op">=</span> value<span class="op">;</span>        <span class="co">// int 副本；修改 copy 不会改变 value。</span></span>
+<span data-line="5"><span class="kw">auto</span> <span class="op">&amp;</span>alias <span class="op">=</span> value<span class="op">;</span>      <span class="co">// int&amp;，alias 是 value 的别名。</span></span>
+<span data-line="6"><span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;</span>view <span class="op">=</span> value<span class="op">;</span> <span class="co">// const int&amp;，只能通过 view 读取。</span></span></code></pre></div>
+<p>auto 的基本声明需要提供可推导类型的初始化表达式。普通的 <code>auto copy=value</code> 不会保留 value 的引用身份；需要绑定就显式写 <code>auto&amp;</code>。这里没有“万能类型”，count 创建后仍是一个确定类型的变量。</p>
+<h4 id="n-0064">2. lambda：保存一个小计算动作</h4>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。x 初值为 3，分别建立按值和按引用捕获 x 的计算动作，每个动作接收 y，返回 x+y。再把 x 改为 5，传入 y=2，输出两个结果。</p>
+<figure>
+<img alt="lambda 按值与按引用捕获在创建和调用时分别读取什么" decoding="async" loading="lazy" src="../media/notes/lambda-capture-value-reference.svg"/>
+<figcaption aria-hidden="true">lambda 按值与按引用捕获在创建和调用时分别读取什么</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="dt">int</span> x <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span data-line="6">    <span class="kw">auto</span> byValue <span class="op">=</span> <span class="op">[</span>x<span class="op">](</span><span class="dt">int</span> y<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">+</span> y<span class="op">;</span> <span class="op">};</span>      <span class="co">// 创建时保存 x 的副本 3。</span></span>
+<span data-line="7">    <span class="kw">auto</span> byReference <span class="op">=</span> <span class="op">[&amp;</span>x<span class="op">](</span><span class="dt">int</span> y<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">+</span> y<span class="op">;</span> <span class="op">};</span> <span class="co">// 绑定原 x，调用时读它。</span></span>
+<span data-line="8">    x <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span data-line="9">    cout <span class="op">&lt;&lt;</span> byValue<span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> byReference<span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 分别得到 3+2、5+2。</span></span>
+<span data-line="10"><span class="op">}</span></span></code></pre></div>
+<p>输出 <code>5 7</code>。lambda 可以按“小函数”阅读：捕获列表 <code>[]</code>、参数列表 <code>(int y)</code>、函数体 <code>{...}</code>。返回类型在这里由 return 表达式推导，也可显式写 <code>-&gt; int</code>。创建 lambda 时不执行函数体，像调用函数一样写 <code>byValue(2)</code> 才执行它。</p>
+<p><code>[x]</code> 捕获副本，<code>[&amp;x]</code> 捕获引用；<code>[=]</code>、<code>[&amp;]</code> 则按相应方式捕获函数体用到的外部局部变量。引用捕获不自动延长 x 的生命周期，不能让这个动作在 x 销毁后继续访问它。后面会把同样的动作交给排序算法，或用 std::function 保存为可替换的规则。</p>
+<h4 id="n-0065">3. 结构化绑定：副本与引用仍要分清</h4>
+<p>如果数组的两项表示行和列，每次写 <code>position[0]</code>、<code>position[1]</code> 不易看出含义。C++17 的结构化绑定可以一次给两项取名字。</p>
+<figure>
+<img alt="结构化绑定的副本独立，引用绑定写回原数组" decoding="async" loading="lazy" src="../media/notes/syntax-structured-binding-array.svg"/>
+<figcaption aria-hidden="true">结构化绑定的副本独立，引用绑定写回原数组</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="dt">int</span> position<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
+<span data-line="6">    <span class="kw">auto</span> <span class="op">[</span>row<span class="op">,</span> column<span class="op">]</span> <span class="op">=</span> position<span class="op">;</span>              <span class="co">// 得到数组的独立副本中的两个字段。</span></span>
+<span data-line="7">    row <span class="op">=</span> <span class="dv">9</span><span class="op">;</span>                                    <span class="co">// 原 position[0] 不变。</span></span>
+<span data-line="8">    <span class="kw">auto</span> <span class="op">&amp;[</span>storedRow<span class="op">,</span> storedColumn<span class="op">]</span> <span class="op">=</span> position<span class="op">;</span> <span class="co">// 引用绑定到原数组。</span></span>
+<span data-line="9">    storedRow <span class="op">=</span> <span class="dv">7</span><span class="op">;</span>                              <span class="co">// 现在改动的是 position[0]。</span></span>
+<span data-line="10">    cout <span class="op">&lt;&lt;</span> row <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> column <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="11">    cout <span class="op">&lt;&lt;</span> position<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> storedColumn <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="12"><span class="op">}</span></span></code></pre></div>
+<p>输出为 <code>9 3</code>、<code>7 3</code>，各占一行。数组有两项，就用 row、column 两个名字分别绑定。后面的 pair、tuple 和映射记录也可使用相同写法，先理解这两个数组元素上的副本与引用即可。</p>
+<h4 id="n-0066">4. auto 推导的是表达式已有类型</h4>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>声明</th>
+<th>推导结果</th>
+<th>为什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto value=5/2;</code></td>
+<td>int，值为 2</td>
+<td>初始化表达式已经做了整数除法</td>
+</tr>
+<tr>
+<td><code>auto value=5.0/2;</code></td>
+<td>double，值为 2.5</td>
+<td>操作数使除法按浮点进行</td>
+</tr>
+<tr>
+<td><code>const int source=7; auto copy=source;</code></td>
+<td>copy 为可修改的 int 副本</td>
+<td>普通按值 auto 不保留来源的顶层 const</td>
+</tr>
+<tr>
+<td><code>auto&amp; alias=source;</code></td>
+<td>const int&amp;</td>
+<td>引用仍受原对象只读类型约束</td>
+</tr>
+</tbody>
+</table>
+<p>auto 不会推测“我们想要小数”或“以后可能放更大数”。先把表达式的类型算对，再让 auto 推导；同一声明中的多个变量也不能要求 auto 同时成为互相矛盾的类型。</p>
+<h4 id="n-0067">5. 按值捕获与 mutable 状态更新</h4>
+<p><strong>题目原文（自拟演示）：</strong> x 初值为 3，lambda 按值捕获 x，每次调用给自己的副本加一并返回；连续调用两次，最后输出两结果与原 x。</p>
+<p><strong>推导：</strong> 普通按值捕获的 lambda 在函数体中默认不能直接修改这个捕获副本。添加 mutable 允许修改副本；副本是该 lambda 对象的状态，不会每次调用又从原 x 重新复制。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="dt">int</span> x <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span data-line="6">    <span class="kw">auto</span> next <span class="op">=</span> <span class="op">[</span>x<span class="op">]()</span> <span class="at">mutable</span> <span class="op">{</span></span>
+<span data-line="7">        <span class="cf">return</span> <span class="op">++</span>x<span class="op">;</span> <span class="co">// 改 lambda 自己保存的副本，不改外层 x。</span></span>
+<span data-line="8">    <span class="op">};</span></span>
+<span data-line="9">    <span class="dt">int</span> first <span class="op">=</span> next<span class="op">();</span>                                 <span class="co">// 副本从 3 变成 4。</span></span>
+<span data-line="10">    <span class="dt">int</span> second <span class="op">=</span> next<span class="op">();</span>                                <span class="co">// 同一动作中的副本从 4 继续变成 5。</span></span>
+<span data-line="11">    cout <span class="op">&lt;&lt;</span> first <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> second <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> x <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 输出 4 5 3。</span></span>
+<span data-line="12"><span class="op">}</span></span></code></pre></div>
+<figure>
+<img alt="捕获在创建时复制，mutable 修改同一动作内部的副本" decoding="async" loading="lazy" src="../media/notes/basic-lambda-mutable-state.svg"/>
+<figcaption aria-hidden="true">捕获在创建时复制，mutable 修改同一动作内部的副本</figcaption>
+</figure>
+<p>对照按引用捕获：引用方式会修改外层 x，mutable 的按值方式只修改内部副本。需要稍后执行的动作时，也要检查被引用对象是否仍然存活；std::function 能保存动作，但不会替它延长外部变量的生命周期。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-01-08.html"><small>上一节</small>（八） 指针、引用与对象生命周期</a><a href="../chapters/part-01-10.html"><small>下一节</small>（十） 输入细节、文件与异常</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0063">1. auto 类型推导与引用绑定</a><a class="level-4" href="#n-0064">2. lambda：保存一个小计算动作</a><a class="level-4" href="#n-0065">3. 结构化绑定：副本与引用仍要分清</a><a class="level-4" href="#n-0066">4. auto 推导的是表达式已有类型</a><a class="level-4" href="#n-0067">5. 按值捕获与 mutable 状态更新</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

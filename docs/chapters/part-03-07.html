@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（七） 把最优化改成可行性判断 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-03-07.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-03-07.html" data-page-title="（七） 把最优化改成可行性判断" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details open><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="current" href="../chapters/part-03-07.html" aria-current=page>（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 三、解题方法论：从题意到代码</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0199">（七） 把最优化改成可行性判断</h3>
+<p>有时直接求“最小值”很难，但判断候选值是否足够更容易。先写：</p>
+<p><span class="math display">\[
+check(x)=\text{是否存在一个满足所有限制、目标值不超过 x 的方案}
+\]</span></p>
+<p>如果 <code>check(x)</code> 从假到真只切换一次，就可以寻找第一个可行的 <code>x</code>。如果题目要最大可行值，并且从真到假只切换一次，则寻找最后一个可行值。</p>
+<h4 id="n-0200">1. 完整示例：最小工作量上限</h4>
+<p><strong>题目原文（自拟）：</strong> 有工作量依次为 <code>[3, 2, 4]</code> 的三个任务。要按原顺序分成至多 <code>2</code> 个连续非空组，使最大组内工作量尽量小。求这个最小值。</p>
+<p><strong>分析推导：</strong> 给定上限 <code>limit</code>，从左到右尽量向当前组添加任务；再添加会超过上限时，就开新组。工作量非负，因此当前组多容纳一个任务不会增加所需组数。</p>
+<p><strong>先看分组判定为什么正确，再看上限增大后发生什么。</strong></p>
+<p>对于固定上限，贪心把第一组取到“再加一个就超限”为止。因此，任何合法划分的第一组都不能比它更靠后结束。贪心用相同组数覆盖了更长前缀后，下一组又尽量向后延伸；工作量非负，从更靠后的起点接到另一划分的组末端，不会使组内和增大。按组数归纳，贪心不会比其他合法划分需要更多组。因此，用它算出的组数是否超过 <code>2</code>，确实能判断上限是否可行。</p>
+<p>单调性来自同一个方案的复用：若某个划分的每组和都不超过 <code>limit</code>，把上限放大后，这个划分仍然合法。于是可行状态只会从假变真，不会再变回假。</p>
+<table>
+<thead>
+<tr>
+<th>上限</th>
+<th>从左到右得到的组</th>
+<th>是否至多两组</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td><code>[3]、[2]、[4]</code></td>
+<td>否</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>[3,2]、[4]</code></td>
+<td>是</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>[3,2]、[4]</code></td>
+<td>是</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>[3,2,4]</code></td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+<p>搜索范围为什么是 <code>[max(work), sum(work)]</code>？最大任务所在的组包含这个任务，所以答案至少为最大元素；把所有任务放在一组即可达到总和，所以总和一定是可行上界。每个任务贡献非负工作量，所以组内再加入一个任务，累计工作量就会增加或保持不变；这正是上面按顺序扩展分组的依据。</p>
+<figure>
+<img alt="候选工作量上限决定连续分组" decoding="async" loading="lazy" src="../media/notes/workload-feasibility-steps.svg"/>
+<figcaption aria-hidden="true">候选工作量上限决定连续分组</figcaption>
+</figure>
+<p>[3,2,4] 在上限 4 时需要三组，上限 5 时只需两组；上限继续增大后，已有的两组仍能使用。因此，要找的就是第一个能分成至多两组的上限。</p>
+<figure>
+<img alt="工作量分组判定中第一个可行上限的搜索边界" decoding="async" loading="lazy" src="../media/notes/binary-first-feasible-invariant.svg"/>
+<figcaption aria-hidden="true">工作量分组判定中第一个可行上限的搜索边界</figcaption>
+</figure>
+<p>以 [3,2,4] 的分组判定展示第一个 true 的搜索边界。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;numeric&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="5"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="dt">bool</span> feasible<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>work<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> limit<span class="op">,</span> <span class="dt">int</span> maxGroups<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">    <span class="dt">int</span> groups <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="9">    <span class="dt">long</span> <span class="dt">long</span> current <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="10">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> task <span class="op">:</span> work<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">        <span class="cf">if</span> <span class="op">(</span>task <span class="op">&gt;</span> limit<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// 一个任务已经超过上限，怎样分组都不行</span></span>
+<span data-line="13">        <span class="op">}</span></span>
+<span data-line="14">        <span class="cf">if</span> <span class="op">(</span>current <span class="op">+</span> task <span class="op">&gt;</span> limit<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="15">            <span class="op">++</span>groups<span class="op">;</span> <span class="co">// 当前组放不下，开新组</span></span>
+<span data-line="16">            current <span class="op">=</span> task<span class="op">;</span></span>
+<span data-line="17">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="18">            current <span class="op">+=</span> task<span class="op">;</span></span>
+<span data-line="19">        <span class="op">}</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21">    <span class="cf">return</span> groups <span class="op">&lt;=</span> maxGroups<span class="op">;</span></span>
+<span data-line="22"><span class="op">}</span></span>
+<span data-line="23"></span>
+<span data-line="24"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="25">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> work<span class="op">{</span><span class="dv">3</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">};</span></span>
+<span data-line="26">    <span class="dt">long</span> <span class="dt">long</span> left <span class="op">=</span> <span class="op">*</span>max_element<span class="op">(</span>work<span class="op">.</span>begin<span class="op">(),</span> work<span class="op">.</span>end<span class="op">());</span></span>
+<span data-line="27">    <span class="dt">long</span> <span class="dt">long</span> right <span class="op">=</span> accumulate<span class="op">(</span>work<span class="op">.</span>begin<span class="op">(),</span> work<span class="op">.</span>end<span class="op">(),</span> <span class="dv">0</span><span class="bu">LL</span><span class="op">);</span></span>
+<span data-line="28">    <span class="co">// 上限越大越容易分组；搜索第一个可行的上限。</span></span>
+<span data-line="29">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="30">        <span class="dt">long</span> <span class="dt">long</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="31">        <span class="cf">if</span> <span class="op">(</span>feasible<span class="op">(</span>work<span class="op">,</span> mid<span class="op">,</span> <span class="dv">2</span><span class="op">))</span> <span class="op">{</span></span>
+<span data-line="32">            right <span class="op">=</span> mid<span class="op">;</span></span>
+<span data-line="33">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="34">            left <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="35">        <span class="op">}</span></span>
+<span data-line="36">    <span class="op">}</span></span>
+<span data-line="37">    cout <span class="op">&lt;&lt;</span> left <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 5，分成 [3, 2] 和 [4]</span></span>
+<span data-line="38"><span class="op">}</span></span></code></pre></div>
+<p><strong>代码解释：</strong> <code>limit = 4</code> 时要分三组，失败；<code>limit = 5</code> 时可以分两组，成功。如果上限为 <code>5</code> 的方案可行，更大的上限也能使用这个方案，所以真假具有单调性。</p>
+<p>这里先学习“把目标改成判断”的过程；二分更新边界的详细原理见后面的算法章节。若任务数为 <code>n</code>、工作量总和为 <code>S</code>，这个方法的时间为 <span class="math inline">\(O(n\log(S+1))\)</span>，额外空间为 <span class="math inline">\(O(1)\)</span>，不计输入数组。</p>
+<p><strong>练习：</strong> <a href="https://www.luogu.com.cn/problem/P1182" rel="noopener noreferrer">洛谷 P1182 — 数列分段 Section II</a>、<a href="https://www.luogu.com.cn/problem/P1873" rel="noopener noreferrer">洛谷 P1873 — 砍树</a>。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-03-06.html"><small>上一节</small>（六） 从计数要求推导向上取整</a><a href="../chapters/part-03-08.html"><small>下一节</small>（八） 用不变量和反例检查推导</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0200">1. 完整示例：最小工作量上限</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

@@ -1,0 +1,1461 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十） 二分与三分搜索 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-05-10.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/vendor/mermaid.min.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-05-10.html" data-page-title="（十） 二分与三分搜索" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details open><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="current" href="../chapters/part-05-10.html" aria-current=page>（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 五、数据结构与算法</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0335">（十） 二分与三分搜索</h3>
+<p>前面的归并排序把两段分别排好，再合并成完整序列。本章换成查找任务：比较中间位置后排除一段候选，将注意力留在仍可能包含答案的部分；先学二分怎样舍弃一半，再看三分怎样沿曲线缩短区间。</p>
+<p>将一个大问题拆成同类的小问题，分别求解，再合并结果，叫作分治。归并排序展示了“拆分、求解、合并”；二分查找则在比较后只保留一半继续查找，每轮都缩小同一个任务的规模。</p>
+<h4 id="n-0336">1. 二分搜索</h4>
+<p>在升序数组中比较中间项与目标：中间项小于目标时，它左侧也都太小；中间项大于目标时，它右侧也都太大。因此一次比较就能排除一半位置，这就是二分查找。</p>
+<p>这个思路还可以用来寻找第一个 true 或最后一个 true。例如速度越大越容易按时完成任务，判定结果就像排好的 false、true；不用真的建立数组，也能二分定位变化的位置。</p>
+<h5 id="n-0337">1.1 整数二分</h5>
+<p>整数二分用于在 <strong>有序的整数数组</strong> 中查找某个元素，或者寻找一个满足某种性质的边界点。这是最经典的二分应用。</p>
+<h6 id="n-0338">1.1.1 查找一个等于目标的元素</h6>
+<p><strong>题目原文（自拟）：</strong> 输入一个升序（允许相等）的整数 vector arr 与整数 target，数组长度和下标均在 int 范围内。返回某个满足 <code>arr[index]</code>=target 的下标；不存在返回 -1。允许空数组；有重复值时不要求最左位置。</p>
+<p><strong>思路分析：</strong> 维护闭区间 [left,right]，只有其中可能存在答案。中点等于 target 就返回；中点较大时，升序保证中点及其右侧都不可能匹配，令 right=mid-1；中点较小时对称地令 left=mid+1。每轮保留全部可能答案且至少删除中点，区间最终为空则无解。</p>
+<p><strong>手算与复杂度：</strong> arr=[1,2,3,4,5,6,7,8,9,10]，target=7。候选下标 [0,9] 的中点 4 对应 5，保留 [5,9]；中点 7 对应 8，保留 [5,6]；中点 5 对应 6，保留 [6,6]，找到下标 6。每轮候选约减半，时间 O(log(n+1))，额外空间 O(1)。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P2249" rel="noopener noreferrer">洛谷 P2249 — 查找</a>（要求第一次出现，应使用接下来的下界方法）。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> Binary_Search<span class="op">(</span><span class="dt">int</span> target<span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>arr<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>arr<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="6">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;=</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">        <span class="dt">int</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// 在非负下标区间中避免 left+right 溢出</span></span>
+<span data-line="8">        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>mid<span class="op">]</span> <span class="op">==</span> target<span class="op">)</span></span>
+<span data-line="9">            <span class="cf">return</span> mid<span class="op">;</span></span>
+<span data-line="10">        <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>mid<span class="op">]</span> <span class="op">&gt;</span> target<span class="op">)</span></span>
+<span data-line="11">            right <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="12">        <span class="cf">else</span></span>
+<span data-line="13">            left <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="14">    <span class="op">}</span></span>
+<span data-line="15">    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span data-line="16"><span class="op">}</span></span></code></pre></div>
+<p>示例：</p>
+<p>传入数组：1 2 3 4 5 6 7 8 9 10</p>
+<p>可以把每次选择的中点画成下面的判定树；二分算法本身在数组上操作，并不实际构造这棵树。</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+A((5)) --&gt; B((2))
+A --&gt; C((8))
+B --&gt; D((1))
+B --&gt; E((4))
+C --&gt; F((7))
+C --&gt; G((9))
+E --&gt; H((3))
+E --&gt; I(( ))
+F --&gt; J((6))
+F --&gt; K(( ))
+G --&gt; L(( ))
+G --&gt; M((10))
+style I fill:#ffffff, stroke:#ffffff, color:#ffffff
+style K fill:#ffffff, stroke:#ffffff, color:#ffffff
+style L fill:#ffffff, stroke:#ffffff, color:#ffffff</div>
+<p>平均查找长度 <span class="math inline">\(ASL=\frac{\sum{查找路径长度}}{节点数}=\frac{1+2×2+3×4+4×3}{10}=2.9\)</span></p>
+<h6 id="n-0339">1.1.2 边界查找（lower_bound / upper_bound）</h6>
+<p><strong>题目原文（自拟）：</strong> 给定升序整数 vector arr 与 target，返回第一个 &gt;=target 的下标 lower，以及第一个 &gt;target 的下标 upper。若某种位置不存在，返回数组长度 n，空数组返回 0；两个函数均不直接读取返回位置。</p>
+<p><strong>思路分析：</strong> 使用半开区间 [left,right)。下界将“<code>arr[mid]</code>&gt;=target”作为真，否则在右侧查找；上界仅将“<code>arr[mid]</code>&gt;target”作为真。真时令 right=mid 保留当前候选，假时令 left=mid+1 排除当前位置。目标条件沿升序数组从假到真，循环结束位置就是第一个真，也可能为 n。</p>
+<p><strong>样例与解释：</strong> arr=[1,2,2,2,4]、target=2 时 lower=1、upper=4，重复段是 [1,4)；target=3 时两者均为 4；target=5 时均为 5，不能读 <code>arr[5]</code>。每个函数 O(log(n+1)) 时间、O(1) 空间。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P2249" rel="noopener noreferrer">洛谷 P2249 — 查找</a>。</p>
+<p>在 STL 的 <code>&lt;algorithm&gt;</code> 小节中使用的 <code>lower_bound</code> 与 <code>upper_bound</code>，就是用二分定位升序区间里的位置。</p>
+<p>它们的原型是：</p>
+<p><strong>寻找第一个 ≥ target 的位置（lower_bound）</strong></p>
+<figure>
+<img alt="重复值的上下界与未找到时的返回位置" decoding="async" loading="lazy" src="../media/notes/binary-search-boundaries.svg"/>
+<figcaption aria-hidden="true">重复值的上下界与未找到时的返回位置</figcaption>
+</figure>
+<p>对 <code>[1,2,2,2,4]</code> 查 target=2，左边界每轮判断 <code>a[mid]&gt;=2</code>，得到区间 <code>[0,5)→[0,2)→[0,1)→[1,1)</code>；右边界判断 <code>a[mid]&gt;2</code>，得到 <code>[0,5)→[3,5)→[3,4)→[4,4)</code>。相等时两种判断保留的方向不同，最终等值位置为 <code>[1,4)</code>。返回 n 是合法的边界结果，但不是可读取的元素下标。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> lower_bound<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>arr<span class="op">,</span> <span class="dt">int</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> arr<span class="op">.</span>size<span class="op">();</span> <span class="co">// 注意右边界是 n</span></span>
+<span data-line="7">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="dt">int</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// 防止整数溢出</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>mid<span class="op">]</span> <span class="op">&gt;=</span> target<span class="op">)</span></span>
+<span data-line="10">            right <span class="op">=</span> mid<span class="op">;</span> <span class="co">// 收紧右边界，继续在左半部分查找</span></span>
+<span data-line="11">        <span class="cf">else</span></span>
+<span data-line="12">            left <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 收紧左边界，在右半部分查找</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14">    <span class="cf">return</span> left<span class="op">;</span> <span class="co">// 返回第一个 &gt;= target 的下标</span></span>
+<span data-line="15"><span class="op">}</span></span></code></pre></div>
+<p><strong>寻找第一个 &gt; target 的位置（upper_bound）</strong></p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> upper_bound<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>arr<span class="op">,</span> <span class="dt">int</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> arr<span class="op">.</span>size<span class="op">();</span></span>
+<span data-line="7">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="dt">int</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// 防止整数溢出</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>mid<span class="op">]</span> <span class="op">&gt;</span> target<span class="op">)</span></span>
+<span data-line="10">            right <span class="op">=</span> mid<span class="op">;</span> <span class="co">// 收紧右边界，继续在左半部分查找</span></span>
+<span data-line="11">        <span class="cf">else</span></span>
+<span data-line="12">            left <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 收紧左边界，在右半部分查找</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14">    <span class="cf">return</span> left<span class="op">;</span> <span class="co">// 返回第一个 &gt; target 的下标</span></span>
+<span data-line="15"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0340">1.1.3 查找前驱与后继</h6>
+<p><strong>题目原文（自拟）：</strong> 给定升序整数 vector arr 与 target。如果存在相等值，函数 bin_search 返回其中一个相等下标；若不存在，则返回最后一个小于 target 的位置；所有值都大于 target 或数组为空时返回 -1。遇到相等值立即返回，因此重复值中找到哪一项取决于二分访问次序；查找最后一个不大于 target 的位置时，使用前面的 upper_bound 再向前一项。</p>
+<p><strong>分析与样例：</strong> 除维护候选区间外，result 记目前见到的最大合法前驱下标。中点较小时记录它并向右查找，尝试更靠右的前驱；较大时向左。arr=[1,3,3,7]、target=4 时返回 2，target=0 时返回 -1，target=3 时可以返回 1 或 2。若严格要求“最后一个 &lt;=target”，应使用 upper_bound-1，而不能提前返回任意相等位置。时间 O(log(n+1))、空间 O(1)。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1102" rel="noopener noreferrer">洛谷 P1102 — A-B 数对</a>（上下界统计等值段，区分重复下标数量）。</p>
+<p><strong>寻找目标值或目标值的前驱</strong></p>
+<figure>
+<img alt="lower_bound 与 upper_bound 对应的前驱后继" decoding="async" loading="lazy" src="../media/notes/binary-predecessor-successor.svg"/>
+<figcaption aria-hidden="true">lower_bound 与 upper_bound 对应的前驱后继</figcaption>
+</figure>
+<p>以 <code>[1,3,3,7]</code> 为例，找 0 的严格前驱时，lower_bound 返回 0，左侧没有元素；找 8 的后继时，lower_bound 返回 4，它是数组之后的位置。代码用 -1 表示未找到，用 0…3 表示实际元素位置。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> bin_search<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>arr<span class="op">,</span> <span class="dt">int</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>arr<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="6">    <span class="dt">int</span> result <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span> <span class="co">// 记录前驱位置</span></span>
+<span data-line="7"></span>
+<span data-line="8">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;=</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="dt">int</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="10"></span>
+<span data-line="11">        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>mid<span class="op">]</span> <span class="op">==</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">            <span class="cf">return</span> mid<span class="op">;</span> <span class="co">// 找到目标值，直接返回</span></span>
+<span data-line="13">        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>mid<span class="op">]</span> <span class="op">&lt;</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">            result <span class="op">=</span> mid<span class="op">;</span>   <span class="co">// 记录可能的前驱位置</span></span>
+<span data-line="15">            left <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 继续在右半部分查找目标值</span></span>
+<span data-line="16">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="17">            right <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 在左半部分查找</span></span>
+<span data-line="18">        <span class="op">}</span></span>
+<span data-line="19">    <span class="op">}</span></span>
+<span data-line="20"></span>
+<span data-line="21">    <span class="cf">return</span> result<span class="op">;</span> <span class="co">// 返回前驱位置或-1</span></span>
+<span data-line="22"><span class="op">}</span></span></code></pre></div>
+<p>整数二分在离散下标或离散答案上搜索。首先确定区间约定和循环不变量，再选择中点与更新方式；不是只凭函数名字决定向上还是向下取整。</p>
+<table>
+<colgroup>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+</colgroup>
+<thead>
+<tr>
+<th>目标 / 写法</th>
+<th>区间与中点</th>
+<th>满足条件时</th>
+<th>不满足时</th>
+<th>无解表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>精确查找</td>
+<td>闭区间，<code>mid = l + (r-l)/2</code></td>
+<td>相等直接返回</td>
+<td>按大小更新 <code>l = mid+1</code> 或 <code>r = mid-1</code></td>
+<td><code>-1</code></td>
+</tr>
+<tr>
+<td>第一个 <code>&gt;= x</code></td>
+<td><code>[l,r)</code>，向下中点</td>
+<td><code>r = mid</code></td>
+<td><code>l = mid+1</code></td>
+<td>返回 <code>n</code></td>
+</tr>
+<tr>
+<td>第一个 <code>&gt; x</code></td>
+<td><code>[l,r)</code>，向下中点</td>
+<td><code>r = mid</code></td>
+<td><code>l = mid+1</code></td>
+<td>返回 <code>n</code></td>
+</tr>
+<tr>
+<td>最后一个可行点</td>
+<td>闭区间，<code>mid = l + (r-l+1)/2</code></td>
+<td><code>l = mid</code></td>
+<td><code>r = mid-1</code></td>
+<td>需先保证至少一个可行点</td>
+</tr>
+</tbody>
+</table>
+<p>这里的上取整写法要求 <code>r-l+1</code> 可表示。两端相邻时，<code>l = mid</code> 需要上中点避免停在原地；<code>r = mid</code> 的对称写法则使用下中点。<code>upper_bound</code> 返回第一个严格大于目标的位置，并不是“最右位置”。</p>
+<p>不严格前驱（最后一个 <code>&lt;= x</code>）可以用 <code>upper_bound</code> 返回下标减一；严格前驱（最后一个 <code>&lt; x</code>）用 <code>lower_bound</code> 返回下标减一；严格后继就是 <code>upper_bound</code>，返回 <code>n</code> 时表示不存在。</p>
+<p><strong>例题：</strong></p>
+<h6 id="n-0341">1.1.4 两数之和：二分查找互补值</h6>
+<p><strong>题目原文（自拟示例）：</strong> 给定升序数组和目标和，返回两个不同下标；不存在返回 (-1, -1)。元素与目标在所用整数类型范围内。</p>
+<p><strong>思路分析：</strong> 双指针以 left &lt; right 保证不同下标；二分版本只在 i 后面的区间找互补值。分别为 O(n) 和 O(n log n) 时间。</p>
+<p><strong>样例与解释：</strong> [1, 2, 4, 7]、目标 9，返回 (1, 3)；[3]、目标 6，返回 (-1, -1)。</p>
+<p>给定一个有序数组和目标值 <span class="math inline">\(target\)</span>，寻找数组中是否有两个数之和为目标值, 找到则返回这两个数的下标</p>
+<p>前面我们已经使用头尾双指针法解决了这个问题，现在我们尝试用整数二分</p>
+<figure>
+<img alt="固定一个位置后，只在其右侧查找互补值，保证下标不同" decoding="async" loading="lazy" src="../media/notes/enumerate-pairs-distinct.svg"/>
+<figcaption aria-hidden="true">固定一个位置后，只在其右侧查找互补值，保证下标不同</figcaption>
+</figure>
+<p>固定一个位置后，只在其右侧查找互补值，保证下标不同。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5">pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> twoSumBinary<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>arr<span class="op">,</span> <span class="dt">int</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n <span class="op">=</span> arr<span class="op">.</span>size<span class="op">();</span></span>
+<span data-line="7">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="dt">long</span> <span class="dt">long</span> need <span class="op">=</span> <span class="dv">1</span><span class="bu">LL</span> <span class="op">*</span> target <span class="op">-</span> arr<span class="op">[</span>i<span class="op">];</span> <span class="co">// 计算需要的互补值</span></span>
+<span data-line="9"></span>
+<span data-line="10">        <span class="co">// 在 (i+1 ... n-1) 范围内二分查找 need</span></span>
+<span data-line="11">        <span class="dt">int</span> left <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> right <span class="op">=</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="12">        <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;=</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">            <span class="dt">int</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// 防止整数溢出</span></span>
+<span data-line="14">            <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>mid<span class="op">]</span> <span class="op">==</span> need<span class="op">)</span></span>
+<span data-line="15">                <span class="cf">return</span> <span class="op">{</span>i<span class="op">,</span> mid<span class="op">};</span> <span class="co">// 找到匹配对</span></span>
+<span data-line="16">            <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>mid<span class="op">]</span> <span class="op">&lt;</span> need<span class="op">)</span></span>
+<span data-line="17">                left <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 在右半部分继续查找</span></span>
+<span data-line="18">            <span class="cf">else</span></span>
+<span data-line="19">                right <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 在左半部分继续查找</span></span>
+<span data-line="20">        <span class="op">}</span></span>
+<span data-line="21">    <span class="op">}</span></span>
+<span data-line="22">    <span class="cf">return</span> <span class="op">{-</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">};</span> <span class="co">// 无解</span></span>
+<span data-line="23"><span class="op">}</span></span></code></pre></div>
+<p>可以看到，时间复杂度相较于双指针法的 <span class="math inline">\(O(n)\)</span> 还是慢了些，但是逻辑也比较清晰</p>
+<h5 id="n-0342">1.2 实数二分</h5>
+<p>实数二分用于在 <strong>连续的实数区间</strong> 上求解问题，例如求方程的根、函数的零点等。常见于：</p>
+<ul>
+<li>求开方、开立方</li>
+<li>求最短时间、最小距离</li>
+<li>几何问题（切蛋糕、切绳子）</li>
+<li>求方程的根</li>
+</ul>
+<p>与整数二分处理的“离散化数据”不同，实数二分面对的是数学意义上的连续区间。在连续区间中不存在跳点，因此 <strong>mid 不需要取整，也不需要考虑向上或向下的问题</strong>，直接使用：<code>double mid = (left + right) / 2.0</code> 即可。</p>
+<p>不过需要注意：<strong>计算机并不具有真正的连续性</strong>。 <code>double</code> 和 <code>float</code> 只能表示有限精度的浮点数，因此实数二分本质上是在一个“有限精度的浮点集合”内不断逼近答案，而不可能无限细分。</p>
+<p>因此，实数二分的停止条件不是“区间缩为一个点”，而是：</p>
+<ul>
+<li>区间长度达到给定精度：<code>right - left &lt; eps</code></li>
+<li>或者迭代次数足够多：固定迭代次数，例如 100 次；次数应结合初始区间和所需误差选择</li>
+</ul>
+<p>浮点舍入可能让 <code>mid</code> 等于端点，区间不再缩小。使用精度条件时，应加最大迭代次数或检查是否停滞；固定次数也不能突破浮点表示精度。</p>
+<p>实数二分的基本形式如下：</p>
+<pre class="text"><code>// 伪代码：保存左右端点，用 check(mid) 决定保留哪一半。
+/*
+ * 实数二分模板
+ *
+ * 该模板用于在浮点数范围内进行二分查找，解决连续函数求根、最优值查找等问题。
+ * 通过设置精度阈值或固定迭代次数来控制搜索精度，避免无限循环。
+ *
+ * 参数 left：搜索区间左边界
+ * 参数 right：搜索区间右边界
+ * 参数 check：判断函数，确定mid满足条件的哪一侧
+ *
+ * 注意：时间复杂度: O(log(n))，其中n = (right-left)/eps
+ * 注意：空间复杂度: O(1)，仅使用常数级别的额外空间
+ * 注意：精度控制: 使用eps控制精度或固定迭代次数保证收敛
+ * 注意：应用场景: 连续函数求根、最优值搜索、数值计算等
+ * 注意：与整数二分区别: 边界处理不同，直接赋值mid而非mid±1
+ */
+const double eps = 1e-7;                    // 精度控制，根据问题要求调整
+for (int iter = 0; iter &lt; 200 &amp;&amp; right - left &gt; eps; ++iter) {                // 或者使用 for(int i = 0; i &lt; 100; ++i)
+    double mid = left / 2 + right / 2; // 计算中点，并避免异号大端点的差溢出
+    if (mid == left || mid == right) break; // 浮点中点不再变化时停止。
+    if (check(mid))
+        right = mid; // mid满足条件，在左半部分继续搜索
+    else
+        left = mid; // mid不满足条件，在右半部分继续搜索
+}</code></pre>
+<blockquote>
+<p><strong>注意：</strong> 理想实数计算中，迭代 k 次后区间长度为初始长度的 <span class="math inline">\(2^{-k}\)</span>。这不是浮点答案实际具有同样精度的保证。停止条件要同时考虑区间尺度、误差要求和浮点舍入。</p>
+</blockquote>
+<p>使用示例：</p>
+<h6 id="n-0343">1.2.1 求平方根</h6>
+<p><strong>题目原文（自拟示例）：</strong> 给定有限非负 double x，返回其平方根的浮点近似值；负数或非有限输入抛出异常。</p>
+<p><strong>思路分析：</strong> 在覆盖答案的非负区间二分，用 mid &gt; x/mid 代替平方比较来避免溢出。有限次迭代及中点停滞检查保证结束，实际精度受浮点表示限制。</p>
+<p><strong>样例与解释：</strong> x=0 返回 0；x=2 约为 1.4142135623730951；x=0.25 约为 0.5。</p>
+<figure>
+<img alt="平方根二分维持答案所在区间" decoding="async" loading="lazy" src="../media/notes/sqrt-bisection-interval.svg"/>
+<figcaption aria-hidden="true">平方根二分维持答案所在区间</figcaption>
+</figure>
+<p>以 x=2 为例，在非负区间比较 mid 与 x/mid，保留包含平方根的一侧；用除法避免 mid*mid 溢出。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;stdexcept&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">double</span> sqrt_binary<span class="op">(</span><span class="dt">double</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="cf">if</span> <span class="op">(</span>x <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">||</span> <span class="op">!</span>isfinite<span class="op">(</span>x<span class="op">))</span></span>
+<span data-line="8">        <span class="cf">throw</span> invalid_argument<span class="op">(</span><span class="st">"x 必须是有限非负数"</span><span class="op">);</span></span>
+<span data-line="9">    <span class="cf">if</span> <span class="op">(</span>x <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="10">        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="11">    <span class="dt">double</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> max<span class="op">(</span><span class="fl">1.0</span><span class="op">,</span> x<span class="op">);</span></span>
+<span data-line="12">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">1100</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">        <span class="dt">double</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="14">        <span class="cf">if</span> <span class="op">(</span>mid <span class="op">==</span> left <span class="op">||</span> mid <span class="op">==</span> right<span class="op">)</span></span>
+<span data-line="15">            <span class="cf">break</span><span class="op">;</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(</span>mid <span class="op">&gt;</span> x <span class="op">/</span> mid<span class="op">)</span></span>
+<span data-line="17">            right <span class="op">=</span> mid<span class="op">;</span> <span class="co">// 避免 mid*mid 溢出</span></span>
+<span data-line="18">        <span class="cf">else</span></span>
+<span data-line="19">            left <span class="op">=</span> mid<span class="op">;</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21">    <span class="cf">return</span> left<span class="op">;</span></span>
+<span data-line="22"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0344">1.2.2 二分法求方程的根</h6>
+<p><strong>题目原文（自拟示例）：</strong> 给定有限区间 [a,b] 和连续函数 f，要求端点已为零或两端函数值异号，返回区间内一个根的近似值。计算过程中出现非有限函数值时抛出异常。</p>
+<p><strong>思路分析：</strong> 连续曲线的一端在横轴下方、一端在横轴上方，中间就会经过横轴。计算中点后，保留两端仍在横轴两侧的那一半，零点就在这个越来越短的区间中。</p>
+<p><strong>样例与解释：</strong> f(x)=x²-2、区间 [0,2]，返回约 1.4142135623730951；f(x)=x、区间 [0,1]，直接返回端点 0。</p>
+<figure>
+<img alt="符号夹逼与牛顿切线的不同更新方式" decoding="async" loading="lazy" src="../media/notes/root-bisection-newton.svg"/>
+<figcaption aria-hidden="true">符号夹逼与牛顿切线的不同更新方式</figcaption>
+</figure>
+<p>左图让零点留在两个端点之间，再不断缩短区间；右图画当前点的切线，取它与横轴的交点作为下一次位置。下文分别手算这两种更新。</p>
+<p><strong>接口衔接：</strong> 这里的 <code>function&lt;double(double)&gt; f</code> 用前面的 std::function 章节同样的读法：传入一个 double，得到一个 double；调用 <code>f(mid)</code> 交给调用者提供的公式。<code>&lt;cmath&gt;</code> 的 isfinite 检查结果是否有限，后面的 fabs 求浮点绝对值；<code>&lt;stdexcept&gt;</code> 的 runtime_error 表示运行过程中未能满足条件，与 invalid_argument 的参数错误类别不同，均可通过异常对象的 what 获取说明。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;functional&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;stdexcept&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">double</span> solve_root_binary<span class="op">(</span><span class="dt">double</span> a<span class="op">,</span> <span class="dt">double</span> b<span class="op">,</span> function<span class="op">&lt;</span><span class="dt">double</span><span class="op">(</span><span class="dt">double</span><span class="op">)&gt;</span> f<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="cf">if</span> <span class="op">(!</span>isfinite<span class="op">(</span>a<span class="op">)</span> <span class="op">||</span> <span class="op">!</span>isfinite<span class="op">(</span>b<span class="op">)</span> <span class="op">||</span> a <span class="op">&gt;</span> b<span class="op">)</span></span>
+<span data-line="8">        <span class="cf">throw</span> invalid_argument<span class="op">(</span><span class="st">"区间无效"</span><span class="op">);</span></span>
+<span data-line="9">    <span class="co">// 先处理端点就是零点的情况，再检查夹逼条件。</span></span>
+<span data-line="10">    <span class="dt">double</span> fa <span class="op">=</span> f<span class="op">(</span>a<span class="op">),</span> fb <span class="op">=</span> f<span class="op">(</span>b<span class="op">);</span></span>
+<span data-line="11">    <span class="cf">if</span> <span class="op">(!</span>isfinite<span class="op">(</span>fa<span class="op">)</span> <span class="op">||</span> <span class="op">!</span>isfinite<span class="op">(</span>fb<span class="op">))</span></span>
+<span data-line="12">        <span class="cf">throw</span> invalid_argument<span class="op">(</span><span class="st">"函数值必须有限"</span><span class="op">);</span></span>
+<span data-line="13">    <span class="cf">if</span> <span class="op">(</span>fa <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="14">        <span class="cf">return</span> a<span class="op">;</span></span>
+<span data-line="15">    <span class="cf">if</span> <span class="op">(</span>fb <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="16">        <span class="cf">return</span> b<span class="op">;</span></span>
+<span data-line="17">    <span class="cf">if</span> <span class="op">((</span>fa <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">==</span> <span class="op">(</span>fb <span class="op">&lt;</span> <span class="dv">0</span><span class="op">))</span></span>
+<span data-line="18">        <span class="cf">throw</span> invalid_argument<span class="op">(</span><span class="st">"端点须异号或已经为零"</span><span class="op">);</span></span>
+<span data-line="19">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">100</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="20">        <span class="dt">double</span> mid <span class="op">=</span> a <span class="op">/</span> <span class="dv">2</span> <span class="op">+</span> b <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="21">        <span class="cf">if</span> <span class="op">(</span>mid <span class="op">==</span> a <span class="op">||</span> mid <span class="op">==</span> b<span class="op">)</span></span>
+<span data-line="22">            <span class="cf">break</span><span class="op">;</span></span>
+<span data-line="23">        <span class="dt">double</span> fm <span class="op">=</span> f<span class="op">(</span>mid<span class="op">);</span></span>
+<span data-line="24">        <span class="cf">if</span> <span class="op">(!</span>isfinite<span class="op">(</span>fm<span class="op">))</span></span>
+<span data-line="25">            <span class="cf">throw</span> invalid_argument<span class="op">(</span><span class="st">"函数值必须有限"</span><span class="op">);</span></span>
+<span data-line="26">        <span class="cf">if</span> <span class="op">(</span>fm <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="27">            <span class="cf">return</span> mid<span class="op">;</span></span>
+<span data-line="28">        <span class="co">// 中点与左端同号时舍弃左半段，否则舍弃右半段。</span></span>
+<span data-line="29">        <span class="cf">if</span> <span class="op">((</span>fm <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">==</span> <span class="op">(</span>fa <span class="op">&lt;</span> <span class="dv">0</span><span class="op">))</span> <span class="op">{</span></span>
+<span data-line="30">            a <span class="op">=</span> mid<span class="op">;</span></span>
+<span data-line="31">            fa <span class="op">=</span> fm<span class="op">;</span></span>
+<span data-line="32">        <span class="op">}</span> <span class="cf">else</span></span>
+<span data-line="33">            b <span class="op">=</span> mid<span class="op">;</span></span>
+<span data-line="34">    <span class="op">}</span></span>
+<span data-line="35">    <span class="cf">return</span> a <span class="op">/</span> <span class="dv">2</span> <span class="op">+</span> b <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="36"><span class="op">}</span></span></code></pre></div>
+<p><strong>二分代码解释：</strong> 端点为零时直接返回；否则检查异号条件。中点与左端同号时，左端移动到中点；异号时，右端移动到中点。这样每次仍保留含有零点的夹逼区间。连续曲线从负值连到正值时会经过 0，这就是介值定理的直观含义。曲线即使途中上下起伏，我们仍能沿符号变化找到其中一个零点。</p>
+<p>固定 100 次是本实现的迭代上限。若把允许误差记为 <code>eps</code>、初始宽度记为 <code>L</code>，理论上需约 <span class="math inline">\(\log_2(L/eps)\)</span> 轮，每轮另需一次函数求值。浮点数能表示的位置有限，中点与端点相同时，代码结束迭代；此时继续计算同一个中点也不会让区间再缩小。函数对象本身的求值时间和存储也要另计。</p>
+<p><strong>牛顿迭代的推导：</strong> 当前点为 <code>(x,f(x))</code>，切线方程为 <span class="math inline">\(y=f(x)+f'(x)(t-x)\)</span>。令 <code>y=0</code>，得到下一次估计 <span class="math inline">\(t=x-f(x)/f'(x)\)</span>。这一步使用局部切线逼近曲线；它不像二分那样始终持有夹逼区间，所以初值和导数会影响结果。</p>
+<p>本节仍以 <code>f(x)=x²-2</code> 为例，导数为 2x。从 x=2 开始，先得到 1.5，再得到约 1.4166667，逐渐接近 sqrt(2)。代码先计算 f(x)：它与 0 的差已不超过 eps 时返回 x；否则计算导数和下一个点。若从 x=0 开始，导数 2x 为 0，代码在执行除法前抛出异常。</p>
+<p><strong>代码示例：</strong></p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;functional&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;stdexcept&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">double</span> newton_method<span class="op">(</span><span class="dt">double</span> x0<span class="op">,</span> function<span class="op">&lt;</span><span class="dt">double</span><span class="op">(</span><span class="dt">double</span><span class="op">)&gt;</span> f<span class="op">,</span> function<span class="op">&lt;</span><span class="dt">double</span><span class="op">(</span><span class="dt">double</span><span class="op">)&gt;</span> df<span class="op">,</span></span>
+<span data-line="7">                     <span class="dt">double</span> eps <span class="op">=</span> <span class="fl">1e-7</span><span class="op">,</span> <span class="dt">int</span> max_iter <span class="op">=</span> <span class="dv">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">    <span class="cf">if</span> <span class="op">(!</span>isfinite<span class="op">(</span>x0<span class="op">)</span> <span class="op">||</span> <span class="op">!</span>isfinite<span class="op">(</span>eps<span class="op">)</span> <span class="op">||</span> eps <span class="op">&lt;=</span> <span class="dv">0</span> <span class="op">||</span> max_iter <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="9">        <span class="cf">throw</span> invalid_argument<span class="op">(</span><span class="st">"初值、误差或迭代次数无效"</span><span class="op">);</span></span>
+<span data-line="10">    <span class="dt">double</span> x <span class="op">=</span> x0<span class="op">;</span></span>
+<span data-line="11">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> max_iter<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">        <span class="dt">double</span> fx <span class="op">=</span> f<span class="op">(</span>x<span class="op">);</span></span>
+<span data-line="13">        <span class="cf">if</span> <span class="op">(!</span>isfinite<span class="op">(</span>fx<span class="op">))</span></span>
+<span data-line="14">            <span class="cf">throw</span> runtime_error<span class="op">(</span><span class="st">"函数值不有限"</span><span class="op">);</span></span>
+<span data-line="15">        <span class="cf">if</span> <span class="op">(</span>fabs<span class="op">(</span>fx<span class="op">)</span> <span class="op">&lt;=</span> eps<span class="op">)</span></span>
+<span data-line="16">            <span class="cf">return</span> x<span class="op">;</span> <span class="co">// 返回前检查残差，而非只检查步长。</span></span>
+<span data-line="17">        <span class="dt">double</span> dfx <span class="op">=</span> df<span class="op">(</span>x<span class="op">);</span></span>
+<span data-line="18">        <span class="cf">if</span> <span class="op">(!</span>isfinite<span class="op">(</span>dfx<span class="op">)</span> <span class="op">||</span> dfx <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="19">            <span class="cf">throw</span> runtime_error<span class="op">(</span><span class="st">"导数无效或为零"</span><span class="op">);</span></span>
+<span data-line="20">        <span class="dt">double</span> next <span class="op">=</span> x <span class="op">-</span> fx <span class="op">/</span> dfx<span class="op">;</span></span>
+<span data-line="21">        <span class="cf">if</span> <span class="op">(!</span>isfinite<span class="op">(</span>next<span class="op">)</span> <span class="op">||</span> next <span class="op">==</span> x<span class="op">)</span></span>
+<span data-line="22">            <span class="cf">throw</span> runtime_error<span class="op">(</span><span class="st">"迭代溢出或停滞"</span><span class="op">);</span></span>
+<span data-line="23">        x <span class="op">=</span> next<span class="op">;</span></span>
+<span data-line="24">    <span class="op">}</span></span>
+<span data-line="25">    <span class="cf">if</span> <span class="op">(</span>isfinite<span class="op">(</span>f<span class="op">(</span>x<span class="op">))</span> <span class="op">&amp;&amp;</span> fabs<span class="op">(</span>f<span class="op">(</span>x<span class="op">))</span> <span class="op">&lt;=</span> eps<span class="op">)</span></span>
+<span data-line="26">        <span class="cf">return</span> x<span class="op">;</span></span>
+<span data-line="27">    <span class="cf">throw</span> runtime_error<span class="op">(</span><span class="st">"达到迭代上限但残差仍超出阈值"</span><span class="op">);</span></span>
+<span data-line="28"><span class="op">}</span></span></code></pre></div>
+<p>每轮用当前 x 计算函数值与切线。上面的程序以 <code>|f(x)|&lt;=eps</code> 表示函数值已足够接近 0；导数为零、计算结果非有限、迭代位置不再变化或次数用完时，走到对应的异常分支。它比较的是函数值与 0 的差；若要衡量位置与真实根的距离，还可以在这个平方根例子中计算 <code>|x-sqrt(2)|</code>。</p>
+<p>两种方法对比：</p>
+<table>
+<colgroup>
+<col style="width: 18%"/>
+<col style="width: 40%"/>
+<col style="width: 40%"/>
+</colgroup>
+<thead>
+<tr>
+<th>项目</th>
+<th><strong>牛顿迭代法 Newton</strong></th>
+<th><strong>二分法 Binary Search</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>怎样推进</strong></td>
+<td>计算当前点的切线，用切线与横轴的交点得到下一点</td>
+<td>在横轴两侧取端点，计算中点并保留异号的一半</td>
+</tr>
+<tr>
+<td><strong>是否需要导数</strong></td>
+<td>需要 f’(x)</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td><strong>从哪里开始</strong></td>
+<td>本例从 x=2 开始画第一条切线</td>
+<td>本例从 [0,2] 开始，f(0)&lt;0、f(2)&gt;0</td>
+</tr>
+<tr>
+<td><strong>每轮的变化</strong></td>
+<td>本例为 2→1.5→1.4166667→1.4142157</td>
+<td>本例区间宽度为 2→1→0.5→0.25</td>
+</tr>
+<tr>
+<td><strong>保留哪些信息</strong></td>
+<td>保存当前点，重新计算函数值与导数</td>
+<td>保存两端，使零点继续留在中间</td>
+</tr>
+<tr>
+<td><strong>代码复杂度</strong></td>
+<td>中等：需要传入导数函数</td>
+<td>简单：只有区间取 mid</td>
+</tr>
+<tr>
+<td><strong>适合问题类型</strong></td>
+<td>可计算导数的方程零点近似</td>
+<td>连续函数的零点夹逼；整数二分另见单调判定问题</td>
+</tr>
+<tr>
+<td><strong>每次迭代成本</strong></td>
+<td>计算 f 和 f’，成本由具体函数决定</td>
+<td>计算一次 f(mid)，成本由具体函数决定</td>
+</tr>
+<tr>
+<td><strong>后续联系</strong></td>
+<td>用导数确定更新方向；还可学习求极值的迭代</td>
+<td>用判断舍弃一半；整数二分与二分答案也沿这个思路</td>
+</tr>
+<tr>
+<td><strong>怎样结束</strong></td>
+<td>函数值足够接近 0 时返回；程序另外处理无法继续迭代的分支</td>
+<td>按迭代次数缩短区间，中点与端点相同时结束</td>
+</tr>
+</tbody>
+</table>
+<h6 id="n-0345">1.2.3 与整数二分的对比</h6>
+<table>
+<colgroup>
+<col style="width: 15%"/>
+<col style="width: 46%"/>
+<col style="width: 38%"/>
+</colgroup>
+<thead>
+<tr>
+<th>特性</th>
+<th>整数二分</th>
+<th>实数二分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据结构</td>
+<td>数组 / 离散值</td>
+<td>连续区间</td>
+</tr>
+<tr>
+<td>终止条件</td>
+<td><code>left &gt; right</code> 或 <code>left == right</code></td>
+<td>区间长度 &lt; 精度</td>
+</tr>
+<tr>
+<td>mid 的计算</td>
+<td>整数</td>
+<td>double/long double</td>
+</tr>
+<tr>
+<td>判断依据</td>
+<td>比较中间值，或观察判定结果的真假变化</td>
+<td>比较函数值，或观察函数值的正负变化</td>
+</tr>
+<tr>
+<td>场景</td>
+<td>查找值、边界</td>
+<td>求根、求最优值、几何问题</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意：</strong> 根据二分思想和二叉搜索树的性质，我们可以写出二叉搜索树的插入算法</p>
+</blockquote>
+<p>下列 <code>insert_BST</code> 是类内成员片段，需放入前面 <code>BinaryTree</code> 的 <code>public</code> 区域，并从空树开始使用 BST 插入；不能与层序插入或普通树删除混用。</p>
+<p>首先，二叉搜索树的性质：左子树的所有节点值 &lt; 当前节点值 &lt; 右子树所有节点值。</p>
+<figure>
+<img alt="二叉搜索树逐层比较选择插入方向" decoding="async" loading="lazy" src="../media/notes/bst-insertion-path.svg"/>
+<figcaption aria-hidden="true">二叉搜索树逐层比较选择插入方向</figcaption>
+</figure>
+<p>插入 5 时依次与 8、3、6、4 比较，最后放到 4 的右孩子。普通 BST 的代价取决于树高。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">bool</span> insert_BST<span class="op">(</span><span class="dt">int</span> value<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    <span class="co">// 处理空树情况：直接创建根节点</span></span>
+<span data-line="3">    <span class="cf">if</span> <span class="op">(!</span>root<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="4">        root <span class="op">=</span> <span class="kw">new</span> TreeNode<span class="op">(</span>value<span class="op">);</span></span>
+<span data-line="5">        <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="6">    <span class="op">}</span></span>
+<span data-line="7"></span>
+<span data-line="8">    TreeNode <span class="op">*</span>cur <span class="op">=</span> root<span class="op">;</span></span>
+<span data-line="9">    <span class="co">// 迭代查找合适的插入位置</span></span>
+<span data-line="10">    <span class="cf">while</span> <span class="op">(</span><span class="kw">true</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">        <span class="cf">if</span> <span class="op">(</span>value <span class="op">&lt;</span> cur<span class="op">-&gt;</span>val<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">            <span class="co">// 值小于当前节点，向左子树查找</span></span>
+<span data-line="13">            <span class="cf">if</span> <span class="op">(</span>cur<span class="op">-&gt;</span>left<span class="op">)</span></span>
+<span data-line="14">                cur <span class="op">=</span> cur<span class="op">-&gt;</span>left<span class="op">;</span> <span class="co">// 左子树非空，继续向下查找</span></span>
+<span data-line="15">            <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="16">                cur<span class="op">-&gt;</span>left <span class="op">=</span> <span class="kw">new</span> TreeNode<span class="op">(</span>value<span class="op">);</span> <span class="co">// 找到空位置，插入新节点</span></span>
+<span data-line="17">                <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="18">            <span class="op">}</span></span>
+<span data-line="19">        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>value <span class="op">==</span> cur<span class="op">-&gt;</span>val<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="20">            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// 本笔记的 BST 不存重复值</span></span>
+<span data-line="21">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="22">            <span class="co">// 值大于当前节点，向右子树查找</span></span>
+<span data-line="23">            <span class="cf">if</span> <span class="op">(</span>cur<span class="op">-&gt;</span>right<span class="op">)</span></span>
+<span data-line="24">                cur <span class="op">=</span> cur<span class="op">-&gt;</span>right<span class="op">;</span> <span class="co">// 右子树非空，继续向下查找</span></span>
+<span data-line="25">            <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="26">                cur<span class="op">-&gt;</span>right <span class="op">=</span> <span class="kw">new</span> TreeNode<span class="op">(</span>value<span class="op">);</span> <span class="co">// 找到空位置，插入新节点</span></span>
+<span data-line="27">                <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="28">            <span class="op">}</span></span>
+<span data-line="29">        <span class="op">}</span></span>
+<span data-line="30">    <span class="op">}</span></span>
+<span data-line="31"><span class="op">}</span></span></code></pre></div>
+<p>当然，因为这是普通 BST，而不是 AVL 树或者 Treap 树，输入严格有序的话，该二叉树会退化（若升序则退化为只有右子树的链表，降序则退化为只有左子树的链表）</p>
+<p>例如：</p>
+<pre class="text"><code>输入：
+1 2 3 4 5 6 7 8 9 10</code></pre>
+<p>构建的二叉树为：</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+
+    n1((1)) --&gt; l1(( ))
+    n1 --&gt; n2((2))
+
+    n2 --&gt; l2(( ))
+    n2 --&gt; n3((3))
+
+    n3 --&gt; l3(( ))
+    n3 --&gt; n4((4))
+
+    n4 --&gt; l4(( ))
+    n4 --&gt; n5((5))
+
+    n5 --&gt; l5(( ))
+    n5 --&gt; n6((6))
+
+    n6 --&gt; l6(( ))
+    n6 --&gt; n7((7))
+
+    n7 --&gt; l7(( ))
+    n7 --&gt; n8((8))
+
+    n8 --&gt; l8(( ))
+    n8 --&gt; n9((9))
+
+    n9 --&gt; l9(( ))
+    n9 --&gt; n10((10))
+
+style l1 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l2 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l3 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l4 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l5 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l6 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l7 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l8 fill:#ffffff, stroke:#ffffff, color:#ffffff
+    style l9 fill:#ffffff, stroke:#ffffff, color:#ffffff</div>
+<pre class="text"><code>输入：
+10 9 8 7 6 5 4 3 2 1</code></pre>
+<p>构建的二叉树为：</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+
+    n10((10)) --&gt; n9((9))
+    n10 --&gt; r10(( ))
+
+    n9 --&gt; n8((8))
+    n9 --&gt; r9(( ))
+
+    n8 --&gt; n7((7))
+    n8 --&gt; r8(( ))
+
+    n7 --&gt; n6((6))
+    n7 --&gt; r7(( ))
+
+    n6 --&gt; n5((5))
+    n6 --&gt; r6(( ))
+
+    n5 --&gt; n4((4))
+    n5 --&gt; r5(( ))
+
+    n4 --&gt; n3((3))
+    n4 --&gt; r4(( ))
+
+    n3 --&gt; n2((2))
+    n3 --&gt; r3(( ))
+
+    n2 --&gt; n1((1))
+    n2 --&gt; r2(( ))
+
+style r10 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r9  fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r8  fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r7  fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r6  fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r5  fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r4  fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r3  fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r2  fill:#ffffff, stroke:#ffffff, color:#ffffff</div>
+<pre class="text"><code>输入
+4 7 9 6 5 3 1 8 2 10</code></pre>
+<p>构建如下二叉树：</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+
+    n4((4)) --&gt; n3((3))
+    n4 --&gt; n7((7))
+
+    n3 --&gt; n1((1))
+    n3 --&gt; r3(( ))
+
+    n1 --&gt; r1(( ))
+    n1 --&gt; n2((2))
+
+    n2 --&gt; l2(( ))
+    n2 --&gt; r2(( ))
+
+    n7 --&gt; n6((6))
+    n7 --&gt; n9((9))
+
+    n6 --&gt; n5((5))
+    n6 --&gt; r6(( ))
+
+    n5 --&gt; l5(( ))
+    n5 --&gt; r5(( ))
+
+    n9 --&gt; n8((8))
+    n9 --&gt; n10((10))
+
+    n8 --&gt; l8(( ))
+    n8 --&gt; r8(( ))
+
+    n10 --&gt; l10(( ))
+    n10 --&gt; r10(( ))
+
+style r3 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r1 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l2 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r2 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r6 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l5 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r5 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r8 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l8 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style l10 fill:#ffffff, stroke:#ffffff, color:#ffffff
+style r10 fill:#ffffff, stroke:#ffffff, color:#ffffff</div>
+<h5 id="n-0346">1.3 二分答案</h5>
+<p>二分答案是一种 <strong>解题策略</strong>，它本身使用的是二分查找的技术。当一个问题直接求解很困难，但我们可以 <strong>轻易地判断一个候选答案 <code>x</code> 是“偏大”还是“偏小”</strong> 时，就可以使用二分答案。</p>
+<p><strong>适用问题特征：</strong></p>
+<ul>
+<li>问题的解在某个确定的范围内 <code>[min, max]</code>。</li>
+<li>这个范围内的值相对于问题的条件存在单调性。例如，如果 <code>x</code> 可行，那么所有 <code>&lt;= x</code>（或 <code>&gt;= x</code>）的值也可能可行。</li>
+<li>存在一个 <code>check(x)</code> 函数，可以高效地判断给定的 <code>x</code> 是否是一个可行的解。</li>
+</ul>
+<p><strong>常见题型：</strong></p>
+<ul>
+<li>最小化最大值 / 最大化最小值</li>
+<li>Koko 吃香蕉</li>
+<li>分配工作、分配书本</li>
+<li>木棒切割、绳子切割</li>
+<li>最小花费 / 最大利润可行性</li>
+<li>图论中的最小可行路径（比如最大边最小、最小边最大）</li>
+</ul>
+<p>示例：</p>
+<h6 id="n-0347">1.3.1 最小吃香蕉速度（Koko，<a href="https://leetcode.cn/problems/koko-eating-bananas/description/" rel="noopener noreferrer">LeetCode 875</a>）</h6>
+<p><strong>接口与范围：</strong> 给定非空正整数堆数组 piles 和小时 h，保证 h 至少等于堆数。每小时只能从一堆吃至多 k 根，求按时吃完的最小正整数 k。</p>
+<p><strong>思路分析：</strong> 用 ceil(pile/k) 统计小时，速度越大越容易完成。二分最小可行速度，时间 O(n log maxPile)。</p>
+<p><strong>样例与解释：</strong> piles=[3,6,7,11]、h=8，返回 4；各堆用时 1、2、2、3 小时。</p>
+<p>珂珂喜欢吃香蕉。这里有 <code>n</code> 堆香蕉，第 <code>i</code> 堆中有 <code>piles[i]</code> 根香蕉。警卫已经离开了，将在 <code>h</code> 小时后回来。</p>
+<p>珂珂可以决定她吃香蕉的速度 <code>k</code> （单位：根/小时）。每个小时，她将会选择一堆香蕉，从中吃掉 <code>k</code> 根。如果这堆香蕉少于 <code>k</code> 根，她将吃掉这堆的所有香蕉，然后这一小时内不会再吃更多的香蕉。</p>
+<p>珂珂喜欢慢慢吃，但仍然想在警卫回来前吃掉所有的香蕉。</p>
+<p>返回她可以在 <code>h</code> 小时内吃掉所有香蕉的最小速度 <code>k</code>（<code>k</code> 为整数）。</p>
+<p>题目分析：对于一个给定的速度 <code>k</code>，我们可以计算吃完所有香蕉需要多少小时。如果所需小时数 <code>&lt;= h</code>，则速度 <code>k</code> 是可行的；否则速度太慢。</p>
+<p>判断 k 是否可行的方法：</p>
+<p>对每一堆香蕉 <code>piles[i]</code>：</p>
+<p>吃完这一堆需要的小时数为：<span class="math inline">\(hours=⌈piles[i]/k⌉\)</span></p>
+<p>因为每小时只能吃一个堆，剩余不足 k 时，这个堆仍占用当前一小时；下一小时再吃另一个堆。</p>
+<p>将所有堆的小时数加和：<span class="math inline">\(total_hours=∑⌈piles[i]/k⌉\)</span></p>
+<p>题解：</p>
+<figure>
+<img alt="香蕉速度判定中的逐堆向上取整" decoding="async" loading="lazy" src="../media/notes/koko-ceiling-hours.svg"/>
+<figcaption aria-hidden="true">香蕉速度判定中的逐堆向上取整</figcaption>
+</figure>
+<p>每堆分别占完整小时；速度 3 共需 10 小时，不满足 h=8，速度 4 共需 8 小时，恰好可行。</p>
+<figure>
+<img alt="每次实际计算所需小时，再决定二分保留哪一侧" decoding="async" loading="lazy" src="../media/notes/koko-binary-decisions.svg"/>
+<figcaption aria-hidden="true">每次实际计算所需小时，再决定二分保留哪一侧</figcaption>
+</figure>
+<p>对 <code>[3,6,7,11]</code>、h=8，初始速度范围 <code>[1,11]</code>。中点 6 需要 6 小时，可行，保留 <code>[1,6]</code>；中点 3 需要 10 小时，失败，排除 1…3；随后 5、4 都恰好需要 8 小时，依次收缩到 <code>[4,4]</code>。所求是第一个可行速度，失败时移到 <code>mid+1</code>，成功时仍保留 mid。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="kw">using</span> ll <span class="op">=</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="dt">bool</span> check<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>piles<span class="op">,</span> <span class="dt">int</span> k<span class="op">,</span> <span class="dt">int</span> h<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">    ll hours <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 用 long long 防止大数相加溢出</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> p <span class="op">:</span> piles<span class="op">)</span></span>
+<span data-line="10">        hours <span class="op">+=</span> <span class="op">(</span><span class="dv">1</span><span class="bu">LL</span> <span class="op">*</span> p <span class="op">+</span> k <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> k<span class="op">;</span> <span class="co">// 等价于 ceil(p / k)，耗时累加</span></span>
+<span data-line="11">    <span class="cf">return</span> hours <span class="op">&lt;=</span> h<span class="op">;</span>                  <span class="co">// 若总时间不超过 h，则速度可行</span></span>
+<span data-line="12"><span class="op">}</span></span>
+<span data-line="13"></span>
+<span data-line="14"><span class="dt">int</span> minEatingSpeed<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>piles<span class="op">,</span> <span class="dt">int</span> h<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="15">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> right <span class="op">=</span> <span class="op">*</span>max_element<span class="op">(</span>piles<span class="op">.</span>begin<span class="op">(),</span> piles<span class="op">.</span>end<span class="op">());</span></span>
+<span data-line="16">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">        <span class="dt">int</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="18">        <span class="cf">if</span> <span class="op">(</span>check<span class="op">(</span>piles<span class="op">,</span> mid<span class="op">,</span> h<span class="op">))</span></span>
+<span data-line="19">            right <span class="op">=</span> mid<span class="op">;</span> <span class="co">// mid 足够快，尝试更小的速度</span></span>
+<span data-line="20">        <span class="cf">else</span></span>
+<span data-line="21">            left <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// mid 对应的耗时过长，继续查找更高速度</span></span>
+<span data-line="22">    <span class="op">}</span></span>
+<span data-line="23">    <span class="cf">return</span> left<span class="op">;</span> <span class="co">// 返回最小可行速度</span></span>
+<span data-line="24"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0348">1.3.2 木材切割：寻找最长可行长度</h6>
+<p><strong>题目原文（自拟教学题）：</strong> 函数输入非空、有限非负木条长度 vector a 和整数 k&gt;=1，允许舍弃余料但不允许拼接，求能切出至少 k 段等长木条的最大长度；全为 0 时返回 0。返回近似 double，按调用者输出精度格式化。</p>
+<p><strong>接口与范围：</strong> 给定非空有限非负木条长度数组和 k&gt;=1，切出至少 k 段等长木条，允许丢弃余料，求最大长度；所有长度为 0 时返回 0。</p>
+<p><strong>思路分析：</strong> 试探长度越大，可切段数越少；floor(length/guess) 累加达到 k 就停止，以避免计数溢出。二分返回近似值。</p>
+<p><strong>样例与解释：</strong> 长度 [5,8]、k=3，答案为 4，可从两根分别切出 1、2 段。</p>
+<p>给定若干木棒，它们的长度分别为 <code>a[1] , a[2] , ... , a[n]</code>，需要从中切出 <strong>至少 <code>k</code> 根</strong> 等长的小木棒。</p>
+<p>每次切割不会损失木材（也就是不能粘合，只能切割）。</p>
+<p>问：<strong>能够切出的所有小木棒长度的最大值是多少？（保留两位小数）</strong></p>
+<p>题目分析：</p>
+<p>对于一个给定测试长度 <span class="math inline">\(len\)</span>，则可切出数量为 <span class="math inline">\(total=∑_{i=1}^n⌊\frac{a[i]}{len}⌋\)</span></p>
+<p>如果 <span class="math inline">\(total &gt;= k\)</span> 说明 <span class="math inline">\(len\)</span> 可行，可以尝试更长长度，否则太长，需要缩短</p>
+<p>由于题目要求保留两位小数，因此这是个实数二分的二分答案</p>
+<p>题解：</p>
+<figure>
+<img alt="切割长度与可提供段数" decoding="async" loading="lazy" src="../media/notes/wood-cut-feasibility.svg"/>
+<figcaption aria-hidden="true">切割长度与可提供段数</figcaption>
+</figure>
+<p>长度 4 时，[5,8] 分别提供 1、2 段，共 3 段；长度 5 时只剩 2 段，不能拼接余料。</p>
+<figure>
+<img alt="用逐根向下取整得到段数，驱动实数二分收缩" decoding="async" loading="lazy" src="../media/notes/wood-binary-decisions.svg"/>
+<figcaption aria-hidden="true">用逐根向下取整得到段数，驱动实数二分收缩</figcaption>
+</figure>
+<p>对 <code>[5,8]</code>、k=3，从 <code>[0,8]</code> 开始。长度 4 提供 3 段，左端升到 4；长度 6、5、4.5 都只有 2 段，右端依次下降。每次只使用各根木材的完整段，余料不能跨木材拼接。程序继续固定轮数，最终返回可行一侧的 left，图中前几轮展示的就是这个更新规则。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;stdexcept&gt;</span></span>
+<span data-line="5"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="kw">using</span> ll <span class="op">=</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">;</span></span>
+<span data-line="8"></span>
+<span data-line="9"><span class="dt">bool</span> check<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="dt">double</span> len<span class="op">,</span> <span class="dt">int</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">    ll cnt <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="11">    <span class="cf">for</span> <span class="op">(</span><span class="dt">double</span> x <span class="op">:</span> a<span class="op">)</span></span>
+<span data-line="12">        <span class="cf">if</span> <span class="op">(</span>len <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="13">            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="14">        <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>floor<span class="op">(</span>x <span class="op">/</span> len<span class="op">)</span> <span class="op">&gt;=</span> k <span class="op">-</span> cnt<span class="op">)</span></span>
+<span data-line="15">            <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="16">        <span class="cf">else</span></span>
+<span data-line="17">            cnt <span class="op">+=</span> <span class="kw">static_cast</span><span class="op">&lt;</span>ll<span class="op">&gt;(</span>floor<span class="op">(</span>x <span class="op">/</span> len<span class="op">));</span></span>
+<span data-line="18">    <span class="cf">return</span> cnt <span class="op">&gt;=</span> k<span class="op">;</span> <span class="co">// 总段数是否满足要求</span></span>
+<span data-line="19"><span class="op">}</span></span>
+<span data-line="20"></span>
+<span data-line="21"><span class="dt">double</span> maxCutLength<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="dt">int</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="22">    <span class="cf">if</span> <span class="op">(</span>a<span class="op">.</span>empty<span class="op">()</span> <span class="op">||</span> k <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="23">        <span class="cf">throw</span> invalid_argument<span class="op">(</span><span class="st">"木棒非空且 k &gt; 0"</span><span class="op">);</span></span>
+<span data-line="24">    <span class="dt">double</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="op">*</span>max_element<span class="op">(</span>a<span class="op">.</span>begin<span class="op">(),</span> a<span class="op">.</span>end<span class="op">());</span></span>
+<span data-line="25">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">100</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="26">        <span class="dt">double</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="27">        <span class="cf">if</span> <span class="op">(</span>mid <span class="op">==</span> left <span class="op">||</span> mid <span class="op">==</span> right<span class="op">)</span></span>
+<span data-line="28">            <span class="cf">break</span><span class="op">;</span></span>
+<span data-line="29">        <span class="dt">long</span> <span class="dt">long</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="30">        <span class="cf">for</span> <span class="op">(</span><span class="dt">double</span> x <span class="op">:</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="31">            <span class="dt">double</span> pieces <span class="op">=</span> floor<span class="op">(</span>x <span class="op">/</span> mid<span class="op">);</span></span>
+<span data-line="32">            <span class="cf">if</span> <span class="op">(</span>pieces <span class="op">&gt;=</span> k <span class="op">-</span> count<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="33">                count <span class="op">=</span> k<span class="op">;</span></span>
+<span data-line="34">                <span class="cf">break</span><span class="op">;</span></span>
+<span data-line="35">            <span class="op">}</span></span>
+<span data-line="36">            count <span class="op">+=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;(</span>pieces<span class="op">);</span></span>
+<span data-line="37">        <span class="op">}</span></span>
+<span data-line="38">        <span class="cf">if</span> <span class="op">(</span>count <span class="op">&gt;=</span> k<span class="op">)</span></span>
+<span data-line="39">            left <span class="op">=</span> mid<span class="op">;</span></span>
+<span data-line="40">        <span class="cf">else</span></span>
+<span data-line="41">            right <span class="op">=</span> mid<span class="op">;</span></span>
+<span data-line="42">    <span class="op">}</span></span>
+<span data-line="43">    <span class="cf">return</span> left<span class="op">;</span></span>
+<span data-line="44"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0349">1.3.3 最小化最大值：寻找第一个可行上限</h6>
+<p>定义：在一个集合或可行域内，找到一个点或策略，使得在所有可能的最坏情况（最大值）中，这个最坏情况是最好的（最小化）。</p>
+<p>表达式：<span class="math inline">\(\min_{x \in X} \left( \max_{y \in Y} f(x, y) \right)\)</span></p>
+<p><span class="math inline">\(X\)</span> 是决策变量 <span class="math inline">\(x\)</span> 的可行集（我们能控制的变量）。</p>
+<p><span class="math inline">\(Y\)</span> 是对 <span class="math inline">\(x\)</span> 产生影响的干扰变量 <span class="math inline">\(y\)</span> 的可行集（我们不能控制的变量，代表最坏情况）。</p>
+<p><span class="math inline">\(f(x, y)\)</span> 是目标函数。</p>
+<p>在二分法下：</p>
+<p><span class="math display">\[\text{目标：} \min ( \max \{ \text{集合中的值} \} )\]</span></p>
+<p><strong>单调性：</strong> 如果存在一个方案使得最大值 <span class="math inline">\(\leq K\)</span>，那么对于任何 <span class="math inline">\(K' &gt; K\)</span>，也一定存在方案使得最大值 <span class="math inline">\(\leq K'\)</span>。</p>
+<ul>
+<li>我们便可以用二分法来搜索这个最小的 <span class="math inline">\(K\)</span>。</li>
+</ul>
+<p>分摊工作的目标是最小化最大工作量；上面的木材切割则是在可行长度中求最大值，应寻找最后一个可行点。</p>
+<p>示例：</p>
+<h6 id="n-0350">1.3.4 任务分段：最小化最大工作量</h6>
+<p><strong>题目原文（自拟教学题）：</strong> 输入非空正整数工作量数组 W 和 M&gt;=1，将任务分为不超过 M 个连续非空段，最小化所有段和的最大值；返回 long long，所有总和可表示。</p>
+<p><strong>接口与范围：</strong> 给定非空、正整数工作量数组 W 和 M&gt;=1，把它分成不超过 M 个连续非空段，求最大段和的最小值；总和在 long long 范围内。</p>
+<p><strong>思路分析：</strong> 猜一个上限，依次装入当前段，超过就另开一段；所需段数不超过 M 即可行。上限越大越容易可行，二分最小可行值。</p>
+<p><strong>样例与解释：</strong> W=[7,2,5,10,8]、M=2，返回 18，对应 [7,2,5] 与 [10,8]。</p>
+<p>有 <span class="math inline">\(N\)</span> 个任务，每个任务的工作量为 <span class="math inline">\(W_i\)</span>。现在要将这些任务分配给 <span class="math inline">\(M\)</span> 个人，要求分配给每个人的任务是 <strong>连续</strong> 的一段。目标是最小化 <span class="math inline">\(M\)</span> 个人中工作量 <strong>最大</strong> 的那个人所承担的总工作量。</p>
+<p>问题分析：</p>
+<p>如果我们设一个最大允许工作量 <code>X</code>，那么我们能否按照不超过 <code>X</code> 的原则把任务分给 <strong>不多于 M 个人</strong>？</p>
+<p>只要判断这个 <code>X</code> 是否可行，就能对答案进行 <strong>二分搜索</strong>。</p>
+<p>题解：</p>
+<figure>
+<img alt="连续工作分组的单调可行性" decoding="async" loading="lazy" src="../media/notes/binary-answer-feasibility.svg"/>
+<figcaption aria-hidden="true">连续工作分组的单调可行性</figcaption>
+</figure>
+<p>图中的 17、18 分别位于不可行与可行一侧；二分要定位它们之间的边界。</p>
+<figure>
+<img alt="按候选上限实际分组，再寻找第一个可行上限" decoding="async" loading="lazy" src="../media/notes/workload-binary-decisions.svg"/>
+<figcaption aria-hidden="true">按候选上限实际分组，再寻找第一个可行上限</figcaption>
+</figure>
+<p>对 <code>[7,2,5,10,8]</code>、M=2，范围先取 <code>[10,32]</code>。上限 21 分两组，可行；上限 15 分三组，不可行；上限 18 分两组，可行；上限 17 分三组，不可行，最后收缩到 18。图中的分组由从左向右累计、放不下才开新组产生，不能任意把非连续任务挪到同一组。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="kw">using</span> ll <span class="op">=</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">;</span></span>
+<span data-line="5"><span class="dt">bool</span> check<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>W<span class="op">,</span> ll X<span class="op">,</span> <span class="dt">int</span> M<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    ll load <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 当前工人的累计工作量</span></span>
+<span data-line="7">    <span class="dt">int</span> cnt <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 已使用的工人数量（至少1个）</span></span>
+<span data-line="8">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> w <span class="op">:</span> W<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>w <span class="op">&gt;</span> X<span class="op">)</span></span>
+<span data-line="10">            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// 单个任务超过 X，直接不可能</span></span>
+<span data-line="11">        <span class="cf">if</span> <span class="op">(</span>load <span class="op">+</span> w <span class="op">&gt;</span> X<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">            cnt<span class="op">++;</span>    <span class="co">// 新开一个工人</span></span>
+<span data-line="13">            load <span class="op">=</span> w<span class="op">;</span> <span class="co">// 新工人从当前任务开始</span></span>
+<span data-line="14">        <span class="op">}</span> <span class="cf">else</span></span>
+<span data-line="15">            load <span class="op">+=</span> w<span class="op">;</span> <span class="co">// 当前工人继续承担任务</span></span>
+<span data-line="16">    <span class="op">}</span></span>
+<span data-line="17">    <span class="cf">return</span> cnt <span class="op">&lt;=</span> M<span class="op">;</span> <span class="co">// 使用的工人数是否在限制内</span></span>
+<span data-line="18"><span class="op">}</span></span>
+<span data-line="19"></span>
+<span data-line="20">ll minimizeMaxWorkload<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>W<span class="op">,</span> <span class="dt">int</span> M<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="21">    ll left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="22">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> w <span class="op">:</span> W<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="23">        <span class="cf">if</span> <span class="op">(</span>w <span class="op">&gt;</span> left<span class="op">)</span> left <span class="op">=</span> w<span class="op">;</span> <span class="co">// 上限至少要容纳最大的单个任务。</span></span>
+<span data-line="24">        right <span class="op">+=</span> w<span class="op">;</span>            <span class="co">// 全部任务放一组，得到可行上界。</span></span>
+<span data-line="25">    <span class="op">}</span></span>
+<span data-line="26"></span>
+<span data-line="27">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="28">        ll mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="29">        <span class="cf">if</span> <span class="op">(</span>check<span class="op">(</span>W<span class="op">,</span> mid<span class="op">,</span> M<span class="op">))</span></span>
+<span data-line="30">            right <span class="op">=</span> mid<span class="op">;</span> <span class="co">// mid 可行，尝试更小的上限</span></span>
+<span data-line="31">        <span class="cf">else</span></span>
+<span data-line="32">            left <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// mid 对应的方案不可行，继续尝试更大上限</span></span>
+<span data-line="33">    <span class="op">}</span></span>
+<span data-line="34">    <span class="cf">return</span> left<span class="op">;</span> <span class="co">// 返回最小可行最大工作量</span></span>
+<span data-line="35"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0351">1.3.5 最大化最小值：寻找最后一个可行下限</h6>
+<p>在一个集合或可行域内，找到一个点或策略，使得在所有可能的最优情况（最小值）中，这个最优情况是最好的（最大化）。（）找到一个策略，使得在所有可能的 <strong>最差结果</strong> 中，这个最差结果是 <strong>最好的</strong>。</p>
+<p><strong>数学表达式：</strong> <span class="math inline">\(\max_{x \in X} \left( \min_{y \in Y} f(x, y) \right)\)</span></p>
+<p>在二分答案下：</p>
+<p><span class="math display">\[\text{目标：} \max ( \min \{ \text{集合中的值} \} )\]</span></p>
+<p><strong>单调性：</strong> 如果存在一个方案使得最小值 <span class="math inline">\(\geq K\)</span>，那么对于任何 <span class="math inline">\(K' &lt; K\)</span>，也一定存在方案使得最小值 <span class="math inline">\(\geq K'\)</span>。</p>
+<ul>
+<li>我们便可以用二分法来搜索这个最大的 <span class="math inline">\(K\)</span>。</li>
+</ul>
+<h6 id="n-0352">1.3.6 进击的奶牛：最大化最小间距</h6>
+<p><strong>教学接口题面（自拟）：</strong> 给定至少两个牛舍的整数坐标，范围 [0,10⁹]，以及 2&lt;=C&lt;=牛舍数。每个牛舍最多放一头牛，放入 C 头，求最近两头间距的最大可能值；返回整数。坐标数组可被函数排序。</p>
+<p><strong>接口与范围：</strong> 给定至少两个牛舍坐标，2&lt;=C&lt;=牛舍数，每个位置在 [0,1000000000]。每个牛舍至多放一头牛，求最大化最近两头牛距离的整数答案。</p>
+<p><strong>思路分析：</strong> 给定间距后总是选择最靠左的可行牛舍；可行间距呈先 true 后 false，二分最后的 true。排序 O(n log n)，二分检查 O(n log D)。</p>
+<p><strong>样例与解释：</strong> 位置 [1,2,8,4,9]、C=3，返回 3，可选 1、4、8。</p>
+<p>农夫约翰建造了一座有 <em><span class="math inline">\(n\)</span></em> 间牛舍的小屋，牛舍排在一条直线上，第 <em><span class="math inline">\(i\)</span></em> 间牛舍在 <em><span class="math inline">\(x_i\)</span></em> 的位置，但是约翰的 <em><span class="math inline">\(m\)</span></em> 头牛对小屋很不满意，因此经常互相攻击。约翰为了防止牛之间互相伤害，因此决定把每头牛都放在离其它牛尽可能远的牛舍。也就是要最大化最近的两头牛之间的距离。</p>
+<p>牛们并不喜欢这种布局，而且几头牛放在一个隔间里，它们就要发生争斗。为了不让牛互相伤害。约翰决定自己给牛分配隔间，使任意两头牛之间的最小距离尽可能的大，那么，这个最大的最小距离是多少呢？</p>
+<p>题目分析：</p>
+<p>如果我们猜一个最小距离 <code>d</code>，要判断能否把 <code>C</code> 头奶牛放置下去：</p>
+<ul>
+<li>第一头奶牛放在最左的牛棚；</li>
+<li>后续每次尽量放在距离上一次 ≥ <code>d</code> 的最靠前的牛棚；</li>
+<li>数到能否放满 <code>C</code> 头。</li>
+</ul>
+<p>若能放下，则说明距离 <code>d</code> 可行，可以再增大； 否则 <code>d</code> 太大，需要减小。因此可以使用向上取整的整数二分的二分答案</p>
+<p>题解：</p>
+<figure>
+<img alt="固定最小距离后的最靠左放置" decoding="async" loading="lazy" src="../media/notes/cow-distance-placement.svg"/>
+<figcaption aria-hidden="true">固定最小距离后的最靠左放置</figcaption>
+</figure>
+<p>排序位置为 [1,2,4,8,9]；距离 3 可在 1、4、8 放三头，距离 4 只能放两头。</p>
+<figure>
+<img alt="固定距离后逐个判断是否能放，保留尽可能靠左的合法位置" decoding="async" loading="lazy" src="../media/notes/cow-greedy-scan.svg"/>
+<figcaption aria-hidden="true">固定距离后逐个判断是否能放，保留尽可能靠左的合法位置</figcaption>
+</figure>
+<p>距离 3 时先放位置 1；位置 2 与上一次间隔为 1，跳过；位置 4 间隔为 3，可以放；位置 8 间隔为 4，再放一头便达到 C=3，可以返回成功。尽早放置不会挤占右侧空间：将某个方案的下一头左移到最早合法牛舍，前一段间隔仍够，后一段间隔只会增大。</p>
+<figure>
+<img alt="把放置判定代入整数二分，寻找最后一个可行距离" decoding="async" loading="lazy" src="../media/notes/cow-binary-decisions.svg"/>
+<figcaption aria-hidden="true">把放置判定代入整数二分，寻找最后一个可行距离</figcaption>
+</figure>
+<p>初始距离范围 <code>[0,8]</code>，取向上中点 4，只能放在 1、8 两处，失败，保留 <code>[0,3]</code>；中点 2、3 都能在 1、4、8 放三头，左端依次升高，最后为 3。这里寻找最后一个可行值：成功就把左端移到 mid，失败就把右端移到 mid-1；前面的最小速度题寻找第一个可行值，成功时缩右端，两种目标对应不同的移动方向。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">bool</span> check<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>x<span class="op">,</span> <span class="dt">int</span> d<span class="op">,</span> <span class="dt">int</span> C<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> cnt <span class="op">=</span> <span class="dv">1</span><span class="op">;</span>     <span class="co">// 已安置奶牛数量（第一头在x[0]）</span></span>
+<span data-line="7">    <span class="dt">int</span> last <span class="op">=</span> x<span class="op">[</span><span class="dv">0</span><span class="op">];</span> <span class="co">// 最后一头奶牛的安置位置</span></span>
+<span data-line="8">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> x<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>x<span class="op">[</span>i<span class="op">]</span> <span class="op">-</span> last <span class="op">&gt;=</span> d<span class="op">)</span> <span class="op">{</span> <span class="co">// 满足最小间距要求</span></span>
+<span data-line="10">            cnt<span class="op">++;</span></span>
+<span data-line="11">            last <span class="op">=</span> x<span class="op">[</span>i<span class="op">];</span> <span class="co">// 更新最后安置位置</span></span>
+<span data-line="12">            <span class="cf">if</span> <span class="op">(</span>cnt <span class="op">&gt;=</span> C<span class="op">)</span></span>
+<span data-line="13">                <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span> <span class="co">// 已安置足够数量，提前返回</span></span>
+<span data-line="14">        <span class="op">}</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16">    <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// 无法安置所有奶牛</span></span>
+<span data-line="17"><span class="op">}</span></span>
+<span data-line="18"></span>
+<span data-line="19"><span class="dt">int</span> maxMinDistance<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>x<span class="op">,</span> <span class="dt">int</span> C<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="20">    sort<span class="op">(</span>x<span class="op">.</span>begin<span class="op">(),</span> x<span class="op">.</span>end<span class="op">());</span>                   <span class="co">// 预处理：排序牛栏位置</span></span>
+<span data-line="21">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> x<span class="op">.</span>back<span class="op">()</span> <span class="op">-</span> x<span class="op">.</span>front<span class="op">();</span> <span class="co">// 最大可能间距</span></span>
+<span data-line="22"></span>
+<span data-line="23">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="24">        <span class="dt">int</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span> <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">%</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// 取上中位数避免死循环</span></span>
+<span data-line="25">        <span class="cf">if</span> <span class="op">(</span>check<span class="op">(</span>x<span class="op">,</span> mid<span class="op">,</span> C<span class="op">))</span></span>
+<span data-line="26">            left <span class="op">=</span> mid<span class="op">;</span> <span class="co">// mid 可行，尝试更大的间距</span></span>
+<span data-line="27">        <span class="cf">else</span></span>
+<span data-line="28">            right <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// mid 不可行，缩小间距</span></span>
+<span data-line="29">    <span class="op">}</span></span>
+<span data-line="30">    <span class="cf">return</span> left<span class="op">;</span> <span class="co">// 返回最大可行最小间距</span></span>
+<span data-line="31"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0353">1.3.7 分派：最大化每人的切片面积（<a href="http://poj.org/problem?id=3122" rel="noopener noreferrer">POJ 3122</a>）</h6>
+<p><strong>接口与范围：</strong> 给定非空非负整数半径数组 <code>radii</code> 和朋友数 <code>F&gt;=0</code>。主人也分一份，总人数为 <code>F+1</code>；每人得到一块面积相等、来自同一个派的切片，允许余料，求最大切片面积。半径转换成面积后，再按总人数计算每份面积。</p>
+<p><strong>思路分析：</strong> 用 floor(πr²/area) 判断能否凑够人数，人数达到目标就停止。面积越大越难分配，二分最大可行面积。</p>
+<p><strong>样例与解释：</strong> 半径 [1,1]、朋友数 F=2，总人数 3，答案为 π/2；每个派可切两块。</p>
+<p>我的生日快到了，依据传统，我准备给大家分馅饼。我不只有一个馅饼，我有 <strong><span class="math inline">\(N\)</span></strong> 个馅饼，口味和大小各不相同。有 <strong><span class="math inline">\(F\)</span></strong> 个朋友会来参加我的派对，他们每个人都会得到一块馅饼。这一块必须是一整块馅饼，而不是几个小块拼凑起来的，并且大小应该一样。当然，我自己也想得到一块馅饼。那一块也应该是完整的一块，并且和其他人的大小相同。</p>
+<p>我们每个人能得到多大的一块馅饼？所有的馅饼都是圆柱形的，高度都一样，所以馅饼的大小只取决于它的半径。</p>
+<p>题目分析：</p>
+<p>有 N 个派和 F 个朋友，加上自己一共 F + 1 个人。 每个派都是高为 1 的圆柱体，但是半径不同。 要求：</p>
+<ul>
+<li>每个人分到 <strong>体积相同</strong> 的一块派。</li>
+<li>只能从 <strong>一个派</strong> 中切出一块（不能从多个派拼凑）。</li>
+<li>每个人只能得到 <strong>一块</strong> 派（不能要多个小块）。</li>
+</ul>
+<p>问：每个人能分到的 <strong>最大体积</strong> 是多少。</p>
+<p>每个派面积：<span class="math inline">\(area[i]=π⋅R_i^2\)</span></p>
+<p>如果我们猜测每个人能分得面积为 <code>A</code>，那么每个派可提供多少份：</p>
+<p>若：<span class="math inline">\(∑cnt[i]≥F+1\)</span></p>
+<p>则说明面积 <code>A</code> 可行，还能尝试更大； 否则说明 <code>A</code> 太大，需要缩小。</p>
+<p>因此可以使用实数二分求解</p>
+<p>题解：</p>
+<figure>
+<img alt="每个派独立提供切片的面积判定" decoding="async" loading="lazy" src="../media/notes/pie-area-pieces.svg"/>
+<figcaption aria-hidden="true">每个派独立提供切片的面积判定</figcaption>
+</figure>
+<p>两个半径 1 的派面积各为 π；每份 π/2 时能提供四份，总人数为 3 时可行，余下的一份不必分配。</p>
+<figure>
+<img alt="每个候选面积分别求完整份数，再按可行性收缩区间" decoding="async" loading="lazy" src="../media/notes/pie-binary-decisions.svg"/>
+<figcaption aria-hidden="true">每个候选面积分别求完整份数，再按可行性收缩区间</figcaption>
+</figure>
+<p>两个半径 1 的派、总人数 3 时，把面积按 π 归一化以便手算。每份 0.5π 可得 4 份，提升左端；0.75π、0.625π 都只能得 2 份，降低右端；不断逼近 0.5π。实际代码使用面积单位，<code>friends+1</code> 才是总人数。每个派分别向下取整，剩余碎料不能拼成一份。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;stdexcept&gt;</span></span>
+<span data-line="5"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="dt">bool</span> check<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="op">&amp;</span>area<span class="op">,</span> <span class="dt">double</span> A<span class="op">,</span> <span class="dt">int</span> people<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">    <span class="dt">int</span> cnt <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">double</span> x <span class="op">:</span> area<span class="op">)</span></span>
+<span data-line="10">        <span class="cf">if</span> <span class="op">(</span>A <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="11">            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="12">        <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>floor<span class="op">(</span>x <span class="op">/</span> A<span class="op">)</span> <span class="op">&gt;=</span> people <span class="op">-</span> cnt<span class="op">)</span></span>
+<span data-line="13">            <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="14">        <span class="cf">else</span></span>
+<span data-line="15">            cnt <span class="op">+=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>floor<span class="op">(</span>x <span class="op">/</span> A<span class="op">));</span></span>
+<span data-line="16">    <span class="cf">return</span> cnt <span class="op">&gt;=</span> people<span class="op">;</span> <span class="co">// 总份数是否满足要求</span></span>
+<span data-line="17"><span class="op">}</span></span>
+<span data-line="18"></span>
+<span data-line="19"><span class="dt">double</span> maxPieArea<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>radii<span class="op">,</span> <span class="dt">int</span> friends<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="20">    <span class="cf">if</span> <span class="op">(</span>radii<span class="op">.</span>empty<span class="op">()</span> <span class="op">||</span> friends <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="21">        <span class="cf">throw</span> invalid_argument<span class="op">(</span><span class="st">"派非空且朋友数非负"</span><span class="op">);</span></span>
+<span data-line="22">    <span class="dt">long</span> <span class="dt">long</span> people <span class="op">=</span> <span class="dv">1</span><span class="bu">LL</span> <span class="op">*</span> friends <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="23">    vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> area<span class="op">;</span></span>
+<span data-line="24">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> radius <span class="op">:</span> radii<span class="op">)</span></span>
+<span data-line="25">        area<span class="op">.</span>push_back<span class="op">(</span>acos<span class="op">(-</span><span class="fl">1.0</span><span class="op">)</span> <span class="op">*</span> radius <span class="op">*</span> radius<span class="op">);</span></span>
+<span data-line="26">    <span class="dt">double</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="op">*</span>max_element<span class="op">(</span>area<span class="op">.</span>begin<span class="op">(),</span> area<span class="op">.</span>end<span class="op">());</span></span>
+<span data-line="27">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">100</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="28">        <span class="dt">double</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="29">        <span class="cf">if</span> <span class="op">(</span>mid <span class="op">==</span> left <span class="op">||</span> mid <span class="op">==</span> right<span class="op">)</span></span>
+<span data-line="30">            <span class="cf">break</span><span class="op">;</span></span>
+<span data-line="31">        <span class="dt">long</span> <span class="dt">long</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="32">        <span class="cf">for</span> <span class="op">(</span><span class="dt">double</span> x <span class="op">:</span> area<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="33">            <span class="dt">double</span> pieces <span class="op">=</span> floor<span class="op">(</span>x <span class="op">/</span> mid<span class="op">);</span></span>
+<span data-line="34">            <span class="cf">if</span> <span class="op">(</span>pieces <span class="op">&gt;=</span> people <span class="op">-</span> count<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="35">                count <span class="op">=</span> people<span class="op">;</span></span>
+<span data-line="36">                <span class="cf">break</span><span class="op">;</span></span>
+<span data-line="37">            <span class="op">}</span></span>
+<span data-line="38">            count <span class="op">+=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;(</span>pieces<span class="op">);</span></span>
+<span data-line="39">        <span class="op">}</span></span>
+<span data-line="40">        <span class="cf">if</span> <span class="op">(</span>count <span class="op">&gt;=</span> people<span class="op">)</span></span>
+<span data-line="41">            left <span class="op">=</span> mid<span class="op">;</span></span>
+<span data-line="42">        <span class="cf">else</span></span>
+<span data-line="43">            right <span class="op">=</span> mid<span class="op">;</span></span>
+<span data-line="44">    <span class="op">}</span></span>
+<span data-line="45">    <span class="cf">return</span> left<span class="op">;</span></span>
+<span data-line="46"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0354">1.3.8 二分答案的最大值与最小值模板</h6>
+<p>至此，二分答案的一般模板：</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 伪代码：L/R 保存候选范围，check 计算当前候选值的判定结果。</span></span>
+<span data-line="2"><span class="co">/*</span></span>
+<span data-line="3"><span class="co"> * 二分答案通用模板</span></span>
+<span data-line="4"><span class="co"> *</span></span>
+<span data-line="5"><span class="co"> * 二分答案是一种基于单调性的高效搜索技术，通过二分查找确定满足条件的最优解。</span></span>
+<span data-line="6"><span class="co"> * 适用于求解最优化问题，如最大化最小值、最小化最大值等。</span></span>
+<span data-line="7"><span class="co"> */</span></span>
+<span data-line="8"></span>
+<span data-line="9"><span class="kw">using</span> ll <span class="op">=</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">;</span></span>
+<span data-line="10"></span>
+<span data-line="11"><span class="co">/*</span></span>
+<span data-line="12"><span class="co"> * 检查函数 - 二分答案的核心</span></span>
+<span data-line="13"><span class="co"> *</span></span>
+<span data-line="14"><span class="co"> * 把候选值 x 代入判断，观察判定结果怎样随 x 变化：</span></span>
+<span data-line="15"><span class="co"> * - 对于最大化问题：若x满足条件，则所有≤x的值都满足</span></span>
+<span data-line="16"><span class="co"> * - 对于最小化问题：若x满足条件，则所有≥x的值都满足</span></span>
+<span data-line="17"><span class="co"> *</span></span>
+<span data-line="18"><span class="co"> * 参数 x：待检查的值</span></span>
+<span data-line="19"><span class="co"> * 返回：bool 检查结果</span></span>
+<span data-line="20"><span class="co"> *</span></span>
+<span data-line="21"><span class="co"> * 从一个可行方案出发，改变 x 后仍能复用该方案，就能推导可行方向。</span></span>
+<span data-line="22"><span class="co"> * 注意：实现要点: 根据具体问题设计高效的检查逻辑</span></span>
+<span data-line="23"><span class="co"> */</span></span>
+<span data-line="24"><span class="dt">bool</span> check<span class="op">(</span>ll x<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="25">    <span class="co">// 判断 x 是否满足题目条件</span></span>
+<span data-line="26">    <span class="co">// 根据题目推导可行方向，再决定二分时缩短哪一侧。</span></span>
+<span data-line="27">    <span class="co">/*</span></span>
+<span data-line="28"><span class="co">     实际应用中除了上述示例的贪心遍历，可能更为复杂：</span></span>
+<span data-line="29"></span>
+<span data-line="30"><span class="co">     二分 + BFS/DFS：判断连通性或最短路是否满足限制。</span></span>
+<span data-line="31"></span>
+<span data-line="32"><span class="co">     二分 + 动态规划：判断是否存在满足条件的 DP 路径。</span></span>
+<span data-line="33"></span>
+<span data-line="34"><span class="co">     二分 + 最大流：网络流问题中的容量判定。</span></span>
+<span data-line="35"><span class="co">     */</span></span>
+<span data-line="36"><span class="op">}</span></span>
+<span data-line="37"></span>
+<span data-line="38"><span class="co">/*</span></span>
+<span data-line="39"><span class="co"> * 整数二分答案模板 - 最大化最小值类问题</span></span>
+<span data-line="40"><span class="co"> *</span></span>
+<span data-line="41"><span class="co"> * 适用于求解满足条件的最大值，如：最大最小间距、最大可行值等。</span></span>
+<span data-line="42"><span class="co"> * 单调性：若mid满足条件，则所有≤mid的值都满足，目标是找到最大的满足条件的值。</span></span>
+<span data-line="43"><span class="co"> *</span></span>
+<span data-line="44"><span class="co"> * 返回：ll 满足条件的最大值</span></span>
+<span data-line="45"><span class="co"> *</span></span>
+<span data-line="46"><span class="co"> * 注意：时间复杂度: O(log(R-L))</span></span>
+<span data-line="47"><span class="co"> * 注意：适用场景: 最大化最小值、寻找右边界</span></span>
+<span data-line="48"><span class="co"> * 注意：模板特点: 记录ans，l=mid+1，r=mid-1</span></span>
+<span data-line="49"><span class="co"> */</span></span>
+<span data-line="50">ll binary_search_maximize_min<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="51">    ll l <span class="op">=</span> L<span class="op">,</span> r <span class="op">=</span> R<span class="op">,</span> ans <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span data-line="52">    <span class="cf">while</span> <span class="op">(</span>l <span class="op">&lt;=</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="53">        <span class="dt">long</span> <span class="dt">long</span> mid <span class="op">=</span> l <span class="op">+</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>  <span class="co">// 防止溢出</span></span>
+<span data-line="54">        <span class="cf">if</span> <span class="op">(</span>check<span class="op">(</span>mid<span class="op">))</span> <span class="op">{</span>                 <span class="co">// mid 能否满足要求</span></span>
+<span data-line="55">            ans <span class="op">=</span> mid<span class="op">;</span>                    <span class="co">// 记录可行答案</span></span>
+<span data-line="56">            l <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>                  <span class="co">// 继续尝试更大的值</span></span>
+<span data-line="57">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="58">            r <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span><span class="op">;</span>                  <span class="co">// mid 不行，尝试更小的值</span></span>
+<span data-line="59">        <span class="op">}</span></span>
+<span data-line="60">    <span class="op">}</span></span>
+<span data-line="61">    <span class="cf">return</span> ans<span class="op">;</span></span>
+<span data-line="62"><span class="op">}</span></span>
+<span data-line="63"></span>
+<span data-line="64"><span class="co">/*</span></span>
+<span data-line="65"><span class="co"> * 整数二分答案模板 - 最小化最大值类问题</span></span>
+<span data-line="66"><span class="co"> *</span></span>
+<span data-line="67"><span class="co"> * 适用于求解满足条件的最小值，如：最小最大工作量、最小可行值等。</span></span>
+<span data-line="68"><span class="co"> * 单调性：若mid满足条件，则所有≥mid的值都满足，目标是找到最小的满足条件的值。</span></span>
+<span data-line="69"><span class="co"> *</span></span>
+<span data-line="70"><span class="co"> * 返回：ll 满足条件的最小值</span></span>
+<span data-line="71"><span class="co"> *</span></span>
+<span data-line="72"><span class="co"> * 注意：时间复杂度: O(log(R-L))</span></span>
+<span data-line="73"><span class="co"> * 注意：适用场景: 最小化最大值、寻找左边界</span></span>
+<span data-line="74"><span class="co"> * 注意：模板特点: 不记录ans，r=mid，l=mid+1</span></span>
+<span data-line="75"><span class="co"> */</span></span>
+<span data-line="76">ll binary_search_minimize_max<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="77">    ll l <span class="op">=</span> L<span class="op">,</span> r <span class="op">=</span> R<span class="op">;</span></span>
+<span data-line="78">    <span class="cf">while</span> <span class="op">(</span>l <span class="op">&lt;</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="79">        <span class="dt">long</span> <span class="dt">long</span> mid <span class="op">=</span> l <span class="op">+</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span>  <span class="co">// 防止溢出</span></span>
+<span data-line="80">        <span class="cf">if</span> <span class="op">(</span>check<span class="op">(</span>mid<span class="op">))</span> <span class="op">{</span></span>
+<span data-line="81">            r <span class="op">=</span> mid<span class="op">;</span>                      <span class="co">// mid 可行，尝试更小的值</span></span>
+<span data-line="82">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="83">            l <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>                  <span class="co">// mid 不可行，继续尝试更大的值</span></span>
+<span data-line="84">        <span class="op">}</span></span>
+<span data-line="85">    <span class="op">}</span></span>
+<span data-line="86">    <span class="cf">return</span> l<span class="op">;</span></span>
+<span data-line="87"><span class="op">}</span></span>
+<span data-line="88"></span>
+<span data-line="89"><span class="co">/*</span></span>
+<span data-line="90"><span class="co"> * 浮点数二分答案模板</span></span>
+<span data-line="91"><span class="co"> *</span></span>
+<span data-line="92"><span class="co"> * 适用于实数范围内的二分答案，通过固定迭代次数或精度阈值控制搜索精度。</span></span>
+<span data-line="93"><span class="co"> * 常用于连续函数求根、数值计算等问题。</span></span>
+<span data-line="94"><span class="co"> *</span></span>
+<span data-line="95"><span class="co"> * 返回：double 满足条件的近似解</span></span>
+<span data-line="96"><span class="co"> *</span></span>
+<span data-line="97"><span class="co"> * 注意：时间复杂度: O(100) 或 O(log((R-L)/eps))</span></span>
+<span data-line="98"><span class="co"> * 注意：适用场景: 实数范围的最优化、连续函数求根</span></span>
+<span data-line="99"><span class="co"> * 注意：模板特点: 直接赋值mid，无±1操作</span></span>
+<span data-line="100"><span class="co"> */</span></span>
+<span data-line="101"><span class="dt">double</span> binary_search_real<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="102">    <span class="dt">double</span> l <span class="op">=</span> L<span class="op">,</span> r <span class="op">=</span> R<span class="op">;</span></span>
+<span data-line="103">    <span class="co">// 方法1: 固定迭代次数（避免无限循环，仍须检查精度要求）</span></span>
+<span data-line="104">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">100</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span data-line="105">        <span class="dt">double</span> mid <span class="op">=</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="106">        <span class="cf">if</span> <span class="op">(</span>check<span class="op">(</span>mid<span class="op">))</span> <span class="op">{</span></span>
+<span data-line="107">            r <span class="op">=</span> mid<span class="op">;</span>      <span class="co">// check 可行 → 在左半部分继续搜索</span></span>
+<span data-line="108">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="109">            l <span class="op">=</span> mid<span class="op">;</span>      <span class="co">// check 不行 → 在右半部分继续搜索</span></span>
+<span data-line="110">        <span class="op">}</span></span>
+<span data-line="111">    <span class="op">}</span></span>
+<span data-line="112"></span>
+<span data-line="113">    <span class="co">// 方法2: 精度控制</span></span>
+<span data-line="114">    <span class="co">// const double eps = 1e-7;</span></span>
+<span data-line="115">    <span class="co">// while (r - l &gt; eps) {</span></span>
+<span data-line="116">    <span class="co">//     double mid = (l + r) / 2;</span></span>
+<span data-line="117">    <span class="co">//     if (check(mid)) {</span></span>
+<span data-line="118">    <span class="co">//         r = mid;</span></span>
+<span data-line="119">    <span class="co">//     } else {</span></span>
+<span data-line="120">    <span class="co">//         l = mid;</span></span>
+<span data-line="121">    <span class="co">//     }</span></span>
+<span data-line="122">    <span class="co">// }</span></span>
+<span data-line="123"></span>
+<span data-line="124">    <span class="cf">return</span> l<span class="op">;</span> <span class="co">// 或 (l + r) / 2</span></span>
+<span data-line="125"><span class="op">}</span></span>
+<span data-line="126"></span>
+<span data-line="127"><span class="co">/*</span></span>
+<span data-line="128"><span class="co"> * 二分答案解题步骤</span></span>
+<span data-line="129"><span class="co"> *</span></span>
+<span data-line="130"><span class="co"> * 1. 确定搜索范围 [L, R]</span></span>
+<span data-line="131"><span class="co"> * 2. 设计检查函数 check(x)，确保单调性</span></span>
+<span data-line="132"><span class="co"> * 3. 根据问题类型选择合适的模板：</span></span>
+<span data-line="133"><span class="co"> *    - 最大化最小值 → binary_search_maximize_min</span></span>
+<span data-line="134"><span class="co"> *    - 最小化最大值 → binary_search_minimize_max</span></span>
+<span data-line="135"><span class="co"> *    - 实数范围问题 → binary_search_real</span></span>
+<span data-line="136"><span class="co"> * 4. 从可行方案的复用关系推导判定方向</span></span>
+<span data-line="137"><span class="co"> *</span></span>
+<span data-line="138"><span class="co"> * 注意：核心思想: 将最优化问题转化为判定性问题</span></span>
+<span data-line="139"><span class="co"> * 改变候选值后，已有方案仍能复用的方向就是可行方向</span></span>
+<span data-line="140"><span class="co"> * 注意：常见应用: 分配问题、调度问题、数值计算等</span></span>
+<span data-line="141"><span class="co"> */</span></span></code></pre></div>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1182" rel="noopener noreferrer">洛谷 P1182 — 数列分段 Section II</a>、<a href="https://www.luogu.com.cn/problem/P1873" rel="noopener noreferrer">洛谷 P1873 — 砍树</a>、<a href="https://www.luogu.com.cn/problem/P2678" rel="noopener noreferrer">洛谷 P2678 — 跳石头</a>。</p>
+<h4 id="n-0355">2. 三分搜索</h4>
+<h5 id="n-0356">2.1 从单峰与单谷寻找极值</h5>
+<p>三分算法是一种用于在 <strong>单峰 / 单谷函数</strong> 上寻找 <strong>极值（最大值或最小值）</strong> 的算法。</p>
+<p><strong>单峰函数</strong>：函数值先单调增后单调减（求最大值） <strong>单谷函数</strong>：函数值先单调减后单调增（求最小值）</p>
+<p>核心思想：</p>
+<p><strong>每次将区间分成三段，通过比较中间两点函数值，丢弃不可能包含最优解的那一段</strong></p>
+<h5 id="n-0357">2.2 从曲线形状理解取点</h5>
+<p>先观察一个具体函数：<span class="math inline">\(f(x)=-(x-2)^2+4\)</span>。在 [0,4] 中，它从 x=0 的 0 上升到 x=2 的 4，再下降到 x=4 的 0，形成一个峰。</p>
+<p>如果两个取点都在峰的左侧，右点更高，继续向右能接近峰；都在峰的右侧时，左点更高，继续向左能接近峰。两点分居峰的两侧时，峰就在它们之间。三分就是把这些位置关系转成区间更新，下一节沿图逐步推导。</p>
+<p>反过来看两座峰之间的谷底：谷底两点的高低只能说明附近曲线的走向，远处还可能有另一座更高的峰。这时从局部比较中删去一整段，就可能把那座峰也删掉。这个例子说明，舍弃区间的理由来自曲线怎样变化。</p>
+<h5 id="n-0358">2.3 比较两个取点并舍弃一侧区间</h5>
+<p>在单峰或单谷函数中</p>
+<p>单峰函数：</p>
+<figure>
+<img alt="单峰函数先上升后下降" decoding="async" loading="lazy" src="../media/notes/ternary-peak.svg"/>
+<figcaption aria-hidden="true">单峰函数先上升后下降</figcaption>
+</figure>
+<p>图中的绿色点是最大值位置，区间内只有一个峰。</p>
+<p>单谷函数：</p>
+<figure>
+<img alt="单谷函数先下降后上升" decoding="async" loading="lazy" src="../media/notes/ternary-valley.svg"/>
+<figcaption aria-hidden="true">单谷函数先下降后上升</figcaption>
+</figure>
+<p>图中的绿色点是最小值位置；求最小值时需要相应调整比较方向。</p>
+<p>下面以单峰函数为例</p>
+<p>在区间 <span class="math inline">\([l,r]\)</span> 中取两点 <span class="math inline">\(mid1\)</span> , <span class="math inline">\(mid2\)</span></p>
+<p>且 <span class="math display">\[
+mid1 = l+\frac{r-l}{3}, mid2 = r-\frac{r-l}{3}
+\]</span> 则对于 <span class="math inline">\(f(mid1)\)</span> 和 <span class="math inline">\(f(mid2)\)</span> 的关系有：</p>
+<ol type="1">
+<li><span class="math inline">\(f(mid2)&gt;f(mid1)\)</span> 时，有两种情况：</li>
+</ol>
+<figure>
+<img alt="三分求最大值时舍弃左侧区间" decoding="async" loading="lazy" src="../media/notes/ternary-discard-left.svg"/>
+<figcaption aria-hidden="true">三分求最大值时舍弃左侧区间</figcaption>
+</figure>
+<p>两种极值位置都满足 f(mid1) &lt; f(mid2)：橙色左段可舍弃，绿色范围继续搜索。</p>
+<p>以上两种情况都有，极值点 <span class="math inline">\(v\)</span> 在 <span class="math inline">\(mid1\)</span> 的右边，因此每次迭代使得 <span class="math inline">\(l=mid1\)</span> ，即使区间缩减为 <span class="math inline">\([mid1,r]\)</span> ，并再次取两点分出三段逐步逼近即可</p>
+<ol start="2" type="1">
+<li><span class="math inline">\(f(mid1)&gt;f(mid2)\)</span> 时，也有两种情况：</li>
+</ol>
+<figure>
+<img alt="三分求最大值时舍弃右侧区间" decoding="async" loading="lazy" src="../media/notes/ternary-discard-right.svg"/>
+<figcaption aria-hidden="true">三分求最大值时舍弃右侧区间</figcaption>
+</figure>
+<p>两种极值位置都满足 f(mid1) &gt; f(mid2)：橙色右段可舍弃，绿色范围继续搜索。</p>
+<p>以上两种情况都有，极值点 <span class="math inline">\(v\)</span> 在 <span class="math inline">\(mid2\)</span> 的左边，因此每次迭代使得 <span class="math inline">\(r=mid2\)</span> ，即使区间缩减为 <span class="math inline">\([l,mid2]\)</span> ，并再次取两点分出三段逐步逼近即可</p>
+<h5 id="n-0359">2.4 实数与整数三分的实现</h5>
+<p>与二分算法类似，由于除法的取整方向的问题，也需要划分出整数三分或实数三分</p>
+<h6 id="n-0360">2.4.1 实数三分：缩小区间逼近峰顶</h6>
+<p><strong>题目原文（自拟）：</strong> 输入一个 <code>N</code> 次多项式的系数，从最高次项到常数项依次保存为 <code>a[0..N]</code>，以及有限区间 <code>[l,r]</code>。保证多项式在区间内先严格上升、后严格下降，只有一个最大值点；使用 double 计算函数值。求最大值点 <code>x</code> 的浮点近似。教学样例使用 <code>N=2</code>、系数 <code>[-1,4,0]</code>、区间 <code>[0,4]</code>，要求绝对误差不超过 <code>1e-6</code>。</p>
+<p><strong>思路分析：</strong> 每轮取两个三等分点。左点的函数值较小时，峰顶不在最左的三分之一，因此移动左边界；否则移动右边界。比较的是函数值，最终返回的是自变量 <code>x</code>，两者不能混淆。求最小值的模板将比较方向反过来，对应的曲线则先下降、后上升。</p>
+<p>多项式不要每次分别计算所有幂。按 <span class="math inline">\((((a_0x+a_1)x+a_2)x+\cdots)x+a_N\)</span> 逐项乘加，这就是<strong>秦九韶算法</strong>。<code>poly_func(x,a,N)</code> 要求系数恰好有 <code>N+1</code> 项；它每次求值花 <span class="math inline">\(O(N)\)</span> 时间。</p>
+<figure>
+<img alt="秦九韶算法逐项乘加求多项式值" decoding="async" loading="lazy" src="../media/notes/horner-polynomial-evaluation.svg"/>
+<figcaption aria-hidden="true">秦九韶算法逐项乘加求多项式值</figcaption>
+</figure>
+<p>图用 <code>2x²-3x+4</code> 在 <code>x=2</code> 的求值过程说明乘加顺序；三分样例的系数不同，但求值方法相同。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="at">const</span> <span class="dt">double</span> eps <span class="op">=</span> <span class="fl">1e-6</span><span class="op">;</span> <span class="co">// 精度阈值</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">double</span> poly_func<span class="op">(</span><span class="dt">double</span> x<span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">double</span> result <span class="op">=</span> a<span class="op">[</span><span class="dv">0</span><span class="op">];</span> <span class="co">// 初始化为最高次项系数</span></span>
+<span data-line="8">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        result <span class="op">=</span> result <span class="op">*</span> x <span class="op">+</span> a<span class="op">[</span>i<span class="op">];</span> <span class="co">// 秦九韶算法迭代</span></span>
+<span data-line="10">    <span class="op">}</span></span>
+<span data-line="11">    <span class="cf">return</span> result<span class="op">;</span></span>
+<span data-line="12"><span class="op">}</span></span>
+<span data-line="13"></span>
+<span data-line="14"><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> Func<span class="op">&gt;</span> <span class="dt">double</span> ternary_search_max<span class="op">(</span>Func f<span class="op">,</span> <span class="dt">double</span> l<span class="op">,</span> <span class="dt">double</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="15">    <span class="co">// 方法1：固定迭代次数（避免无限循环，仍须检查精度要求）</span></span>
+<span data-line="16">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">100</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">        <span class="dt">double</span> k <span class="op">=</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="fl">3.0</span><span class="op">;</span></span>
+<span data-line="18">        <span class="dt">double</span> mid1 <span class="op">=</span> l <span class="op">+</span> k<span class="op">;</span> <span class="co">// 左三等分点</span></span>
+<span data-line="19">        <span class="dt">double</span> mid2 <span class="op">=</span> r <span class="op">-</span> k<span class="op">;</span> <span class="co">// 右三等分点</span></span>
+<span data-line="20"></span>
+<span data-line="21">        <span class="cf">if</span> <span class="op">(</span>f<span class="op">(</span>mid1<span class="op">)</span> <span class="op">&lt;</span> f<span class="op">(</span>mid2<span class="op">))</span> <span class="op">{</span></span>
+<span data-line="22">            l <span class="op">=</span> mid1<span class="op">;</span> <span class="co">// 最大值在[mid1, r]区间</span></span>
+<span data-line="23">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="24">            r <span class="op">=</span> mid2<span class="op">;</span> <span class="co">// 最大值在[l, mid2]区间</span></span>
+<span data-line="25">        <span class="op">}</span></span>
+<span data-line="26">    <span class="op">}</span></span>
+<span data-line="27"></span>
+<span data-line="28">    <span class="cf">return</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span> <span class="co">// 返回区间中点作为近似最优解</span></span>
+<span data-line="29"><span class="op">}</span></span>
+<span data-line="30"></span>
+<span data-line="31"><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> Func<span class="op">&gt;</span> <span class="dt">double</span> ternary_search_min<span class="op">(</span>Func f<span class="op">,</span> <span class="dt">double</span> l<span class="op">,</span> <span class="dt">double</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="32">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">100</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="33">        <span class="dt">double</span> k <span class="op">=</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="fl">3.0</span><span class="op">;</span></span>
+<span data-line="34">        <span class="dt">double</span> mid1 <span class="op">=</span> l <span class="op">+</span> k<span class="op">;</span></span>
+<span data-line="35">        <span class="dt">double</span> mid2 <span class="op">=</span> r <span class="op">-</span> k<span class="op">;</span></span>
+<span data-line="36"></span>
+<span data-line="37">        <span class="cf">if</span> <span class="op">(</span>f<span class="op">(</span>mid1<span class="op">)</span> <span class="op">&gt;</span> f<span class="op">(</span>mid2<span class="op">))</span> <span class="op">{</span> <span class="co">// 注意：这里比较符号与求最大值相反</span></span>
+<span data-line="38">            l <span class="op">=</span> mid1<span class="op">;</span>            <span class="co">// 最小值在[mid1, r]区间</span></span>
+<span data-line="39">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="40">            r <span class="op">=</span> mid2<span class="op">;</span> <span class="co">// 最小值在[l, mid2]区间</span></span>
+<span data-line="41">        <span class="op">}</span></span>
+<span data-line="42">    <span class="op">}</span></span>
+<span data-line="43"></span>
+<span data-line="44">    <span class="cf">return</span> <span class="op">(</span>l <span class="op">+</span> r<span class="op">)</span> <span class="op">/</span> <span class="fl">2.0</span><span class="op">;</span></span>
+<span data-line="45"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例与解释：</strong> 对 <code>f(x)=-x²+4x</code>，在 <code>[0,4]</code> 上先上升后下降，最大值点是 <code>x=2</code>，函数最大值为 4。调用 <code>ternary_search_max</code> 时，将系数数组捕获到一个 lambda 中，再用 <code>poly_func</code> 计算传入位置的函数值。返回结果约为 2；若题目还要最大函数值，再对返回点求一次值。</p>
+<p><strong>复杂度与精度：</strong> 上面的三分固定迭代 100 次，每轮两次多项式求值，所以总计算量约为 <code>200N</code>，时间 <span class="math inline">\(O(100N)\)</span>，除系数存储外额外空间 <span class="math inline">\(O(1)\)</span>。若用误差作为停止条件，理论轮数为 <span class="math inline">\(O(\log((r-l)/eps))\)</span>，总时间还要乘上求值代价。每轮区间宽度变为原来的 <code>2/3</code>，因此初始宽度为 L 时，t 轮后约剩 <code>L*(2/3)^t</code>。把这个宽度与题目允许的位置误差相比，就能估算需要多少轮。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P3382" rel="noopener noreferrer">洛谷 P3382 — 三分法</a>。</p>
+<h6 id="n-0361">2.4.2 整数三分：比较取点后枚举剩余值</h6>
+<p><strong>整数三分</strong> 用于在 <strong>离散整数区间</strong> <span class="math inline">\([l, r]\)</span> 上，寻找一个函数的极值点（最大值或最小值）</p>
+<p><strong>题目原文（自拟）：</strong> 给定整数 l、r、k、c，l&lt;=r，l、r、k 的绝对值不超过 10⁶，c 的绝对值不超过 10¹²。在整数闭区间 [l,r] 内寻找 f(x)=-(x-k)²+c 的最大值位置，若有多个最优位置返回一个即可；最大值可由 f(返回位置) 计算。下面用全局参数 k、c 与函数接口演示。</p>
+<p><strong>推导与样例：</strong> 抛物线在顶点 k 左侧上升、右侧下降。取两个三等分点，左值小于右值时可以排除更左侧，反之保留左侧与中间。剩余区间太短时枚举，不依赖浮点精度。l=-3、r=9、k=3、c=10 时返回位置 3，最大值为 10；k 不在区间时最优点是较靠近 k 的端点。</p>
+<p><strong>复杂度与练习：</strong> 假设 f 为 O(1)，三分时间 O(log(r-l+1))、空间 O(1)；固定抛物线的解析解为 O(1)。<a href="https://www.luogu.com.cn/problem/P3382" rel="noopener noreferrer">洛谷 P3382 — 三分法</a>（多项式实数单峰题，使用实数版本）。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>整数三分</th>
+<th>实数三分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>区间</td>
+<td>离散整数</td>
+<td>连续实数</td>
+</tr>
+<tr>
+<td>终止条件</td>
+<td>区间长度很小</td>
+<td>精度误差</td>
+</tr>
+<tr>
+<td>结尾处理</td>
+<td>暴力枚举剩余点</td>
+<td>取中点</td>
+</tr>
+<tr>
+<td>易错点</td>
+<td>死循环</td>
+<td>精度不足</td>
+</tr>
+</tbody>
+</table>
+<p>例题：</p>
+<p>给定一个定义在整数区间 <span class="math inline">\([l, r]\)</span> 上的函数： <span class="math display">\[
+f(x) = - (x - k)^2 + c
+\]</span> 其中 <span class="math inline">\(l \le x \le r\)</span>，<span class="math inline">\(l, r, k, c\)</span> 均为整数。请你找出 <strong>使函数值最大的整数 <span class="math inline">\(x\)</span></strong>，并输出这个最大值。</p>
+<figure>
+<img alt="整数三分缩小后枚举剩余候选" decoding="async" loading="lazy" src="../media/notes/integer-ternary-final-scan.svg"/>
+<figcaption aria-hidden="true">整数三分缩小后枚举剩余候选</figcaption>
+</figure>
+<p>图示 f(x)=-(x-3)²+10，在 [1,4] 中逐个比较 1、2、3、4，避免整数取整使区间不再缩小。</p>
+<p><strong>代码组合方式：</strong> 前三段共享第一段的头文件、ll、k、c 和 f；模板也使用 ll。函数名各不相同，可以放进同一文件。</p>
+<p><strong>1. 明确函数和返回值</strong></p>
+<p>以 f(x)=-(x-k)²+c 为例，越靠近 k，函数值越大。现在从整数区间 [l,r] 中寻找最大值的位置；函数返回位置 best，再计算 f(best) 就得到最大函数值。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 示例函数为 f(x)=-(x-k)²+c。</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="kw">using</span> ll <span class="op">=</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7">ll k<span class="op">,</span> c<span class="op">;</span> <span class="co">// 抛物线参数：顶点在(k, c)</span></span>
+<span data-line="8"></span>
+<span data-line="9">ll f<span class="op">(</span>ll x<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">    ll diff <span class="op">=</span> x <span class="op">-</span> k<span class="op">;</span></span>
+<span data-line="11">    <span class="cf">return</span> <span class="op">-(</span>diff <span class="op">*</span> diff<span class="op">)</span> <span class="op">+</span> c<span class="op">;</span> <span class="co">// 避免使用pow，提高效率</span></span>
+<span data-line="12"><span class="op">}</span></span></code></pre></div>
+<p><strong>2. 三分缩区间，再枚举剩余整数</strong></p>
+<p>整数区间不能依赖无限缩小。当前代码在 r-l&lt;=3 时直接枚举所有剩余点，比较值后保存最优位置，避免取整导致区间停滞。</p>
+<figure>
+<img alt="逐步缩小整数区间并枚举最后四个候选" decoding="async" loading="lazy" src="../media/notes/integer-ternary-shrink-stages.svg"/>
+<figcaption aria-hidden="true">逐步缩小整数区间并枚举最后四个候选</figcaption>
+</figure>
+<p>逐步缩小整数区间并枚举最后四个候选。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 整数区间不能依赖无限缩小。</span></span>
+<span data-line="2">ll ternary_search<span class="op">(</span>ll l<span class="op">,</span> ll r<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="co">// 边界检查</span></span>
+<span data-line="4">    <span class="cf">if</span> <span class="op">(</span>l <span class="op">&gt;</span> r<span class="op">)</span></span>
+<span data-line="5">        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span> <span class="co">// 无效区间</span></span>
+<span data-line="6"></span>
+<span data-line="7">    <span class="co">// 特殊情况处理：区间长度很小直接暴力</span></span>
+<span data-line="8">    <span class="cf">if</span> <span class="op">(</span>r <span class="op">-</span> l <span class="op">+</span> <span class="dv">1</span> <span class="op">&lt;=</span> <span class="dv">3</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        ll best <span class="op">=</span> l<span class="op">;</span></span>
+<span data-line="10">        <span class="cf">for</span> <span class="op">(</span>ll x <span class="op">=</span> l <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> x <span class="op">&lt;=</span> r<span class="op">;</span> x<span class="op">++)</span> <span class="op">{</span></span>
+<span data-line="11">            <span class="cf">if</span> <span class="op">(</span>f<span class="op">(</span>x<span class="op">)</span> <span class="op">&gt;</span> f<span class="op">(</span>best<span class="op">))</span></span>
+<span data-line="12">                best <span class="op">=</span> x<span class="op">;</span></span>
+<span data-line="13">        <span class="op">}</span></span>
+<span data-line="14">        <span class="cf">return</span> best<span class="op">;</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16"></span>
+<span data-line="17">    <span class="co">// 三分阶段：不断缩小搜索区间</span></span>
+<span data-line="18">    <span class="cf">while</span> <span class="op">(</span>r <span class="op">-</span> l <span class="op">&gt;</span> <span class="dv">3</span><span class="op">)</span> <span class="op">{</span>            <span class="co">// 区间长度&gt;3时继续三分</span></span>
+<span data-line="19">        ll mid1 <span class="op">=</span> l <span class="op">+</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="dv">3</span><span class="op">;</span> <span class="co">// 左三等分点</span></span>
+<span data-line="20">        ll mid2 <span class="op">=</span> r <span class="op">-</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="dv">3</span><span class="op">;</span> <span class="co">// 右三等分点</span></span>
+<span data-line="21"></span>
+<span data-line="22">        <span class="co">// 比较两个三等分点的函数值</span></span>
+<span data-line="23">        <span class="cf">if</span> <span class="op">(</span>f<span class="op">(</span>mid1<span class="op">)</span> <span class="op">&lt;</span> f<span class="op">(</span>mid2<span class="op">))</span></span>
+<span data-line="24">            l <span class="op">=</span> mid1<span class="op">;</span> <span class="co">// 峰值在[mid1, r]区间</span></span>
+<span data-line="25">        <span class="cf">else</span></span>
+<span data-line="26">            r <span class="op">=</span> mid2<span class="op">;</span> <span class="co">// 峰值在[l, mid2]区间</span></span>
+<span data-line="27">    <span class="op">}</span></span>
+<span data-line="28"></span>
+<span data-line="29">    <span class="co">// 暴力阶段：枚举剩余的所有点</span></span>
+<span data-line="30">    ll best <span class="op">=</span> l<span class="op">;</span></span>
+<span data-line="31">    <span class="cf">for</span> <span class="op">(</span>ll x <span class="op">=</span> l <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> x <span class="op">&lt;=</span> r<span class="op">;</span> x<span class="op">++)</span> <span class="op">{</span></span>
+<span data-line="32">        <span class="cf">if</span> <span class="op">(</span>f<span class="op">(</span>x<span class="op">)</span> <span class="op">&gt;</span> f<span class="op">(</span>best<span class="op">))</span></span>
+<span data-line="33">            best <span class="op">=</span> x<span class="op">;</span></span>
+<span data-line="34">    <span class="op">}</span></span>
+<span data-line="35"></span>
+<span data-line="36">    <span class="cf">return</span> best<span class="op">;</span></span>
+<span data-line="37"><span class="op">}</span></span></code></pre></div>
+<p><strong>3. 已知顶点时使用解析解</strong></p>
+<p>这条抛物线在 k 处最高。k 在区间内就取 k；在左侧就取 l，在右侧就取 r，因此答案是把 k 限制到 [l,r]。这是该函数的特定性质，不能当成任意单峰函数的解法。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 这条抛物线在 k 处最高。</span></span>
+<span data-line="2">ll optimal_solution<span class="op">(</span>ll l<span class="op">,</span> ll r<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="cf">if</span> <span class="op">(</span>l <span class="op">&gt;</span> r<span class="op">)</span></span>
+<span data-line="4">        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span data-line="5">    <span class="cf">return</span> max<span class="op">(</span>l<span class="op">,</span> min<span class="op">(</span>r<span class="op">,</span> k<span class="op">));</span></span>
+<span data-line="6"><span class="op">}</span></span></code></pre></div>
+<p><strong>4. 抽出可复用的整数三分模板</strong></p>
+<p>这里继续使用 ll 表示 long long。以峰形的整数函数为例，区间较长时比较两个三等分点，沿上一节推导的方向缩短区间；只剩少量整数时逐个计算并选出最大值。谷形函数则反过来比较，最终逐个取最小值。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// ll 表示 long long；本函数比较峰形曲线上的两个取点，最后逐个检查剩余整数。</span></span>
+<span data-line="2"><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> Func<span class="op">&gt;</span> ll integer_ternary_search<span class="op">(</span>Func f<span class="op">,</span> ll l<span class="op">,</span> ll r<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="cf">while</span> <span class="op">(</span>r <span class="op">-</span> l <span class="op">&gt;</span> <span class="dv">3</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="4">        ll mid1 <span class="op">=</span> l <span class="op">+</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="dv">3</span><span class="op">;</span></span>
+<span data-line="5">        ll mid2 <span class="op">=</span> r <span class="op">-</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="dv">3</span><span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7">        <span class="cf">if</span> <span class="op">(</span>f<span class="op">(</span>mid1<span class="op">)</span> <span class="op">&lt;</span> f<span class="op">(</span>mid2<span class="op">))</span></span>
+<span data-line="8">            l <span class="op">=</span> mid1<span class="op">;</span></span>
+<span data-line="9">        <span class="cf">else</span></span>
+<span data-line="10">            r <span class="op">=</span> mid2<span class="op">;</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12"></span>
+<span data-line="13">    ll best <span class="op">=</span> l<span class="op">;</span></span>
+<span data-line="14">    <span class="cf">for</span> <span class="op">(</span>ll x <span class="op">=</span> l <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> x <span class="op">&lt;=</span> r<span class="op">;</span> x<span class="op">++)</span> <span class="op">{</span></span>
+<span data-line="15">        <span class="cf">if</span> <span class="op">(</span>f<span class="op">(</span>x<span class="op">)</span> <span class="op">&gt;</span> f<span class="op">(</span>best<span class="op">))</span></span>
+<span data-line="16">            best <span class="op">=</span> x<span class="op">;</span></span>
+<span data-line="17">    <span class="op">}</span></span>
+<span data-line="18">    <span class="cf">return</span> best<span class="op">;</span></span>
+<span data-line="19"><span class="op">}</span></span></code></pre></div>
+<p>使用暴力搜索的原因，在整数域中：</p>
+<ul>
+<li><code>mid1</code> 和 <code>mid2</code> <strong>可能相等</strong></li>
+<li>区间长度小的时候三分 <strong>不再缩小区间</strong></li>
+<li>容易死循环或漏最优点</li>
+</ul>
+<p>所以统一策略是：</p>
+<p>当 <code>r - l &lt;= 3</code>，直接枚举</p>
+<p>以下情况 <strong>不能用</strong> 整数三分：</p>
+<ul>
+<li>函数 <strong>不单峰</strong></li>
+<li>有多个局部极值</li>
+<li>函数是“阶梯型”或“锯齿型”</li>
+<li>题目本质是 <strong>二分答案 + 判定</strong></li>
+</ul>
+<p>若目标能转换成单调可行性边界，就分析二分答案；若直接优化单峰函数，再考虑三分。选择方法需要依据题目的结构。</p>
+<h5 id="n-0362">2.5 二分与三分的判定方式对照</h5>
+<table>
+<thead>
+<tr>
+<th>对比点</th>
+<th>二分</th>
+<th>三分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目标</td>
+<td>找边界 / 判定条件</td>
+<td>找极值</td>
+</tr>
+<tr>
+<td>函数要求</td>
+<td>单调</td>
+<td>单峰 / 单谷</td>
+</tr>
+<tr>
+<td>每轮比较</td>
+<td>1 次</td>
+<td>2 次</td>
+</tr>
+<tr>
+<td>时间复杂度</td>
+<td><span class="math inline">\(O(\log_2 n)\)</span></td>
+<td><span class="math inline">\(O(\log n)\)</span>（每轮约保留 2/3）</td>
+</tr>
+<tr>
+<td>常见用途</td>
+<td>判定、最小可行解</td>
+<td>最大/最小函数值</td>
+</tr>
+</tbody>
+</table>
+<h5 id="n-0363">2.6 从求根、判定与求极值选择搜索方式</h5>
+<p>(1). <strong>物理问题</strong></p>
+<ul>
+<li>最短距离</li>
+<li>最小能量</li>
+<li>最优角度</li>
+</ul>
+<p>(2).<strong>几何问题</strong></p>
+<ul>
+<li>点到曲线最短距离</li>
+<li>最大面积 / 最小周长</li>
+</ul>
+<p>(3).<strong>算法竞赛常见</strong></p>
+<ul>
+<li>函数最值优化</li>
+<li>与 DP / 贪心 结合</li>
+</ul>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P3382" rel="noopener noreferrer">洛谷 P3382 — 三分</a>。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-05-09.html"><small>上一节</small>（九） 双指针与滑动窗口（尺取法）</a><a href="../chapters/part-05-11.html"><small>下一节</small>（十一） 贪心算法</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0336">1. 二分搜索</a><a class="level-5" href="#n-0337">1.1 整数二分</a><a class="level-6" href="#n-0338">1.1.1 查找一个等于目标的元素</a><a class="level-6" href="#n-0339">1.1.2 边界查找（lower_bound / upper_bound）</a><a class="level-6" href="#n-0340">1.1.3 查找前驱与后继</a><a class="level-6" href="#n-0341">1.1.4 两数之和：二分查找互补值</a><a class="level-5" href="#n-0342">1.2 实数二分</a><a class="level-6" href="#n-0343">1.2.1 求平方根</a><a class="level-6" href="#n-0344">1.2.2 二分法求方程的根</a><a class="level-6" href="#n-0345">1.2.3 与整数二分的对比</a><a class="level-5" href="#n-0346">1.3 二分答案</a><a class="level-6" href="#n-0347">1.3.1 最小吃香蕉速度（Koko，LeetCode 875）</a><a class="level-6" href="#n-0348">1.3.2 木材切割：寻找最长可行长度</a><a class="level-6" href="#n-0349">1.3.3 最小化最大值：寻找第一个可行上限</a><a class="level-6" href="#n-0350">1.3.4 任务分段：最小化最大工作量</a><a class="level-6" href="#n-0351">1.3.5 最大化最小值：寻找最后一个可行下限</a><a class="level-6" href="#n-0352">1.3.6 进击的奶牛：最大化最小间距</a><a class="level-6" href="#n-0353">1.3.7 分派：最大化每人的切片面积（POJ 3122）</a><a class="level-6" href="#n-0354">1.3.8 二分答案的最大值与最小值模板</a><a class="level-4" href="#n-0355">2. 三分搜索</a><a class="level-5" href="#n-0356">2.1 从单峰与单谷寻找极值</a><a class="level-5" href="#n-0357">2.2 从曲线形状理解取点</a><a class="level-5" href="#n-0358">2.3 比较两个取点并舍弃一侧区间</a><a class="level-5" href="#n-0359">2.4 实数与整数三分的实现</a><a class="level-6" href="#n-0360">2.4.1 实数三分：缩小区间逼近峰顶</a><a class="level-6" href="#n-0361">2.4.2 整数三分：比较取点后枚举剩余值</a><a class="level-5" href="#n-0362">2.5 二分与三分的判定方式对照</a><a class="level-5" href="#n-0363">2.6 从求根、判定与求极值选择搜索方式</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

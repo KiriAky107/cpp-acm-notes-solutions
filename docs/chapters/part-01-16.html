@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十六） std::function：保存、传递和更换计算动作 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-01-16.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-01-16.html" data-page-title="（十六） std::function：保存、传递和更换计算动作" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details open><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="current" href="../chapters/part-01-16.html" aria-current=page>（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 一、C++ 语法基础</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0174">（十六） std::function：保存、传递和更换计算动作</h3>
+<h4 id="n-0175">1. 从“保存数据”到“保存要执行的动作”</h4>
+<p>STL 已能保存数和记录。如果希望先选择“加一”或“加上偏移量”，之后再统一调用一个名字执行它，能不能把计算动作也保存起来？普通函数与 lambda 都能被调用，std::function 用一个约定的调用形式接住它们。</p>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。先令规则为“加一”，作用于 3；再换成捕获偏移量 5 的“加上偏移量”，作用于 3；最后换成“平方”，作用于 3。每次输出结果。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;functional&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> addOne<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="cf">return</span> x <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="7"><span class="op">}</span> <span class="co">// 一个普通函数。</span></span>
+<span data-line="8"></span>
+<span data-line="9"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="10">    function<span class="op">&lt;</span><span class="dt">int</span><span class="op">(</span><span class="dt">int</span><span class="op">)&gt;</span> rule <span class="op">=</span> addOne<span class="op">;</span> <span class="co">// 接收一个 int，返回一个 int。</span></span>
+<span data-line="11">    cout <span class="op">&lt;&lt;</span> rule<span class="op">(</span><span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="12">    <span class="dt">int</span> offset <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span data-line="13">    rule <span class="op">=</span> <span class="op">[</span>offset<span class="op">](</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">+</span> offset<span class="op">;</span> <span class="op">};</span> <span class="co">// 改存带捕获的 lambda。</span></span>
+<span data-line="14">    cout <span class="op">&lt;&lt;</span> rule<span class="op">(</span><span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="15">    rule <span class="op">=</span> <span class="op">[](</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">*</span> x<span class="op">;</span> <span class="op">};</span> <span class="co">// 再次更换规则，调用形式仍相同。</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> rule<span class="op">(</span><span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>4
+8
+9</code></pre>
+<figure>
+<img alt="同一调用入口先后保存不同动作，再把输入交给当前动作" decoding="async" loading="lazy" src="../media/notes/syntax-function-replace-rule.svg"/>
+<figcaption aria-hidden="true">同一调用入口先后保存不同动作，再把输入交给当前动作</figcaption>
+</figure>
+<p><code>&lt;functional&gt;</code> 提供 function。<code>function&lt;int(int)&gt;</code> 的外层是模板；尖括号里的 <code>int(int)</code> 是<strong>函数类型</strong>：前一个 int 是返回类型，括号里的 int 是参数类型。不是两个整数值，更不是把输入 3 写在类型里。<code>rule(3)</code> 才是实际调用。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>写法</th>
+<th>调用约定</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>function&lt;int(int)&gt;</code></td>
+<td>一个 int 参数，返回 int</td>
+<td>整数变换</td>
+</tr>
+<tr>
+<td><code>function&lt;bool(int,int)&gt;</code></td>
+<td>两个 int 参数，返回 bool</td>
+<td>判断两个数的关系</td>
+</tr>
+<tr>
+<td><code>function&lt;double(double)&gt;</code></td>
+<td>一个 double 参数，返回 double</td>
+<td>后面二分求根使用的函数 f</td>
+</tr>
+<tr>
+<td><code>function&lt;void(int)&gt;</code></td>
+<td>一个 int 参数，不返回结果值</td>
+<td>输出动作、搜索中的调用</td>
+</tr>
+</tbody>
+</table>
+<p>不同 lambda 表达式具有不同的类型，auto 变量由初始化时的表达式确定类型；std::function 则把能按指定形式调用的目标包装成同一个类型，因此可以更换保存的动作。包装后仍按签名传入参数、接收返回值，这种统一调用接口的方式也称为类型擦除。</p>
+<h4 id="n-0176">2. 把动作作为参数传给另一段处理过程</h4>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。数组为 <code>1、2、3</code>，分别按“乘 2”和“加 10”的规则转换并输出，每个规则的结果占一行，以空格分隔。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;functional&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">void</span> printTransformed<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>values<span class="op">,</span> <span class="at">const</span> function<span class="op">&lt;</span><span class="dt">int</span><span class="op">(</span><span class="dt">int</span><span class="op">)&gt;</span> <span class="op">&amp;</span>rule<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>values<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="9">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="10">        cout <span class="op">&lt;&lt;</span> rule<span class="op">(</span>values<span class="op">[</span>i<span class="op">]);</span> <span class="co">// 过程不决定公式，只负责把每项交给规则。</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="13"><span class="op">}</span></span>
+<span data-line="14"></span>
+<span data-line="15"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="16">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
+<span data-line="17">    printTransformed<span class="op">(</span>values<span class="op">,</span> <span class="op">[](</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">*</span> <span class="dv">2</span><span class="op">;</span> <span class="op">});</span>  <span class="co">// 传入第一个动作。</span></span>
+<span data-line="18">    printTransformed<span class="op">(</span>values<span class="op">,</span> <span class="op">[](</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">+</span> <span class="dv">10</span><span class="op">;</span> <span class="op">});</span> <span class="co">// 数据相同，动作不同。</span></span>
+<span data-line="19"><span class="op">}</span></span></code></pre></div>
+<p>输出为 <code>2 4 6</code>、<code>11 12 13</code>，各占一行。只读引用避免在 printTransformed 的参数处再复制已有容器与函数对象；这里传入的临时 function 在整个调用期间有效。容器的遍历和计算规则分别负责自己的部分，后面的求根代码就会把 f 作为这样的参数。</p>
+<h4 id="n-0177">3. 空目标与已保存的动作</h4>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="bu">std::</span>function<span class="op">&lt;</span><span class="dt">int</span><span class="op">(</span><span class="dt">int</span><span class="op">)&gt;</span> rule<span class="op">;</span> <span class="co">// 默认构造时为空，没有目标可以执行。</span></span>
+<span data-line="2"><span class="cf">if</span> <span class="op">(</span>rule<span class="op">)</span> <span class="op">{</span>                   <span class="co">// 转成逻辑判断：检查是否已保存一个可调用目标。</span></span>
+<span data-line="3">    rule<span class="op">(</span><span class="dv">3</span><span class="op">);</span>                  <span class="co">// 只有存在目标时才调用；本片段需 &lt;functional&gt;。</span></span>
+<span data-line="4"><span class="op">}</span></span></code></pre></div>
+<p>直接调用空 function 会抛出 <code>std::bad_function_call</code>，不是默认返回 0。改用 <code>rule=nullptr</code> 可以清空目标。保存引用捕获的 lambda 时，function 也不会延长它所引用变量的生命周期。</p>
+<h4 id="n-0178">4. 递归 lambda：先准备名字，再让动作调用这个名字</h4>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。从 3 开始依次输出 <code>3、2、1</code>，到 0 时停止；用一个能够调用自己的 lambda 完成，元素之间一个空格。</p>
+<p><strong>推导：</strong> 输出当前剩余数 left 后，下一个动作与当前完全相同，只是参数变成 left-1；left=0 时直接返回，不再调用。先声明 countDown，再给它赋值，lambda 才能引用一个已声明的名字。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;functional&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    function<span class="op">&lt;</span><span class="dt">void</span><span class="op">(</span><span class="dt">int</span><span class="op">)&gt;</span> countDown<span class="op">;</span> <span class="co">// 先声明用于调用的名字。</span></span>
+<span data-line="7">    countDown <span class="op">=</span> <span class="op">[&amp;</span>countDown<span class="op">](</span><span class="dt">int</span> left<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="cf">if</span> <span class="op">(</span>left <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="9">            <span class="cf">return</span><span class="op">;</span> <span class="co">// 这一支结束递归，不再调用下一层。</span></span>
+<span data-line="10">        cout <span class="op">&lt;&lt;</span> left<span class="op">;</span></span>
+<span data-line="11">        <span class="cf">if</span> <span class="op">(</span>left <span class="op">&gt;</span> <span class="dv">1</span><span class="op">)</span></span>
+<span data-line="12">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="13">        countDown<span class="op">(</span>left <span class="op">-</span> <span class="dv">1</span><span class="op">);</span> <span class="co">// 调用同一动作，参数逐次减小。</span></span>
+<span data-line="14">    <span class="op">};</span></span>
+<span data-line="15">    countDown<span class="op">(</span><span class="dv">3</span><span class="op">);</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<figure>
+<img alt="递归调用暂停父层，遇到终止条件后逐层返回" decoding="async" loading="lazy" src="../media/notes/syntax-function-recursive-calls.svg"/>
+<figcaption aria-hidden="true">递归调用暂停父层，遇到终止条件后逐层返回</figcaption>
+</figure>
+<p>输出 <code>3 2 1</code>。先进入 3，再进入 2、1、0；0 返回后，依次回到 1、2、3 的调用现场，每层从调用后的语句继续执行。本例之后没有其他操作，所以直接继续返回。搜索章节会在这个基础上加入选择、回溯和记忆化，并画出返回后还要做什么。</p>
+<p>std::function 把不同的可调用对象包装成同一个调用接口。包装可能分配存储，调用还会经过包装层，所以计算费用时既要计入包装与调用，也要计入目标函数本身的工作。固定动作可以直接使用普通函数或 auto lambda；把动作作为参数传递、保存或替换时，function 提供统一的类型。C++17 的 function 会保存可复制的目标，例如前面按值捕获整数的 lambda 可以随包装一起复制。相关接口见 <a href="https://timsong-cpp.github.io/cppwp/n4659/func.wrap.func" rel="noopener noreferrer">C++17 草案：function</a>。</p>
+<p>现在能够把数据组成容器，也能把动作传给处理过程。下一部分用自定义类把相关的数据、约束和操作放到一起，先从学生记录这样的具体需求开始。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-01-15.html"><small>上一节</small>（十五） STL：容器、迭代器与算法</a><a href="../chapters/part-02.html"><small>下一节</small>二、面向对象编程</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0175">1. 从“保存数据”到“保存要执行的动作”</a><a class="level-4" href="#n-0176">2. 把动作作为参数传给另一段处理过程</a><a class="level-4" href="#n-0177">3. 空目标与已保存的动作</a><a class="level-4" href="#n-0178">4. 递归 lambda：先准备名字，再让动作调用这个名字</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

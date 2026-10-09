@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十四） 模板入门：从相同操作到类型参数 T · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-01-14.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-01-14.html" data-page-title="（十四） 模板入门：从相同操作到类型参数 T" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details open><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="current" href="../chapters/part-01-14.html" aria-current=page>（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 一、C++ 语法基础</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0091">（十四） 模板入门：从相同操作到类型参数 T</h3>
+<h4 id="n-0092">1. 相同计算在不同类型上的复用</h4>
+<p>两整数取较大值与两小数取较大值，判断过程都是 <code>a&gt;b ? a:b</code>。分别写 int 版和 double 版会重复同一段逻辑；现在希望保留逻辑，把参与计算的类型作为参数。</p>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。用同一个取较大值的函数模板，依次计算 <code>(3,5)</code>、<code>(2.5,1.0)</code>，以及显式按 double 处理的 <code>(3,2.5)</code>，各输出一行。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> T<span class="op">&gt;</span> T larger<span class="op">(</span>T a<span class="op">,</span> T b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="cf">return</span> a <span class="op">&gt;</span> b <span class="op">?</span> a <span class="op">:</span> b<span class="op">;</span> <span class="co">// 比较两个 T 类型的值，返回较大的一项。</span></span>
+<span data-line="6"><span class="op">}</span></span>
+<span data-line="7"></span>
+<span data-line="8"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="9">    cout <span class="op">&lt;&lt;</span> larger<span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span>           <span class="co">// 两实参都是 int，推导 T=int，得到 5。</span></span>
+<span data-line="10">    cout <span class="op">&lt;&lt;</span> larger<span class="op">(</span><span class="fl">2.5</span><span class="op">,</span> <span class="fl">1.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span>       <span class="co">// 两实参都是 double，推导 T=double。</span></span>
+<span data-line="11">    cout <span class="op">&lt;&lt;</span> larger<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;(</span><span class="dv">3</span><span class="op">,</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 明确 T=double，3 转成 3.0 后比较。</span></span>
+<span data-line="12"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>5
+2.5
+3</code></pre>
+<figure>
+<img alt="从实参类型推导 T，再形成对应的具体函数" decoding="async" loading="lazy" src="../media/notes/syntax-template-function-deduction.svg"/>
+<figcaption aria-hidden="true">从实参类型推导 T，再形成对应的具体函数</figcaption>
+</figure>
+<p>沿第一行读：<code>template</code> 声明模板，<code>typename T</code> 声明一个<strong>类型参数</strong>；接着 <code>T larger(T a,T b)</code> 表示返回类型与两个参数类型都使用这个 T。T 不是一个存数字的变量，也不是固定的内置类型，只是这里选用的参数名，换成 Type 或 ValueType 也可以。普通竞赛模板里的 <code>int T</code> 是组数变量，与这里的类型参数角色不同。</p>
+<h4 id="n-0093">2. 推导、显式指定与实例化</h4>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>调用</th>
+<th>怎样确定类型</th>
+<th>按具体类型理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>larger(3,5)</code></td>
+<td>两个参数都推导为 int</td>
+<td><code>int larger(int,int)</code></td>
+</tr>
+<tr>
+<td><code>larger(2.5,1.0)</code></td>
+<td>两个参数都推导为 double</td>
+<td><code>double larger(double,double)</code></td>
+</tr>
+<tr>
+<td><code>larger&lt;double&gt;(3,2.5)</code></td>
+<td>调用者直接指定 double</td>
+<td>两个值先作为 double 参数传入</td>
+</tr>
+<tr>
+<td><code>larger(3,2.5)</code></td>
+<td>两个位置分别要求 int 与 double</td>
+<td>这个模板的同一个 T 推导冲突，不能这样调用</td>
+</tr>
+</tbody>
+</table>
+<p>编译器依据模板和确定的参数形成所需的具体函数，这个过程称为<strong>实例化</strong>。它发生在编译相关的阶段，不是在每次运行时把类型换一遍。模板内部支持哪些操作，要看代入后的类型；若类型没有 <code>&gt;</code>，本函数也无法用于它。</p>
+<p><code>template&lt;class T&gt;</code> 与 <code>template&lt;typename T&gt;</code> 都声明类型参数，int、double 或我们定义的类都可以代入 T。函数模板、推导和实例化规则见 <a href="https://timsong-cpp.github.io/cppwp/n4659/temp.param" rel="noopener noreferrer">C++17 草案：模板参数</a>与<a href="https://timsong-cpp.github.io/cppwp/n4659/temp.deduct.call" rel="noopener noreferrer">调用时的参数推导</a>。</p>
+<h4 id="n-0094">3. 先做一条记录，再把记录里的类型参数化</h4>
+<p>假设要把一个值装进名为 Box 的记录，整数盒子与小数盒子的区别只有 value 的类型。先认识最小的 struct：它定义一种自定义类型，花括号内声明成员；创建对象后用 <code>对象.成员</code> 访问，成员默认可以公开访问。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="kw">struct</span> IntBox <span class="op">{</span></span>
+<span data-line="2">    <span class="dt">int</span> value<span class="op">;</span> <span class="co">// 每个 IntBox 对象各自保存一个整数。</span></span>
+<span data-line="3"><span class="op">};</span></span>
+<span data-line="4"><span class="co">// 在函数中写 IntBox box{7}; 后，box.value 就是 7。</span></span></code></pre></div>
+<p>现在把 int 换成 T，仍然只保存一个值：</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> T<span class="op">&gt;</span> <span class="kw">struct</span> Box <span class="op">{</span></span>
+<span data-line="5">    T value<span class="op">;</span> <span class="co">// 代入什么类型，这个成员就保存什么类型的值。</span></span>
+<span data-line="6">    T read<span class="op">()</span> <span class="at">const</span> <span class="op">{</span></span>
+<span data-line="7">        <span class="cf">return</span> value<span class="op">;</span></span>
+<span data-line="8">    <span class="op">}</span> <span class="co">// 成员函数；末尾 const 表示只读该对象。</span></span>
+<span data-line="9"><span class="op">};</span></span>
+<span data-line="10"></span>
+<span data-line="11"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="12">    Box<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> count<span class="op">{</span><span class="dv">7</span><span class="op">};</span>                                  <span class="co">// value 的类型为 int。</span></span>
+<span data-line="13">    Box<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> price<span class="op">{</span><span class="fl">2.5</span><span class="op">};</span>                             <span class="co">// value 的类型为 double，是另一种具体类型。</span></span>
+<span data-line="14">    cout <span class="op">&lt;&lt;</span> count<span class="op">.</span>value <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> price<span class="op">.</span>read<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 点号访问数据或调用成员函数。</span></span>
+<span data-line="15"><span class="op">}</span></span></code></pre></div>
+<p>输出 <code>7 2.5</code>。<code>Box&lt;int&gt;</code> 是一个具体类型，<code>Box&lt;int&gt; count</code> 才是在创建该类型的对象；Box 本身是模板名称。<code>Box&lt;int&gt;</code> 与 <code>Box&lt;double&gt;</code> 是不同类型，不能理解为一个对象在运行时改变类型。</p>
+<figure>
+<img alt="类型实参先决定成员类型，再创建具有具体值的对象" decoding="async" loading="lazy" src="../media/notes/syntax-template-box-types.svg"/>
+<figcaption aria-hidden="true">类型实参先决定成员类型，再创建具有具体值的对象</figcaption>
+</figure>
+<p>struct 内的函数通过对象调用；例如 <code>price.read()</code> 读取 price 的 value。这样，一条记录既能保存数据，也能提供操作这些数据的函数。面向对象部分会继续用它讲访问控制、构造和继承。</p>
+<h4 id="n-0095">4. 尖括号里也可能放一个编译期数值</h4>
+<p>如果还想让记录保存固定长度的原生数组，就需要两个参数：元素类型 T，以及长度 N。N 表示值，不是另一种类型。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> T<span class="op">,</span> <span class="dt">int</span> N<span class="op">&gt;</span> <span class="kw">struct</span> FixedBuffer <span class="op">{</span></span>
+<span data-line="5">    T data<span class="op">[</span>N<span class="op">]{};</span> <span class="co">// 本例要求 N&gt;0；用编译期长度创建原生数组。</span></span>
+<span data-line="6"><span class="op">};</span></span>
+<span data-line="7"></span>
+<span data-line="8"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="9">    FixedBuffer<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">3</span><span class="op">&gt;</span> values<span class="op">;</span> <span class="co">// T=int，N=3，三个整数先初始化为 0。</span></span>
+<span data-line="10">    values<span class="op">.</span>data<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">7</span><span class="op">;</span></span>
+<span data-line="11">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">3</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="13">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="14">        cout <span class="op">&lt;&lt;</span> values<span class="op">.</span>data<span class="op">[</span>i<span class="op">];</span> <span class="co">// 仍使用已学的成员访问和数组下标。</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p>输出 <code>0 7 0</code>。这里的 3 是<strong>非类型模板实参</strong>，参与确定具体类型；输入读取的普通变量 n 不满足这个编译期长度要求。类型参数通常写 T、Key、Value，数值参数常写 N；判断它们的角色，应看声明，不应只凭字母大小写。</p>
+<figure>
+<img alt="模板参数的类型与数值分别决定数组元素和长度" decoding="async" loading="lazy" src="../media/notes/syntax-template-buffer-arguments.svg"/>
+<figcaption aria-hidden="true">模板参数的类型与数值分别决定数组元素和长度</figcaption>
+</figure>
+<p>多个类型参数可以分别指定类型，例如 <code>template&lt;typename A,typename B&gt;</code> 中的 A、B 可以取不同类型。模板参数也可提供默认值：把 Box 声明为 <code>template&lt;typename T=int&gt;</code> 后，<code>Box&lt;&gt;</code> 就使用 int；写 <code>Box&lt;double&gt;</code> 则使用明确给出的 double。</p>
+<h4 id="n-0096">5. 标准库的类型工具也按同一方式阅读</h4>
+<p>想知道当前平台 int 能保存的范围，可以使用 <code>&lt;limits&gt;</code> 的 <code>numeric_limits&lt;int&gt;</code>。<code>numeric_limits</code> 是类模板，int 是类型实参；<code>::min()</code>、<code>::max()</code> 是属于这个具体类型的查询函数，不必创建一个对象。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;limits&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    cout <span class="op">&lt;&lt;</span> numeric_limits<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;::</span>min<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span>       <span class="co">// 当前平台 int 的最小值。</span></span>
+<span data-line="7">    cout <span class="op">&lt;&lt;</span> numeric_limits<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;::</span>max<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span>       <span class="co">// 当前平台 int 的最大值。</span></span>
+<span data-line="8">    cout <span class="op">&lt;&lt;</span> numeric_limits<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;::</span>max<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 换实参，查另一种类型。</span></span>
+<span data-line="9"><span class="op">}</span></span></code></pre></div>
+<p>结果取决于实现。普通整数的 min 是最小值；浮点类型的 min 通常表示最小正正规值，若要其最低有限值应使用 lowest。模板定义通常放在头文件中，使调用或创建具体类型的源文件能看见完整定义。</p>
+<h4 id="n-0097">6. 两个类型参数：同一条记录保存不同类型的字段</h4>
+<p>函数重载中，两份 larger 重复了判断逻辑；模板把变化的类型参数化。类模板同样可以让记录的多个字段分别选择类型，不必要求所有字段共用 T。</p>
+<p><strong>题目原文（自拟演示）：</strong> 建立一条“编号、等级”记录，编号类型 int、等级类型 char，保存 7 与 A，输出两个字段。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> Key<span class="op">,</span> <span class="kw">typename</span> Value<span class="op">&gt;</span> <span class="kw">struct</span> Record <span class="op">{</span></span>
+<span data-line="5">    Key key<span class="op">;</span>     <span class="co">// 第一个类型实参决定编号字段的类型。</span></span>
+<span data-line="6">    Value value<span class="op">;</span> <span class="co">// 第二个类型实参独立决定等级字段的类型。</span></span>
+<span data-line="7"><span class="op">};</span></span>
+<span data-line="8"></span>
+<span data-line="9"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="10">    Record<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">char</span><span class="op">&gt;</span> student<span class="op">{</span><span class="dv">7</span><span class="op">,</span> <span class="ch">'A'</span><span class="op">};</span>                   <span class="co">// 参数是类型，花括号里的才是对象的实际值。</span></span>
+<span data-line="11">    cout <span class="op">&lt;&lt;</span> student<span class="op">.</span>key <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> student<span class="op">.</span>value <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 输出 7 A。</span></span>
+<span data-line="12"><span class="op">}</span></span></code></pre></div>
+<p>把声明、类型与对象分开读：Record 是模板名称，Record&lt;int,char&gt; 是具体类型，student 是该类型的对象。若改成 Record&lt;int,double&gt;，第二字段就换成 double；不是让已经创建的 student 在运行中随意换类型。</p>
+<p><code>typename T</code> 与这里的 <code>class T</code> 都声明类型参数；<code>int N</code> 则声明值参数。实例化要满足模板体中的操作要求，typename 不会自动让任意类型都能使用加法、比较或数组初始化。下一节的 vector<t>、pair&lt;A,B&gt; 都可以按这套参数读法理解，再分别学习它们提供的行为。</t></p>
+<p>到这里，已经能区分模板名称、类型实参、具体类型和对象，也能用两个参数分别指定字段类型。接下来面对运行时长度的序列、查找与排序等任务，用这套读法理解 STL，继续从用途推进。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-01-13.html"><small>上一节</small>（十三） 常用标准流与输出格式</a><a href="../chapters/part-01-15.html"><small>下一节</small>（十五） STL：容器、迭代器与算法</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0092">1. 相同计算在不同类型上的复用</a><a class="level-4" href="#n-0093">2. 推导、显式指定与实例化</a><a class="level-4" href="#n-0094">3. 先做一条记录，再把记录里的类型参数化</a><a class="level-4" href="#n-0095">4. 尖括号里也可能放一个编译期数值</a><a class="level-4" href="#n-0096">5. 标准库的类型工具也按同一方式阅读</a><a class="level-4" href="#n-0097">6. 两个类型参数：同一条记录保存不同类型的字段</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

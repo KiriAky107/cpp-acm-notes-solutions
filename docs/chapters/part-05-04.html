@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（四） 排序与离散化 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-05-04.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-05-04.html" data-page-title="（四） 排序与离散化" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details open><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="current" href="../chapters/part-05-04.html" aria-current=page>（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 五、数据结构与算法</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0279">（四） 排序与离散化</h3>
+<p>前缀和按位置累积，遇到按数值查找、比较大小或给稀疏数值编号时，先建立顺序会更方便。这里继续从 STL 的排序接口追问它如何减少查找工作。</p>
+<h4 id="n-0280">1. 常见排序思路</h4>
+<table>
+<colgroup>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+</colgroup>
+<thead>
+<tr>
+<th>方法</th>
+<th>思路</th>
+<th>时间复杂度</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>选择排序</td>
+<td>每轮找剩余元素的最小值</td>
+<td><span class="math inline">\(O(n^2)\)</span></td>
+<td>入门直观，通常不稳定</td>
+</tr>
+<tr>
+<td>插入排序</td>
+<td>将当前元素插入已有序部分</td>
+<td>最坏 <span class="math inline">\(O(n^2)\)</span></td>
+<td>有序时可达 <span class="math inline">\(O(n)\)</span>，可稳定实现</td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td>分成两半排序后合并</td>
+<td><span class="math inline">\(O(n \log n)\)</span></td>
+<td>可稳定实现，常需 <span class="math inline">\(O(n)\)</span> 辅助空间</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td>按枢轴划分后递归</td>
+<td>平均 <span class="math inline">\(O(n \log n)\)</span>，最坏 <span class="math inline">\(O(n^2)\)</span></td>
+<td>划分策略影响性能</td>
+</tr>
+</tbody>
+</table>
+<p>竞赛通常直接使用 sort，比较次数为 <span class="math inline">\(O(n\log n)\)</span>。如果两条同分记录还要保持输入时的先后顺序，就使用 stable_sort，它会保留等价元素的相对顺序。</p>
+<p><strong>稳定</strong>是指排序键相同的元素，排序后相对顺序不变。vector 使用 sort 按位置移动元素；list 使用成员 list::sort() 调整链表中的节点连接。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1177" rel="noopener noreferrer">洛谷 P1177 — 排序</a>。</p>
+<h4 id="n-0281">2. 归并排序模板</h4>
+<p>下面使用半开区间 <code>[left, right)</code>：</p>
+<p><strong>题目原文（自拟）：</strong> 给定整数数组，将元素按非递减顺序排列，保留所有重复元素。用归并排序实现。</p>
+<p><strong>分析：</strong> 把区间拆成两半，递归排序，再按两段的当前最小值合并。区间长度为 0 或 1 时已经有序。</p>
+<figure>
+<img alt="归并排序的分解与合并过程" decoding="async" loading="lazy" src="../media/notes/merge-sort-process.svg"/>
+<figcaption aria-hidden="true">归并排序的分解与合并过程</figcaption>
+</figure>
+<p>两段排好序后，只比较各自尚未取出的第一个值；相等时先取左段。</p>
+<figure>
+<img alt="合并时逐轮比较两个指针，写入后只移动被选一侧" decoding="async" loading="lazy" src="../media/notes/merge-pointer-selection.svg"/>
+<figcaption aria-hidden="true">合并时逐轮比较两个指针，写入后只移动被选一侧</figcaption>
+</figure>
+<p>样例 <code>[3,1,2,1]</code> 的两半排好后为 <code>[1左,3]</code> 与 <code>[1右,2]</code>。第一轮相等，按代码先取左侧 1；随后依次比较 3 与 1、3 与 2，取右侧的 1、2；右段耗尽，复制左段剩余的 3。左右标签只用于追踪相等元素来源，最终输出仍是 <code>[1,1,2,3]</code>，相等时先取左段使归并保持稳定。</p>
+<p><strong>合并为什么只看两段的第一个剩余元素？</strong> 两段内部已经有序，所以各自的第一个剩余元素都是该段剩余部分的最小值。比较这两个值，把较小者写入 <code>temp</code>，它就一定是全部剩余元素中的最小值。重复这一步，已写部分始终有序，且不会漏掉元素。</p>
+<p>对 <code>[3,1,2,1]</code>，左右分别排成 <code>[1,3]</code> 和 <code>[1,2]</code>。合并时先取左边的 <code>1</code>，再取右边的 <code>1</code>，然后取 <code>2</code>，最后补上 <code>3</code>。相等时先取左段，配合各段内部也保持原相对次序，便得到稳定排序；若只排序整数，稳定性的差别不明显，排序带编号记录时就能看出来。</p>
+<p><code>temp</code> 只作为当前合并结果，完成后要复制回 <code>values[left…right)</code>，因为上层递归合并读取的是 <code>values</code>。长度 0 或 1 的区间不用再拆分，这既是递归终点，也保证最终能够结束。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">void</span> mergeSort<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>values<span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>temp<span class="op">,</span> <span class="dt">int</span> left<span class="op">,</span> <span class="dt">int</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="cf">if</span> <span class="op">(</span>right <span class="op">-</span> left <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">        <span class="cf">return</span><span class="op">;</span></span>
+<span data-line="7">    <span class="op">}</span></span>
+<span data-line="8">    <span class="co">// 把半开区间拆为两半，分别排序后再合并。</span></span>
+<span data-line="9">    <span class="dt">int</span> mid <span class="op">=</span> left <span class="op">+</span> <span class="op">(</span>right <span class="op">-</span> left<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span data-line="10">    mergeSort<span class="op">(</span>values<span class="op">,</span> temp<span class="op">,</span> left<span class="op">,</span> mid<span class="op">);</span></span>
+<span data-line="11">    mergeSort<span class="op">(</span>values<span class="op">,</span> temp<span class="op">,</span> mid<span class="op">,</span> right<span class="op">);</span></span>
+<span data-line="12"></span>
+<span data-line="13">    <span class="co">// i、j 读取左右有序段，k 写入辅助数组。</span></span>
+<span data-line="14">    <span class="dt">int</span> i <span class="op">=</span> left<span class="op">,</span> j <span class="op">=</span> mid<span class="op">,</span> k <span class="op">=</span> left<span class="op">;</span></span>
+<span data-line="15">    <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> mid <span class="op">&amp;&amp;</span> j <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(</span>values<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;=</span> values<span class="op">[</span>j<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="17">            temp<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> values<span class="op">[</span>i<span class="op">++];</span> <span class="co">// 相等时先取左边，保持稳定</span></span>
+<span data-line="18">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="19">            temp<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> values<span class="op">[</span>j<span class="op">++];</span></span>
+<span data-line="20">        <span class="op">}</span></span>
+<span data-line="21">    <span class="op">}</span></span>
+<span data-line="22">    <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> mid<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="23">        temp<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> values<span class="op">[</span>i<span class="op">++];</span></span>
+<span data-line="24">    <span class="op">}</span></span>
+<span data-line="25">    <span class="cf">while</span> <span class="op">(</span>j <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="26">        temp<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> values<span class="op">[</span>j<span class="op">++];</span></span>
+<span data-line="27">    <span class="op">}</span></span>
+<span data-line="28">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> index <span class="op">=</span> left<span class="op">;</span> index <span class="op">&lt;</span> right<span class="op">;</span> <span class="op">++</span>index<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="29">        values<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> temp<span class="op">[</span>index<span class="op">];</span></span>
+<span data-line="30">    <span class="op">}</span></span>
+<span data-line="31"><span class="op">}</span></span></code></pre></div>
+<p>调用时先创建同样长度的辅助数组：<code>vector&lt;int&gt; temp(values.size());</code>，再调用 <code>mergeSort(values, temp, 0, static_cast&lt;int&gt;(values.size()));</code>。</p>
+<p>归并排序体现“分解、解决子问题、合并”的分治思想。若合并时右侧元素小于当前左侧元素，左侧未取出的 <code>mid - i</code> 个元素都会与它形成逆序对，可以据此扩展为逆序对计数。</p>
+<p><strong>样例与解释：</strong> <code>[3,1,2,1]</code> 排序后为 <code>[1,1,2,3]</code>；重复的两个 1 都保留。时间 <span class="math inline">\(O(n\log n)\)</span>，辅助数组空间 <span class="math inline">\(O(n)\)</span>，递归栈深 <span class="math inline">\(O(\log n)\)</span>。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1908" rel="noopener noreferrer">洛谷 P1908 — 逆序对</a>。</p>
+<h4 id="n-0282">3. 离散化</h4>
+<p>数据值很大，但我们只关心大小关系时，可以把它们映射成紧凑下标：</p>
+<p><strong>题目原文（自拟）：</strong> 给定整数数组，将不同值按升序依次编号为 <code>0,1,...</code>，输出原数组每个元素的编号。相同原值必须得到相同编号。</p>
+<p><strong>分析：</strong> 先在副本中排序去重，再用 <code>lower_bound</code> 找每个值在去重数组中的位置。</p>
+<p><strong>保留需要的关系，去掉无用的数值跨度。</strong> <code>[100,-5,100,20]</code> 如果按数值当数组下标，会遇到负数与很大的范围；按值排序去重后只剩 <code>[-5,20,100]</code>，用它们的位置 <code>0、1、2</code> 就能表示大小次序。回到原顺序便得到 <code>[2,0,2,1]</code>。</p>
+<p><code>unique</code> 只把连续相等元素压到前面并返回新的逻辑末尾，不直接缩短容器，所以先排序让相同值相邻，再用 <code>erase</code> 删除尾部。<code>lower_bound</code> 找原值的第一处位置；原值都来自这份副本，所以一定能找到对应排名。</p>
+<p>排名之间的差不能当坐标距离：原值 <code>-5</code> 到 <code>20</code> 距离为 <code>25</code>，新排名只差 <code>1</code>。处理区间长度、面积等问题时，需要保留排序后的原坐标，用相邻原坐标的差计算长度。</p>
+<figure>
+<img alt="排序去重后的排名映射" decoding="async" loading="lazy" src="../media/notes/coordinate-compression-ranks.svg"/>
+<figcaption aria-hidden="true">排序去重后的排名映射</figcaption>
+</figure>
+<p>相同原值映射到相同排名，大小关系保留；排名差不等于原坐标距离。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5">vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> compress<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>values<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="co">// 复制后排序去重，得到每种原值对应的有序排名。</span></span>
+<span data-line="7">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> sorted <span class="op">=</span> values<span class="op">;</span></span>
+<span data-line="8">    sort<span class="op">(</span>sorted<span class="op">.</span>begin<span class="op">(),</span> sorted<span class="op">.</span>end<span class="op">());</span></span>
+<span data-line="9">    sorted<span class="op">.</span>erase<span class="op">(</span>unique<span class="op">(</span>sorted<span class="op">.</span>begin<span class="op">(),</span> sorted<span class="op">.</span>end<span class="op">()),</span> sorted<span class="op">.</span>end<span class="op">());</span></span>
+<span data-line="10"></span>
+<span data-line="11">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> rank<span class="op">;</span></span>
+<span data-line="12">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> values<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">        rank<span class="op">.</span>push_back<span class="op">(</span></span>
+<span data-line="14">            <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>lower_bound<span class="op">(</span>sorted<span class="op">.</span>begin<span class="op">(),</span> sorted<span class="op">.</span>end<span class="op">(),</span> x<span class="op">)</span> <span class="op">-</span> sorted<span class="op">.</span>begin<span class="op">()));</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16">    <span class="cf">return</span> rank<span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p>例：<code>[100, -5, 100, 20]</code> 映射为 <code>[2, 0, 2, 1]</code>。离散化保留大小关系和相等关系，不保留数值差距，不能直接用新下标计算原坐标距离。时间 <span class="math inline">\(O(n \log n)\)</span>，空间 <span class="math inline">\(O(n)\)</span>。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1496" rel="noopener noreferrer">洛谷 P1496 — 火烧赤壁</a>（排序、区间合并或离散化练习）。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-05-03.html"><small>上一节</small>（三） 前缀和与差分</a><a href="../chapters/part-05-05.html"><small>下一节</small>（五） 基础数论</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0280">1. 常见排序思路</a><a class="level-4" href="#n-0281">2. 归并排序模板</a><a class="level-4" href="#n-0282">3. 离散化</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

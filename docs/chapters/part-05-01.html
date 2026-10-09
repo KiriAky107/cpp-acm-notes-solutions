@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（一） 时间复杂度与空间复杂度 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-05-01.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-05-01.html" data-page-title="（一） 时间复杂度与空间复杂度" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details open><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="current" href="../chapters/part-05-01.html" aria-current=page>（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 五、数据结构与算法</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0262">（一） 时间复杂度与空间复杂度</h3>
+<p>同一个题目可以用一次遍历，也可以用两层枚举；先把输入规模代入，比较工作量与同时占用的存储，再决定哪种做法能用于最大数据。</p>
+<p>先判断一个方法能不能处理题目的最大数据，再决定是否值得实现。复杂度描述输入规模增大时，计算量和内存需求如何增长；它不是程序实际用了多少秒、多少 MiB 的直接测量值。</p>
+<h4 id="n-0263">1. 输入规模、基本操作与大 O</h4>
+<p><strong>输入规模</strong>要先定义清楚。数组常用元素数 <code>n</code>，字符串匹配可能需要两个长度 <code>n、m</code>，图算法需要顶点数 <code>V</code> 和边数 <code>E</code>，背包问题还需要容量 <code>C</code>。不能把所有题目的规模都简化成一个 <code>n</code>。</p>
+<p>估算时间时，可以选出反复执行的<strong>基本操作</strong>，例如一次比较、一次加法或一次状态转移，统计它随规模增长的次数。我们通常假设机器整数运算、数组下标访问的单次代价为常数；若一次操作需要遍历字符串、复制数组或计算大整数，就要继续展开它的代价。</p>
+<p>例如某段程序的操作次数是 <span class="math inline">\(3n^2+5n+7\)</span>。随着 <code>n</code> 增大，平方项主导增长，常数系数不影响增长阶，所以通常记作 <span class="math inline">\(O(n^2)\)</span>。忽略常数是为了比较增长趋势，实际判断能否通过时仍要考虑常数。</p>
+<p>严格地说，<span class="math inline">\(O(f(n))\)</span> 表示一个渐近上界：存在正常数 <code>c</code> 和起始规模 <code>n₀</code>，使足够大的 <code>n</code> 上有 <span class="math inline">\(T(n)\le c f(n)\)</span>。若上下界都与同一个函数成常数比例，则可以写 <span class="math inline">\(\Theta(f(n))\)</span>。本笔记通常用大 O 表示分析得到的常用增长量级；遇到仅有上界、最坏情况或均摊情况时会另作说明。</p>
+<p>对数的底数只差一个常数，所以复杂度中通常写 <span class="math inline">\(O(\log n)\)</span>。<strong>手算时统一用 <span class="math inline">\(\log_2 n\)</span></strong>，因为“每轮减半”正好对应二进制位数。</p>
+<blockquote>
+<p>注：根据对数换底公式<br/>
+[ _a x= ] 可知，对于任意固定底数 (a) 的对数，要换底为 (p)，相差的常数为： [ . ] 也就是说， [ _a x=_p x. ] 反过来， [ _p x=_p a_a x, ] 此时相差的常数为 (_p a)。这些常数都与 (x) 无关，所以不会改变增长量级。</p>
+<p>特别地，换成以 (2) 为底时： [ _a n= =_2 n. ] 因此 [ O(_a n)=O(_2 n). ]</p>
+</blockquote>
+<h4 id="n-0264">2. 增长曲线与数量对照表</h4>
+<p>下面用函数值比较不同增长速度，统一采用 <code>log₂ n</code>，小数取近似值。曲线纵轴表示工作量随 n 的增长趋势，实际耗时还取决于每步操作与运行环境。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>增长量级</th>
+<th>常见场景</th>
+<th><code>n</code> 翻倍时的变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(O(1)\)</span></td>
+<td>已知下标访问一个元素</td>
+<td>基本不变</td>
+</tr>
+<tr>
+<td><span class="math inline">\(O(\log n)\)</span></td>
+<td>二分查找、按位快速幂</td>
+<td>对数值增加约 1</td>
+</tr>
+<tr>
+<td><span class="math inline">\(O(n)\)</span></td>
+<td>一次遍历、建立前缀和</td>
+<td>约 2 倍</td>
+</tr>
+<tr>
+<td><span class="math inline">\(O(n\log n)\)</span></td>
+<td>归并排序、常用比较排序</td>
+<td>略多于 2 倍</td>
+</tr>
+<tr>
+<td><span class="math inline">\(O(n^2)\)</span></td>
+<td>枚举所有数对、一些二维 DP</td>
+<td>约 4 倍</td>
+</tr>
+<tr>
+<td><span class="math inline">\(O(n^3)\)</span></td>
+<td>Floyd、三重全范围枚举</td>
+<td>约 8 倍</td>
+</tr>
+<tr>
+<td><span class="math inline">\(O(2^n)\)</span></td>
+<td>每个位置选或不选</td>
+<td>比原来再乘 <span class="math inline">\(2^n\)</span>；<code>n</code> 增加 1 时才是 2 倍</td>
+</tr>
+<tr>
+<td><span class="math inline">\(O(n!)\)</span></td>
+<td>无重复地枚举全部排列</td>
+<td><code>n</code> 增加 1 时乘 <code>n+1</code></td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="普通坐标下线性、线性对数与平方增长" decoding="async" loading="lazy" src="../media/notes/complexity-growth-linear-axes.svg"/>
+<figcaption aria-hidden="true">普通坐标下线性、线性对数与平方增长</figcaption>
+</figure>
+<p>先看普通刻度图：<code>n</code> 从 10 增到 20，线性函数从 10 增到 20，平方函数从 100 增到 400。平方曲线越来越陡，说明相同的输入增量会带来越来越多的计算。</p>
+<p>加入指数和阶乘后，各函数差距太大，普通刻度会把较小曲线挤在底部，所以接下来使用对数刻度。</p>
+<figure>
+<img alt="小规模输入下常见增长函数的对比" decoding="async" loading="lazy" src="../media/notes/complexity-growth-small.svg"/>
+<figcaption aria-hidden="true">小规模输入下常见增长函数的对比</figcaption>
+</figure>
+<p>图中横轴是元素数，纵轴使用对数刻度：刻度以 10 的幂标注，相同的纵向距离表示相同的倍数变化。指数和阶乘很快拉开差距；阶乘曲线在对数纵轴上也仍明显加速上升。</p>
+<table>
+<colgroup>
+<col style="width: 13%"/>
+<col style="width: 17%"/>
+<col style="width: 17%"/>
+<col style="width: 17%"/>
+<col style="width: 17%"/>
+<col style="width: 17%"/>
+</colgroup>
+<thead>
+<tr>
+<th><code>n</code></th>
+<th style="text-align: right;"><code>log₂ n</code></th>
+<th style="text-align: right;"><code>n</code></th>
+<th style="text-align: right;"><code>n log₂ n</code></th>
+<th style="text-align: right;"><code>n²</code></th>
+<th style="text-align: right;"><code>n³</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td style="text-align: right;">3.32</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">33.2</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">1,000</td>
+</tr>
+<tr>
+<td>100</td>
+<td style="text-align: right;">6.64</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">664</td>
+<td style="text-align: right;">10,000</td>
+<td style="text-align: right;">1,000,000</td>
+</tr>
+<tr>
+<td>1,000</td>
+<td style="text-align: right;">9.97</td>
+<td style="text-align: right;">1,000</td>
+<td style="text-align: right;">9,966</td>
+<td style="text-align: right;">1,000,000</td>
+<td style="text-align: right;">1,000,000,000</td>
+</tr>
+<tr>
+<td>10,000</td>
+<td style="text-align: right;">13.29</td>
+<td style="text-align: right;">10,000</td>
+<td style="text-align: right;">132,877</td>
+<td style="text-align: right;">100,000,000</td>
+<td style="text-align: right;"><span class="math inline">\(10^{12}\)</span></td>
+</tr>
+<tr>
+<td>200,000</td>
+<td style="text-align: right;">17.61</td>
+<td style="text-align: right;">200,000</td>
+<td style="text-align: right;">3,521,928</td>
+<td style="text-align: right;">40,000,000,000</td>
+<td style="text-align: right;"><span class="math inline">\(8\times10^{15}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>这些数只是代表函数值。例如枚举 <code>i &lt; j</code> 的次数是 <span class="math inline">\(n(n-1)/2\)</span>，不是恰好 <code>n²</code>；排序比较次数也不必恰好等于 <code>n log₂ n</code>。增长表用于先分辨数量级，再按具体代码细算。</p>
+<figure>
+<img alt="大规模输入下线性、线性对数、平方与立方增长" decoding="async" loading="lazy" src="../media/notes/complexity-growth-large.svg"/>
+<figcaption aria-hidden="true">大规模输入下线性、线性对数、平方与立方增长</figcaption>
+</figure>
+<p>这张图的两个轴都使用对数刻度，适合同时展示跨越多个数量级的数据。图上线性函数也会向上增长；曲线看上去近似直线不代表它们的复杂度都是线性。</p>
+<table>
+<thead>
+<tr>
+<th><code>n</code></th>
+<th style="text-align: right;">子集数 <code>2ⁿ</code></th>
+<th style="text-align: right;">排列数 <code>n!</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td style="text-align: right;">1,024</td>
+<td style="text-align: right;">3,628,800</td>
+</tr>
+<tr>
+<td>15</td>
+<td style="text-align: right;">32,768</td>
+<td style="text-align: right;">1,307,674,368,000</td>
+</tr>
+<tr>
+<td>20</td>
+<td style="text-align: right;">1,048,576</td>
+<td style="text-align: right;">2,432,902,008,176,640,000</td>
+</tr>
+<tr>
+<td>25</td>
+<td style="text-align: right;">33,554,432</td>
+<td style="text-align: right;">约 <span class="math inline">\(1.55\times10^{25}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>不要漏算“每种情况的处理成本”。</strong> 枚举全部子集共有 <code>2ⁿ</code> 种，如果每次再扫描 <code>n</code> 位，时间是 <span class="math inline">\(O(n2^n)\)</span>；输出全部排列时，每个排列要输出 <code>n</code> 个数，时间至少与 <span class="math inline">\(n\cdot n!\)</span> 个输出元素相对应。</p>
+<h4 id="n-0265">3. 顺序、嵌套与变长循环的复杂度</h4>
+<p>先数循环体真正执行了多少次，再化简。不要仅凭“有几层循环”给出结论。</p>
+<p><strong>顺序执行取总和。</strong> 一次长度 <code>n</code> 的遍历后，再做一次长度 <code>m</code> 的遍历，总时间是 <span class="math inline">\(O(n+m)\)</span>。如果 <code>m=n</code>，才可以化简成 <span class="math inline">\(O(n)\)</span>。排序后再遍历一遍是 <span class="math inline">\(O(n\log n+n)=O(n\log n)\)</span>；不是把两个代价相乘。</p>
+<p><strong>独立的嵌套范围相乘。</strong> 外层跑 <code>n</code> 次，每次内层跑 <code>m</code> 次，而且每次循环体是常数代价，合计 <code>nm</code> 次，时间为 <span class="math inline">\(O(nm)\)</span>。当两个长度都为 <code>n</code> 时才是 <span class="math inline">\(O(n^2)\)</span>。</p>
+<p><strong>内层长度变化时求和。</strong> 枚举 <code>0 &lt;= i &lt; j &lt; n</code> 时，内层次数依次是 <code>n-1、n-2、…、0</code>，因此：</p>
+<p><span class="math display">\[
+T(n)=(n-1)+(n-2)+\cdots+1+0=\frac{n(n-1)}2=O(n^2)
+\]</span></p>
+<p>虽然只检查了所有有序数对的一半，增长阶仍是平方级。如果内层每次从 <code>0</code> 跑到 <code>i</code>，同样要计算 <span class="math inline">\(1+2+\cdots+n\)</span>，不能因为内层不是固定 <code>n</code> 次就判为线性。</p>
+<p><strong>每轮减半时算轮数。</strong> 从正整数 <code>n</code> 开始，反复执行整数除法 <code>x /= 2</code>，直到 <code>x=0</code>，共执行 <span class="math inline">\(\lfloor\log_2 n\rfloor+1\)</span> 次，所以是 <span class="math inline">\(O(\log n)\)</span>。例如 <code>20→10→5→2→1→0</code>，执行 5 轮。若每轮还扫描整个长度 <code>n</code> 的数组，则总时间变成 <span class="math inline">\(O(n\log n)\)</span>。</p>
+<p><strong>工作规模减半时求几何和。</strong> 若各轮扫描的长度分别是 <code>n、n/2、n/4、…</code>，总扫描量小于 <code>2n</code>，所以是 <span class="math inline">\(O(n)\)</span>。它与“每轮都扫描完整数组”的情况不同。</p>
+<p>下面用一个完整例子实际数次数。</p>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>1 &lt;= n &lt;= 1000</code>。分别统计一次遍历、枚举所有 <code>i &lt; j</code>、将 <code>n</code> 反复整除 2 直到 0、外层 <code>i=1…n</code> 且内层执行 <code>i</code> 次这四个过程的循环体执行次数。按上述顺序输出四个整数，每个占一行。</p>
+<p><strong>分析：</strong> 为每个过程设置单独计数器；只统计循环体，不把循环条件检查和计数器更新拆成更多操作。这样能对照推导验证循环次数，但不等于测出了程序耗时。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="6">    cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span data-line="7">    <span class="dt">long</span> <span class="dt">long</span> linear <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> pairs <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> halving <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> triangle <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="8"></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">        <span class="op">++</span>linear<span class="op">;</span> <span class="co">// 每个元素对应一次循环体执行。</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>j<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">            <span class="op">++</span>pairs<span class="op">;</span> <span class="co">// 只枚举不同下标，每个无序数对出现一次。</span></span>
+<span data-line="15">        <span class="op">}</span></span>
+<span data-line="16">    <span class="op">}</span></span>
+<span data-line="17">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> remaining <span class="op">=</span> n<span class="op">;</span> remaining <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> remaining <span class="op">/=</span> <span class="dv">2</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="18">        <span class="op">++</span>halving<span class="op">;</span> <span class="co">// 每轮减半，轮数等于正整数 n 的二进制位数。</span></span>
+<span data-line="19">    <span class="op">}</span></span>
+<span data-line="20">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="21">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> <span class="op">++</span>j<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="22">            <span class="op">++</span>triangle<span class="op">;</span> <span class="co">// 内层次数随 i 增加，累加得到 1+2+...+n。</span></span>
+<span data-line="23">        <span class="op">}</span></span>
+<span data-line="24">    <span class="op">}</span></span>
+<span data-line="25">    cout <span class="op">&lt;&lt;</span> linear <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span> <span class="op">&lt;&lt;</span> pairs <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span> <span class="op">&lt;&lt;</span> halving <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span> <span class="op">&lt;&lt;</span> triangle <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="26"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5</code></pre>
+<p>输出：</p>
+<pre class="text"><code>5
+10
+3
+15</code></pre>
+<p><strong>样例与代码解释：</strong> 数对次数为 <code>4+3+2+1+0=10</code>；减半过程为 <code>5→2→1→0</code>，执行 3 轮；最后一段为 <code>1+2+3+4+5=15</code>。四段依次运行，总时间是 <span class="math inline">\(O(n+n^2+\log n+n^2)=O(n^2)\)</span>，计数器的额外空间为 <span class="math inline">\(O(1)\)</span>。</p>
+<h4 id="n-0266">4. 双指针、图遍历与 DP 的总工作量</h4>
+<p><strong>双指针看总移动次数。</strong> 例如滑动窗口中，外层让右端从左到右前进，内层在必要时收缩左端。只要两个指针都不后退，每个指针最多移动 <code>n</code> 次，总移动次数不超过 <code>2n</code>。因此，即使存在嵌套的 <code>while</code>，每次只做常数次加减或赋值，总时间就是 <span class="math inline">\(O(n)\)</span>。如果每轮把左端重置后再重新扫描，就失去了这个结论。</p>
+<p><strong>邻接表遍历看所有边的总量。</strong> DFS / BFS 对每个顶点最多进入或入队一次，合计 <span class="math inline">\(O(V)\)</span>；各顶点的邻接表长度相加为 <code>E</code>，无向图通常是 <code>2E</code>。因此总时间为 <span class="math inline">\(O(V+E)\)</span>。只有用邻接矩阵并对每个顶点扫描全部 <code>V</code> 列时，才会出现 <span class="math inline">\(O(V^2)\)</span> 的扫描量。</p>
+<p><strong>DP 看“状态数量 × 每个状态的转移数量”。</strong> 网格路径有 <code>R×C</code> 个状态，每个只检查上方、左方，时间为 <span class="math inline">\(O(RC)\)</span>。最少硬币有 <code>M+1</code> 个金额状态，每个尝试 <code>k</code> 种硬币，时间为 <span class="math inline">\(O(kM)\)</span>。背包的 <code>C</code> 是容量数值，不是物品个数；即使 <code>n</code> 很小，<code>C=10^9</code> 也不能直接开表逐容量更新。</p>
+<p><strong>库函数也要算进去。</strong> <code>sort</code> 需要 <span class="math inline">\(O(n\log n)\)</span> 量级的比较；在 <code>n</code> 轮循环中每轮重新排序完整数组，便会得到 <span class="math inline">\(O(n^2\log n)\)</span> 量级的比较次数。<code>string</code> 的比较在最坏情况下需要检查多个字符；比较很长的字符串时，不能继续把每次比较当成一个固定大小整数比较。</p>
+<h4 id="n-0267">5. 递归的时间与空间要分开算</h4>
+<p>递归时间要统计所有调用的工作，递归空间要统计<strong>同时还没返回的调用</strong>。总调用数和最大调用深度通常不同。</p>
+<p>归并排序每层把数组分成更小的区间，但一层中所有区间的长度加起来仍是 <code>n</code>。合并一层共 <span class="math inline">\(O(n)\)</span> 工作，层数为 <span class="math inline">\(O(\log n)\)</span>，所以：</p>
+<p><span class="math display">\[
+T(n)=2T(n/2)+O(n)=O(n\log n)
+\]</span></p>
+<p>递归时先做左半，再做右半，并不同时保留整棵调用树。因此单个调用只保留常数个局部变量时，递归栈为 <span class="math inline">\(O(\log n)\)</span>。本笔记的归并排序另有长度 <code>n</code> 的公共辅助数组，额外空间合计为 <span class="math inline">\(O(n+\log n)=O(n)\)</span>。</p>
+<figure>
+<img alt="归并递归的每层工作量与同时存活的调用栈" decoding="async" loading="lazy" src="../media/notes/complexity-recursion-work-stack.svg"/>
+<figcaption aria-hidden="true">归并递归的每层工作量与同时存活的调用栈</figcaption>
+</figure>
+<p>左图把全部调用按层画出，用来计算时间；右图只画当前尚未返回的一条调用链，用来计算递归栈。图以 <code>n=8</code> 为例，包含长度为 1 的终止调用。</p>
+<p>朴素递归斐波那契会反复计算相同参数，调用树有指数级数量的节点，常写上界 <span class="math inline">\(O(2^n)\)</span>，但单条调用链深度仍为 <span class="math inline">\(O(n)\)</span>。加入记忆化后，每个参数只展开计算一次，时间降为 <span class="math inline">\(O(n)\)</span>；缓存和递归栈各为 <span class="math inline">\(O(n)\)</span>，总额外空间仍为 <span class="math inline">\(O(n)\)</span>。</p>
+<blockquote>
+<p><strong>注意：</strong> 不能看到“递归参数每次减半”就直接写 <span class="math inline">\(O(\log n)\)</span>。还要检查每次递归调用几个子问题、每个节点额外做了多少工作。若每个调用还保存长度与当前问题相同的数组，栈中的这些数组也要计入空间。</p>
+</blockquote>
+<h4 id="n-0268">6. 数据规模与算法选择</h4>
+<p>做题时可以优先寻找 <span class="math inline">\(O(n\log n)\)</span>、<span class="math inline">\(O(n)\)</span> 的方法；规模较小时，<span class="math inline">\(O(n^2)\)</span> 方法常常足够，而且更容易写对。<strong>需要控制的是总运算量和内存，而不是固定把每道题压到某一种复杂度。</strong> 读取 <code>n</code> 个数本身通常就要线性时间；要求输出所有数对的题目，其输出量已是平方级。</p>
+<p>把主要规模代入增长式，就能先比较候选方案需要多少工作，再结合每次操作的内容估时：</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>主要规模</th>
+<th>可以先考虑什么</th>
+<th>仍需计算什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n &lt;= 10</code></td>
+<td>全排列、回溯</td>
+<td><code>10!</code> 已约 363 万种，每种还有处理或输出代价</td>
+</tr>
+<tr>
+<td><code>n &lt;= 20</code></td>
+<td>子集枚举、状态压缩</td>
+<td><code>2²⁰</code> 约 105 万；再扫描 20 位约 2,097 万次检查</td>
+</tr>
+<tr>
+<td><code>n</code> 为几百</td>
+<td>平方方法；简单立方方法也可估算</td>
+<td><code>500³</code> 为 1.25 亿次，未必轻松，需要看具体操作与时限</td>
+</tr>
+<tr>
+<td><code>n</code> 为几千</td>
+<td>枚举数对、平方 DP</td>
+<td><code>2000²</code> 为 400 万；但有大常数或多组数据时仍可能过慢</td>
+</tr>
+<tr>
+<td><code>n</code> 为十万量级</td>
+<td>线性、排序、二分、堆等</td>
+<td><code>200000²</code> 为 400 亿，通常要改进平方枚举</td>
+</tr>
+<tr>
+<td><code>n</code> 为百万量级</td>
+<td>先考虑线性；简单排序也要具体估算</td>
+<td>还要检查输入输出、元素大小和辅助数组</td>
+</tr>
+</tbody>
+</table>
+<p><strong>手算一个选择过程：</strong> 对 <code>n=200000</code> 的两数之和，暴力枚举约有</p>
+<p><span class="math display">\[
+\frac{200000\times199999}{2}=19,999,900,000
+\]</span></p>
+<p>次数对检查。排序后使用双指针，代表量约为</p>
+<p><span class="math display">\[
+n\log_2 n+n\approx3,521,928+200,000\approx3.72\times10^6
+\]</span></p>
+<p>两种方案的主要工作量差了约几千倍，应优先考虑排序或合适的哈希方案。若要求原下标，排序时要把原下标和数值一起保存；不能只优化复杂度却丢掉题目要求。若数组本来已经有序，扫描部分只需 <span class="math inline">\(O(n)\)</span>。</p>
+<p>对 <code>n=2000</code>，暴力需要 <code>1,999,000</code> 次数对检查。将这个工作量与题目时限、单次检查的成本结合起来，就能判断暴力是否够用，以及是否值得换成更复杂的方法。</p>
+<p>实际估时可以按下面的方法做：</p>
+<ol type="1">
+<li>用最大合法输入计算主要操作次数 <code>N</code>，把排序、预处理、所有询问都加进去。</li>
+<li>测量同类操作的处理速率 R，再粗估 <span class="math inline">\(t\approx N/R\)</span>。例如每秒处理约 <code>2×10⁷</code> 次，<code>4×10⁶</code> 次约需 0.2 秒；换一种操作后，再按它的处理速率计算。</li>
+<li>给内存访问、分配、输入输出和环境差异留下余量。整数加法、哈希查找、树节点分配的代价不同，不能共用一个“每秒操作次数”。</li>
+<li>如果估算已经明显超限，先改算法；快速 I/O 和编译优化通常只能改善常数，不能把平方级增长变成线性对数级。</li>
+</ol>
+<p>给定一个估算的操作预算 B，还可反解候选规模。平方方法从 <span class="math inline">\(n^2\le B\)</span> 得到 <span class="math inline">\(n\le\sqrt B\)</span>；线性对数方法把候选 n 代入 <span class="math inline">\(n\log_2 n\le B\)</span> 验算。取 <code>B=10⁷</code>，平方模型约得到 3162；<code>n=500000</code> 时，<code>n log₂ n</code> 约为 <code>9.47×10⁶</code>。数对枚举只访问每对一次，就改用实际的 <code>n(n-1)/2</code> 计算。</p>
+<h4 id="n-0269">7. 多组数据、最坏情况与均摊</h4>
+<p>多组数据总耗时是各组代价相加。若第 <code>i</code> 组长度为 <code>nᵢ</code>，排序总时间为 <span class="math inline">\(O(\sum_i n_i\log n_i)\)</span>，平方方法为 <span class="math inline">\(O(\sum_i n_i^2)\)</span>。先读清题面是否限制“所有测试的 <code>n</code> 之和”，不能总把单组最大值机械乘测试组数。</p>
+<p>例如 <code>T=100</code>，每组都允许 <code>n=2000</code> 且没有总长度限制，数对检查合计可达约 <code>2×10⁸</code> 次。若改为 <span class="math inline">\(\sum_i n_i\le2000\)</span>，则因为 <span class="math inline">\(\sum_i n_i^2\le(\sum_i n_i)^2\)</span>，平方量合计不会超过 <code>4×10⁶</code>。两种限制会改变算法选择。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>表述</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最坏复杂度</td>
+<td>规模给定时最慢的合法情况</td>
+<td>试除判素数遇到素数时要检查到平方根附近</td>
+</tr>
+<tr>
+<td>平均 / 期望复杂度</td>
+<td>依赖输入分布或随机选择的分析</td>
+<td>随机枢轴快速排序的期望时间为 <span class="math inline">\(O(n\log n)\)</span></td>
+</tr>
+<tr>
+<td>均摊复杂度</td>
+<td>一串操作的总成本除以操作数，不要求随机性</td>
+<td><code>vector::push_back</code> 为均摊常数；扩容的某一次可以是线性</td>
+</tr>
+</tbody>
+</table>
+<p>哈希容器平均查找常用 <span class="math inline">\(O(1)\)</span>，但严重冲突时一次查找可能退化到 <span class="math inline">\(O(n)\)</span>；剪枝可能减少实际分支，却不自动改变最坏复杂度。平均表现与最坏表现描述不同的问题：前者观察通常需要多少工作，后者计算最费力的数据会产生多少工作。</p>
+<h4 id="n-0270">8. 空间复杂度与内存用量换算</h4>
+<p><strong>总空间</strong>包括输入保存、答案、辅助结构和调用栈；<strong>额外空间</strong>常指不计已有输入存储的辅助空间。写复杂度时明确口径。例如对已有数组进行双指针扫描，额外空间是 <span class="math inline">\(O(1)\)</span>，但数组本身仍占 <span class="math inline">\(O(n)\)</span> 空间。</p>
+<p>内存预算要计算程序运行时<strong>同时存在的最大存储量</strong>。两个临时数组若确实先后创建并释放，取峰值；若它们同时存活，就相加。函数按值传入一个 <code>vector</code> 可能创建副本，递归调用中复制容器可能使实际峰值远大于预期。</p>
+<p>先从元素大小计算：</p>
+<p><span class="math display">\[
+\text{数组字节数}\approx\text{元素数量}\times\operatorname{sizeof}(\text{元素类型})
+\]</span></p>
+<p><code>1 KiB = 1024 B</code>，<code>1 MiB = 1024² B</code>。下面假设每个 <code>int</code> 为 4 B、每个 <code>long long</code> 为 8 B；这是常见竞赛环境的情况，具体环境用 <code>sizeof</code> 检查，不作为所有 C++ 实现的规定。</p>
+<table>
+<thead>
+<tr>
+<th>存储内容</th>
+<th style="text-align: right;">数据部分字节数</th>
+<th style="text-align: right;">换算结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>10⁶</code> 个 4 B 整数</td>
+<td style="text-align: right;"><code>4×10⁶</code></td>
+<td style="text-align: right;">约 3.81 MiB</td>
+</tr>
+<tr>
+<td><code>10⁶</code> 个 8 B 整数</td>
+<td style="text-align: right;"><code>8×10⁶</code></td>
+<td style="text-align: right;">约 7.63 MiB</td>
+</tr>
+<tr>
+<td><code>2000×2000</code> 的 4 B 表</td>
+<td style="text-align: right;"><code>16×10⁶</code></td>
+<td style="text-align: right;">约 15.26 MiB</td>
+</tr>
+<tr>
+<td><code>5000×5000</code> 的 8 B 表</td>
+<td style="text-align: right;"><code>200×10⁶</code></td>
+<td style="text-align: right;">约 190.73 MiB</td>
+</tr>
+<tr>
+<td><code>10000×10000</code> 的 8 B 表</td>
+<td style="text-align: right;"><code>800×10⁶</code></td>
+<td style="text-align: right;">约 762.94 MiB</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="不同存储规模下的原始数据内存增长" decoding="async" loading="lazy" src="../media/notes/complexity-memory-growth.svg"/>
+<figcaption aria-hidden="true">不同存储规模下的原始数据内存增长</figcaption>
+</figure>
+<p>图中每个存储单元统一假设为 8 B；<code>ceil(log₂(n+1))</code> 个单元用来展示对数增长。纵轴为对数刻度，虚线标出 64 MiB、256 MiB。曲线只计算数据单元，尚未计容器对象、分配器、对齐和其他结构的开销。</p>
+<p><strong>算一次完整预算：</strong> 若内存限制为 256 MiB，<code>5000×5000</code> 的 <code>long long</code> DP 数据就约为 190.73 MiB，再保存同尺寸 4 B 输入约 95.37 MiB，两份数据同时存在已约为 286.10 MiB，超过限制。不能看到“DP 单独不到 256 MiB”就判断足够。</p>
+<p><code>vector&lt;vector&lt;T&gt;&gt;</code> 还有每行 <code>vector</code> 对象和单独分配的开销；<code>vector</code> 的容量可能大于实际元素数；<code>map</code>、<code>set</code>、哈希表和 <code>priority_queue</code> 也有额外存储。<code>vector&lt;bool&gt;</code> 的元素常按位压缩，不能简单用 <code>n*sizeof(bool)</code> 推断它的实际占用。</p>
+<p>递归栈按“同时保留的层数 × 每层栈帧大小”估算。例如 DFS 沿十万个顶点组成的链递归，会同时保留十万层调用，每层的参数、局部变量和返回位置都占栈空间。改用显式栈后，这些待处理状态保存在容器中；改成迭代 DP 后，则按依赖顺序逐项计算。</p>
+<p><strong>从依赖关系减少存储。</strong> 二维 DP 的当前行只读上一行时，保留两行就能把表空间从 <span class="math inline">\(O(RC)\)</span> 降到 <span class="math inline">\(O(C)\)</span>。恢复完整路径时可以另存前驱，读取更多历史行时则保留对应的行。背包还能压成一行：01 背包逆序更新，完全背包正序更新；后文会从“这一轮读到哪个值”推导这两种方向。</p>
+<h4 id="n-0271">9. 算法实现的复杂度核对</h4>
+<p>按下面顺序计算一遍，最后把结论写在算法旁边：</p>
+<ol type="1">
+<li>定义所有规模变量：<code>n、m、q、V、E、C</code> 分别表示什么。</li>
+<li>找出主要操作，检查它本身是否真是常数代价。</li>
+<li>用求和、乘法或递归树统计总次数，补上预处理和每个询问。</li>
+<li>代入最大数据，计算具体数量级；有多组时算总和。</li>
+<li>列出同时存活的数组、容器、副本和递归栈，估算内存峰值。</li>
+<li>分清最坏、期望与均摊复杂度，再对照题目的最大规模估算总工作量。</li>
+</ol>
+<p>例如前缀和处理长度 <code>n</code> 的数组和 <code>q</code> 次询问，总时间为 <span class="math inline">\(O(n+q)\)</span>、额外空间 <span class="math inline">\(O(n)\)</span>；不是只写“每次查询 <span class="math inline">\(O(1)\)</span>”就结束。二分答案若每次判定扫描 <code>n</code> 个元素、候选范围宽度为 <code>W</code>，应写 <span class="math inline">\(O(n\log(W+1))\)</span>，不能漏掉判定函数的成本。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1177" rel="noopener noreferrer">洛谷 P1177 — 排序</a>、<a href="https://www.luogu.com.cn/problem/P1102" rel="noopener noreferrer">洛谷 P1102 — A-B 数对</a>。先写出各方法的时间、空间和最大规模估算，再选择实现；比较时要遵守原题对计数和重复元素的要求。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-05.html"><small>上一节</small>五、数据结构与算法</a><a href="../chapters/part-05-02.html"><small>下一节</small>（二） 枚举与模拟</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0263">1. 输入规模、基本操作与大 O</a><a class="level-4" href="#n-0264">2. 增长曲线与数量对照表</a><a class="level-4" href="#n-0265">3. 顺序、嵌套与变长循环的复杂度</a><a class="level-4" href="#n-0266">4. 双指针、图遍历与 DP 的总工作量</a><a class="level-4" href="#n-0267">5. 递归的时间与空间要分开算</a><a class="level-4" href="#n-0268">6. 数据规模与算法选择</a><a class="level-4" href="#n-0269">7. 多组数据、最坏情况与均摊</a><a class="level-4" href="#n-0270">8. 空间复杂度与内存用量换算</a><a class="level-4" href="#n-0271">9. 算法实现的复杂度核对</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

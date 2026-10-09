@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（八） 二叉树 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-05-08.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/vendor/mermaid.min.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-05-08.html" data-page-title="（八） 二叉树" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details open><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="current" href="../chapters/part-05-08.html" aria-current=page>（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 五、数据结构与算法</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0298">（八） 二叉树</h3>
+<p>除了顺序数组与按键查找，有些数据需要表达“谁是谁的孩子”。从父节点与左右孩子的记录开始，再观察不同遍历为什么产生不同访问次序。</p>
+<figure>
+<img alt="二叉树的节点、孩子、子树和叶子" decoding="async" loading="lazy" src="../media/notes/tree-terms.svg"/>
+<figcaption aria-hidden="true">二叉树的节点、孩子、子树和叶子</figcaption>
+</figure>
+<p>每个节点最多两个孩子，空孩子不计作节点；这里沿用本文根为第 1 层的约定。</p>
+<h4 id="n-0299">1. 二叉树的结构与性质</h4>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A((A)) --&gt; B((B))
+    A --&gt; C((C))</div>
+<p>如上图，每个节点最多有两个有序子节点的树结构称为<strong>二叉树</strong>。</p>
+<p>左边和右边的子节点又被分别被称为：</p>
+<ul>
+<li>左子节点（left child）</li>
+<li>右子节点（right child）</li>
+</ul>
+<p><strong>严格定义</strong>：<strong>二叉树</strong> 是 n(n≥0)个节点的有限集合，该集合或者为空集（称为空二叉树），或者由一个根节点和两棵互不相交的、分别称为根节点的左子树和右子树的二叉树组成。</p>
+<h5 id="n-0300">1.1 左右子树与五种结构形态</h5>
+<ul>
+<li>每个节点最多有两棵子树（即度不超过 2）</li>
+<li>左子树和右子树有顺序，不能颠倒</li>
+<li>即使只有一棵子树，也要区分是左子树还是右子树</li>
+</ul>
+<p>二叉树的五种形态：</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A[空二叉树] --&gt; B[只有一个根节点]
+    B --&gt; C[根节点只有左子树]
+    B --&gt; D[根节点只有右子树]
+    B --&gt; E[根节点有左右子树]</div>
+<h5 id="n-0301">1.2 节点的度、深度与高度</h5>
+<p>（1）节点的度</p>
+<ul>
+<li><strong>节点的度</strong>：节点拥有的子树数目</li>
+<li>在二叉树中，节点的度只能是 0、1 或 2</li>
+</ul>
+<p>（2）叶子节点</p>
+<ul>
+<li><strong>叶子节点</strong>：度为 0 的节点（没有子节点的节点）</li>
+</ul>
+<p>（3） 节点的层次和深度</p>
+<ul>
+<li><strong>根节点的层次</strong>：第 1 层</li>
+<li><strong>节点的深度</strong>：本文统一按节点所在层数计算，根的深度为 1；若按边数计算根深度为 0，公式应相应调整。</li>
+</ul>
+<p>（4）树的高度</p>
+<ul>
+<li><strong>树的高度</strong>：树中节点的最大层次</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A((1)) --&gt; B((2))
+    A --&gt; C((3))
+    B --&gt; D((4))
+    B --&gt; E((5))</div>
+<p>对于上述二叉树，根节点有两个子树，五个节点的度数分别为 2，2，0，0，0，其中叶子节点，即度为 0 的节点为 3，4，5</p>
+<p>根节点 1 的深度为 1，</p>
+<p>子节点 2，3 的深度为 2</p>
+<p>子节点 4，5 的深度为 3</p>
+<p>树的最大高度为 3</p>
+<h5 id="n-0302">1.3 常见二叉树类型与数量关系</h5>
+<h6 id="n-0303">1.3.1 满、完全、搜索与平衡二叉树</h6>
+<p><strong>满二叉树（本文采用国内教材常见定义，对应 perfect binary tree）</strong>：每层都达到最多节点数，高度为 h 时共有 <span class="math inline">\(2^h-1\)</span> 个节点。</p>
+<p>英文 full / proper binary tree 通常只要求每个节点有 0 或 2 个孩子，不要求所有叶子处于同一层。下面五个节点的图符合 full 的英文定义，但不是本文定义的满二叉树。</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A((1)) --&gt; B((2))
+    A --&gt; C((3))
+    B --&gt; D((4))
+    B --&gt; E((5))</div>
+<p><strong>完全二叉树（Complete Binary Tree）</strong>：除最后一层外，其他层节点都满，且最后一层节点从左到右连续排列。</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A((1)) --&gt; B((2))
+    A --&gt; C((3))
+    B --&gt; D((4))
+    B --&gt; E((5))
+    C --&gt; F((6))</div>
+<p>由于是从左到右连续排列，因此下列这种<strong>不是</strong>完全二叉树：</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A((1)) --&gt; B((2))
+    A --&gt; C((3))
+    B --&gt; D((4))
+    B --&gt; N1( )
+    C --&gt; E((5))
+    C --&gt; F((6))
+
+    style N1 fill:#ffffff, stroke:#ffffff, color:#ffffff</div>
+<p><strong>二叉搜索树（BST, Binary Search Tree）</strong>：左子树的所有节点值 &lt; 当前节点值 &lt; 右子树所有节点值。</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A((8)) --&gt; B((3))
+    A --&gt; C((10))
+    B --&gt; D((1))
+    B --&gt; E((6))
+    C --&gt; F(( ))
+    C --&gt; G((14))
+    E --&gt; H((4))
+    E --&gt; I((7))
+    G --&gt; J((13))
+    G --&gt; K(( ))
+
+    style F fill:#ffffff, stroke:#ffffff, color:#ffffff
+    style K fill:#ffffff, stroke:#ffffff, color:#ffffff</div>
+<p>说明：</p>
+<ul>
+<li>以节点 8 为根：左子树(3,1,6,4,7)都 &lt;8，右子树(10,14,13)都&gt; 8</li>
+<li>以节点 3 为根：左子树(1)&lt;3，右子树(6,4,7)&gt; 3</li>
+<li>以节点 6 为根：左子树(4)&lt;6，右子树(7)&gt; 6</li>
+</ul>
+<p><strong>AVL 树</strong>：二叉搜索树，并且每个节点的左右子树高度差不超过 1。红黑树使用颜色等约束维持对数级高度，不要求每个节点的左右高度差都不超过 1。</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A((6)) --&gt; B((3))
+    A --&gt; C((10))
+    B --&gt; D((1))
+    B --&gt; E((4))
+    C --&gt; F((8))
+    C --&gt; G((13))
+    E --&gt; H(( ))
+    E --&gt; I((5))
+    F --&gt; J(( ))
+    F --&gt; K(( ))
+    G --&gt; L(( ))
+    G --&gt; M((14))
+
+    style H fill:#ffffff, stroke:#ffffff, color:#ffffff
+    style J fill:#ffffff, stroke:#ffffff, color:#ffffff
+    style K fill:#ffffff, stroke:#ffffff, color:#ffffff
+    style L fill:#ffffff, stroke:#ffffff, color:#ffffff</div>
+<p>自平衡二叉搜索树通过相应的旋转或调整规则控制树高，保持对数级的查找、插入和删除代价。AVL 与红黑树使用的平衡约束不同。</p>
+<p><strong>平衡因子</strong>：某节点的左子树高度 - 右子树高度 <strong>AVL 平衡条件</strong>：所有节点的平衡因子绝对值 ≤ 1 <strong>常见自平衡二叉搜索树</strong>：AVL 树和红黑树使用不同约束与调整规则。</p>
+<p>图中的 AVL 示例保持搜索树的大小关系，并且每个节点的左右子树高度差不超过 1。</p>
+<h6 id="n-0304">1.3.2 节点数、高度与叶子数的关系</h6>
+<figure>
+<img alt="完全二叉树的层序编号与父子下标" decoding="async" loading="lazy" src="../media/notes/complete-tree-array-indices.svg"/>
+<figcaption aria-hidden="true">完全二叉树的层序编号与父子下标</figcaption>
+</figure>
+<p>此图采用从 1 开始的层序编号，父节点为 i/2，孩子为 2i、2i+1；编号超出节点数表示孩子不存在。</p>
+<p><strong>性质 1</strong>：在二叉树的第 i 层上至多有 <strong><span class="math inline">\(2^{(i-1)}\)</span></strong> 个节点(<span class="math inline">\(i≥1\)</span>)</p>
+<p><strong>性质 2</strong>：深度为 <span class="math inline">\(k\)</span> 的二叉树至多有 <strong><span class="math inline">\(2^k - 1\)</span></strong> 个节点(<span class="math inline">\(k≥1\)</span>)</p>
+<p><strong>性质 3</strong>：对任何一棵非空二叉树 T，如果其叶子节点数为 <span class="math inline">\(n_0\)</span>，度为 <span class="math inline">\(2\)</span> 的节点数为 <span class="math inline">\(n_2\)</span>，则： <span class="math inline">\(n_0 = n_2 + 1\)</span></p>
+<p><strong>性质 4</strong>：具有 <span class="math inline">\(n\)</span> 个节点的完全二叉树的深度为 <span class="math inline">\(\lfloor\log_2 n\rfloor + 1\)</span>（n ≥ 1）</p>
+<p><strong>性质 5</strong>：</p>
+<p>对完全二叉树按层编号，则对任意节点 <span class="math inline">\(i\)</span> 有：</p>
+<ul>
+<li>如果 <span class="math inline">\(i=1\)</span>，则是根节点</li>
+<li>如果 <span class="math inline">\(i&gt;1\)</span>，则其父节点编号为 <span class="math inline">\(⌊i/2⌋\)</span></li>
+<li>左孩子编号为 <span class="math inline">\(2i\)</span>（如果 <span class="math inline">\(2i≤n\)</span>）</li>
+<li>右孩子编号为 <span class="math inline">\(2i+1\)</span>（如果 <span class="math inline">\(2i+1≤n\)</span> ）</li>
+</ul>
+<p><strong>性质 6</strong>：对于高度为 <span class="math inline">\(h\)</span> 的二叉树：</p>
+<ul>
+<li><strong>最少节点数</strong>：<span class="math inline">\(h\)</span>（每层只有一个节点）</li>
+<li><strong>最多节点数</strong>：<span class="math inline">\(2^h - 1\)</span>（满二叉树）</li>
+</ul>
+<p><strong>性质 7</strong>：对于有 n 个节点的完全二叉树：</p>
+<ul>
+<li><strong>高度</strong>：<span class="math inline">\(\lfloor\log_2 n\rfloor + 1\)</span>（n ≥ 1）</li>
+<li><strong>叶子节点数</strong>：<span class="math inline">\(⌈\frac{n}{2}⌉\)</span></li>
+<li><strong>非叶子节点数</strong>：<span class="math inline">\(⌊\frac{n}{2}⌋\)</span></li>
+</ul>
+<h6 id="n-0305">1.3.3 用二叉树性质计算节点数与高度</h6>
+<p><strong>题目</strong>：一棵完全二叉树有 1000 个节点，求：</p>
+<ol type="1">
+<li>树的高度</li>
+<li>叶子节点数</li>
+<li>度为 1 的节点数</li>
+</ol>
+<p><strong>解答</strong>：</p>
+<ol type="1">
+<li><p><strong>高度</strong> = <span class="math inline">\(⌊log_21000⌋ + 1 = ⌊9.966⌋ + 1 = 9 + 1 = 10\)</span></p></li>
+<li><p><strong>叶子节点数</strong> = $ ⌈⌉ = 500$</p></li>
+<li><p><strong>度为 1 的节点数</strong>：</p>
+<ul>
+<li><span class="math inline">\(n_0 = 500\)</span></li>
+<li><span class="math inline">\(n = n_0 + n_1 + n_2 = 1000\)</span></li>
+<li>又因为 <span class="math inline">\(n_0 = n_2 + 1\)</span>，所以 <span class="math inline">\(n_2 = 499\)</span></li>
+<li>因此 <span class="math inline">\(n_1 = 1000 - 500 - 499 = 1\)</span></li>
+</ul></li>
+</ol>
+<h5 id="n-0306">1.4 二叉树的遍历</h5>
+<p><strong>示例二叉树：</strong></p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+    A((A)) --&gt; B((B))
+    A --&gt; C((C))
+    B --&gt; D((D))
+    B --&gt; E((E))
+    C --&gt; F((F))
+    C --&gt; G((G))
+    E --&gt; H((H))
+    E --&gt; I((I))</div>
+<h6 id="n-0307">1.4.1 层序遍历</h6>
+<p><strong>访问顺序</strong>：按层次从上到下，每层从左到右</p>
+<figure>
+<img alt="二叉树层序遍历的访问编号" decoding="async" loading="lazy" src="../media/notes/tree-traversal-level.svg"/>
+<figcaption aria-hidden="true">二叉树层序遍历的访问编号</figcaption>
+</figure>
+<p>橙色小数字表示访问次序；树边表示父子关系，依次按层读取。</p>
+<p>所以层序遍历为：A - B - C - D - E - F - G - H - I</p>
+<h6 id="n-0308">1.4.2 前序遍历</h6>
+<p><strong>访问顺序</strong>：根节点 → 左子树 → 右子树</p>
+<figure>
+<img alt="二叉树前序遍历的访问编号" decoding="async" loading="lazy" src="../media/notes/tree-traversal-pre.svg"/>
+<figcaption aria-hidden="true">二叉树前序遍历的访问编号</figcaption>
+</figure>
+<p>先根、再左、再右；用编号和下方序列表示访问顺序，树边只表示父子关系。</p>
+<p>所以前序遍历为：A - B - D - E - H - I - C - F - G</p>
+<h6 id="n-0309">1.4.3 中序遍历</h6>
+<p><strong>访问顺序</strong>：左子树 → 根节点 → 右子树</p>
+<figure>
+<img alt="二叉树中序遍历的访问编号" decoding="async" loading="lazy" src="../media/notes/tree-traversal-in.svg"/>
+<figcaption aria-hidden="true">二叉树中序遍历的访问编号</figcaption>
+</figure>
+<p>先左、再根、再右；当前节点要等左子树全部访问后才访问。</p>
+<p>所以中序遍历：D - B - H - E - I - A - F - C - G</p>
+<h6 id="n-0310">1.4.4 后序遍历</h6>
+<p><strong>访问顺序</strong>：左子树 → 右子树 → 根节点</p>
+<figure>
+<img alt="二叉树后序遍历的访问编号" decoding="async" loading="lazy" src="../media/notes/tree-traversal-post.svg"/>
+<figcaption aria-hidden="true">二叉树后序遍历的访问编号</figcaption>
+</figure>
+<p>先左、再右、再根；子树处理完成以后才访问其根节点。</p>
+<p>所以后序遍历：D - H - I - E - B - F - G - C - A</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">遍历方式</th>
+<th style="text-align: left;">应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>前序遍历</strong></td>
+<td style="text-align: left;">复制二叉树、前缀表达式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>中序遍历</strong></td>
+<td style="text-align: left;">二叉搜索树的有序输出、中缀表达式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>后序遍历</strong></td>
+<td style="text-align: left;">释放二叉树内存、后缀表达式、计算目录大小</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>层序遍历</strong></td>
+<td style="text-align: left;">查找最短路径、按层次处理节点</td>
+</tr>
+</tbody>
+</table>
+<p>这四张图用于核对同一棵树的完整访问次序。执行时怎样暂停在子调用、返回后何时访问根、队列如何进出，会在后面的二叉树实现中用 5 个节点逐步展开；先理解这些动作，再按相同规则推到这棵 9 节点树。</p>
+<h6 id="n-0311">1.4.5 遍历序列与二叉树的唯一性</h6>
+<ul>
+<li>节点标识互不相同时，<strong>前序 + 中序</strong>或<strong>后序 + 中序</strong>可以唯一确定二叉树。</li>
+<li>一般情况下只有前序 + 后序不能唯一确定；重复值需要额外的节点身份或约束。</li>
+</ul>
+<h4 id="n-0312">2. 按层序插入与删除的二叉树实现</h4>
+<h5 id="n-0313">2.1 二叉树节点类</h5>
+<p><strong>题目原文（自拟示例）：</strong> 输入 n 个互不相同的整数，按层序放入普通二叉树，再输入一个待删除值。输出四种遍历结果，并删除目标后输出层序结果；允许空树，找不到目标时树不变。</p>
+<p><strong>思路分析：</strong> 层序插入寻找第一个空位；删除时把最后一个节点的值复制到目标位置，再摘除最后节点。这个操作维护普通树结构，不维护 BST 的大小关系。</p>
+<p>节点类拥有左右子树，二叉树对象拥有根节点；所有节点由 <code>new</code> 创建，不允许共享同一个子节点或拷贝整个所有权结构。</p>
+<figure>
+<img alt="树节点拥有孩子与析构顺序" decoding="async" loading="lazy" src="../media/notes/tree-node-ownership.svg"/>
+<figcaption aria-hidden="true">树节点拥有孩子与析构顺序</figcaption>
+</figure>
+<p>每个孩子只由一个父节点拥有，根由树对象拥有；析构根会递归销毁左右子树，不能把同一节点交给两个父节点。</p>
+<p>这里的 <code>TreeNode(const TreeNode&amp;) = delete;</code> 与赋值函数末尾的 <code>= delete</code> 禁止这两种拷贝操作；它们不是释放内存的 delete 表达式。节点拥有左右子树的释放责任，若只复制地址，就可能让两份对象重复释放同一子树。后面的 BinaryTree 也按同样理由禁止直接拷贝。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">/*</span></span>
+<span data-line="2"><span class="co"> * 二叉树节点类</span></span>
+<span data-line="3"><span class="co"> *</span></span>
+<span data-line="4"><span class="co"> * 定义了二叉树的基本结构，包含节点值和左右子节点指针</span></span>
+<span data-line="5"><span class="co"> */</span></span>
+<span data-line="6"><span class="kw">class</span> TreeNode <span class="op">{</span></span>
+<span data-line="7"></span>
+<span data-line="8"><span class="kw">public</span><span class="op">:</span></span>
+<span data-line="9">    <span class="dt">int</span> val<span class="op">;</span>         <span class="co">// 节点值</span></span>
+<span data-line="10">    TreeNode <span class="op">*</span>left<span class="op">;</span>  <span class="co">// 左子节点指针</span></span>
+<span data-line="11">    TreeNode <span class="op">*</span>right<span class="op">;</span> <span class="co">// 右子节点指针</span></span>
+<span data-line="12"></span>
+<span data-line="13">    <span class="co">/*</span></span>
+<span data-line="14"><span class="co">     * 默认构造函数</span></span>
+<span data-line="15"><span class="co">     *</span></span>
+<span data-line="16"><span class="co">     * 初始化节点值为0，左右子节点指针为空</span></span>
+<span data-line="17"><span class="co">     */</span></span>
+<span data-line="18">    TreeNode<span class="op">()</span> <span class="op">:</span> val<span class="op">(</span><span class="dv">0</span><span class="op">),</span> left<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> right<span class="op">(</span><span class="kw">nullptr</span><span class="op">)</span> <span class="op">{}</span></span>
+<span data-line="19">    TreeNode<span class="op">(</span><span class="at">const</span> TreeNode <span class="op">&amp;)</span> <span class="op">=</span> <span class="kw">delete</span><span class="op">;</span></span>
+<span data-line="20">    TreeNode <span class="op">&amp;</span><span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> TreeNode <span class="op">&amp;)</span> <span class="op">=</span> <span class="kw">delete</span><span class="op">;</span></span>
+<span data-line="21"></span>
+<span data-line="22">    <span class="co">/*</span></span>
+<span data-line="23"><span class="co">     * 带参数的构造函数</span></span>
+<span data-line="24"><span class="co">     *</span></span>
+<span data-line="25"><span class="co">     * 参数 x：用于初始化节点的值</span></span>
+<span data-line="26"><span class="co">     */</span></span>
+<span data-line="27">    TreeNode<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">:</span> val<span class="op">(</span>x<span class="op">),</span> left<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> right<span class="op">(</span><span class="kw">nullptr</span><span class="op">)</span> <span class="op">{}</span></span>
+<span data-line="28"></span>
+<span data-line="29">    <span class="op">~</span>TreeNode<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="30">        <span class="kw">delete</span> left<span class="op">;</span></span>
+<span data-line="31">        <span class="kw">delete</span> right<span class="op">;</span></span>
+<span data-line="32">    <span class="op">}</span></span>
+<span data-line="33"><span class="op">};</span></span></code></pre></div>
+<h5 id="n-0314">2.2 BinaryTree 的接口与成员操作</h5>
+<p><strong>题目原文（自拟）：</strong> 输入 n（1&lt;=n&lt;=10000）和 n 个 int 范围的整数，按输入顺序层序插入一棵普通二叉树；重复值不插入。输出层序、前序、中序、后序遍历。再读一个待删除值，用最深最右叶子的值替换目标节点并移除该叶子，最后输出层序遍历；目标不存在则结构不变。遍历同层或同父节点时先左后右，输出格式见后面样例。</p>
+<p><strong>思路分析：</strong> 普通二叉树没有搜索树的大小约束。插入依据层序的首个空位，遍历依据访问顺序，删除则根据末尾叶子的替换规则；三个过程分别实现，不能以 BST 删除规则代替。</p>
+<p>下面代码与上一段节点类合用，还需要 <code>&lt;iostream&gt;</code>、<code>&lt;queue&gt;</code> 和 <code>using namespace std;</code>。</p>
+<p><strong>代码组合方式：</strong> 在同一个 <code>.cpp</code> 中依次放置 TreeNode 定义、下面的 BinaryTree 类定义、各成员函数实现和唯一的 main。成员实现不能单独运行；<code>BinaryTree::</code> 表示它属于这个类。</p>
+<h6 id="n-0315">2.2.1 先确定类的接口与所有权</h6>
+<p>TreeNode 析构时递归释放孩子，BinaryTree 只需释放根。禁止浅拷贝，避免两个对象重复释放同一棵树。成员声明先列出接口，下面再分开实现。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="co">// 先放入上一小节的 TreeNode 定义；root 拥有整棵树。</span></span>
+<span data-line="6"><span class="kw">class</span> BinaryTree <span class="op">{</span></span>
+<span data-line="7"><span class="kw">public</span><span class="op">:</span></span>
+<span data-line="8">    TreeNode <span class="op">*</span>root<span class="op">;</span></span>
+<span data-line="9">    BinaryTree<span class="op">()</span> <span class="op">:</span> root<span class="op">(</span><span class="kw">nullptr</span><span class="op">)</span> <span class="op">{}</span></span>
+<span data-line="10">    BinaryTree<span class="op">(</span><span class="at">const</span> BinaryTree <span class="op">&amp;)</span> <span class="op">=</span> <span class="kw">delete</span><span class="op">;</span></span>
+<span data-line="11">    BinaryTree <span class="op">&amp;</span><span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> BinaryTree <span class="op">&amp;)</span> <span class="op">=</span> <span class="kw">delete</span><span class="op">;</span></span>
+<span data-line="12">    <span class="op">~</span>BinaryTree<span class="op">()</span> <span class="op">{</span> <span class="kw">delete</span> root<span class="op">;</span> <span class="op">}</span></span>
+<span data-line="13">    <span class="dt">bool</span> insert<span class="op">(</span><span class="dt">int</span> value<span class="op">);</span></span>
+<span data-line="14">    <span class="dt">void</span> levelOrder<span class="op">();</span></span>
+<span data-line="15">    <span class="dt">void</span> preOrder<span class="op">(</span>TreeNode <span class="op">*</span>node<span class="op">);</span></span>
+<span data-line="16">    <span class="dt">void</span> inOrder<span class="op">(</span>TreeNode <span class="op">*</span>node<span class="op">);</span></span>
+<span data-line="17">    <span class="dt">void</span> postOrder<span class="op">(</span>TreeNode <span class="op">*</span>node<span class="op">);</span></span>
+<span data-line="18">    TreeNode <span class="op">*</span>deleteNode<span class="op">(</span>TreeNode <span class="op">*</span>root<span class="op">,</span> <span class="dt">int</span> key<span class="op">);</span></span>
+<span data-line="19"><span class="op">};</span></span></code></pre></div>
+<h6 id="n-0316">2.2.2 层序寻找插入位置</h6>
+<p>队列按层扫描，记下第一个缺孩子的节点。即使已找到空位，也继续扫描全树，检查值是否重复；不存在重复才真正插入。单次插入 O(n)，连续插入 n 个不同值的总量可能为 O(n²)。</p>
+<figure>
+<img alt="队列按层扫描，记下第一个缺孩子的节点" decoding="async" loading="lazy" src="../media/notes/binary-tree-insert-vacancy.svg"/>
+<figcaption aria-hidden="true">队列按层扫描，记下第一个缺孩子的节点</figcaption>
+</figure>
+<p>队列按层扫描，记下第一个缺孩子的节点。</p>
+<figure>
+<img alt="记下空位后继续检查重复，全部检查通过才连接新节点" decoding="async" loading="lazy" src="../media/notes/binary-tree-insert-scan.svg"/>
+<figcaption aria-hidden="true">记下空位后继续检查重复，全部检查通过才连接新节点</figcaption>
+</figure>
+<p>在根 1、孩子 2 和 3 的树中插入 4：队列先处理 1，再处理 2，此时记下 2 的左空位；随后仍处理 3，确认没有值 4，才创建并连接新节点。若插入的是 3，处理到现有节点 3 就返回 false，之前记下的空位不发生写入。记录位置和实际插入是两个时机，不能混在一起。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 队列按层扫描，记下第一个缺孩子的节点。</span></span>
+<span data-line="2"><span class="dt">bool</span> BinaryTree<span class="op">::</span>insert<span class="op">(</span><span class="dt">int</span> value<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="cf">if</span> <span class="op">(!</span>root<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="4">        root <span class="op">=</span> <span class="kw">new</span> TreeNode<span class="op">(</span>value<span class="op">);</span></span>
+<span data-line="5">        <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="6">    <span class="op">}</span></span>
+<span data-line="7">    queue<span class="op">&lt;</span>TreeNode <span class="op">*&gt;</span> pending<span class="op">;</span></span>
+<span data-line="8">    pending<span class="op">.</span>push<span class="op">(</span>root<span class="op">);</span></span>
+<span data-line="9">    TreeNode <span class="op">*</span>vacancy <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span data-line="10">    <span class="dt">bool</span> leftVacancy <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="11">    <span class="cf">while</span> <span class="op">(!</span>pending<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="12">        TreeNode <span class="op">*</span>node <span class="op">=</span> pending<span class="op">.</span>front<span class="op">();</span></span>
+<span data-line="13">        pending<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="14">        <span class="cf">if</span> <span class="op">(</span>node<span class="op">-&gt;</span>val <span class="op">==</span> value<span class="op">)</span></span>
+<span data-line="15">            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(</span>node<span class="op">-&gt;</span>left<span class="op">)</span></span>
+<span data-line="17">            pending<span class="op">.</span>push<span class="op">(</span>node<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span data-line="18">        <span class="cf">else</span> <span class="cf">if</span> <span class="op">(!</span>vacancy<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="19">            vacancy <span class="op">=</span> node<span class="op">;</span></span>
+<span data-line="20">            leftVacancy <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="21">        <span class="op">}</span></span>
+<span data-line="22">        <span class="cf">if</span> <span class="op">(</span>node<span class="op">-&gt;</span>right<span class="op">)</span></span>
+<span data-line="23">            pending<span class="op">.</span>push<span class="op">(</span>node<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span data-line="24">        <span class="cf">else</span> <span class="cf">if</span> <span class="op">(!</span>vacancy<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="25">            vacancy <span class="op">=</span> node<span class="op">;</span></span>
+<span data-line="26">            leftVacancy <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="27">        <span class="op">}</span></span>
+<span data-line="28">    <span class="op">}</span></span>
+<span data-line="29">    TreeNode <span class="op">*</span>added <span class="op">=</span> <span class="kw">new</span> TreeNode<span class="op">(</span>value<span class="op">);</span></span>
+<span data-line="30">    <span class="cf">if</span> <span class="op">(</span>leftVacancy<span class="op">)</span></span>
+<span data-line="31">        vacancy<span class="op">-&gt;</span>left <span class="op">=</span> added<span class="op">;</span></span>
+<span data-line="32">    <span class="cf">else</span></span>
+<span data-line="33">        vacancy<span class="op">-&gt;</span>right <span class="op">=</span> added<span class="op">;</span></span>
+<span data-line="34">    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="35"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0317">2.2.3 队列驱动层序遍历</h6>
+<p>取出队头并输出，再把左、右孩子依次入队。队列始终保存尚未访问的节点；每个节点处理一次，时间 O(n)，队列空间 O(w)，w 为最大层宽。</p>
+<figure>
+<img alt="取出队头并输出，再把左、右孩子依次入队" decoding="async" loading="lazy" src="../media/notes/binary-tree-bfs-queue.svg"/>
+<figcaption aria-hidden="true">取出队头并输出，再把左、右孩子依次入队</figcaption>
+</figure>
+<p>取出队头并输出，再把左、右孩子依次入队。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 取出队头并输出，再把左、右孩子依次入队。</span></span>
+<span data-line="2"><span class="dt">void</span> BinaryTree<span class="op">::</span>levelOrder<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="co">// 检查根节点是否为空</span></span>
+<span data-line="4">    <span class="cf">if</span> <span class="op">(!</span>root<span class="op">)</span></span>
+<span data-line="5">        <span class="cf">return</span><span class="op">;</span></span>
+<span data-line="6">    queue<span class="op">&lt;</span>TreeNode <span class="op">*&gt;</span> q<span class="op">;</span></span>
+<span data-line="7">    <span class="co">// 将根节点入队</span></span>
+<span data-line="8">    q<span class="op">.</span>push<span class="op">(</span>root<span class="op">);</span></span>
+<span data-line="9">    <span class="co">// 当队列不为空时继续遍历</span></span>
+<span data-line="10">    <span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="11">        <span class="co">// 取出队首节点并出队</span></span>
+<span data-line="12">        TreeNode <span class="op">*</span>current <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span data-line="13">        q<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="14">        <span class="co">// 输出当前节点值</span></span>
+<span data-line="15">        cout <span class="op">&lt;&lt;</span> current<span class="op">-&gt;</span>val <span class="op">&lt;&lt;</span> <span class="st">" "</span><span class="op">;</span></span>
+<span data-line="16">        <span class="co">// 将左右子节点依次入队</span></span>
+<span data-line="17">        <span class="cf">if</span> <span class="op">(</span>current<span class="op">-&gt;</span>left<span class="op">)</span></span>
+<span data-line="18">            q<span class="op">.</span>push<span class="op">(</span>current<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span data-line="19">        <span class="cf">if</span> <span class="op">(</span>current<span class="op">-&gt;</span>right<span class="op">)</span></span>
+<span data-line="20">            q<span class="op">.</span>push<span class="op">(</span>current<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span data-line="21">    <span class="op">}</span></span>
+<span data-line="22">    <span class="co">// 遍历完成后换行</span></span>
+<span data-line="23">    cout <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="24"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0318">2.2.4 前序：根、左、右</h6>
+<p>空指针立即返回。先访问当前根，再递归左子树和右子树；递归深度为树高 h，时间 O(n)，调用栈 O(h)。</p>
+<figure>
+<img alt="三种递归遍历只改变访问根的位置" decoding="async" loading="lazy" src="../media/notes/binary-tree-dfs-visit-position.svg"/>
+<figcaption aria-hidden="true">三种递归遍历只改变访问根的位置</figcaption>
+</figure>
+<p>绿色标出根节点的访问位置，子树内部递归采用相同规则。</p>
+<figure>
+<img alt="进入调用、左子树返回、右子树返回分别对应三种访问时机" decoding="async" loading="lazy" src="../media/notes/tree-recursive-return-events.svg"/>
+<figcaption aria-hidden="true">进入调用、左子树返回、右子树返回分别对应三种访问时机</figcaption>
+</figure>
+<p>用根 1、孩子 2 和 3、节点 2 的孩子 4 和 5 来跟踪调用。前序在刚进入 2 时输出 2；中序等左侧 4 整棵子树处理完、返回 2 后才输出 2；后序还要等右侧 5 返回后才输出 2。子调用运行时，父调用停在调用语句处，返回后接着下一句，不能把“返回父节点”理解为重新执行整个父函数。三种输出依次为 <code>1 2 4 5 3</code>、<code>4 2 5 1 3</code>、<code>4 5 2 3 1</code>。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 空指针立即返回。</span></span>
+<span data-line="2"><span class="dt">void</span> BinaryTree<span class="op">::</span>preOrder<span class="op">(</span>TreeNode <span class="op">*</span>node<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="co">// 递归终止条件：如果当前节点为空，则直接返回</span></span>
+<span data-line="4">    <span class="cf">if</span> <span class="op">(</span>node <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span></span>
+<span data-line="5">        <span class="cf">return</span><span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7">    <span class="co">// 访问当前节点：打印节点值</span></span>
+<span data-line="8">    cout <span class="op">&lt;&lt;</span> node<span class="op">-&gt;</span>val <span class="op">&lt;&lt;</span> <span class="st">" "</span><span class="op">;</span></span>
+<span data-line="9"></span>
+<span data-line="10">    <span class="co">// 递归遍历左子树</span></span>
+<span data-line="11">    preOrder<span class="op">(</span>node<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span data-line="12"></span>
+<span data-line="13">    <span class="co">// 递归遍历右子树</span></span>
+<span data-line="14">    preOrder<span class="op">(</span>node<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span data-line="15"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0319">2.2.5 中序：左、根、右</h6>
+<p>先完整处理左子树，返回后输出根，最后处理右子树。二叉搜索树把较小值放在左侧、较大值放在右侧，所以它的中序遍历恰好从小到大输出；普通二叉树的中序则按结构给出左、根、右的访问次序。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 先完整处理左子树，返回后输出根，最后处理右子树。</span></span>
+<span data-line="2"><span class="dt">void</span> BinaryTree<span class="op">::</span>inOrder<span class="op">(</span>TreeNode <span class="op">*</span>node<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="co">// 递归终止条件：如果当前节点为空，则直接返回</span></span>
+<span data-line="4">    <span class="cf">if</span> <span class="op">(</span>node <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span></span>
+<span data-line="5">        <span class="cf">return</span><span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7">    <span class="co">// 递归遍历左子树</span></span>
+<span data-line="8">    inOrder<span class="op">(</span>node<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span data-line="9"></span>
+<span data-line="10">    <span class="co">// 访问当前节点：打印节点值</span></span>
+<span data-line="11">    cout <span class="op">&lt;&lt;</span> node<span class="op">-&gt;</span>val <span class="op">&lt;&lt;</span> <span class="st">" "</span><span class="op">;</span></span>
+<span data-line="12"></span>
+<span data-line="13">    <span class="co">// 递归遍历右子树</span></span>
+<span data-line="14">    inOrder<span class="op">(</span>node<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span data-line="15"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0320">2.2.6 后序：左、右、根</h6>
+<p>孩子处理完才访问根。删除整棵树也沿这个顺序：先通过父节点的 left、right 找到并释放两棵子树，最后释放父节点。这样读取孩子指针时，父节点仍然存在。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 孩子处理完才访问根。</span></span>
+<span data-line="2"><span class="dt">void</span> BinaryTree<span class="op">::</span>postOrder<span class="op">(</span>TreeNode <span class="op">*</span>node<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="co">// 递归终止条件：如果当前节点为空，则直接返回</span></span>
+<span data-line="4">    <span class="cf">if</span> <span class="op">(</span>node <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span></span>
+<span data-line="5">        <span class="cf">return</span><span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7">    <span class="co">// 递归遍历左子树</span></span>
+<span data-line="8">    postOrder<span class="op">(</span>node<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span data-line="9"></span>
+<span data-line="10">    <span class="co">// 递归遍历右子树</span></span>
+<span data-line="11">    postOrder<span class="op">(</span>node<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span data-line="12"></span>
+<span data-line="13">    <span class="co">// 访问当前节点：打印节点值</span></span>
+<span data-line="14">    cout <span class="op">&lt;&lt;</span> node<span class="op">-&gt;</span>val <span class="op">&lt;&lt;</span> <span class="st">" "</span><span class="op">;</span></span>
+<span data-line="15"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0321">2.2.7 用最后一个节点替换目标并删除叶子</h6>
+<p>层序扫描同时找到目标、最后访问的节点及其父节点。最后一个节点若有孩子，就不可能最后出队，因此一定是叶子；把它的值复制到目标后，解除父节点的对应孩子指针并删除叶子。空树、单节点和目标不存在分别处理，最后把返回的根指针赋给 tree.root，树便指向删除后的根。</p>
+<figure>
+<img alt="层序扫描同时找到目标、最后访问的节点及其父节点" decoding="async" loading="lazy" src="../media/notes/binary-tree-delete.svg"/>
+<figcaption aria-hidden="true">层序扫描同时找到目标、最后访问的节点及其父节点</figcaption>
+</figure>
+<p>层序扫描同时找到目标、最后访问的节点及其父节点。</p>
+<figure>
+<img alt="逐个出队确定目标与末尾叶子，再复制值并解除父指针" decoding="async" loading="lazy" src="../media/notes/binary-tree-delete-search.svg"/>
+<figcaption aria-hidden="true">逐个出队确定目标与末尾叶子，再复制值并解除父指针</figcaption>
+</figure>
+<p>层序值为 <code>[1,2,3,4,5,6]</code>、删除值 2 时，扫描 2 只记下目标，不能立刻释放；扫描到最后的 6，才知道替换值及其父节点 3。把 6 复制到目标节点，再将原节点 6 的父指针 <code>3-&gt;left</code> 置空，最后释放该叶子。结果层序为 <code>[1,6,3,4,5]</code>；只复制值而不解除指针，会留下指向已释放内存的连接。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 层序扫描同时找到目标、最后访问的节点及其父节点。</span></span>
+<span data-line="2">TreeNode <span class="op">*</span>BinaryTree<span class="op">::</span>deleteNode<span class="op">(</span>TreeNode <span class="op">*</span>root<span class="op">,</span> <span class="dt">int</span> key<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">    <span class="cf">if</span> <span class="op">(</span>root <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span></span>
+<span data-line="4">        <span class="cf">return</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span data-line="5">    <span class="cf">if</span> <span class="op">(!</span>root<span class="op">-&gt;</span>left <span class="op">&amp;&amp;</span> <span class="op">!</span>root<span class="op">-&gt;</span>right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">        <span class="cf">if</span> <span class="op">(</span>root<span class="op">-&gt;</span>val <span class="op">==</span> key<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">            <span class="kw">delete</span> root<span class="op">;</span></span>
+<span data-line="8">            <span class="cf">return</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span data-line="9">        <span class="op">}</span></span>
+<span data-line="10">        <span class="cf">return</span> root<span class="op">;</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12"></span>
+<span data-line="13">    <span class="co">// 用于查找目标节点和最后节点</span></span>
+<span data-line="14">    TreeNode <span class="op">*</span>target <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span> <span class="co">// 要删除的节点（只删值）</span></span>
+<span data-line="15">    TreeNode <span class="op">*</span>last <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span>   <span class="co">// 最深最右节点</span></span>
+<span data-line="16">    TreeNode <span class="op">*</span>parent <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span> <span class="co">// 最深最右节点的父节点</span></span>
+<span data-line="17"></span>
+<span data-line="18">    queue<span class="op">&lt;</span>TreeNode <span class="op">*&gt;</span> q<span class="op">;</span></span>
+<span data-line="19">    q<span class="op">.</span>push<span class="op">(</span>root<span class="op">);</span></span>
+<span data-line="20"></span>
+<span data-line="21">    <span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="22">        TreeNode <span class="op">*</span>node <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span data-line="23">        q<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="24"></span>
+<span data-line="25">        <span class="co">// 记录最后一个节点</span></span>
+<span data-line="26">        last <span class="op">=</span> node<span class="op">;</span></span>
+<span data-line="27"></span>
+<span data-line="28">        <span class="co">// 找到目标节点</span></span>
+<span data-line="29">        <span class="cf">if</span> <span class="op">(</span>node<span class="op">-&gt;</span>val <span class="op">==</span> key<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="30">            target <span class="op">=</span> node<span class="op">;</span></span>
+<span data-line="31">        <span class="op">}</span></span>
+<span data-line="32"></span>
+<span data-line="33">        <span class="co">// 入队孩子，并记录父节点</span></span>
+<span data-line="34">        <span class="cf">if</span> <span class="op">(</span>node<span class="op">-&gt;</span>left<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="35">            parent <span class="op">=</span> node<span class="op">;</span></span>
+<span data-line="36">            q<span class="op">.</span>push<span class="op">(</span>node<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span data-line="37">        <span class="op">}</span></span>
+<span data-line="38">        <span class="cf">if</span> <span class="op">(</span>node<span class="op">-&gt;</span>right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="39">            parent <span class="op">=</span> node<span class="op">;</span></span>
+<span data-line="40">            q<span class="op">.</span>push<span class="op">(</span>node<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span data-line="41">        <span class="op">}</span></span>
+<span data-line="42">    <span class="op">}</span></span>
+<span data-line="43"></span>
+<span data-line="44">    <span class="co">// 若未找到目标节点，直接返回</span></span>
+<span data-line="45">    <span class="cf">if</span> <span class="op">(</span>target <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="46">        <span class="cf">return</span> root<span class="op">;</span></span>
+<span data-line="47">    <span class="op">}</span></span>
+<span data-line="48"></span>
+<span data-line="49">    <span class="co">// 将最深节点值放到目标位置</span></span>
+<span data-line="50">    target<span class="op">-&gt;</span>val <span class="op">=</span> last<span class="op">-&gt;</span>val<span class="op">;</span></span>
+<span data-line="51"></span>
+<span data-line="52">    <span class="co">// 删除最深节点</span></span>
+<span data-line="53">    <span class="cf">if</span> <span class="op">(</span>parent<span class="op">-&gt;</span>right <span class="op">==</span> last<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="54">        <span class="kw">delete</span> parent<span class="op">-&gt;</span>right<span class="op">;</span></span>
+<span data-line="55">        parent<span class="op">-&gt;</span>right <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span data-line="56">    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>parent<span class="op">-&gt;</span>left <span class="op">==</span> last<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="57">        <span class="kw">delete</span> parent<span class="op">-&gt;</span>left<span class="op">;</span></span>
+<span data-line="58">        parent<span class="op">-&gt;</span>left <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span data-line="59">    <span class="op">}</span></span>
+<span data-line="60"></span>
+<span data-line="61">    <span class="cf">return</span> root<span class="op">;</span></span>
+<span data-line="62"><span class="op">}</span></span></code></pre></div>
+<h6 id="n-0322">2.2.8 组合调用与输出</h6>
+<p>先读入节点值，调用四种遍历，再读入要删除的值并写回返回的根。下面的输出对应后面的样例；重复输入值会被 insert 拒绝。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 将类定义和上面各成员实现放在 main 之前。</span></span>
+<span data-line="2"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="3">    BinaryTree tree<span class="op">;</span></span>
+<span data-line="4">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="5">    cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span data-line="6">    <span class="cf">while</span> <span class="op">(</span>n<span class="op">--)</span> <span class="op">{</span></span>
+<span data-line="7">        <span class="dt">int</span> x<span class="op">;</span></span>
+<span data-line="8">        cin <span class="op">&gt;&gt;</span> x<span class="op">;</span></span>
+<span data-line="9">        tree<span class="op">.</span>insert<span class="op">(</span>x<span class="op">);</span></span>
+<span data-line="10">    <span class="op">}</span></span>
+<span data-line="11">    cout <span class="op">&lt;&lt;</span> <span class="st">"层序遍历："</span><span class="op">;</span></span>
+<span data-line="12">    tree<span class="op">.</span>levelOrder<span class="op">();</span></span>
+<span data-line="13">    cout <span class="op">&lt;&lt;</span> <span class="st">"前序遍历："</span><span class="op">;</span></span>
+<span data-line="14">    tree<span class="op">.</span>preOrder<span class="op">(</span>tree<span class="op">.</span>root<span class="op">);</span></span>
+<span data-line="15">    cout <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> <span class="st">"中序遍历："</span><span class="op">;</span></span>
+<span data-line="17">    tree<span class="op">.</span>inOrder<span class="op">(</span>tree<span class="op">.</span>root<span class="op">);</span></span>
+<span data-line="18">    cout <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="19">    cout <span class="op">&lt;&lt;</span> <span class="st">"后序遍历："</span><span class="op">;</span></span>
+<span data-line="20">    tree<span class="op">.</span>postOrder<span class="op">(</span>tree<span class="op">.</span>root<span class="op">);</span></span>
+<span data-line="21">    cout <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="22">    <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="23">    cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="24">    tree<span class="op">.</span>root <span class="op">=</span> tree<span class="op">.</span>deleteNode<span class="op">(</span>tree<span class="op">.</span>root<span class="op">,</span> value<span class="op">);</span></span>
+<span data-line="25">    cout <span class="op">&lt;&lt;</span> <span class="st">"删除节点后，层序遍历："</span><span class="op">;</span></span>
+<span data-line="26">    tree<span class="op">.</span>levelOrder<span class="op">();</span></span>
+<span data-line="27"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5
+1 2 3 4 5
+2</code></pre>
+<p>输出：</p>
+<pre class="text"><code>层序遍历：1 2 3 4 5
+前序遍历：1 2 4 5 3
+中序遍历：4 2 5 1 3
+后序遍历：4 5 2 3 1
+删除节点后，层序遍历：1 5 3 4</code></pre>
+<p>层序插入构建的是如下二叉树</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+ A((1)) --&gt; B((2))
+ A --&gt; C((3))
+ B --&gt; D((4))
+ B --&gt; E((5))</div>
+<p>因此</p>
+<p>层序遍历为：1 2 3 4 5</p>
+<p>前序遍历为：1 2 4 5 3</p>
+<p>中序遍历为：4 2 5 1 3</p>
+<p>后序遍历为：4 5 2 3 1</p>
+<p>删除后二叉树：</p>
+<div class="mermaid">%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#17324d","primaryBorderColor":"#2563eb","lineColor":"#94a3b8","background":"#f8fafc","secondaryColor":"#ecfdf5","tertiaryColor":"#ecfdf5","fontFamily":"Microsoft YaHei, sans-serif","fontSize":"16px","edgeLabelBackground":"#f8fafc"},"flowchart":{"curve":"linear"}}}%%
+graph TD
+ A((1)) --&gt; B((5))
+ A --&gt; C((3))
+ B --&gt; D((4))
+ B --&gt; E(( ))
+style E fill:#ffffff, stroke:#ffffff, color:#ffffff</div>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P4913" rel="noopener noreferrer">洛谷 P4913 — 二叉树深度</a>、<a href="https://www.luogu.com.cn/problem/P3884" rel="noopener noreferrer">洛谷 P3884 — 二叉树问题</a>。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-05-07.html"><small>上一节</small>（七） 哈希（散列）表</a><a href="../chapters/part-05-09.html"><small>下一节</small>（九） 双指针与滑动窗口（尺取法）</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0299">1. 二叉树的结构与性质</a><a class="level-5" href="#n-0300">1.1 左右子树与五种结构形态</a><a class="level-5" href="#n-0301">1.2 节点的度、深度与高度</a><a class="level-5" href="#n-0302">1.3 常见二叉树类型与数量关系</a><a class="level-6" href="#n-0303">1.3.1 满、完全、搜索与平衡二叉树</a><a class="level-6" href="#n-0304">1.3.2 节点数、高度与叶子数的关系</a><a class="level-6" href="#n-0305">1.3.3 用二叉树性质计算节点数与高度</a><a class="level-5" href="#n-0306">1.4 二叉树的遍历</a><a class="level-6" href="#n-0307">1.4.1 层序遍历</a><a class="level-6" href="#n-0308">1.4.2 前序遍历</a><a class="level-6" href="#n-0309">1.4.3 中序遍历</a><a class="level-6" href="#n-0310">1.4.4 后序遍历</a><a class="level-6" href="#n-0311">1.4.5 遍历序列与二叉树的唯一性</a><a class="level-4" href="#n-0312">2. 按层序插入与删除的二叉树实现</a><a class="level-5" href="#n-0313">2.1 二叉树节点类</a><a class="level-5" href="#n-0314">2.2 BinaryTree 的接口与成员操作</a><a class="level-6" href="#n-0315">2.2.1 先确定类的接口与所有权</a><a class="level-6" href="#n-0316">2.2.2 层序寻找插入位置</a><a class="level-6" href="#n-0317">2.2.3 队列驱动层序遍历</a><a class="level-6" href="#n-0318">2.2.4 前序：根、左、右</a><a class="level-6" href="#n-0319">2.2.5 中序：左、根、右</a><a class="level-6" href="#n-0320">2.2.6 后序：左、右、根</a><a class="level-6" href="#n-0321">2.2.7 用最后一个节点替换目标并删除叶子</a><a class="level-6" href="#n-0322">2.2.8 组合调用与输出</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

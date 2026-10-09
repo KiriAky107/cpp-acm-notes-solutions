@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（七） 哈希（散列）表 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-05-07.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-05-07.html" data-page-title="（七） 哈希（散列）表" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details open><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="current" href="../chapters/part-05-07.html" aria-current=page>（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 五、数据结构与算法</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0293">（七） 哈希（散列）表</h3>
+<p>STL 的 unordered 容器已经能判重和统计。现在用小表手工插入、查找几个键，解释为何先定位桶仍要比较真实键，以及冲突怎样影响工作量。</p>
+<p>哈希表（Hash Table）先对键计算哈希值，再把元素分配到桶或槽位中。键分散到各桶时，一次查询通常只比较少量候选，平均时间为 <span class="math inline">\(O(1)\)</span>；n 个键集中在同一桶时，一次查询可能逐个比较到最后，最坏时间为 <span class="math inline">\(O(n)\)</span>。unordered_map 与 unordered_set 是标准库提供的无序关联容器。</p>
+<h4 id="n-0294">1. 哈希值、桶下标与冲突</h4>
+<p>哈希值是对键计算出的结果，桶下标是进一步映射到存储位置的编号，两者不能总是当作同一个数。教学示例直接使用 <code>index=((value%m)+m)%m</code>，把整数分配到 <code>0..m-1</code>；实际代码只在余数为负时加一次 <code>m</code>，避免先加产生溢出。</p>
+<p><code>m=10</code> 时，7 和 17 都映射到桶 7，这叫<strong>冲突</strong>。键仍然不同，不能因为桶相同就把它们当成同一个元素。查找 17 时，定位到桶 7 后还要比较实际保存的是 7 还是 17。下面介绍两种不同的处理方法。</p>
+<figure>
+<img alt="哈希冲突的两种处理方式" decoding="async" loading="lazy" src="../media/notes/hash-collision-resolution.svg"/>
+<figcaption aria-hidden="true">哈希冲突的两种处理方式</figcaption>
+</figure>
+<p>图以 12、22、32 为例：它们的初始桶下标都为 2。左图寻找后续空槽，右图把元素保存在同一桶内；两幅图代表不同方案。</p>
+<h4 id="n-0295">2. 线性探测：沿后续槽位找空位</h4>
+<p><strong>题目原文（自拟）：</strong> 建立长度为 10 的整数表。输入非负整数 <code>n</code>，再输入 <code>n</code> 个在 <code>int</code> 范围内的整数，按输入顺序插入。起始槽位取非负余数；槽位已占用时循环检查下一槽，直到遇到空位。若插入某个数时整表已满，输出 <code>FULL</code> 并结束；否则按槽位 <code>0..9</code> 输出表，空槽输出 <code>EMPTY</code>，以单个空格分隔。重复数也各占一个槽。</p>
+<p><strong>本例的空槽表示：</strong> <code>&lt;optional&gt;</code> 提供 C++17 的 optional。<code>optional&lt;int&gt;</code> 可以处于“没有值”或“保存一个 int”两种状态；默认构造没有值，赋入整数后有值。has_value 或逻辑判断检查是否有值，has_value 为真时，<code>*slot</code> 读取所保存的整数；为假时，程序输出 EMPTY。它没有拿 0 或 -1 充当空标记，所以这些整数也可正常存入。</p>
+<p><strong>思路分析：</strong> 检查下标按 <code>(index+1)%length</code> 循环，确保到末尾后能回到开头。只检查一整圈：若检查了 10 个占用槽还没找到空位，就不能插入。空状态用 <code>optional</code> 表示，因而 <code>0</code>、<code>-1</code> 等数仍可合法保存。</p>
+<figure>
+<img alt="插入遇到冲突后逐槽检查，直到找到空槽" decoding="async" loading="lazy" src="../media/notes/hash-linear-probe-example.svg"/>
+<figcaption aria-hidden="true">插入遇到冲突后逐槽检查，直到找到空槽</figcaption>
+</figure>
+<p>插入遇到冲突后逐槽检查，直到找到空槽。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// optional 的空状态表示空槽；探测最多一整圈，避免表满时死循环。</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;optional&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="5"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="8">    <span class="kw">constexpr</span> <span class="dt">int</span> length <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span data-line="9">    vector<span class="op">&lt;</span>optional<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> table<span class="op">(</span>length<span class="op">);</span></span>
+<span data-line="10">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="11">    cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span data-line="12">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">        <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="14">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="15">        <span class="dt">int</span> index <span class="op">=</span> value <span class="op">%</span> length<span class="op">;</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(</span>index <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="17">            index <span class="op">+=</span> length<span class="op">;</span></span>
+<span data-line="18">        <span class="dt">int</span> checked <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="19">        <span class="cf">while</span> <span class="op">(</span>checked <span class="op">&lt;</span> length <span class="op">&amp;&amp;</span> table<span class="op">[</span>index<span class="op">].</span>has_value<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="20">            index <span class="op">=</span> <span class="op">(</span>index <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> length<span class="op">;</span></span>
+<span data-line="21">            <span class="op">++</span>checked<span class="op">;</span></span>
+<span data-line="22">        <span class="op">}</span></span>
+<span data-line="23">        <span class="cf">if</span> <span class="op">(</span>checked <span class="op">==</span> length<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="24">            cout <span class="op">&lt;&lt;</span> <span class="st">"FULL</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span></span>
+<span data-line="25">            <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="26">        <span class="op">}</span></span>
+<span data-line="27">        table<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> value<span class="op">;</span></span>
+<span data-line="28">    <span class="op">}</span></span>
+<span data-line="29">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> length<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="30">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="31">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="32">        <span class="cf">if</span> <span class="op">(</span>table<span class="op">[</span>i<span class="op">])</span></span>
+<span data-line="33">            cout <span class="op">&lt;&lt;</span> <span class="op">*</span>table<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="34">        <span class="cf">else</span></span>
+<span data-line="35">            cout <span class="op">&lt;&lt;</span> <span class="st">"EMPTY"</span><span class="op">;</span></span>
+<span data-line="36">    <span class="op">}</span></span>
+<span data-line="37">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="38"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例输入：</strong></p>
+<pre class="text"><code>7
+0 1 2 7 17 8 6</code></pre>
+<p><strong>样例输出：</strong></p>
+<pre class="text"><code>0 1 2 EMPTY EMPTY EMPTY 6 7 17 8</code></pre>
+<p><strong>代码解释：</strong> 17 从槽 7 探测到槽 8；随后 8 从槽 8 探测到槽 9。6 的初始槽为空，所以放入槽 6。checked 记录已经检查几项，绕过十槽还未找到空位时，程序输出 FULL。查找 17 时也从槽 7 开始，跳过 7 后在槽 8 找到它。删除槽 7 中的数时，可以留下“已删除”标记，让查找继续到槽 8；若直接变成空槽，查找就在 7 停下，遗漏后面的 17。</p>
+<p>推广到 m 个槽时，一次探测最坏检查 m 项，额外存储为 <span class="math inline">\(O(m)\)</span>。表中空槽较多、起始位置较分散时，探测往往很快遇到空位；连续占满一段槽位后，查找和插入都会沿这段位置继续扫描。固定十槽的程序可以直接观察这两种过程。</p>
+<h4 id="n-0296">3. 桶内存储：在同一桶中逐个比较</h4>
+<p>链地址法让一个桶保存所有落入该桶的元素，常用链表连接它们。下面用 <code>vector&lt;vector&lt;int&gt;&gt;</code> 表示桶与桶内元素：外层下标是桶号，内层 vector 是这个桶里的列表，便于观察冲突后怎样保存和查找。</p>
+<p><strong>题目原文（自拟）：</strong> 输入非负整数 <code>n</code>、<code>n</code> 个整数，再输入查询值 <code>target</code>，所有值在 <code>int</code> 范围内。把数据按非负的模 10 余数放入相应桶。先输出 <code>target</code> 是否存在，存在输出 1，否则输出 0；再依次输出十个桶，每行格式为 <code>编号:</code> 后跟该桶按插入顺序保存的数。重复输入不去重。</p>
+<p><strong>思路分析：</strong> 先找到 <code>target</code> 应在的桶，再检查桶内是否有相等的数。例如桶 7 中有 7、17，查找 17 时先比较 7，再比较 17；其他桶不用访问。</p>
+<figure>
+<img alt="桶下标相同的键仍需逐个比较" decoding="async" loading="lazy" src="../media/notes/hash-bucket-key-comparison.svg"/>
+<figcaption aria-hidden="true">桶下标相同的键仍需逐个比较</figcaption>
+</figure>
+<p>桶下标相同的键仍需逐个比较。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"><span class="at">const</span> <span class="dt">int</span> len <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="8">    <span class="co">// 每个桶用 vector 保存冲突元素，模拟桶式存储；它并不是链表</span></span>
+<span data-line="9">    vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> hash<span class="op">(</span>len<span class="op">);</span></span>
+<span data-line="10"></span>
+<span data-line="11">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="12">    cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span data-line="13">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">        <span class="dt">int</span> val<span class="op">;</span></span>
+<span data-line="15">        cin <span class="op">&gt;&gt;</span> val<span class="op">;</span></span>
+<span data-line="16"></span>
+<span data-line="17">        <span class="dt">int</span> key <span class="op">=</span> val <span class="op">%</span> len<span class="op">;</span></span>
+<span data-line="18">        <span class="cf">if</span> <span class="op">(</span>key <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="19">            key <span class="op">+=</span> len<span class="op">;</span></span>
+<span data-line="20">        hash<span class="op">[</span>key<span class="op">].</span>push_back<span class="op">(</span>val<span class="op">);</span></span>
+<span data-line="21">    <span class="op">}</span></span>
+<span data-line="22"></span>
+<span data-line="23">    <span class="co">// 查找操作示例</span></span>
+<span data-line="24">    <span class="dt">int</span> target<span class="op">;</span></span>
+<span data-line="25">    cin <span class="op">&gt;&gt;</span> target<span class="op">;</span></span>
+<span data-line="26">    <span class="dt">bool</span> flag <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="27"></span>
+<span data-line="28">    <span class="dt">int</span> index <span class="op">=</span> target <span class="op">%</span> len<span class="op">;</span></span>
+<span data-line="29">    <span class="cf">if</span> <span class="op">(</span>index <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="30">        index <span class="op">+=</span> len<span class="op">;</span></span>
+<span data-line="31">    <span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;</span>h <span class="op">=</span> hash<span class="op">[</span>index<span class="op">];</span></span>
+<span data-line="32">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> h<span class="op">.</span>size<span class="op">();</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span data-line="33">        <span class="cf">if</span> <span class="op">(</span>h<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> target<span class="op">)</span></span>
+<span data-line="34">            flag <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="35"></span>
+<span data-line="36">    cout <span class="op">&lt;&lt;</span> flag <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="37"></span>
+<span data-line="38">    <span class="co">// 输出结构</span></span>
+<span data-line="39">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> len<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="40">        cout <span class="op">&lt;&lt;</span> i <span class="op">&lt;&lt;</span> <span class="st">": "</span><span class="op">;</span></span>
+<span data-line="41">        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> v <span class="op">:</span> hash<span class="op">[</span>i<span class="op">])</span></span>
+<span data-line="42">            cout <span class="op">&lt;&lt;</span> v <span class="op">&lt;&lt;</span> <span class="st">" "</span><span class="op">;</span></span>
+<span data-line="43">        cout <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span data-line="44">    <span class="op">}</span></span>
+<span data-line="45"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例输入：</strong></p>
+<pre class="text"><code>7
+0 1 2 7 17 8 6
+17</code></pre>
+<p><strong>样例输出：</strong></p>
+<pre class="text"><code>1
+0: 0
+1: 1
+2: 2
+3:
+4:
+5:
+6: 6
+7: 7 17
+8: 8
+9:</code></pre>
+<p><strong>代码解释：</strong> 查询 17 时只检查桶 7，其中先遇到 7，再遇到 17，最后输出 1。展示用的桶输出包含行末空格，不影响图示内容；解题输出仍要遵守题面格式。若有 <code>m</code> 个桶、<code>n</code> 个元素且分布均匀，平均桶长约为 <code>n/m</code>，查找期望代价为 <span class="math inline">\(O(1+n/m)\)</span>；最坏所有元素集中在一桶，查找为 <span class="math inline">\(O(n)\)</span>。这个程序还要输出全部桶，所以整段演示的时间为 <span class="math inline">\(O(n+m)\)</span>，空间为 <span class="math inline">\(O(n+m)\)</span>，不能把“单次平均查找”直接当成整个程序的复杂度。</p>
+<h4 id="n-0297">4. 装载因子、rehash 与哈希设计</h4>
+<p>装载因子为 <span class="math inline">\(\alpha=n/m\)</span>，这里 <code>n</code> 是元素数，<code>m</code> 是槽位数或桶数。开放地址法越接近满表，探测越可能变长；链式桶即使 <code>alpha&gt;1</code> 也能存储，但平均桶长会增加。<code>0.7</code> 可以作为某些线性探测实现的经验阈值，不能称为所有哈希表的统一要求。</p>
+<p><code>rehash</code> 改变桶数，并按新的桶数重新安排元素；它改变的是组织方式，冲突仍由桶内存储或探测过程处理。标准无序容器还可用 reserve 规划预计元素数、用 max_load_factor 设置负载上限，从而减少增长时的重建。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>方案</th>
+<th>存储方式</th>
+<th>需要关注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开放地址</td>
+<td>元素存于同一槽位数组，冲突时继续探测</td>
+<td>满表、聚集、删除标记</td>
+</tr>
+<tr>
+<td>桶内存储</td>
+<td>同一桶内保存多个元素</td>
+<td>桶长、相等比较、附加存储</td>
+</tr>
+<tr>
+<td>rehash 操作</td>
+<td>改变桶组织并重新分配元素</td>
+<td>重建成本、遍历迭代器失效</td>
+</tr>
+</tbody>
+</table>
+<p>标准无序容器以桶组织元素，冲突时仍在候选桶中比较键；各实现可以选择不同的桶内存储方式。<code>rehash</code> 会使迭代器失效，但不会仅因重分配桶而使元素指针与引用失效。相等的键经同一个哈希函数计算得到相同位置，查找因此能回到插入时的桶；不同键也可能落在同一桶，如 7 与 17，这时靠键比较区分。参见 <a href="https://eel.is/c++draft/unord.req" rel="noopener noreferrer">C++ 标准草案：无序关联容器要求</a>。</p>
+<p>哈希函数应兼顾计算成本与分布。整数可以用适当的混合函数；字符串可逐字节进行多项式乘加；自定义结构需要结合参与相等比较的字段。字符串哈希中的 31、131 等基数是常用选择之一，不同字符串仍可能得到相同哈希值，因此找到哈希相同的候选后，还要核对实际字符串。精确判重时可直接用保存原字符串的 <code>set</code> 或 <code>unordered_set</code>；后者仍会比较完整键。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P3370" rel="noopener noreferrer">洛谷 P3370 — 字符串哈希</a>（可先用 set / unordered_set 精确判重）、<a href="https://codeforces.com/problemset/problem/4/C" rel="noopener noreferrer">CF 4C — Registration System</a>。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-05-06.html"><small>上一节</small>（六） 快速幂</a><a href="../chapters/part-05-08.html"><small>下一节</small>（八） 二叉树</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0294">1. 哈希值、桶下标与冲突</a><a class="level-4" href="#n-0295">2. 线性探测：沿后续槽位找空位</a><a class="level-4" href="#n-0296">3. 桶内存储：在同一桶中逐个比较</a><a class="level-4" href="#n-0297">4. 装载因子、rehash 与哈希设计</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

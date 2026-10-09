@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>国内 ACM 与 OI 类竞赛 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-06-06.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-06-06.html" data-page-title="国内 ACM 与 OI 类竞赛" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details open><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="current" href="../chapters/part-06-06.html" aria-current=page>国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 后记</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0466">国内 ACM 与 OI 类竞赛</h3>
+<p>周赛和分级练习积累起来后，可以给自己选一个比赛目标：在校赛中独立完成几题，与队友合做一场题，或用一套信息学试题练习完整推导和自测。国内常见的程序设计比赛，有高校团队赛，也有面向青少年的信息学竞赛；它们使用的算法有很多相通之处，作答和计分方式则会影响比赛中的时间安排。</p>
+<h4 id="n-0467">高校团队赛：ICPC 与 CCPC</h4>
+<p>在高校里，大家常说的“打 ACM”，通常指参加 ICPC、CCPC 以及采用相近赛制的校赛、省赛和邀请赛。<strong>ICPC</strong> 是国际大学生程序设计竞赛，<strong>CCPC</strong> 是中国大学生程序设计竞赛。国内高校既参加 ICPC 的国内赛站，也参加 CCPC 的网络赛、分站赛和总决赛。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>比赛</th>
+<th>可以了解的内容</th>
+<th>官方入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ICPC 国内赛站</td>
+<td>高校组队参加的区域赛，以及国内举办的相关邀请赛；通过赛站页面查看比赛介绍、题目和榜单</td>
+<td><a href="https://icpc.global/" rel="noopener noreferrer">ICPC 官网</a>；<a href="https://icpc.global/regionals" rel="noopener noreferrer">区域赛与赛站</a></td>
+</tr>
+<tr>
+<td>CCPC</td>
+<td>国内高校的团队程序设计竞赛，包含网络选拔、分站赛和总决赛，也有省赛、地区赛与邀请赛</td>
+<td><a href="https://ccpc.io/intro/352" rel="noopener noreferrer">CCPC 简介</a>；<a href="https://ccpc.io/event" rel="noopener noreferrer">赛事公告</a></td>
+</tr>
+<tr>
+<td>校赛</td>
+<td>从自己学校的比赛开始，练习定时作答、组队和现场配合</td>
+<td>查看学校竞赛队、计算机学院与教务处的通知</td>
+</tr>
+<tr>
+<td>各省大学生程序设计竞赛</td>
+<td>与省内高校队伍一起定时解题，检验基础实现、综合建模和团队配合；下一节给出各地赛事与备赛方法</td>
+<td>从本省竞赛组织与承办学校的赛事页面进入，也可在 <a href="https://ccpc.io/event" rel="noopener noreferrer">CCPC 赛事页</a>查找相关活动</td>
+</tr>
+</tbody>
+</table>
+<p>经典的 ICPC、CCPC 现场赛由 <strong>3 名队员共用一台计算机，在 5 小时内合作解题</strong>。有人读新题、有人在纸上推导、有人写代码，机器成为需要共同安排的资源。提交后会收到评测结果，队伍根据通过情况和当前进展调整做题顺序。<a href="https://icpc.global/regionals/rules" rel="noopener noreferrer">ICPC 比赛规则</a>、<a href="https://final.ccpc.io/rules/" rel="noopener noreferrer">CCPC 现场赛规则示例</a>中可以看到这些安排。</p>
+<p>例如三人同时发现一道容易题，全部围着电脑讨论，另外两道题就没有推进。可以由一人实现容易题，第二人检查样例和构造反例，第三人读下一题；提交后再交换角色。分工围绕当前任务变化，每个人都要能向队友讲清模型、复杂度和还没证明的步骤。</p>
+<p>开始准备时，可以先参加校赛，了解本校竞赛队的训练与选拔安排；找到队友后，选一场往年的团队赛共同作答。赛后记录读题、推导、写代码和调试各用了多久，以及电脑空闲或多人等待的时段。下一轮训练就能同时改进解题能力和配合方式。</p>
+<h4 id="n-0468">各省大学生程序设计竞赛</h4>
+<p>学会基础算法、开始做定时训练后，可以把<strong>本省大学生程序设计竞赛</strong>作为一个近期目标。省赛把省内高校的队伍聚在一起，适合检验基础题能否稳定通过、综合题能否独立建模，以及三人合作时怎样分配读题、推导和电脑使用。平时参加校赛、加入学校竞赛队，再准备省赛，练习就有了具体的时间安排。</p>
+<p>省级赛事会使用“大学生程序设计竞赛”“大学生程序设计大赛”“ICPC 某省赛”“CCPC 某省赛”等名称。可以从下面这些实际赛事了解它们的组织方式，并找到自己所在地区的入口：</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>地区</th>
+<th>省级赛事举例</th>
+<th>官方或组织学校的入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>浙江</td>
+<td>浙江省大学生程序设计竞赛</td>
+<td><a href="https://icpc.hznu.edu.cn/" rel="noopener noreferrer">竞赛报名平台</a>；<a href="https://hise.hznu.edu.cn/c/2026-04-27/3199339.shtml" rel="noopener noreferrer">2026 年承办学校的赛事介绍</a></td>
+</tr>
+<tr>
+<td>江苏</td>
+<td>江苏省大学生程序设计大赛</td>
+<td><a href="https://jsjds.jscs.org.cn/x1.php?id=1803" rel="noopener noreferrer">江苏省计算机学会的赛事介绍</a></td>
+</tr>
+<tr>
+<td>山东</td>
+<td>山东省大学生程序设计竞赛</td>
+<td><a href="https://www.sc.sdu.edu.cn/info/1033/5961.htm" rel="noopener noreferrer">山东大学软件学院的赛事介绍</a></td>
+</tr>
+<tr>
+<td>广东</td>
+<td>广东省大学生程序设计竞赛（GDCPC）</td>
+<td><a href="https://sist.gdufs.edu.cn/info/1191/11972.htm" rel="noopener noreferrer">承办学校的赛事介绍</a>；<a href="https://youth.scnu.edu.cn/announce/2026/0330/19000.html" rel="noopener noreferrer">校赛衔接省赛的选拔通知</a></td>
+</tr>
+<tr>
+<td>河南</td>
+<td>ICPC 河南省大学生程序设计竞赛、CCPC 河南省大学生程序设计竞赛</td>
+<td><a href="https://dwbgs.xcu.edu.cn/info/1198/6705.htm" rel="noopener noreferrer">ICPC 省赛承办学校的介绍</a>；<a href="https://news.hpu.edu.cn/info/1005/25840.htm" rel="noopener noreferrer">CCPC 省赛的高校参赛记录</a></td>
+</tr>
+<tr>
+<td>四川</td>
+<td>四川省大学生程序设计大赛</td>
+<td><a href="https://www.cuit.edu.cn/info/1003/16603.htm" rel="noopener noreferrer">承办学校的赛事介绍</a>；<a href="https://www.cuit.edu.cn/info/1006/16244.htm" rel="noopener noreferrer">校内选拔与备赛通知</a></td>
+</tr>
+<tr>
+<td>湖南</td>
+<td>湖南省大学生计算机程序设计竞赛的 ACM 程序设计类别</td>
+<td><a href="https://jwc.hunnu.edu.cn/info/1093/10893.htm" rel="noopener noreferrer">高校选拔与训练安排</a></td>
+</tr>
+<tr>
+<td>陕西</td>
+<td>ICPC 陕西省大学生程序设计竞赛</td>
+<td><a href="https://xxgk.wnu.edu.cn/info/1024/9730.htm" rel="noopener noreferrer">承办学校的赛事介绍</a></td>
+</tr>
+<tr>
+<td>北京</td>
+<td>北京市大学生程序设计竞赛</td>
+<td><a href="https://cist.buct.edu.cn/2026/0512/c981a219310/page.htm" rel="noopener noreferrer">承办学校的赛事介绍</a></td>
+</tr>
+</tbody>
+</table>
+<p>阅读赛事名称时，可以结合一个具体例子理解：河南在 2026 年分别举办了 ICPC 省赛和 CCPC 省赛，两场比赛各自有承办学校、赛题和榜单。想参加其中一场，就到相应赛事页面了解活动，再通过本校竞赛队安排报名和训练。</p>
+<p>各省的参赛消息通常可以沿三处查找：<strong>本校教务处或竞赛队 → 本省计算机学会、大学生科技竞赛组织 → 承办学校的赛事页面</strong>。搜索时写“省名 + 大学生程序设计竞赛 + 年份”，再核对页面中的主办、承办单位与赛事名称；找到本省往年题后，可在牛客、HDU 等平台检索赛事全名，安排重现赛和补题。</p>
+<p>备战省赛可以分成三步：</p>
+<ol type="1">
+<li><strong>先完成一场往年题。</strong> 由队友一起定时作答，记录每题由谁读、谁推导、谁实现，以及第一次通过的时刻。</li>
+<li><strong>按卡点补题。</strong> 基础题写错，就回到输入输出、类型与模拟；综合题想不出，就整理题意、直接做法和重复计算；已有算法却没通过，就缩小 WA 输入，找第一处状态差异。</li>
+<li><strong>再做一场检验。</strong> 观察同类失误是否减少，机器等待是否缩短，以及是否能独立解释更多题的模型。随后把省赛中的薄弱专题带到 ICPC、CCPC 网络赛与分站赛训练中。</li>
+</ol>
+<p>这里的省赛是高校程序设计比赛。后面信息学活动中的<strong>省选</strong>，则是选拔参加 NOI 的省代表队；两者各自接到高校团队训练与青少年信息学训练中。</p>
+<h4 id="n-0469">青少年信息学：CSP-J/S、NOIP 与 NOI</h4>
+<p><strong>OI</strong> 是 Olympiad in Informatics，即信息学奥林匹克。国内的 NOI 系列活动由中国计算机学会（CCF）组织。学习中会经常见到 CSP-J/S、NOIP、省选和 NOI 这些名称，先把它们各自对应的活动认清，再选择适合当前学习阶段的题目。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>活动</th>
+<th>名称与主要形式</th>
+<th>适合接入的练习</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSP-J</td>
+<td>CCF 非专业级软件能力认证的入门组（Junior）；第一轮侧重基础知识、读程序与推理，第二轮上机编程</td>
+<td>配合语言基础、模拟、枚举和基础算法，练习读程序、手算状态与完整实现</td>
+</tr>
+<tr>
+<td>CSP-S</td>
+<td>同一认证的提高组（Senior），算法设计与编程任务进一步深入</td>
+<td>在基础题能独立完成后，练搜索、数据结构、DP、图论与多步骤建模</td>
+</tr>
+<tr>
+<td>NOIP</td>
+<td>全国青少年信息学奥林匹克联赛，由各省组织的全国性个人程序设计竞赛</td>
+<td>用往年整套题练习读完题面、分析不同规模、比较做法与分配时间</td>
+</tr>
+<tr>
+<td>省级选拔活动</td>
+<td>各省选拔参加 NOI 的代表队；相关方案与活动通知在各省栏目发布</td>
+<td>继续补进阶专题，通过整套题检查多个方法的组合与实现能力</td>
+</tr>
+<tr>
+<td>NOI</td>
+<td>全国青少年信息学奥林匹克竞赛，各省派代表队参加，考查更深入的算法设计与程序实现</td>
+<td>阅读较复杂的模型与证明，练习把长推导拆成可检验的步骤</td>
+</tr>
+</tbody>
+</table>
+<p>其中，<strong>CSP-J/S 是算法与编程能力认证</strong>，两个组分别称为入门组、提高组，认证结果使用一级、二级、三级能力等级。可以通过 <a href="https://www.noi.cn/xw/2026-07-06/908222.shtml" rel="noopener noreferrer">CCF 的认证说明</a>与<a href="https://noi.ccf.org.cn/xw/2026-09-09/930554.shtml" rel="noopener noreferrer">等级名称公告</a>了解它的形式和结果名称。</p>
+<p>NOIP、NOI 与省级选拔活动的介绍、报名消息和历年资料集中在 <a href="https://www.noi.cn/" rel="noopener noreferrer">NOI 官网</a>；<a href="https://www.noi.cn/gynoi/jj/" rel="noopener noreferrer">系列活动简介</a>说明各活动的关系，<a href="https://www.noi.cn/gs/" rel="noopener noreferrer">各省新闻</a>提供本省的具体安排。准备参加活动时，可以和学校的信息学指导教师一起查看报名通知、训练计划与比赛环境，把日常练习接到实际活动上。</p>
+<p>学习上可以先用 CSP-J 往年题检验基础，再用 CSP-S、NOIP 的题目补足建模和算法；已经能完成较长推导后，继续尝试省选与 NOI 题。每个阶段都结合自己的独立解题情况选题，遇到还没学过的专题，就回到前面的后续学习路线补相应知识。</p>
+<h4 id="n-0470">ACM 式与 OI 式计分带来的训练重点</h4>
+<p>同样一道题，比赛评价答案的方式不同，选手就会采取不同的时间安排。</p>
+<p><strong>ACM 式计分先比较通过题数，再比较总罚时。</strong> 一道题得到 AC 才增加通过数；该题的罚时由通过时刻与此前计罚的失败提交组成，各已通过题的罚时再相加。下面用每次计罚失败提交加 20 分钟的 ACM 式规则，计算一份自拟记录：</p>
+<table>
+<colgroup>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+</colgroup>
+<thead>
+<tr>
+<th>队伍</th>
+<th>已通过题数</th>
+<th>已通过题的记录</th>
+<th>总罚时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>甲队</td>
+<td>2</td>
+<td>A 在第 30 分钟通过，之前有 1 次 WA；B 在第 80 分钟一次通过</td>
+<td><span class="math inline">\((30+20)+80=130\)</span> 分钟</td>
+</tr>
+<tr>
+<td>乙队</td>
+<td>2</td>
+<td>A 在第 40 分钟通过；B 在第 85 分钟通过，两题都一次通过</td>
+<td><span class="math inline">\(40+85=125\)</span> 分钟</td>
+</tr>
+<tr>
+<td>丙队</td>
+<td>3</td>
+<td>三题分别在第 60、120、180 分钟一次通过</td>
+<td><span class="math inline">\(60+120+180=360\)</span> 分钟</td>
+</tr>
+</tbody>
+</table>
+<p>丙队通过 3 题，排在两支只通过 2 题的队伍之前。甲、乙通过数相同，再比较罚时，乙排在甲之前。甲队即使在另一题上提交过失败程序，这题尚未通过时也不加入上述总罚时。这种计分方式可以在 <a href="https://ma.na.icpc.global/mana-2025-26/" rel="noopener noreferrer">ICPC 官方赛区的说明</a>中看到。</p>
+<p>由这个例子可以得到训练重点：优先推进有把握完整通过的题；提交前检查推导、实现和样例；当前题卡住时，把已知结论交给队友，再判断继续推导还是切换题目。平时既要练独立解题，也要练习把思路讲给队友听。</p>
+<p><strong>OI 式题目常把分数分配给测试点或子任务。</strong> 题面可能给小规模数据、特殊结构与完整规模分别安排分数，选手需要分析每部分可以使用什么做法。NOIP 的<a href="https://www.noi.cn/xw/2026-09-20/933736.shtml" rel="noopener noreferrer">官方题目分析</a>展示了从朴素算法到优化算法对应不同得分的情况。</p>
+<p>例如一份自拟评分安排：第一组数据给 30 分，枚举即可完成；第二组给 30 分，需要复用前缀信息；第三组给 40 分，还要进一步优化查询。程序只完成第一组得到 30 分，完成前两组得到 60 分，三组全部完成得到 100 分。另一题尚未推导完整时，已经验证的做法也有对应的得分；把它实现并保存后，可以继续研究更大规模的计算。</p>
+<p>这就接回了前面的“一题多建模”：先提出直接做法，代入规模计算工作量，再分析怎样减少重复计算。定时训练时，写清每个做法解决了哪部分数据、还缺哪一步推导；比赛后继续把已完成的部分推进到完整解法。分析子任务时仍要检验算法是否正确，不能只凭样例通过就判断能得分。</p>
+<h4 id="n-0471">蓝桥杯与天梯赛等相关比赛</h4>
+<p>除了上述两条训练方向，也可以用其他国内程序设计比赛安排练习：</p>
+<table>
+<colgroup>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+</colgroup>
+<thead>
+<tr>
+<th>比赛</th>
+<th>比赛中的主要任务</th>
+<th>可以重点练习的能力</th>
+<th>官方入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>蓝桥杯软件赛 C/C++ 程序设计</td>
+<td>个人完成程序设计题，软件赛设有省赛等赛事安排</td>
+<td>基础实现、模拟、枚举、搜索、数学与综合建模，练习一场题中的时间分配</td>
+<td><a href="https://dasai.lanqiao.cn/pages/v7/dasai/competition/individual_competition.html" rel="noopener noreferrer">蓝桥杯个人赛介绍</a></td>
+</tr>
+<tr>
+<td>团体程序设计天梯赛</td>
+<td>题目分基础、进阶、登顶三个梯级；队员独立作答，再形成团队成绩</td>
+<td>从基础输入输出和模拟逐步进入数据结构与算法，练习稳定实现和整场安排</td>
+<td><a href="https://gplt.patest.cn/?proxyCDN=1" rel="noopener noreferrer">天梯赛官网与比赛规则</a></td>
+</tr>
+</tbody>
+</table>
+<p>例如想检查 C++ 基础是否熟练，可以先定时做一组天梯赛基础题，记录失误出在输入、类型、循环还是题意转换；想练个人整场安排，可以用蓝桥杯往年题作答，再按“读题—建模—实现—检查”复盘每道题。</p>
+<h4 id="n-0472">企业组织的算法与编程赛事</h4>
+<p>还可以把企业组织的赛事作为练习目标。有的比赛要求在规定时间内完成多道算法题，有的比赛围绕一个业务任务，让参赛者持续改进方案。选择时先读“要交什么、怎样评测、分数怎样计算”，再判断应当练定时解题，还是练一个方案从实现到优化的完整过程。</p>
+<table>
+<colgroup>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+<col style="width: 25%"/>
+</colgroup>
+<thead>
+<tr>
+<th>赛事或平台</th>
+<th>企业与主要任务</th>
+<th>可以接入的训练</th>
+<th>赛事入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>百度之星程序设计大赛</td>
+<td>百度举办的个人程序设计比赛，通过在线评测比较解题数量与用时</td>
+<td>接在牛客周赛和 CF 分级练习之后，练个人读题、建模、完整实现与整场安排</td>
+<td><a href="https://astar.baidu.com/" rel="noopener noreferrer">百度之星官网</a>；<a href="https://www.cuit.edu.cn/info/1006/16824.htm" rel="noopener noreferrer">2026 年高校参赛通知</a></td>
+</tr>
+<tr>
+<td>华为软件精英挑战赛</td>
+<td>华为举办的软件编程赛事，围绕实际业务场景设计、实现和优化算法方案</td>
+<td>把题目拆成数据表示、合法方案、评分目标与改进步骤，练团队实现、实验比较与性能优化</td>
+<td><a href="https://developer.huaweicloud.com/competition" rel="noopener noreferrer">华为大赛入口</a>；<a href="https://www.huaweicloud.com/news/2026/20260517153529145.html" rel="noopener noreferrer">2026 年官方赛事介绍</a></td>
+</tr>
+<tr>
+<td>阿里云天池上的企业赛事</td>
+<td>阿里云及合作企业举办或共同发起的赛事，平台设数据算法、工程开发等类别</td>
+<td>从赛题的输入、提交结果与评价指标出发，练数据处理、可复现的实现和多轮改进；向数据算法方向学习时继续补统计与机器学习</td>
+<td><a href="https://tianchi.aliyun.com/competition" rel="noopener noreferrer">天池赛事列表</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>限时算法题</strong>可以沿用本笔记的解题流程。例如准备百度之星，就先用当前 rating 附近的 CF 题补基础，再独立完成一场往年题；复盘时区分题意没读清、模型没选对、推导没完成与代码写错，下一轮练习围绕具体问题安排。</p>
+<p><strong>业务优化题</strong>则需要给“改进”留下可比较的记录。先把一份完整的基础方案跑通，核对输出是否合法，再记录它的得分、耗时与主要开销。之后一次改一个步骤，使用同一组数据比较前后的结果。例如做调度任务时，先明确对象、资源和任务顺序，构造一份可执行方案；再尝试调整任务次序或减少重复计算，观察完成时间或费用怎样变化。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>推进步骤</th>
+<th>具体动作</th>
+<th>留下的结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读懂任务</td>
+<td>写清对象、动作、合法方案、输出格式与评分目标</td>
+<td>能手算一个完整小例子</td>
+</tr>
+<tr>
+<td>实现基础方案</td>
+<td>把输入、计算、输出和评测过程接起来</td>
+<td>一份可运行、可验证的程序与初始结果</td>
+</tr>
+<tr>
+<td>找到主要开销</td>
+<td>记录时间消耗、重复工作或方案费用</td>
+<td>确定这轮要改进的一个步骤</td>
+</tr>
+<tr>
+<td>修改并比较</td>
+<td>用同一组数据运行两份方案，核对结果与耗时</td>
+<td>知道变化来自哪项修改</td>
+</tr>
+<tr>
+<td>整理并复现</td>
+<td>保存程序、数据、运行方式和结果记录</td>
+<td>队友能复现结果，下一轮能继续推进</td>
+</tr>
+</tbody>
+</table>
+<p>参加这类比赛时，前面的方法论仍然有用：先验证模型，再算工作量；先解释状态，再更新状态；发现结果变差时，用具体数据找差异。数据算法与工程开发的比赛还会把这些方法接到更长的程序、更多的实验和团队文档中。</p>
+<p>赛事页面也会写清企业的角色。例如江苏省程序设计大赛由省计算机学会主办、高校承办，华为等企业提供赞助；百度之星由百度举办。查找比赛时读清主办、承办、合作和赞助单位，便能从对应入口了解比赛的组织与任务。</p>
+<h4 id="n-0473">从日常练习接到参赛训练</h4>
+<p>可以把牛客周赛、CF 分级题和国内比赛题连接成一轮训练：</p>
+<ol type="1">
+<li><strong>选择一个近期任务。</strong> 例如参加校赛、与队友完成一场团队训练，或独立完成一套 CSP-J 往年题。写清要练的是基础实现、综合建模还是团队配合。</li>
+<li><strong>用分级题补薄弱步骤。</strong> 平时围绕当前 CF rating 做题，遇到专题困难就回到本笔记和推荐书的对应章节，用手算与实现补齐。</li>
+<li><strong>用整场题检验。</strong> 牛客周赛练个人定时判断；团队方向再做省赛、ICPC、CCPC 往年赛题，个人算法方向可做百度之星往年题，信息学方向再做对应阶段的整套题；业务优化方向则完成一轮基础方案与改进方案的实验。按目标比赛的作答方式训练，记录实际时间与中间进展。</li>
+<li><strong>用复盘决定下一轮。</strong> 保留没推完的状态、错误模型和 WA 输入。先补最接近完成的一题，再独立重做；之后根据这次暴露的问题安排下一轮练习。</li>
+</ol>
+<figure>
+<img alt="以日常练习为起点，分别推进省赛与团队训练、个人信息学训练及企业应用优化，再通过复盘返回练习" decoding="async" loading="lazy" src="../media/notes/afterword-contest-training.svg"/>
+<figcaption aria-hidden="true">以日常练习为起点，分别推进省赛与团队训练、个人信息学训练及企业应用优化，再通过复盘返回练习</figcaption>
+</figure>
+<p>图中箭头连接的是训练动作：同样从独立解题开始，省赛与团队训练加入任务分工，信息学训练加入子任务分析与自测，企业应用优化训练加入基础方案与实验比较；每轮都把实际困难带回复盘，再安排下一次练习。</p>
+<p>开始参加比赛之后，可以继续保留同样的学习习惯：先把想法讲清楚，再写程序；通过一题后回看模型，没通过一题时留下能解释问题的具体输入。比赛目标会逐渐提高，这些步骤仍然能帮助我们判断下一步该练什么。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-06-05.html"><small>上一节</small>牛客周赛与 Codeforces 分级训练</a><a href="../chapters/part-06-07.html"><small>下一节</small>阅读、做题与复盘的安排</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0467">高校团队赛：ICPC 与 CCPC</a><a class="level-4" href="#n-0468">各省大学生程序设计竞赛</a><a class="level-4" href="#n-0469">青少年信息学：CSP-J/S、NOIP 与 NOI</a><a class="level-4" href="#n-0470">ACM 式与 OI 式计分带来的训练重点</a><a class="level-4" href="#n-0471">蓝桥杯与天梯赛等相关比赛</a><a class="level-4" href="#n-0472">企业组织的算法与编程赛事</a><a class="level-4" href="#n-0473">从日常练习接到参赛训练</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

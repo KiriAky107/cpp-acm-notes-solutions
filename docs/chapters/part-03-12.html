@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十二） 一题多建模与最优方法的选择过程 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-03-12.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-03-12.html" data-page-title="（十二） 一题多建模与最优方法的选择过程" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details open><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="current" href="../chapters/part-03-12.html" aria-current=page>（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 三、解题方法论：从题意到代码</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0212">（十二） 一题多建模与最优方法的选择过程</h3>
+<p>面对同一道题，先提出几种表示和计算方法，再判断它们是否计算同一份合法方案。下面保留一个数对计数目标，依次构建枚举下标、排序分组、过去频次三种模型，随后代入规模逐项筛选，说明最后采用哪种方法。</p>
+<h4 id="n-0213">1. 完整题面与下标对模型</h4>
+<p><strong>题目原文（自拟）：</strong> 给定 n 个整数和目标 K，统计满足 <span class="math inline">\(0\le i&lt;j&lt;n\)</span> 且 <code>a[i]+a[j]=K</code> 的下标对数量。不同下标对分别计数，即使取值相同。第一行输入 n、K，第二行输入 n 个整数；<span class="math inline">\(1\le n\le200000\)</span>，<span class="math inline">\(-10^9\le a[i]\le10^9\)</span>，<span class="math inline">\(-2\times10^9\le K\le2\times10^9\)</span>。输出一行计数结果。</p>
+<p><strong>样例输入：</strong></p>
+<pre class="text"><code>6 6
+1 5 3 3 5 1</code></pre>
+<p><strong>样例输出：</strong></p>
+<pre class="text"><code>5</code></pre>
+<p><strong>样例解释：</strong> 五个下标对为 <code>(0,1)、(0,4)、(1,5)、(2,3)、(4,5)</code>。其中四对由 1 与 5 组成，一对由两个 3 组成。</p>
+<p>先把所有 <code>i&lt;j</code> 的候选都列出来，再检查和。下面的函数需要 <code>&lt;vector&gt;</code>，参数是输入数组和目标值；可以单独与本节最后的调用程序组合。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">long</span> <span class="dt">long</span> countByEnumeration<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    <span class="dt">long</span> <span class="dt">long</span> answer <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="3">    <span class="dt">int</span> n <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">());</span></span>
+<span data-line="4">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>j<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">            <span class="co">// 每个不同位置的无序下标对恰好检查一次。</span></span>
+<span data-line="7">            answer <span class="op">+=</span> a<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>j<span class="op">]</span> <span class="op">==</span> target<span class="op">;</span></span>
+<span data-line="8">        <span class="op">}</span></span>
+<span data-line="9">    <span class="op">}</span></span>
+<span data-line="10">    <span class="cf">return</span> answer<span class="op">;</span></span>
+<span data-line="11"><span class="op">}</span></span></code></pre></div>
+<p><strong>分析：</strong> n 个位置有 <code>n*(n-1)/2</code> 对，时间为 <span class="math inline">\(O(n^2)\)</span>，额外空间为 <span class="math inline">\(O(1)\)</span>。n 为 200000 时，要检查 19999900000 对。模型清楚，适合手算和核对小数据，但这里仍有大量重复的取值比较。</p>
+<h4 id="n-0214">2. 排序后按相同取值成批计数</h4>
+<p>这道题只求数量，不输出原下标。排序把位置重新排列，但每个元素仍作为一个独立元素保留；排序前后的两元素组合存在一一对应，和也没有变化，因此数量不变。这与“原顺序连续分组”的反例不同：那里排序改变了哪些组合法。</p>
+<p>排序后得到 <code>[1,1,3,3,5,5]</code>。让 left 指向最小值，right 指向最大值：</p>
+<ul>
+<li>和小于 K：当前最小值与剩余最大的值相加仍不够，换其他更小的搭档也不够，因此跳过这个最小值。</li>
+<li>和大于 K：当前最大值与剩余最小的值相加仍偏大，换其他更大的搭档也偏大，因此跳过这个最大值。</li>
+<li>和等于 K：两端取值不同，就统计两端各有多少项，将数量相乘；两端取值相同，就从剩余项中任选两项。</li>
+</ul>
+<figure>
+<img alt="排序后按取值分组计数并保留重复元素的贡献" decoding="async" loading="lazy" src="../media/notes/method-pair-sorted-groups.svg"/>
+<figcaption aria-hidden="true">排序后按取值分组计数并保留重复元素的贡献</figcaption>
+</figure>
+<p>样例中两项 1 与两项 5 贡献 <code>2×2=4</code> 对；剩下两项 3 贡献 <code>2×1/2=1</code> 对，总计 5。这里的 <code>m*(m-1)/2</code> 来自：第一项搭配 m-1 项，第二项搭配 m-2 项，直到最后没有后续项。</p>
+<p>下面的函数需要 <code>&lt;algorithm&gt;</code>、<code>&lt;vector&gt;</code>。数组按值传参，因此排序的是副本，调用者的数组可以继续用于其他方法。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">long</span> <span class="dt">long</span> countBySorting<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> a<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    sort<span class="op">(</span>a<span class="op">.</span>begin<span class="op">(),</span> a<span class="op">.</span>end<span class="op">());</span> <span class="co">// 将同值元素放到一起，便于成批计算。</span></span>
+<span data-line="3">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>a<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="4">    <span class="dt">long</span> <span class="dt">long</span> answer <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="5">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">        <span class="dt">long</span> <span class="dt">long</span> sum <span class="op">=</span> a<span class="op">[</span>left<span class="op">]</span> <span class="op">+</span> a<span class="op">[</span>right<span class="op">];</span></span>
+<span data-line="7">        <span class="cf">if</span> <span class="op">(</span>sum <span class="op">&lt;</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">            <span class="op">++</span>left<span class="op">;</span> <span class="co">// 当前最小值找不到足够大的搭档。</span></span>
+<span data-line="9">        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>sum <span class="op">&gt;</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">            <span class="op">--</span>right<span class="op">;</span> <span class="co">// 当前最大值找不到足够小的搭档。</span></span>
+<span data-line="11">        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>a<span class="op">[</span>left<span class="op">]</span> <span class="op">==</span> a<span class="op">[</span>right<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="12">            <span class="dt">long</span> <span class="dt">long</span> length <span class="op">=</span> right <span class="op">-</span> left <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="13">            answer <span class="op">+=</span> length <span class="op">*</span> <span class="op">(</span>length <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// 全部剩余项任选两项。</span></span>
+<span data-line="14">            <span class="cf">break</span><span class="op">;</span></span>
+<span data-line="15">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="16">            <span class="dt">long</span> <span class="dt">long</span> leftCount <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> rightCount <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="17">            <span class="cf">while</span> <span class="op">(</span>left <span class="op">+</span> leftCount <span class="op">&lt;=</span> right <span class="op">&amp;&amp;</span> a<span class="op">[</span>left <span class="op">+</span> leftCount<span class="op">]</span> <span class="op">==</span> a<span class="op">[</span>left<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="18">                <span class="op">++</span>leftCount<span class="op">;</span></span>
+<span data-line="19">            <span class="op">}</span></span>
+<span data-line="20">            <span class="cf">while</span> <span class="op">(</span>right <span class="op">-</span> rightCount <span class="op">&gt;=</span> left <span class="op">&amp;&amp;</span> a<span class="op">[</span>right <span class="op">-</span> rightCount<span class="op">]</span> <span class="op">==</span> a<span class="op">[</span>right<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="21">                <span class="op">++</span>rightCount<span class="op">;</span></span>
+<span data-line="22">            <span class="op">}</span></span>
+<span data-line="23">            answer <span class="op">+=</span> leftCount <span class="op">*</span> rightCount<span class="op">;</span> <span class="co">// 每项左值都能搭配每项右值。</span></span>
+<span data-line="24">            left <span class="op">+=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>leftCount<span class="op">);</span></span>
+<span data-line="25">            right <span class="op">-=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>rightCount<span class="op">);</span></span>
+<span data-line="26">        <span class="op">}</span></span>
+<span data-line="27">    <span class="op">}</span></span>
+<span data-line="28">    <span class="cf">return</span> answer<span class="op">;</span></span>
+<span data-line="29"><span class="op">}</span></span></code></pre></div>
+<p><strong>代码解释：</strong> 每次移动排除的是已经证明不可能配成目标和的一端，匹配时则一次计入整组，不会丢掉重复元素。排序需要 <span class="math inline">\(O(n\log n)\)</span> 时间，扫描时每个位置只被跳过一次，合起来仍为 <span class="math inline">\(O(n\log n)\)</span>。本实现复制数组，额外空间为 <span class="math inline">\(O(n)\)</span>。</p>
+<h4 id="n-0215">3. 固定后来的位置，查询过去的频次</h4>
+<p>还可以从公式 <code>a[i]+a[j]=K</code> 得到 <code>a[i]=K-a[j]</code>。固定后来的位置 j，就只需知道过去有多少项等于 <code>K-a[j]</code>，不必逐个检查过去的下标。</p>
+<p>用 <code>frequency[value]</code> 保存已经处理过的值的次数。先查询当前值需要的搭档，再把当前值加入表中；这样表里的位置都小于 j，自动满足 <code>i&lt;j</code>。</p>
+<table>
+<thead>
+<tr>
+<th>j</th>
+<th>当前值</th>
+<th>需要的值</th>
+<th>查询到的过去次数</th>
+<th>新增对数</th>
+<th>累计答案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>5</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="频次查询与写入按顺序发生，每对在较后位置处计入" decoding="async" loading="lazy" src="../media/notes/method-pair-frequency-trace.svg"/>
+<figcaption aria-hidden="true">频次查询与写入按顺序发生，每对在较后位置处计入</figcaption>
+</figure>
+<p><strong>正确性推导：</strong> 读到 j 时，每个已出现的搭档位置都小于 j，且值满足目标和，因此新增的配对全部合法。任一合法对 <code>(i,j)</code> 会在处理 j 时找到 i，不会漏掉；它也不会在其他步骤再次出现，因为较后的那个位置只有一个。</p>
+<p>下面的函数需要 <code>&lt;unordered_map&gt;</code>、<code>&lt;vector&gt;</code>。<code>find</code> 查询频次而不创建新键；<code>++frequency[x]</code> 将当前值的次数加一。<code>reserve(a.size())</code> 为预计的不同键数量预留桶，元素仍由后面的写入创建。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">long</span> <span class="dt">long</span> countByFrequency<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    unordered_map<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> frequency<span class="op">;</span></span>
+<span data-line="3">    frequency<span class="op">.</span>reserve<span class="op">(</span>a<span class="op">.</span>size<span class="op">());</span> <span class="co">// 提前准备桶，减少逐步扩容的次数。</span></span>
+<span data-line="4">    <span class="dt">long</span> <span class="dt">long</span> answer <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="5">    <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> x <span class="op">:</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">        <span class="kw">auto</span> it <span class="op">=</span> frequency<span class="op">.</span>find<span class="op">(</span>target <span class="op">-</span> x<span class="op">);</span></span>
+<span data-line="7">        <span class="cf">if</span> <span class="op">(</span>it <span class="op">!=</span> frequency<span class="op">.</span>end<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="8">            answer <span class="op">+=</span> it<span class="op">-&gt;</span>second<span class="op">;</span> <span class="co">// 每个过去的同值位置贡献一对。</span></span>
+<span data-line="9">        <span class="op">}</span></span>
+<span data-line="10">        <span class="op">++</span>frequency<span class="op">[</span>x<span class="op">];</span> <span class="co">// 查询之后才写入，当前项不会与自己配对。</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12">    <span class="cf">return</span> answer<span class="op">;</span></span>
+<span data-line="13"><span class="op">}</span></span></code></pre></div>
+<p><strong>代码解释：</strong> 处理完前 j 项后，表中恰好是这 j 项的频次，answer 恰好是两端都在这 j 项里的合法下标对数。一次查询与一次写入就把这个关系推进到下一项。</p>
+<p>哈希把键分散到桶中，平均查询与写入时间为 <span class="math inline">\(O(1)\)</span>，因此这个方法的平均总时间为 <span class="math inline">\(O(n)\)</span>，额外空间为 <span class="math inline">\(O(n)\)</span>。多个键落入同一桶时，需要继续比较这些键，碰撞集中会增加查找工作；使用 map 保存同一份频次时，总时间为 <span class="math inline">\(O(n\log n)\)</span>。</p>
+<h4 id="n-0216">4. 从候选模型逐步筛选到最终方案</h4>
+<p>同一题的几个正确做法，不是把复杂度排个名就完成选择。要先核对它们是否仍在计算题目要求的对象，再把题面的规模代入，最后比较留下的信息和每步的工作。</p>
+<h5 id="n-0217">4.1 先核对合法方案和输出目标</h5>
+<p>本题计算的是<strong>不同位置组成的下标对数量</strong>。用样例中的两个 1、两个 5 检查候选模型：它们组成四对，而不是只组成一个取值组合。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>候选模型</th>
+<th>保留的信息</th>
+<th>核对结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>枚举所有 <code>i&lt;j</code></td>
+<td>每个元素的位置和值</td>
+<td>每对检查一次，得到 5</td>
+</tr>
+<tr>
+<td>只用 set 保存出现过的值</td>
+<td>出现过 1、3、5</td>
+<td>丢掉重复次数，不能算出四对 1 与 5，排除</td>
+</tr>
+<tr>
+<td>排序后按组计数</td>
+<td>每项元素和同值组大小</td>
+<td>保留元素个数，用组大小相乘，得到 5</td>
+</tr>
+<tr>
+<td>保存过去频次</td>
+<td>每个值在过去出现的次数</td>
+<td>每对在较后位置处计入，得到 5</td>
+</tr>
+</tbody>
+</table>
+<p>排序与频次都去掉了部分位置信息，但没有去掉计数需要的信息。这里每一对的较早、较后位置只用来避免重复计数；输出不要求列出它们的具体编号。</p>
+<h5 id="n-0218">4.2 把最大输入代入工作量</h5>
+<p>取题面中的 <code>n=200000</code>，不要只写一个 O 符号：</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>方法</th>
+<th>主要工作量的估算</th>
+<th>本实现的额外空间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>枚举下标对</td>
+<td><span class="math inline">\(n(n-1)/2=19999900000\)</span> 次配对检查</td>
+<td><span class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td>排序分组</td>
+<td><span class="math inline">\(n\log_2 n\approx3521928\)</span> 的排序比较量级，再扫描 n 项</td>
+<td><span class="math inline">\(O(n)\)</span>，用于数组副本</td>
+</tr>
+<tr>
+<td>map 频次查询</td>
+<td>n 次查询、n 次写入，每次沿树查找约 <span class="math inline">\(\log_2 n\approx18\)</span> 层</td>
+<td><span class="math inline">\(O(n)\)</span>，保存实际出现的键</td>
+</tr>
+<tr>
+<td>哈希频次查询</td>
+<td>n 次查询、n 次写入；平均一次只需少量桶内比较</td>
+<td><span class="math inline">\(O(n)\)</span>，保存实际出现的键</td>
+</tr>
+</tbody>
+</table>
+<p>这些数表示工作量，不能直接当成秒数。枚举要重复检查约 200 亿对；后三种方法把重复配对合并了。枚举函数仍可用于小数据对拍，但提交时不采用它。</p>
+<p>再比较频次的存储方法。把值平移后直接用作数组下标，需要为 <span class="math inline">\(-10^9\)</span> 到 <span class="math inline">\(10^9\)</span> 的 2000000001 个值准备位置。每项计数用 8 字节，合计 16000000008 字节，约 14.9 GiB；输入却最多只有 200000 项。map 和哈希表只保存实际出现的键，避免给大量没有出现的值分配计数位置。因此，直接按完整值域开数组也被排除。</p>
+<h5 id="n-0219">4.3 根据每一步需要的查询作出选择</h5>
+<p>剩下排序分组、map 频次和哈希频次，再回到每步的任务：读到 x，只查询“过去有多少个 <code>K-x</code>”，随后把 x 的频次加一。</p>
+<ol type="1">
+<li>不查询最小值、最大值或某个取值区间，也不按键顺序输出，因此不用维护键的大小顺序。</li>
+<li>不必等全部输入排好序；读到一项就能确定它与过去的配对数，因此可以逐项查询频次。</li>
+<li>输出只有一个总数，不恢复下标列表，因此每个值保存一个次数就够了。</li>
+</ol>
+<p>据此选择 <strong>unordered_map 保存过去频次</strong>：平均时间为 <span class="math inline">\(O(n)\)</span>，空间为 <span class="math inline">\(O(n)\)</span>。这里从“需要的查询”得到了容器选择，而不是看到计数题就先套哈希表。</p>
+<p>哈希查询要在桶内核对键，碰撞集中时会增加工作。排序分组和 map 频次提供 <span class="math inline">\(O(n\log n)\)</span> 的另一种实现；排序分组已经写在前面，可以与哈希结果互相核对。</p>
+<figure>
+<img alt="从合法方案核对、代入规模到逐项排除并选择频次模型" decoding="async" loading="lazy" src="../media/notes/method-model-selection-process.svg"/>
+<figcaption aria-hidden="true">从合法方案核对、代入规模到逐项排除并选择频次模型</figcaption>
+</figure>
+<p><strong>本题的选择结论：</strong> set 丢掉重复次数，首先排除；枚举保留全部信息但约有 200 亿次检查，留作小数据参照；完整值域数组约需 14.9 GiB，排除；排序分组和 map 可行，但维护了本题不查询的取值顺序，最后采用哈希频次。</p>
+<h5 id="n-0220">4.4 沿着同一问题变化重新选择方法</h5>
+<p>方法选择依赖当前要做的事。把这道题稍作变化，选择过程也要重新走一遍：</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>具体任务</th>
+<th>要增加或减少的信息</th>
+<th>相应选择</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只有 30 项，用来检查另一个程序</td>
+<td>全部只有 435 个候选对</td>
+<td>枚举最直接，适合作为参照答案</td>
+</tr>
+<tr>
+<td>输入逐项到来，每读一项就输出当前配对总数</td>
+<td>需要立刻查询过去，不能等待最后排序</td>
+<td>逐项维护频次</td>
+</tr>
+<tr>
+<td>取值为 0 到 1000</td>
+<td>频次只需 1001 个位置，8 字节计数约占 7.82 KiB</td>
+<td>直接用频次数组，免去键查找</td>
+</tr>
+<tr>
+<td>输入已经有序，只输出最后总数</td>
+<td>已经有取值顺序，不必再排序</td>
+<td>双指针按组计数，时间 <span class="math inline">\(O(n)\)</span></td>
+</tr>
+<tr>
+<td>要输出每一对的原下标</td>
+<td>单个次数不能恢复具体位置</td>
+<td>保存每个值对应的过去下标列表；输出 P 对本身就需要 <span class="math inline">\(O(P)\)</span> 时间</td>
+</tr>
+</tbody>
+</table>
+<p>最后一行也说明：“最优方法”要围绕输出目标讨论。若题目要打印约 200 亿对，光输出就有这么多工作；不能把只统计数量的程序直接拿来回答。</p>
+<h4 id="n-0221">5. 从所选模型组装提交程序</h4>
+<p>计数结果可能达到 <code>n*(n-1)/2</code>；200000 项全能互相配对时，结果为 19999900000，所以 answer 使用 long long。每项输入能放进 int，累计答案仍可能需要更大的类型。</p>
+<p>完整调用程序如下，与 <code>countByFrequency</code> 放在同一个文件中；头文件置于该函数之前。替换调用的函数名，就能比较其他两个模型，使用它们时同时加入 <code>&lt;algorithm&gt;</code>。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;unordered_map&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="co">// 在这里放置上面的 countByFrequency 函数定义。</span></span>
+<span data-line="7"></span>
+<span data-line="8"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="9">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="10">    <span class="dt">long</span> <span class="dt">long</span> target<span class="op">;</span></span>
+<span data-line="11">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> target<span class="op">;</span></span>
+<span data-line="12">    vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> a<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="13">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">&amp;</span>x <span class="op">:</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">        cin <span class="op">&gt;&gt;</span> x<span class="op">;</span> <span class="co">// 每个位置保留一个输入元素，重复值仍分别计数。</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> countByFrequency<span class="op">(</span>a<span class="op">,</span> target<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p><strong>练习：</strong> <a href="https://www.luogu.com.cn/problem/P1102" rel="noopener noreferrer">洛谷 P1102 — A-B 数对</a>、<a href="https://codeforces.com/problemset/problem/702/B" rel="noopener noreferrer">CF 702B — Powers of Two</a>。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-03-11.html"><small>上一节</small>（十一） 从输出目标确定状态信息</a><a href="../chapters/part-03-13.html"><small>下一节</small>（十三） 复杂题面到事件模拟的完整推导</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0213">1. 完整题面与下标对模型</a><a class="level-4" href="#n-0214">2. 排序后按相同取值成批计数</a><a class="level-4" href="#n-0215">3. 固定后来的位置，查询过去的频次</a><a class="level-4" href="#n-0216">4. 从候选模型逐步筛选到最终方案</a><a class="level-5" href="#n-0217">4.1 先核对合法方案和输出目标</a><a class="level-5" href="#n-0218">4.2 把最大输入代入工作量</a><a class="level-5" href="#n-0219">4.3 根据每一步需要的查询作出选择</a><a class="level-5" href="#n-0220">4.4 沿着同一问题变化重新选择方法</a><a class="level-4" href="#n-0221">5. 从所选模型组装提交程序</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

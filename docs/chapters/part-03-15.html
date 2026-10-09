@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十五） 反例构造、缩小输入与小规模对拍 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-03-15.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-03-15.html" data-page-title="（十五） 反例构造、缩小输入与小规模对拍" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details open><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="current" href="../chapters/part-03-15.html" aria-current=page>（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 三、解题方法论：从题意到代码</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0233">（十五） 反例构造、缩小输入与小规模对拍</h3>
+<p>随机数据并不总能碰到关键错误。可以先围绕某项规则构造数据，再把失败输入删到能手算的大小。</p>
+<h4 id="n-0234">1. 每份测试对应一项要验证的规则</h4>
+<table>
+<thead>
+<tr>
+<th>数对输入与目标</th>
+<th>正确结果</th>
+<th>要核对的规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[3]</code>，6</td>
+<td>0</td>
+<td>不能和当前位置配对</td>
+</tr>
+<tr>
+<td><code>[3,3]</code>，6</td>
+<td>1</td>
+<td>两个相同值可以来自不同位置</td>
+</tr>
+<tr>
+<td><code>[3,3,3]</code>，6</td>
+<td>3</td>
+<td>次数不是存在性</td>
+</tr>
+<tr>
+<td><code>[1,1,5,5]</code>，6</td>
+<td>4</td>
+<td>两组重复值贡献数量的乘积</td>
+</tr>
+<tr>
+<td><code>[-2,5,-2]</code>，3</td>
+<td>2</td>
+<td>负数同样可以成为键与搭档</td>
+</tr>
+<tr>
+<td><code>[1,2,3]</code>，100</td>
+<td>0</td>
+<td>未找到搭档时不增加答案</td>
+</tr>
+</tbody>
+</table>
+<p>窗口例题也可以逐项试：一个窗口连续办理检查等待；三个顾客同刻到达检查输入顺序；两个窗口同刻完成检查全部释放；窗口 2 更早空闲但两者都已空闲检查编号优先。每份数据都有具体要核对的动作。</p>
+<h4 id="n-0235">2. 把失败输入缩成能看清规则的小例子</h4>
+<p>若一份很长的数对输入失败，先尝试删掉一部分元素，并分别运行枚举与频次程序。仍有差异就保留删减结果；差异消失就撤回这次删减，换另一部分。接着可以尝试缩小数值，但每次都重新运行，确认错误仍存在。</p>
+<figure>
+<img alt="保留失败现象逐步删减输入直到能手算" decoding="async" loading="lazy" src="../media/notes/method-shrink-counterexample.svg"/>
+<figcaption aria-hidden="true">保留失败现象逐步删减输入直到能手算</figcaption>
+</figure>
+<p>例如“先写入再查询”的程序在 <code>[8,3,1,5]</code>、目标 6 上多算了一对。删掉 8、1、5 后，<code>[3]</code> 仍然错误；它直接显示出“同一位置被使用两次”。缩小输入是为了看清原因，不是把所有数字机械地改成 0。</p>
+<h4 id="n-0236">3. 用独立枚举核对优化程序</h4>
+<p>前面的枚举函数逐对检查，频次函数按历史统计，排序函数按同值组统计，三者经过不同的计算过程。用小输入逐一比较结果，就能发现某种实现漏掉重复值、重复计数或错误更新。</p>
+<p><strong>题目原文（自拟验证程序）：</strong> 程序无需输入。枚举长度 1 到 7、元素只取 -1、0、1 的全部数组；每份数组分别检查目标 -2 到 2。用枚举、排序、频次三种方法计算数对数量。第一次不一致时输出 <code>FAIL</code>、数组长度、目标、数组和三份结果并结束；全部一致时输出 <code>OK</code>。</p>
+<p>将前面的 <code>countByEnumeration</code>、<code>countBySorting</code>、<code>countByFrequency</code> 函数放在同一文件中，文件开头加入 <code>&lt;algorithm&gt;</code>、<code>&lt;iostream&gt;</code>、<code>&lt;unordered_map&gt;</code>、<code>&lt;vector&gt;</code> 和 <code>using namespace std;</code>。用下面的 main 替换数对输入程序的 main，不需要新的头文件。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="2">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> n <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> n <span class="op">&lt;=</span> <span class="dv">7</span><span class="op">;</span> <span class="op">++</span>n<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">        <span class="dt">int</span> total <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="4">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> total <span class="op">*=</span> <span class="dv">3</span><span class="op">;</span> <span class="co">// n 个位置共有 3^n 种填写方式。</span></span>
+<span data-line="5">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> code <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> code <span class="op">&lt;</span> total<span class="op">;</span> <span class="op">++</span>code<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">            vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> a<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="7">            <span class="dt">int</span> remaining <span class="op">=</span> code<span class="op">;</span></span>
+<span data-line="8">            <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">&amp;</span>x <span class="op">:</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">                x <span class="op">=</span> remaining <span class="op">%</span> <span class="dv">3</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 三进制位 0、1、2 对应 -1、0、1。</span></span>
+<span data-line="10">                remaining <span class="op">/=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span data-line="11">            <span class="op">}</span></span>
+<span data-line="12">            <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> target <span class="op">=</span> <span class="op">-</span><span class="dv">2</span><span class="op">;</span> target <span class="op">&lt;=</span> <span class="dv">2</span><span class="op">;</span> <span class="op">++</span>target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">                <span class="dt">long</span> <span class="dt">long</span> brute <span class="op">=</span> countByEnumeration<span class="op">(</span>a<span class="op">,</span> target<span class="op">);</span></span>
+<span data-line="14">                <span class="dt">long</span> <span class="dt">long</span> sorted <span class="op">=</span> countBySorting<span class="op">(</span>a<span class="op">,</span> target<span class="op">);</span></span>
+<span data-line="15">                <span class="dt">long</span> <span class="dt">long</span> fast <span class="op">=</span> countByFrequency<span class="op">(</span>a<span class="op">,</span> target<span class="op">);</span></span>
+<span data-line="16">                <span class="cf">if</span> <span class="op">(</span>brute <span class="op">!=</span> sorted <span class="op">||</span> brute <span class="op">!=</span> fast<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">                    cout <span class="op">&lt;&lt;</span> <span class="st">"FAIL</span><span class="sc">\n</span><span class="st">"</span> <span class="op">&lt;&lt;</span> n <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> target <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="18">                    <span class="cf">for</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> x <span class="op">:</span> a<span class="op">)</span> cout <span class="op">&lt;&lt;</span> x <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="19">                    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span> <span class="op">&lt;&lt;</span> brute <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> sorted <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> fast <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="20">                    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 保留第一份差异输入，再按步骤手算。</span></span>
+<span data-line="21">                <span class="op">}</span></span>
+<span data-line="22">            <span class="op">}</span></span>
+<span data-line="23">        <span class="op">}</span></span>
+<span data-line="24">    <span class="op">}</span></span>
+<span data-line="25">    cout <span class="op">&lt;&lt;</span> <span class="st">"OK</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span> <span class="co">// 这些小数组的三份计算结果全部相同。</span></span>
+<span data-line="26"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例输出与解释：</strong> 输出 <code>OK</code>。总共生成 <code>3+9+27+81+243+729+2187=3279</code> 份数组，比较 16395 组“数组、目标”。三进制枚举逐位确定每个位置的取值，覆盖了小值域中的重复值、负数和不同排列。</p>
+<p><strong>验证程序的复杂度：</strong> 最大长度记为 L，目标共有 5 个；长度 n 的数组有 <span class="math inline">\(3^n\)</span> 份，每份的枚举计算需要 <span class="math inline">\(O(n^2)\)</span>，因此总时间为 <span class="math inline">\(O(\sum_{n=1}^{L}3^n n^2)\)</span>，同时保存数组和频次表需要 <span class="math inline">\(O(L)\)</span> 空间。这里 L 为 7，用较慢但直观的枚举来检查较快的实现。</p>
+<p>对拍得到的是这些输入上的一致结果。正确性理由仍来自“每一对在较后的那个位置恰好计入一次”的证明；类型检查还要代入 200000 项的计数，窗口时间也要代入较长的办理过程。证明、手算、对拍分别检查不同的部分。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-03-14.html"><small>上一节</small>（十四） 从推导到程序职责与错误定位</a><a href="../chapters/part-03-16.html"><small>下一节</small>（十六） 从 WA 回到题面与模型</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0234">1. 每份测试对应一项要验证的规则</a><a class="level-4" href="#n-0235">2. 把失败输入缩成能看清规则的小例子</a><a class="level-4" href="#n-0236">3. 用独立枚举核对优化程序</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

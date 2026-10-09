@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（六） 快速幂 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-05-06.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-05-06.html" data-page-title="（六） 快速幂" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details open><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="current" href="../chapters/part-05-06.html" aria-current=page>（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 五、数据结构与算法</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0288">（六） 快速幂</h3>
+<p>计算 a 的 b 次方，直接连续乘 b 次已经能得到答案；当 b 很大时，把指数拆成二进制，观察哪些重复乘法可以合并成平方。</p>
+<h4 id="n-0289">1. 把指数拆成二进制位</h4>
+<p>直接计算 <span class="math inline">\(a^b\)</span>，逐次乘 <code>a</code> 需要 <span class="math inline">\(O(b)\)</span> 次乘法。快速幂利用指数的二进制表示，把乘法次数降到 <span class="math inline">\(O(\log b)\)</span>。</p>
+<p>例如：</p>
+<p><span class="math display">\[
+13=(1101)_2=8+4+1,\qquad a^{13}=a^8\cdot a^4\cdot a
+\]</span></p>
+<figure>
+<img alt="快速幂按指数二进制位选择乘数" decoding="async" loading="lazy" src="../media/notes/binary-power.svg"/>
+<figcaption aria-hidden="true">快速幂按指数二进制位选择乘数</figcaption>
+</figure>
+<p>每轮检查最低位：若为 <code>1</code>，把当前底数乘进答案；随后底数平方，指数右移一位。</p>
+<h4 id="n-0290">2. 普通整数快速幂</h4>
+<p><strong>题目原文（自拟）：</strong> 给定整数底数和非负指数，计算整数幂，用 long long 保存结果。指数为 0 时返回 1，包括底数为 0 的情况。</p>
+<p><strong>把指数的一位与当前底数配起来。</strong> 初始底数是 <code>a</code>；每次平方后依次变成 <code>a²、a⁴、a⁸、…</code>。指数每次右移，依次检查原来的第 0、1、2、3 位；该位为 1 才把对应的幂乘进结果。</p>
+<p>以 <code>2¹³</code> 为例，表中记录每轮入口状态和处理结果：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">剩余指数</th>
+<th style="text-align: right;">当前底数</th>
+<th style="text-align: right;">最低位</th>
+<th style="text-align: right;">处理后的 <code>result</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><code>1×2=2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><code>2×16=32</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><code>32×256=8192</code></td>
+</tr>
+</tbody>
+</table>
+<p>最低位为 0 时只是不累乘，仍需推进到下一位。每轮开始可维护 <span class="math inline">\(result\times base^{exponent}=a^b\)</span>：取走最低位对应的因子后，剩余指数变成偶数，再把底数平方、指数减半，这个乘积不变。指数为 0 时只剩 <code>result</code>，就是答案。</p>
+<p>普通整数版处理完最后一位后，指数已经变为 0，直接返回累乘结果。以 2¹³ 为例，这时答案是 8192，再继续平方不会参与答案计算，所以代码跳过这次平方。</p>
+<figure>
+<img alt="指数按二进制拆分，仅在当前位为 1 时乘入结果" decoding="async" loading="lazy" src="../media/notes/binary-power.svg"/>
+<figcaption aria-hidden="true">指数按二进制拆分，仅在当前位为 1 时乘入结果</figcaption>
+</figure>
+<p>指数按二进制拆分，仅在当前位为 1 时乘入结果。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">long</span> <span class="dt">long</span> fastPower<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> base<span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> exponent<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    <span class="dt">long</span> <span class="dt">long</span> result <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="3">    <span class="cf">while</span> <span class="op">(</span>exponent <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="4">        <span class="co">// 最低位为 1 时，把当前底数对应的这一项乘入答案。</span></span>
+<span data-line="5">        <span class="cf">if</span> <span class="op">((</span>exponent <span class="op">&amp;</span> <span class="dv">1</span><span class="bu">ULL</span><span class="op">)</span> <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">            result <span class="op">*=</span> base<span class="op">;</span></span>
+<span data-line="7">        <span class="op">}</span></span>
+<span data-line="8">        exponent <span class="op">&gt;&gt;=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>exponent <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">            base <span class="op">*=</span> base<span class="op">;</span> <span class="co">// 还有后续位时才需要继续平方</span></span>
+<span data-line="11">        <span class="op">}</span></span>
+<span data-line="12">    <span class="op">}</span></span>
+<span data-line="13">    <span class="cf">return</span> result<span class="op">;</span></span>
+<span data-line="14"><span class="op">}</span></span></code></pre></div>
+<p><code>fastPower(2,13)</code> 得到 8192。代码用 unsigned long long 保存指数，用 long long 保存底数与结果；每次乘法仍按“常量、类型转换与整数溢出”一节介绍的整数运算类型计算。指数为 0 时循环执行零次，返回初值 1，因此这里的 <code>fastPower(0,0)</code> 也返回 1。</p>
+<h4 id="n-0291">3. 取模快速幂</h4>
+<p><strong>题目原文（自拟）：</strong> 给定整数 a、非负整数 b 和模数 m，其中 <code>1&lt;=m&lt;=2^31-1</code>，计算 <span class="math inline">\(a^b\bmod m\)</span>，输出 <code>[0,m)</code> 中的余数。</p>
+<p>当答案很大，而题目只要求 <span class="math inline">\(a^b \bmod m\)</span> 时，可以在每次乘法后取模。</p>
+<p>取模后两因子最大为 <code>m-1</code>。题目中的最大模数是 <code>2^31-1</code>，所以乘积最大为 <code>(2^31-2)²</code>，小于 <code>2^63-1</code>，可以用 long long 先算乘积、再取模。这与“常量、类型转换与整数溢出”一节先推导数值大小、再选择类型的过程相同。</p>
+<p><strong>取模为什么不会破坏最后的余数？</strong> 若 <code>x</code> 与 <code>r</code> 模 <code>m</code> 同余，<code>y</code> 与 <code>s</code> 模 <code>m</code> 同余，则 <code>xy</code> 与 <code>rs</code> 也模 <code>m</code> 同余，所以每次相乘后立刻取模，最后得到的余数不变。这是在中间过程压小数值，不是在最后才对一个已溢出的结果补救。</p>
+<p>对 <code>2¹³ mod 1000</code>，累乘结果依次是 <code>2、2、32、192</code>；最后一步计算 <code>32×256=8192</code>，取模得到 <code>192</code>。所有底数和结果保持在 <code>[0,m)</code>，负底数先规范到这个区间。<code>result=1%m</code> 还覆盖了模数为 1 的情况：它的所有余数都为 0。</p>
+<figure>
+<img alt="每轮实际计算乘入、平方与取模，保留当前指数和余数" decoding="async" loading="lazy" src="../media/notes/binary-power-mod.svg"/>
+<figcaption aria-hidden="true">每轮实际计算乘入、平方与取模，保留当前指数和余数</figcaption>
+</figure>
+<p>图按 <code>2¹³ mod 1000</code> 逐轮列出当前指数、最低位、底数和累乘余数：指数 6 的最低位为 0，结果保持 2；指数 3、1 的最低位为 1，结果先变为 32，最后由 8192 取模得到 192。普通版的最后一轮不再平方，取模版则始终保持底数、结果在合法余数范围。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;limits&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;stdexcept&gt;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">long</span> <span class="dt">long</span> modPower<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> base<span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> exponent<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> mod<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="cf">if</span> <span class="op">(</span>mod <span class="op">&lt;=</span> <span class="dv">0</span> <span class="op">||</span> mod <span class="op">&gt;</span> <span class="dv">2147483647</span><span class="bu">LL</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">        <span class="cf">throw</span> <span class="bu">std::</span>invalid_argument<span class="op">(</span><span class="st">"mod 必须在 [1, 2^31-1] 内"</span><span class="op">);</span></span>
+<span data-line="7">    <span class="op">}</span></span>
+<span data-line="8">    base <span class="op">%=</span> mod<span class="op">;</span></span>
+<span data-line="9">    <span class="cf">if</span> <span class="op">(</span>base <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">        base <span class="op">+=</span> mod<span class="op">;</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12">    <span class="co">// mod 为 1 时结果应为 0，包括指数为 0 的情况。</span></span>
+<span data-line="13">    <span class="dt">long</span> <span class="dt">long</span> result <span class="op">=</span> <span class="dv">1</span> <span class="op">%</span> mod<span class="op">;</span></span>
+<span data-line="14">    <span class="cf">while</span> <span class="op">(</span>exponent <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="15">        <span class="co">// 最低位为 1 时，把当前底数对应的这一项乘入答案。</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">((</span>exponent <span class="op">&amp;</span> <span class="dv">1</span><span class="bu">ULL</span><span class="op">)</span> <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">            result <span class="op">=</span> result <span class="op">*</span> base <span class="op">%</span> mod<span class="op">;</span></span>
+<span data-line="18">        <span class="op">}</span></span>
+<span data-line="19">        <span class="co">// 底数平方对应指数下一位；乘法安全依赖前面声明的模数范围。</span></span>
+<span data-line="20">        base <span class="op">=</span> base <span class="op">*</span> base <span class="op">%</span> mod<span class="op">;</span></span>
+<span data-line="21">        exponent <span class="op">&gt;&gt;=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="22">    <span class="op">}</span></span>
+<span data-line="23">    <span class="cf">return</span> result<span class="op">;</span></span>
+<span data-line="24"><span class="op">}</span></span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>调用</th>
+<th>结果</th>
+<th>检查点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>modPower(2, 13, 1000)</code></td>
+<td><code>192</code></td>
+<td>普通情况</td>
+</tr>
+<tr>
+<td><code>modPower(5, 0, 7)</code></td>
+<td><code>1</code></td>
+<td>指数为 0</td>
+</tr>
+<tr>
+<td><code>modPower(5, 0, 1)</code></td>
+<td><code>0</code></td>
+<td>模数为 1</td>
+</tr>
+<tr>
+<td><code>modPower(-2, 3, 5)</code></td>
+<td><code>2</code></td>
+<td>负底数规范化</td>
+</tr>
+</tbody>
+</table>
+<p>例如模数为 <code>1000000007</code> 时，两个余数的乘积最多为 <code>1000000006²</code>，long long 可以保存这个中间结果。计算更大的模乘时，还可以学习 GNU C++ 的 <code>__int128</code> 宽整数，或把乘法拆成逐位加法与取模；取模操作始终发生在乘法计算之后。</p>
+<h4 id="n-0292">4. 正确性与应用</h4>
+<p>循环中保持“已累计的答案乘上剩余底数的剩余次幂，等于原来的幂”这一关系。指数最低位为 <code>1</code> 时取出一个底数因子，再把剩余偶数指数除以 <code>2</code>，同时将底数平方，所以结果不变。</p>
+<p>时间 <span class="math inline">\(O(\log b)\)</span>（<code>b = 0</code> 时直接返回），额外空间 <span class="math inline">\(O(1)\)</span>。常见用途是大指数取模、矩阵幂和模逆元。</p>
+<p>如果 <code>p</code> 是素数，且 <code>a</code> 不是 <code>p</code> 的倍数，那么费马小定理给出：</p>
+<p><span class="math display">\[
+a^{-1}\equiv a^{p-2}\pmod p
+\]</span></p>
+<p>例如 a=3、p=7 时，<code>modPower(3,5,7)=5</code>，而 <code>3×5 mod 7=1</code>，所以 5 是 3 的模逆元。逆元让模意义下的除法变成乘法：乘 a 的逆元，就抵消了乘 a 的效果。一般模数 m 下，a 与 m 互质时存在逆元；扩展欧几里得算法可以求它。这里素数模数的 <code>p-2</code> 指数来自费马小定理。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1226" rel="noopener noreferrer">洛谷 P1226 — 快速幂</a>、<a href="https://codeforces.com/problemset/problem/742/A" rel="noopener noreferrer">CF 742A — Arpa’s hard exam and Mehrdad’s naive cheat</a>。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-05-05.html"><small>上一节</small>（五） 基础数论</a><a href="../chapters/part-05-07.html"><small>下一节</small>（七） 哈希（散列）表</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0289">1. 把指数拆成二进制位</a><a class="level-4" href="#n-0290">2. 普通整数快速幂</a><a class="level-4" href="#n-0291">3. 取模快速幂</a><a class="level-4" href="#n-0292">4. 正确性与应用</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

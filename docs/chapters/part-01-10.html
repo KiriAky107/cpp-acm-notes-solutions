@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十） 输入细节、文件与异常 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-01-10.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-01-10.html" data-page-title="（十） 输入细节、文件与异常" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details open><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="current" href="../chapters/part-01-10.html" aria-current=page>（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 一、C++ 语法基础</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0068">（十） 输入细节、文件与异常</h3>
+<p>如果先输入年龄，再读取下一行的姓名，为什么直接读整行会得到空行？原因在于：格式化读取整数后，行末换行还留在输入流里。先用已经学过的 char 数组观察输入流中还剩什么。</p>
+<h4 id="n-0069">1. 整行读取与残留换行</h4>
+<p><strong>题目原文（自拟）：</strong> 第一行输入一个 int 年龄，第二行输入至多 100 个英文字符组成的姓名，允许空格和空行。输出完整姓名、一个空格和年龄。</p>
+<figure>
+<img alt="读完整数后先丢弃当前行，再把下一行写入字符数组" decoding="async" loading="lazy" src="../media/notes/syntax-char-line-input.svg"/>
+<figcaption aria-hidden="true">读完整数后先丢弃当前行，再把下一行写入字符数组</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="dt">int</span> age<span class="op">;</span></span>
+<span data-line="6">    <span class="cf">if</span> <span class="op">(!(</span>cin <span class="op">&gt;&gt;</span> age<span class="op">))</span></span>
+<span data-line="7">        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 先确认整数读取成功。</span></span>
+<span data-line="8">    <span class="dt">char</span> ch<span class="op">;</span></span>
+<span data-line="9">    <span class="cf">while</span> <span class="op">(</span>cin<span class="op">.</span>get<span class="op">(</span>ch<span class="op">)</span> <span class="op">&amp;&amp;</span> ch <span class="op">!=</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">    <span class="op">}</span> <span class="co">// 按字符消耗本行余下内容，含换行。</span></span>
+<span data-line="11">    <span class="dt">char</span> name<span class="op">[</span><span class="dv">101</span><span class="op">]{};</span>       <span class="co">// 最多 100 个内容字符，另留一格给结尾的 '\0'。</span></span>
+<span data-line="12">    cin<span class="op">.</span>getline<span class="op">(</span>name<span class="op">,</span> <span class="dv">101</span><span class="op">);</span> <span class="co">// 把下一整行写入已有字符数组，并结束于 '\0'。</span></span>
+<span data-line="13">    cout <span class="op">&lt;&lt;</span> name <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> age <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="14"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>18
+Alice Smith</code></pre>
+<p>输出：</p>
+<pre class="text"><code>Alice Smith 18</code></pre>
+<p><code>cin.get(ch)</code> 读取一个字符，不跳过空白；<code>cin.getline(name,101)</code> 接收字符数组和容量，读取一行、取走换行，但不把换行写入数组。C 风格字符串以 <code>\0</code> 标记结束，cout 输出 name 时读到该标记停止。100 个内容字符加上结尾的 <code>\0</code>，共需要 101 个槽位，所以声明 <code>char name[101]</code> 并传入容量 101。文本超过容量时，getline 会设置失败状态。</p>
+<p><code>cin &gt;&gt; ws</code> 跳过接下来的空白字符与空行；直接调用 getline 则从当前位置读取这一行，保留开头空白。学过 string 后，还会用它读取并保存整行文本。</p>
+<h4 id="n-0070">2. 把输入来源换成文件</h4>
+<p><code>&lt;fstream&gt;</code> 提供文件流，读取整数仍可使用已学的 <code>&gt;&gt;</code>。下面是一个无需标准输入的演示：同目录的 data.txt 保存 <code>1 2 3</code>，程序输出其总和 6。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;fstream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    ifstream input<span class="op">(</span><span class="st">"data.txt"</span><span class="op">);</span> <span class="co">// 尝试打开名为 data.txt 的文件用于读取。</span></span>
+<span data-line="7">    <span class="cf">if</span> <span class="op">(!</span>input<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">        cerr <span class="op">&lt;&lt;</span> <span class="st">"文件打开失败</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span> <span class="co">// cerr 用于诊断输出，不是题目要求的答案。</span></span>
+<span data-line="9">        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="10">    <span class="op">}</span></span>
+<span data-line="11">    <span class="dt">long</span> <span class="dt">long</span> total <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="12">    <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="13">    <span class="cf">while</span> <span class="op">(</span>input <span class="op">&gt;&gt;</span> value<span class="op">)</span></span>
+<span data-line="14">        total <span class="op">+=</span> value<span class="op">;</span> <span class="co">// 与 cin 相同，读取失败时退出。</span></span>
+<span data-line="15">    cout <span class="op">&lt;&lt;</span> total <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="16"><span class="op">}</span></span></code></pre></div>
+<p>ifstream 用于读文件，ofstream 用于写文件，销毁时自动关闭。<code>ofstream output("result.txt");</code> 默认可能覆盖旧文件，<code>ofstream output("result.txt",ios::app);</code> 以追加方式写到末尾；选模式前先确定要保留哪些内容。竞赛评测通常读 cin、写 cout，文件演示用于理解输入输出对象。</p>
+<h4 id="n-0071">3. 异常的抛出与捕获</h4>
+<p>除法要求除数不为 0。函数发现除数为 0 时，可以抛出异常，把错误交给调用者处理。下面抛出整数 0，外层用 catch 接住它，观察程序从计算路径转到错误处理路径。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> divide<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="cf">if</span> <span class="op">(</span>b <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="6">        <span class="cf">throw</span> b<span class="op">;</span>  <span class="co">// 抛出整数 0，立即离开正常计算路径。</span></span>
+<span data-line="7">    <span class="cf">return</span> a <span class="op">/</span> b<span class="op">;</span> <span class="co">// 本演示仅使用 10 与 2，结果在 int 范围内。</span></span>
+<span data-line="8"><span class="op">}</span></span>
+<span data-line="9"></span>
+<span data-line="10"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="11">    <span class="cf">try</span> <span class="op">{</span></span>
+<span data-line="12">        cout <span class="op">&lt;&lt;</span> divide<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">2</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="13">        cout <span class="op">&lt;&lt;</span> divide<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 此次调用抛出异常，不会输出商。</span></span>
+<span data-line="14">    <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="dt">int</span> divisor<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="15">        cout <span class="op">&lt;&lt;</span> <span class="st">"invalid divisor: "</span> <span class="op">&lt;&lt;</span> divisor <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 接收并处理抛出的整数。</span></span>
+<span data-line="16">    <span class="op">}</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p>输出为 <code>5</code>、<code>invalid divisor: 0</code>，各占一行。try 包住可能失败的操作，throw 交出失败信息，匹配的 catch 处理它；并不是所有错误都会自动抛异常。原生数组越界、悬空指针等错误仍要事先避免。后面遇到标准异常类型时，再解释其头文件、错误信息和捕获方式。</p>
+<h4 id="n-0072">4. 读取失败后：先清状态，再处理残留数据</h4>
+<p><code>cin&gt;&gt;value</code> 不只是取出字符，还会记录输入状态。逻辑判断 <code>if(cin&gt;&gt;value)</code> 表示这次提取有没有成功；eof 表示检测到输入末尾，fail 表示格式化读取等操作失败，bad 表示更严重的流故障。EOF 不是一个给普通整数自动赋入的数值。</p>
+<p><strong>题目原文（自拟演示）：</strong> 输入两行。第一行长度至多 1000，首字符是英文字母，不能解析为整数；第二行是一个合法的 int。第一次解析失败后输出 INVALID，恢复输入并丢弃第一行剩余内容，再输出第二行的整数。</p>
+<figure>
+<img alt="格式错误留下字符与失败状态，clear 和丢弃当前行各解决一个问题" decoding="async" loading="lazy" src="../media/notes/basic-input-failure-recovery.svg"/>
+<figcaption aria-hidden="true">格式错误留下字符与失败状态，clear 和丢弃当前行各解决一个问题</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="dt">int</span> value <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="6">    <span class="cf">if</span> <span class="op">(!(</span>cin <span class="op">&gt;&gt;</span> value<span class="op">))</span> <span class="op">{</span></span>
+<span data-line="7">        cout <span class="op">&lt;&lt;</span> <span class="st">"INVALID</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span>    <span class="co">// 演示题要求报告第一次失败。</span></span>
+<span data-line="8">        cin<span class="op">.</span>clear<span class="op">();</span>            <span class="co">// 重置失败状态；它不删除还没读走的错误字符。</span></span>
+<span data-line="9">        cin<span class="op">.</span>ignore<span class="op">(</span><span class="dv">1001</span><span class="op">,</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">);</span> <span class="co">// 至多丢弃 1001 个字符，包含遇到的换行。</span></span>
+<span data-line="10">    <span class="op">}</span></span>
+<span data-line="11">    <span class="cf">if</span> <span class="op">(</span>cin <span class="op">&gt;&gt;</span> value<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">        cout <span class="op">&lt;&lt;</span> value <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 第二行读入成功后，输出这次得到的整数。</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14"><span class="op">}</span></span></code></pre></div>
+<p>输入为 <code>abc</code>、<code>7</code>，各占一行，输出为 <code>INVALID</code>、<code>7</code>。只 clear 而不丢弃错误字符，下一次仍会尝试读取同一个 a，再次失败；只 ignore 而不先 clear，在失败状态下也不能完成预期提取。首行至多 1000 个字符，再加一个换行，所以 ignore 的最大数量设为 1001，恰好能丢弃完整的这一行。</p>
+<p>竞赛中通常将“读入一组成功”放进循环条件：读到数据就处理，输入结束就退出。上面的 clear 与 ignore 用来演示格式错误后的恢复；EOF 已表示数据结束，读到 EOF 后直接结束读取。</p>
+<h4 id="n-0073">5. scanf、printf 的格式化输入输出</h4>
+<p><code>&lt;cstdio&gt;</code> 提供 C 风格输入输出。scanf 根据格式字符串把结果写到给定地址，printf 根据格式说明读取参数值；这与流的 <code>&gt;&gt;</code>、<code>&lt;&lt;</code> 是另一套接口。指针章节已经解释 <code>&amp;x</code>，这里它表示 scanf 将写入的变量地址。</p>
+<table>
+<thead>
+<tr>
+<th>类型或格式</th>
+<th>scanf 输入</th>
+<th>printf 输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td><code>%d</code> 与 int*</td>
+<td><code>%d</code> 与 int</td>
+</tr>
+<tr>
+<td>long long</td>
+<td><code>%lld</code> 与 long long*</td>
+<td><code>%lld</code> 与 long long</td>
+</tr>
+<tr>
+<td>double</td>
+<td><code>%lf</code> 与 double*</td>
+<td><code>%f</code>；<code>%.2f</code> 输出两位小数</td>
+</tr>
+<tr>
+<td>char</td>
+<td><code>%c</code> 与 char*</td>
+<td><code>%c</code> 与字符值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>题目原文（自拟）：</strong> 输入一个 int、一个 long long、一个 double 和一个英文字符，按同样顺序输出一行；double 保留两位小数，字段间一个空格。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span data-line="2"></span>
+<span data-line="3"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="4">    <span class="dt">int</span> number<span class="op">;</span></span>
+<span data-line="5">    <span class="dt">long</span> <span class="dt">long</span> total<span class="op">;</span></span>
+<span data-line="6">    <span class="dt">double</span> ratio<span class="op">;</span></span>
+<span data-line="7">    <span class="dt">char</span> grade<span class="op">;</span></span>
+<span data-line="8">    <span class="cf">if</span> <span class="op">(</span><span class="bu">std::</span>scanf<span class="op">(</span><span class="st">"</span><span class="sc">%d%lld%lf</span><span class="st"> </span><span class="sc">%c</span><span class="st">"</span><span class="op">,</span> <span class="op">&amp;</span>number<span class="op">,</span> <span class="op">&amp;</span>total<span class="op">,</span> <span class="op">&amp;</span>ratio<span class="op">,</span> <span class="op">&amp;</span>grade<span class="op">)</span> <span class="op">!=</span> <span class="dv">4</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 返回值表示成功赋值的项目数；本例要求四项都读到。</span></span>
+<span data-line="10">    <span class="op">}</span></span>
+<span data-line="11">    <span class="bu">std::</span>printf<span class="op">(</span><span class="st">"</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%lld</span><span class="st"> </span><span class="sc">%.2f</span><span class="st"> </span><span class="sc">%c\n</span><span class="st">"</span><span class="op">,</span> number<span class="op">,</span> total<span class="op">,</span> ratio<span class="op">,</span> grade<span class="op">);</span> <span class="co">// 输出传值，不传地址。</span></span>
+<span data-line="12"><span class="op">}</span></span></code></pre></div>
+<p>输入 <code>7 10000000000 2.5 A</code>，输出 <code>7 10000000000 2.50 A</code>。数值格式会跳过开头空白，<code>%c</code> 本身不跳过，所以在它前面放空白以消耗分隔符。用 C 风格字符串数组接收 <code>%s</code> 时要按容量限制宽度，不能任意长度写入已有数组。</p>
+<p>scanf 把数据写入所传地址，printf 读取传入的值。使用序言中的整数宏后，int 会替换为 long long，读取格式相应写成 <code>%lld</code>。这个程序使用 scanf、printf 完成输入输出，使用 cin、cout 的程序则按序言设置标准流加速。</p>
+<h4 id="n-0074">6. throw 与 return 走的是不同路径</h4>
+<figure>
+<img alt="divide 正常返回时继续输出，抛出异常时转到匹配的处理器" decoding="async" loading="lazy" src="../media/notes/basic-exception-control-flow.svg"/>
+<figcaption aria-hidden="true">divide 正常返回时继续输出，抛出异常时转到匹配的处理器</figcaption>
+</figure>
+<p>对应前面的 divide 演示，<code>return a/b</code> 返回一个结果，调用者继续正常输出；<code>throw b</code> 则中断这次正常求值，寻找外层匹配的 catch。传入除数 0 时，调用后的那次输出不会得到一个“默认商”，而是转到 <code>catch(int divisor)</code> 输出错误信息。</p>
+<p>抛出异常会使离开的作用域按规则清理已构造的局部对象，这称为栈展开；面向对象部分会把它与析构、资源管理连接。return 处理正常结果，异常处理失败路径，数组越界等错误并不自动成为可捕获异常。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-01-09.html"><small>上一节</small>（九） auto、lambda 与结构化绑定</a><a href="../chapters/part-01-11.html"><small>下一节</small>（十一） 命名空间、头文件与多文件程序</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0069">1. 整行读取与残留换行</a><a class="level-4" href="#n-0070">2. 把输入来源换成文件</a><a class="level-4" href="#n-0071">3. 异常的抛出与捕获</a><a class="level-4" href="#n-0072">4. 读取失败后：先清状态，再处理残留数据</a><a class="level-4" href="#n-0073">5. scanf、printf 的格式化输入输出</a><a class="level-4" href="#n-0074">6. throw 与 return 走的是不同路径</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

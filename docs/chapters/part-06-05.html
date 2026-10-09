@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>牛客周赛与 Codeforces 分级训练 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-06-05.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-06-05.html" data-page-title="牛客周赛与 Codeforces 分级训练" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details open><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="current" href="../chapters/part-06-05.html" aria-current=page>牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 后记</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0462">牛客周赛与 Codeforces 分级训练</h3>
+<p>平时可以用 CF 题目逐步提高难度，再用牛客周赛练习在规定时间内自己识别模型、安排做题顺序。比赛后的补题把这两件事接起来：找出当场卡住的步骤，回到相近难度的题目继续练习。</p>
+<h4 id="n-0463">用牛客周赛练习定时解题</h4>
+<p>推荐参加<strong>牛客周赛</strong>。从<a href="https://ac.nowcoder.com/acm/contest/vip-index?internalFrom=sideBar" rel="noopener noreferrer">牛客竞赛入口</a>筛选“牛客周赛”，查看比赛页面并报名；往期比赛可以回顾题目，或用“创建重现赛”重新安排一次定时练习。</p>
+<p>一场比赛可以这样做：</p>
+<ol type="1">
+<li><strong>先浏览题目。</strong> 用几分钟看输入规模、输出目标和样例，把已经有思路的题先做出来，再回到需要推导的题。</li>
+<li><strong>给当前想法留下记录。</strong> 题意能理解但暂时做不出时，写下已有模型、尝试过的反例和还缺的推导，再决定继续尝试还是先看另一题。</li>
+<li><strong>检查后再提交。</strong> 手算一组数据，估算工作量，核对多组输入、类型和输出格式。WA 后先定位与手算不同的状态，再修改。</li>
+<li><strong>比赛结束后补一题。</strong> 优先选当场最接近做出来的一题。先继续独立推导；阅读题解时，找到自己缺的那一步，再合上题解重新实现。</li>
+</ol>
+<p>例如一场比赛完成两题，第三题已经想到“统计过去的频次”，却因为先写入当前项而 WA，赛后就先把这个更新次序补清楚。记录失败输入，再选一道同样要区分过去与当前的计数题，比只记“这场做了两题”更能指导下一次训练。</p>
+<h4 id="n-0464">按 CF 题目 rating 逐步提高难度</h4>
+<p>选题时看<strong>题目难度 rating</strong>，例如 800、1000、1200；比赛榜单上的 rank 记录当场比赛的名次。题目难度与选手的参赛评分分别记录，选题时直接使用题目旁的难度数值。字段含义可以查阅 <a href="https://codeforces.com/apiHelp/objects" rel="noopener noreferrer">Codeforces 官方说明</a>。</p>
+<p>打开 <a href="https://codeforces.com/problemset?order=BY_RATING_ASC" rel="noopener noreferrer">CF 题库按难度升序排列</a>，在“Filter Problems”的“Difficulty”中填写当前练习的难度范围。刚开始可以从 800 分题试起，先判断自己卡在读题、推导还是实现，再逐级增加 100 分或 200 分。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>当前练习的题目 rating</th>
+<th>可以安排的训练任务</th>
+<th>每题完成后检查的能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>800—1000</td>
+<td>练习英文题面、条件判断、模拟、枚举和基础数学</td>
+<td>能把文字规则逐项转成代码，并独立处理完整输入输出</td>
+</tr>
+<tr>
+<td>1100—1300</td>
+<td>比较直接枚举与排序、前缀信息、频次统计等做法</td>
+<td>能找到重复工作，说明优化前后计算的是同一份答案</td>
+</tr>
+<tr>
+<td>1400—1600</td>
+<td>练习多步骤推导，结合二分、贪心、搜索、基础 DP 与图模型</td>
+<td>能解释关键判断、证明或状态转移，并估算最大规模的工作量</td>
+</tr>
+<tr>
+<td>1700—1900</td>
+<td>根据补题中遇到的问题扩展专题，练习多个方法的组合</td>
+<td>能从题面自己识别所需信息，把几个计算步骤连接成完整解法</td>
+</tr>
+</tbody>
+</table>
+<p>选题时可以先做一个具体尝试：找 10 道 800 分题，记录哪些题完全独立完成、哪些题看过提示、哪些题看过完整题解。例如 7 道能独立完成，另外 3 道在复盘后也能讲清推导，就选几道 900 分题继续尝试；若只有 2 道能独立完成，则先把反复出现的问题补清楚，再换一组同难度题。</p>
+<p>提高难度时保留一些已经熟练的题练习速度，再安排略高一档的题练习推导。遇到某一题长时间想不出，先整理已有结论，再分段阅读题解：先看模型，自己尝试；还缺推导再继续看；最后合上题解完成代码，隔几天独立重做。</p>
+<p>做专题练习时，可以用标签找到刚学过的方法；做综合训练时，先读题自行判断方法，再核对标签。这样既能巩固某种算法，也能练习比赛中最重要的模型识别。</p>
+<h4 id="n-0465">把周赛、分级练习和复盘接成一轮</h4>
+<p>可以按下面的顺序安排一轮练习：</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>环节</th>
+<th>具体动作</th>
+<th>留下的记录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>赛前练习</td>
+<td>做几道当前 rating 附近的 CF 题，再尝试少量高一档的题</td>
+<td>独立完成与使用提示的情况；读题、推导、实现分别耗时</td>
+</tr>
+<tr>
+<td>牛客周赛</td>
+<td>在比赛时间内浏览、选择、推导、实现和检查</td>
+<td>当场想到的模型、WA 输入、暂时没推完的步骤</td>
+</tr>
+<tr>
+<td>赛后补题</td>
+<td>补最接近完成的一题，复现模型与代码</td>
+<td>缺的是哪条题意、哪段证明或哪个更新次序</td>
+</tr>
+<tr>
+<td>返回 CF 练习</td>
+<td>选相近难度、能练到这个薄弱步骤的题目</td>
+<td>能否在新的题面中独立识别同一思想</td>
+</tr>
+</tbody>
+</table>
+<p>例如周赛卡在“把最优化转成可行性判断”，接下来就从当前 rating 附近找二分相关题，练习判定函数和单调性的推导。把这一步练熟，再回到混合题与下一场周赛，观察自己能否独立识别这个模型。</p>
+<p>复盘时把 rating、独立解题情况和具体困难放在一起看。比赛名次记录当场表现，练习记录则告诉我们下一步应补什么；难度的提高也随这些能力的变化逐步推进。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-06-04.html"><small>上一节</small>后续学习路线</a><a href="../chapters/part-06-06.html"><small>下一节</small>国内 ACM 与 OI 类竞赛</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0463">用牛客周赛练习定时解题</a><a class="level-4" href="#n-0464">按 CF 题目 rating 逐步提高难度</a><a class="level-4" href="#n-0465">把周赛、分级练习和复盘接成一轮</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

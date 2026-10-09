@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（九） 双指针与滑动窗口（尺取法） · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-05-09.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-05-09.html" data-page-title="（九） 双指针与滑动窗口（尺取法）" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details open><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="current" href="../chapters/part-05-09.html" aria-current=page>（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 五、数据结构与算法</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0323">（九） 双指针与滑动窗口（尺取法）</h3>
+<p>对有序数据或连续区间，不一定要重新枚举每一对端点。先跟踪两个位置怎样移动，证明每次移动保留了哪些可能答案。</p>
+<p>双指针是高效遍历与查找序列关系的一种技巧，通过两个下标在同一或不同数组上同时移动，避免重复计算。</p>
+<blockquote>
+<p><strong>注意：</strong> 这里的“双指针”通常指两个数组或字符串下标；它们不必是保存内存地址的 C++ 指针变量。</p>
+</blockquote>
+<h4 id="n-0324">1. 头尾双指针</h4>
+<p>两个下标分别从序列两端开始，按题目的排除规则向中间移动。</p>
+<p>例如，头尾双指针的两个经典应用：</p>
+<h5 id="n-0325">1.1 从两端判断回文字符串</h5>
+<p><strong>题目原文（自拟）：</strong> 给定按单字节字符处理的字符串 <code>s</code>，判断从左到右和从右到左读到的字符是否完全相同。空串和单字符都算回文，返回 <code>bool</code>。大小写、空格和标点都参与比较，不自动忽略。</p>
+<p><strong>思路分析：</strong> 回文要求每个位置 <code>i</code> 都满足 <code>s[i]==s[n-1-i]</code>。从两端开始检查一对字符，相等后一起向中间移动。已检查的外侧已经满足条件，剩下只需检查内部；一旦有一对不同就可以返回 <code>false</code>。指针相遇时，中央字符与自己相等；交错时所有对应位置已检查完。</p>
+<figure>
+<img alt="已匹配的两端不再检查，未验证区间逐步缩小" decoding="async" loading="lazy" src="../media/notes/palindrome-two-ends.svg"/>
+<figcaption aria-hidden="true">已匹配的两端不再检查，未验证区间逐步缩小</figcaption>
+</figure>
+<p>已匹配的两端不再检查，未验证区间逐步缩小。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="co">// 两端字符逐一比较；空串时右下标为 -1，循环直接跳过。</span></span>
+<span data-line="5"><span class="dt">bool</span> isPalindrome<span class="op">(</span><span class="at">const</span> string <span class="op">&amp;</span>s<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>s<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="7">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;=</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="cf">if</span> <span class="op">(</span>s<span class="op">[</span>left<span class="op">]</span> <span class="op">!=</span> s<span class="op">[</span>right<span class="op">])</span></span>
+<span data-line="9">            <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="10">        left<span class="op">++;</span></span>
+<span data-line="11">        right<span class="op">--;</span></span>
+<span data-line="12">    <span class="op">}</span></span>
+<span data-line="13">    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="14"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例与代码解释：</strong> <code>abba</code> 先比较两个 <code>a</code>，再比较两个 <code>b</code>，返回 <code>true</code>；<code>abc</code> 第一轮的 <code>a</code> 与 <code>c</code> 不同，返回 <code>false</code>。空串令 <code>right=-1</code>，不进入循环而返回 <code>true</code>；不是先把无符号的 <code>size()</code> 减一再转换，所以没有无符号减法下溢。</p>
+<p><strong>复杂度：</strong> 每轮比较两端，再向中间移动，最多比较约一半字符，时间 <span class="math inline">\(O(n)\)</span>，额外空间 <span class="math inline">\(O(1)\)</span>。例如 racecar 的比较顺序是 r/r、a/a、c/c，剩下的 e 位于正中间。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1217" rel="noopener noreferrer">洛谷 P1217 — 回文质数</a>（综合回文构造与素数判断）。</p>
+<h5 id="n-0326">1.2 两数之和：从两端排除候选</h5>
+<p><strong>题目原文（自拟）：</strong> 给定非递减整数数组 <code>arr</code> 和目标和 <code>target</code>，找到两个不同下标 <code>i&lt;j</code>，满足 <code>arr[i]+arr[j]==target</code>。存在时返回任意一组下标，否则返回 <code>(-1,-1)</code>。数组长度可用 <code>int</code> 下标表示，元素为 <code>int</code>，目标为 <code>long long</code>。</p>
+<p><strong>思路分析：</strong> 初始令 <code>left=0</code>、<code>right=n-1</code>。从数组的有序关系，可以看出两端之和怎样决定下一步移动：</p>
+<ol type="1">
+<li>和偏小：对当前范围内任意 <code>j&lt;=right</code>，都有 <code>arr[left]+arr[j]&lt;=arr[left]+arr[right]&lt;target</code>。当前左端与谁配对都不够，因此排除左端。</li>
+<li>和偏大：对任意 <code>i&gt;=left</code>，都有 <code>arr[i]+arr[right]&gt;=arr[left]+arr[right]&gt;target</code>。当前右端与谁配对都超出，因此排除右端。</li>
+<li>和相等：直接返回。循环要求 <code>left&lt;right</code>，防止同一位置被使用两次。</li>
+</ol>
+<figure>
+<img alt="头尾双指针的排除理由与手算过程" decoding="async" loading="lazy" src="../media/notes/two-sum-elimination-proof.svg"/>
+<figcaption aria-hidden="true">头尾双指针的排除理由与手算过程</figcaption>
+</figure>
+<p>图以 <code>[1,2,4,7,11]</code>、目标 9 为例：先排除 11，再排除 1，最后得到下标 <code>(1,3)</code>。每一步排除都依赖排序带来的不等式。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 数组有序时：和太大缩右端，和太小移左端；left &lt; right 防止复用。</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6">pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> twoSum<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>arr<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> target<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>arr<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="8">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;</span> right<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="dt">long</span> <span class="dt">long</span> sum <span class="op">=</span> <span class="dv">1</span><span class="bu">LL</span> <span class="op">*</span> arr<span class="op">[</span>left<span class="op">]</span> <span class="op">+</span> arr<span class="op">[</span>right<span class="op">];</span></span>
+<span data-line="10">        <span class="cf">if</span> <span class="op">(</span>sum <span class="op">==</span> target<span class="op">)</span></span>
+<span data-line="11">            <span class="cf">return</span> <span class="op">{</span>left<span class="op">,</span> right<span class="op">};</span></span>
+<span data-line="12">        <span class="cf">if</span> <span class="op">(</span>sum <span class="op">&gt;</span> target<span class="op">)</span></span>
+<span data-line="13">            <span class="op">--</span>right<span class="op">;</span></span>
+<span data-line="14">        <span class="cf">else</span></span>
+<span data-line="15">            <span class="op">++</span>left<span class="op">;</span></span>
+<span data-line="16">    <span class="op">}</span></span>
+<span data-line="17">    <span class="cf">return</span> <span class="op">{-</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">};</span></span>
+<span data-line="18"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例与代码解释：</strong> <code>[1,2,4,7]</code>、目标 9 返回 <code>(1,3)</code>，对应 2+7；<code>[3]</code>、目标 6 返回 <code>(-1,-1)</code>，因为不能使用同一个 3 两次。计算和时先转为较宽整数，避免两个 <code>int</code> 相加后才赋值造成溢出。</p>
+<p><strong>复杂度分析：</strong> 每轮至少移动一个端点，端点总移动次数为 <span class="math inline">\(O(n)\)</span>，额外空间 <span class="math inline">\(O(1)\)</span>。若输入未排序，可带着原下标排序，或使用哈希表查互补值，得到另一种查找过程。后面的整数二分章节会给出逐个查互补值的实现。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1102" rel="noopener noreferrer">洛谷 P1102 — A-B 数对</a>（变式：求差且统计方案，注意相同值的数量）。</p>
+<h5 id="n-0327">1.3 头尾双指针的移动模板</h5>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 标准头尾双指针模板</span></span>
+<span data-line="2"><span class="dt">int</span> functionName<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> arr<span class="op">,</span><span class="dt">int</span> target<span class="op">){</span></span>
+<span data-line="3">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>arr<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="4">    <span class="cf">while</span> <span class="op">(</span>left <span class="op">&lt;=</span> right<span class="op">)</span> <span class="op">{</span>  <span class="co">// 或 left &lt; right，根据具体需求</span></span>
+<span data-line="5">        <span class="co">// 处理逻辑</span></span>
+<span data-line="6">        <span class="cf">if</span> <span class="op">(</span>condition<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">            <span class="co">// 找到目标</span></span>
+<span data-line="8">         <span class="cf">return</span> result<span class="op">;</span></span>
+<span data-line="9">        <span class="op">}</span></span>
+<span data-line="10">        <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>condition1<span class="op">)</span></span>
+<span data-line="11">            left<span class="op">++;</span>    <span class="co">// 左指针右移</span></span>
+<span data-line="12">        <span class="cf">else</span></span>
+<span data-line="13">            right<span class="op">--;</span>   <span class="co">// 右指针左移</span></span>
+<span data-line="14">    <span class="op">}</span></span>
+<span data-line="15"><span class="op">}</span></span></code></pre></div>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1102" rel="noopener noreferrer">洛谷 P1102 — A-B 数对</a>。</p>
+<h4 id="n-0328">2. 快慢双指针</h4>
+<p>两个下标从同一侧开始，同向扫描，分别负责读取和写入；链表判环中则常使用不同步长。</p>
+<h5 id="n-0329">2.1 移除有序数组中的重复元素</h5>
+<p><strong>题目原文（自拟）：</strong> 给定非递减整数数组 <code>nums</code>，在原数组中保留每种值一次，且仍按升序排列。返回有效前缀长度 <code>k</code>，要求前 <code>k</code> 项恰好为去重结果；无须改变 <code>vector</code> 的实际长度，末尾内容可以保留。空数组返回 0。</p>
+<p><strong>思路分析：</strong> 第一个元素直接保留，令 <code>slow=0</code>。<code>fast</code> 从下标 1 开始读取；若新值等于最后保留值，就跳过；否则先把 <code>slow</code> 加一，再把新值写入该位置。排序保证相同值相邻，只需与最后保留值比较。</p>
+<p>循环不变量是：<code>nums[0..slow]</code> 已是扫描过部分的正确去重结果，<code>slow&lt;=fast</code>。写入位置不会超过读取位置，因而不会破坏尚未扫描的后缀。</p>
+<figure>
+<img alt="去重过程中的读取与写入位置" decoding="async" loading="lazy" src="../media/notes/deduplicate-read-write-pointers.svg"/>
+<figcaption aria-hidden="true">去重过程中的读取与写入位置</figcaption>
+</figure>
+<p>图以 <code>[1,2,3,3,4,5]</code> 为例：第二个 3 被跳过，随后 4、5 依次写到有效前缀末尾。绿色区域表示结果范围。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="3"></span>
+<span data-line="4"><span class="dt">int</span> removeDuplicates<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>nums<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">    <span class="cf">if</span> <span class="op">(</span>nums<span class="op">.</span>empty<span class="op">())</span></span>
+<span data-line="6">        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="7"></span>
+<span data-line="8">    <span class="dt">int</span> slow <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 慢指针 - 指向当前唯一元素的位置</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> fast <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> fast <span class="op">&lt;</span> nums<span class="op">.</span>size<span class="op">();</span> fast<span class="op">++)</span> <span class="op">{</span></span>
+<span data-line="10">        <span class="co">// 快指针寻找不同的元素</span></span>
+<span data-line="11">        <span class="cf">if</span> <span class="op">(</span>nums<span class="op">[</span>fast<span class="op">]</span> <span class="op">!=</span> nums<span class="op">[</span>slow<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="12">            slow<span class="op">++;</span></span>
+<span data-line="13">            nums<span class="op">[</span>slow<span class="op">]</span> <span class="op">=</span> nums<span class="op">[</span>fast<span class="op">];</span></span>
+<span data-line="14">        <span class="op">}</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16">    <span class="cf">return</span> slow <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 返回新长度</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例与代码解释：</strong> 最后 <code>slow=4</code>，返回 5；前五项为 <code>[1,2,3,4,5]</code>。<code>slow</code> 是下标，所以长度需要再加一。若确实要缩短容器，可在返回后执行 <code>nums.resize(k)</code>；若只按题目要求返回长度，则不必这样做。</p>
+<p><strong>复杂度：</strong> 只扫描一次，时间 <span class="math inline">\(O(n)\)</span>、额外空间 <span class="math inline">\(O(1)\)</span>。排序后相同值紧挨在一起，只需和上一个保留值比较，就能识别这一轮是否出现新值。</p>
+<p>快慢指针也可用于链表判环：慢指针走一步，快指针走两步；一旦二者进入同一环，相对位置每轮推进一步，最终相遇。此时指针表示节点位置，与本例的数组读写职责不同。参见 <a href="https://leetcode.cn/problems/linked-list-cycle/description/" rel="noopener noreferrer">链表环检测</a>。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1059" rel="noopener noreferrer">洛谷 P1059 — 明明的随机数</a>（先排序，再去重）。</p>
+<h5 id="n-0330">2.2 快慢双指针的读写模板</h5>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 伪代码：把“满足保留条件”换成题目要求的判断。</span></span>
+<span data-line="2"><span class="dt">int</span> slow <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="3"><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> fast <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> fast <span class="op">&lt;</span> n<span class="op">;</span> fast<span class="op">++)</span> <span class="op">{</span></span>
+<span data-line="4">    <span class="cf">if</span> <span class="op">(</span><span class="co">/* 满足保留条件 */</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="5">        nums<span class="op">[</span>slow<span class="op">]</span> <span class="op">=</span> nums<span class="op">[</span>fast<span class="op">];</span></span>
+<span data-line="6">        slow<span class="op">++;</span></span>
+<span data-line="7">    <span class="op">}</span></span>
+<span data-line="8"><span class="op">}</span></span>
+<span data-line="9"><span class="co">// slow 是保留元素数量，也是下一次写入的位置，不是最后一个有效下标</span></span></code></pre></div>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1059" rel="noopener noreferrer">洛谷 P1059 — 明明的随机数</a>（排序去重练习）。</p>
+<h4 id="n-0331">3. 滑动窗口</h4>
+<p>滑动窗口是一种高效解决 <strong>子区间问题（subarray / substring）</strong> 的算法技巧，通过动态维护一个满足条件的区间，避免暴力枚举所有区间带来的重复计算。滑动窗口使用两个边界下标维护连续区间；它与原地去重中的读写下标含义不同。</p>
+<p><strong>核心思想</strong>：</p>
+<p>通过两个指针（通常是 <code>left</code> 与 <code>right</code>）在序列上移动，维护一个“窗口区间” <code>[left, right)</code>。</p>
+<ul>
+<li>右指针向右移动（扩大窗口） → <strong>加入新元素</strong></li>
+<li>左指针向右移动（收缩窗口） → <strong>移除旧元素</strong></li>
+<li>在此过程中实时更新窗口内的信息（如和、长度、字符频率等）</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong> 滑动窗口本质上是一种 <strong>动态区间维护算法</strong>，但常用快慢指针来维护。</p>
+</blockquote>
+<h5 id="n-0332">3.1 区间和：扩张右端与移动左端</h5>
+<p><strong>题目原文（自拟）：</strong> 给定正整数数组 <code>arr</code> 和正目标 <code>s</code>，找一个非空连续区间，使区间和恰好为 <code>s</code>。存在时返回半开区间 <code>[left,right)</code>，否则返回 <code>(-1,-1)</code>；空数组无解。数组长度可用 <code>int</code> 表示，整个数组的和不超出 <code>long long</code> 范围。</p>
+<p><strong>思路分析：</strong> 维护窗口和 <code>sum</code>，初始窗口为空。向右加入一个新数后，若和太大，就不断删去左端；缩小到不再大于目标后，检查是否相等。</p>
+<p>为什么这样不会漏解？正数保证加入元素只能增大和，删去左端只能减小和。窗口已经超过目标时，保留当前左端并继续往右只会更大，所以可以排除这个左端；窗口不足目标时，则继续尝试向右扩张。若有负数，这两个单调变化都可能失效，应考虑前缀和与映射等其他方法。</p>
+<figure>
+<img alt="窗口和随加入与删除而变化" decoding="async" loading="lazy" src="../media/notes/sliding-window-sum.svg"/>
+<figcaption aria-hidden="true">窗口和随加入与删除而变化</figcaption>
+</figure>
+<p>图中加入前三项后 <code>[0,3)</code> 的和为 6，超出目标 5；删除左端 1 后，<code>[1,3)</code> 的和变成 5，对应 2、3。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5">pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> findSum<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>arr<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> s<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="cf">if</span> <span class="op">(</span>s <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="7">        <span class="cf">return</span> <span class="op">{-</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">};</span> <span class="co">// 寻找非空区间，数组元素为正数</span></span>
+<span data-line="8">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="9">    <span class="dt">long</span> <span class="dt">long</span> sum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="10">    <span class="cf">while</span> <span class="op">(</span>right <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="11">        sum <span class="op">+=</span> arr<span class="op">[</span>right<span class="op">++];</span>            <span class="co">// 扩大窗口</span></span>
+<span data-line="12">        <span class="cf">while</span> <span class="op">(</span>sum <span class="op">&gt;</span> s <span class="op">&amp;&amp;</span> left <span class="op">&lt;</span> right<span class="op">)</span> <span class="co">// 收缩窗口</span></span>
+<span data-line="13">            sum <span class="op">-=</span> arr<span class="op">[</span>left<span class="op">++];</span></span>
+<span data-line="14">        <span class="cf">if</span> <span class="op">(</span>sum <span class="op">==</span> s<span class="op">)</span></span>
+<span data-line="15">            <span class="cf">return</span> <span class="op">{</span>left<span class="op">,</span> right<span class="op">};</span></span>
+<span data-line="16">    <span class="op">}</span></span>
+<span data-line="17">    <span class="cf">return</span> <span class="op">{-</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">};</span></span>
+<span data-line="18"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例与代码解释：</strong> <code>[1,2,3,4]</code>、<code>s=5</code> 返回 <code>(1,3)</code>。<code>right++</code> 出现在加入元素的语句中，因此 <code>right</code> 始终是尾后下标，返回前不再加一。函数把空区间与找不到的情况统一返回无解，找到时则返回包含实际元素的起止位置。</p>
+<p><strong>复杂度：</strong> 内层收缩循环虽然嵌套在外层中，但左端只向右走，每个元素最多加入、删去各一次，所以总时间 <span class="math inline">\(O(n)\)</span>，额外空间 <span class="math inline">\(O(1)\)</span>。</p>
+<h5 id="n-0333">3.2 最长无重复子串</h5>
+<p><strong>题目原文（自拟）：</strong> 给定按单字节字符处理的字符串 <code>s</code>，求不含重复字符的最长连续子串长度。空串返回 0；长度可用 <code>int</code> 表示。大小写视为不同字符。</p>
+<p><strong>思路分析：</strong> 集合保存当前半开窗口 <code>[left,right)</code> 中的字符。若 <code>s[right]</code> 不在集合中，就加入它并扩大右端；若已经存在，就先删除左端字符、右移左端，再检查同一个右端字符，直到能够合法加入。每次扩大右端后更新最大长度。</p>
+<p>移动左端时，先从集合中删除对应字符，再将 left 加一；扩展右端时，把新字符加入集合，再将 right 加一。集合因此始终保存窗口里的字符。对一个固定右端，从左侧逐项删到冲突字符离开，就得到这个右端下尽可能长的不重复窗口。</p>
+<figure>
+<img alt="重复字符触发窗口收缩" decoding="async" loading="lazy" src="../media/notes/unique-substring-window.svg"/>
+<figcaption aria-hidden="true">重复字符触发窗口收缩</figcaption>
+</figure>
+<p>图以 <code>abca</code> 为例：扫描最后一个 <code>a</code> 时，已有窗口为 <code>abc</code>；先删除左端 <code>a</code>，再加入新 <code>a</code>，得到 <code>bca</code>。字符只有真正进入窗口后才右移 <code>right</code>。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;unordered_set&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="co">// 集合保存窗口中的字符；重复时移除左端，直到可以加入右端字符。</span></span>
+<span data-line="7"><span class="dt">int</span> lengthOfLongestSubstring<span class="op">(</span>string s<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">    unordered_set<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> window<span class="op">;</span></span>
+<span data-line="9">    <span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> res <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="10"></span>
+<span data-line="11">    <span class="cf">while</span> <span class="op">(</span>right <span class="op">&lt;</span> s<span class="op">.</span>size<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="12">        <span class="cf">if</span> <span class="op">(!</span>window<span class="op">.</span>count<span class="op">(</span>s<span class="op">[</span>right<span class="op">]))</span> <span class="op">{</span></span>
+<span data-line="13">            window<span class="op">.</span>insert<span class="op">(</span>s<span class="op">[</span>right<span class="op">]);</span></span>
+<span data-line="14">            right<span class="op">++;</span></span>
+<span data-line="15">            res <span class="op">=</span> max<span class="op">(</span>res<span class="op">,</span> right <span class="op">-</span> left<span class="op">);</span></span>
+<span data-line="16">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="17">            window<span class="op">.</span>erase<span class="op">(</span>s<span class="op">[</span>left<span class="op">]);</span></span>
+<span data-line="18">            left<span class="op">++;</span></span>
+<span data-line="19">        <span class="op">}</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21">    <span class="cf">return</span> res<span class="op">;</span></span>
+<span data-line="22"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例与代码解释：</strong> <code>abcabcbb</code> 返回 3，<code>bbbbb</code> 返回 1，空串返回 0。<code>res</code> 保存的是历史最大长度，不是最终窗口长度；例如 <code>abcabcbb</code> 最后的窗口很短，但答案仍为 3。</p>
+<p><strong>复杂度：</strong> 每个字符最多进、出窗口各一次，哈希操作平均常数级时，扫描时间 <span class="math inline">\(O(n)\)</span>。集合最多保存当前出现的不同字符，空间 <span class="math inline">\(O(min(n,字符集大小))\)</span>。本函数按值传入字符串，还会产生一份 <span class="math inline">\(O(n)\)</span> 输入副本，因此整个调用的额外空间为 <span class="math inline">\(O(n)\)</span>；改为 <code>const string&amp;</code> 可以省去副本。</p>
+<h5 id="n-0334">3.3 滑动窗口的扩张与收缩模板</h5>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="co">// 伪代码：add/remove 表示维护窗口状态的操作。</span></span>
+<span data-line="2"><span class="dt">int</span> left <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> right <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="3"><span class="cf">while</span> <span class="op">(</span>right <span class="op">&lt;</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="4">    <span class="co">// 扩大窗口</span></span>
+<span data-line="5">    window<span class="op">.</span>add<span class="op">(</span>s<span class="op">[</span>right<span class="op">]);</span></span>
+<span data-line="6">    right<span class="op">++;</span></span>
+<span data-line="7"></span>
+<span data-line="8">    <span class="cf">while</span> <span class="op">(</span>window 不满足条件<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="co">// 收缩窗口</span></span>
+<span data-line="10">        window<span class="op">.</span>remove<span class="op">(</span>s<span class="op">[</span>left<span class="op">]);</span></span>
+<span data-line="11">        left<span class="op">++;</span></span>
+<span data-line="12">    <span class="op">}</span></span>
+<span data-line="13">    <span class="co">// 在这里更新答案（窗口满足条件时）</span></span>
+<span data-line="14"><span class="op">}</span></span></code></pre></div>
+<p><strong>练习题：</strong> <a href="https://codeforces.com/problemset/problem/279/B" rel="noopener noreferrer">CF 279B — Books</a>、<a href="https://www.luogu.com.cn/problem/P1638" rel="noopener noreferrer">洛谷 P1638 — 逛画展</a>。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-05-08.html"><small>上一节</small>（八） 二叉树</a><a href="../chapters/part-05-10.html"><small>下一节</small>（十） 二分与三分搜索</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0324">1. 头尾双指针</a><a class="level-5" href="#n-0325">1.1 从两端判断回文字符串</a><a class="level-5" href="#n-0326">1.2 两数之和：从两端排除候选</a><a class="level-5" href="#n-0327">1.3 头尾双指针的移动模板</a><a class="level-4" href="#n-0328">2. 快慢双指针</a><a class="level-5" href="#n-0329">2.1 移除有序数组中的重复元素</a><a class="level-5" href="#n-0330">2.2 快慢双指针的读写模板</a><a class="level-4" href="#n-0331">3. 滑动窗口</a><a class="level-5" href="#n-0332">3.1 区间和：扩张右端与移动左端</a><a class="level-5" href="#n-0333">3.2 最长无重复子串</a><a class="level-5" href="#n-0334">3.3 滑动窗口的扩张与收缩模板</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

@@ -1,0 +1,1900 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十五） STL：容器、迭代器与算法 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-01-15.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-01-15.html" data-page-title="（十五） STL：容器、迭代器与算法" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details open><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="current" href="../chapters/part-01-15.html" aria-current=page>（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="" href="../chapters/part-05-15.html" >（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 一、C++ 语法基础</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0098">（十五） STL：容器、迭代器与算法</h3>
+<p>读题得到 n 个数，要保存、排序或查询它们。手工管理动态数组需要记录长度并负责释放；每道题都重写查找和排序也会重复工作。STL（Standard Template Library，标准模板库）把这些操作组织成可组合的工具，以<strong>容器保存数据、迭代器表示位置、算法处理区间</strong>为基本配合方式。这里把常用标准容器、string 和相关工具一并放在 STL 章节学习；string 是标准字符串类型，pair 是成对数据工具，整个 C++ 标准库还包含输入输出、数学和其他设施。</p>
+<p>先按保存的数据和需要的操作认识它们，不必一次背完所有接口。</p>
+<p><strong>先读懂操作费用的记号。</strong> 设有 n 项，只读一项的工作不随 n 增长，记作 <span class="math inline">\(O(1)\)</span>；逐项走一遍记作 <span class="math inline">\(O(n)\)</span>；每步把候选大致减半，步数随对数增长，记作 <span class="math inline">\(O(\log n)\)</span>。排序常见的 <span class="math inline">\(O(n\log n)\)</span> 可先理解为接近 n 项乘以对数级工作，两层各走 n 项则是 <span class="math inline">\(O(n^2)\)</span>。这些记号描述规模增大时的增长，不表示固定秒数；算法部分再配增长图、数值表和内存估算完整推导。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>类别</th>
+<th>本章内容</th>
+<th>首先分清什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字符串与成对数据</td>
+<td>string、pair</td>
+<td>字符下标、两个字段、比较顺序</td>
+</tr>
+<tr>
+<td>顺序容器</td>
+<td>vector、deque、list、array、forward_list</td>
+<td>动态或固定大小；连续数组或节点连接；位置访问成本</td>
+</tr>
+<tr>
+<td>有序关联容器</td>
+<td>set、map、multiset、multimap</td>
+<td>保存键还是键值；是否允许等价键重复</td>
+</tr>
+<tr>
+<td>无序关联容器</td>
+<td>unordered_set、unordered_map 及 multi 版本</td>
+<td>按哈希判重；遍历没有有序保证</td>
+</tr>
+<tr>
+<td>容器适配器</td>
+<td>stack、queue、priority_queue</td>
+<td>封装底层容器，限定后进先出、先进先出或优先取出</td>
+</tr>
+<tr>
+<td>连接容器与算法的工具</td>
+<td>迭代器、algorithm、numeric</td>
+<td>半开区间、迭代器能力、比较器、修改后的位置</td>
+</tr>
+</tbody>
+</table>
+<p>自学时先熟悉 string、vector 和 pair，再学迭代器、算法库、链表、栈、队列、map、set 与堆；deque 可结合滑动窗口学习，链表与 multi 版本按需要查阅。每节先手算图中的操作，再运行带注释的例题，最后按练习链接独立写程序。表中的复杂度通常假设单个元素的比较、复制或移动为常数；大字符串和复杂对象还需计算这些操作本身的费用。</p>
+<h4 id="n-0099">1. string：字符串</h4>
+<h5 id="n-0100">1.1 用 string 保存和访问文本</h5>
+<p><code>string</code> 把字符按顺序保存，支持下标、遍历、拼接和查找，头文件为 <code>&lt;string&gt;</code>。<code>string s="abc"</code> 有 3 个字符，有效下标为 <code>0、1、2</code>。<code>s.size()</code> 表示字符单元的数量；普通 <code>string</code> 保存中文 UTF-8 文本时，数量通常是字节数，不能直接当成汉字个数。</p>
+<p><code>cin &gt;&gt; s</code> 跳过开头空白，读到下一段空白停止；<code>getline(cin,s)</code> 读取一整行，可以读出空行。<code>getline(cin,s)</code> 是适用于 string 的整行读取函数；基础语法中的 <code>cin.getline(chars,capacity)</code> 则写入原生字符数组。混用数字输入与 getline 时，仍要先消耗前一行余下内容；例如使用本部分输入细节中的 get 循环，再调用 getline。空字符串是合法对象，但不能读取它的 <code>front()</code>、<code>back()</code> 或某个已有字符。</p>
+<h5 id="n-0101">1.2 string 操作的参数与返回值</h5>
+<p>下面 n 表示字符串长度，k 表示这次处理的字符数。拼接、插入和删除会移动或复制字符，不能把所有操作都当成常数时间。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义与返回值</th>
+<th>操作结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>s.size()</code>、<code>s.empty()</code></td>
+<td>长度、是否为空，<span class="math inline">\(O(1)\)</span></td>
+<td>长度类型是无符号的 <code>size_type</code></td>
+</tr>
+<tr>
+<td><code>s[i]</code>、<code>s.at(i)</code></td>
+<td>访问一个字符</td>
+<td>访问已有字符要求 <code>i&lt;size()</code>；<code>at</code> 越界抛异常</td>
+</tr>
+<tr>
+<td><code>s += t</code>、<code>s.push_back(ch)</code></td>
+<td>尾部拼接、追加一个字符</td>
+<td>扩容可能复制已有字符，旧访问位置可能失效</td>
+</tr>
+<tr>
+<td><code>s.substr(pos,len)</code></td>
+<td>从 pos 开始取最多 len 个字符，返回独立字符串</td>
+<td>第二参数是长度；pos 可以等于 size，不能超过 size</td>
+</tr>
+<tr>
+<td><code>s.find(t,pos)</code></td>
+<td>从 pos 开始找第一次匹配，返回起点</td>
+<td>找不到返回 <code>string::npos</code>；查找会逐步比较字符</td>
+</tr>
+<tr>
+<td><code>s.insert(pos,t)</code></td>
+<td>在 pos 前插入 t</td>
+<td>尾部 pos=size 也可以插入</td>
+</tr>
+<tr>
+<td><code>s.erase(pos,len)</code></td>
+<td>删除从 pos 开始的最多 len 个字符</td>
+<td>不是删除到下标 len；后续字符左移</td>
+</tr>
+<tr>
+<td><code>s.replace(pos,len,t)</code></td>
+<td>用 t 替换指定片段</td>
+<td>t 的长度可与被删片段长度不同</td>
+</tr>
+<tr>
+<td><code>s.clear()</code></td>
+<td>清空字符</td>
+<td>不承诺释放所有已分配容量</td>
+</tr>
+<tr>
+<td><code>s.c_str()</code></td>
+<td>获取以空字符结尾的 <code>const char*</code></td>
+<td>不拥有副本；不要通过它修改字符或在原对象销毁后使用</td>
+</tr>
+</tbody>
+</table>
+<p>at 失败时抛出 <code>&lt;stdexcept&gt;</code> 中的标准异常 out_of_range，表示访问位置超出范围；可按已学的 try/catch 方式捕获 <code>const std::out_of_range&amp; error</code>，<code>error.what()</code> 提供错误说明。异常类别不同，匹配的 catch 类型也不同。</p>
+<p><code>npos</code> 表示“没有找到位置”。例如 find 返回 npos 时，程序输出未找到；返回普通位置时，再从该位置截取或访问字符。字符串比较采用字典序，例如 <code>string("10")&lt;string("2")</code> 为真，因为第一个不同字符是 1 与 2；它比较的是字符顺序。</p>
+<h5 id="n-0102">1.3 完整演示：查找后修改一个片段</h5>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。从字符串 <code>banana</code> 开始，找第一次出现的 <code>na</code>，第一行输出其下标和截出的两个字符；再将这两个字符换成 <code>NA</code>，删除下标 4 开始的两个字符，在下标 2 前插入 <code>-</code>，每次修改后各输出一行。</p>
+<figure>
+<img alt="查找、截取、替换、删除与插入怎样改变字符串" decoding="async" loading="lazy" src="../media/notes/stl-string-edit-stages.svg"/>
+<figcaption aria-hidden="true">查找、截取、替换、删除与插入怎样改变字符串</figcaption>
+</figure>
+<p><strong>推导：</strong> 第一次 <code>na</code> 位于下标 2，<code>substr(2,2)</code> 取的是下标 2、3。替换后为 <code>baNAna</code>；删除位置 4、5 后为 <code>baNA</code>；在 2 前插入横线，后面的 <code>NA</code> 右移，得到 <code>ba-NA</code>。每次修改都会影响后续下标，应按当前字符串解释位置。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    string s <span class="op">=</span> <span class="st">"banana"</span><span class="op">;</span></span>
+<span data-line="7">    <span class="kw">auto</span> pos <span class="op">=</span> s<span class="op">.</span>find<span class="op">(</span><span class="st">"na"</span><span class="op">);</span></span>
+<span data-line="8">    <span class="cf">if</span> <span class="op">(</span>pos <span class="op">==</span> string<span class="op">::</span>npos<span class="op">)</span></span>
+<span data-line="9">        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 未找到时不能拿 npos 当下标。</span></span>
+<span data-line="10">    cout <span class="op">&lt;&lt;</span> pos <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> s<span class="op">.</span>substr<span class="op">(</span>pos<span class="op">,</span> <span class="dv">2</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="11">    s<span class="op">.</span>replace<span class="op">(</span>pos<span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="st">"NA"</span><span class="op">);</span> <span class="co">// 第二参数是被替换的长度。</span></span>
+<span data-line="12">    cout <span class="op">&lt;&lt;</span> s <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="13">    s<span class="op">.</span>erase<span class="op">(</span><span class="dv">4</span><span class="op">,</span> <span class="dv">2</span><span class="op">);</span> <span class="co">// 删除下标 4 开始的两个字符。</span></span>
+<span data-line="14">    cout <span class="op">&lt;&lt;</span> s <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="15">    s<span class="op">.</span>insert<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="st">"-"</span><span class="op">);</span> <span class="co">// 在当前位置 2 之前插入，后缀整体右移。</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> s <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>2 na
+baNAna
+baNA
+ba-NA</code></pre>
+<p>查找会扫描字符，截取会复制结果，修改片段可能移动后缀。处理长度不断增长的字符串时，反复向开头插入可能累计到平方量级。字符遍历若需要修改，用 <code>for(char &amp;ch:s)</code>；只读取可用 <code>char ch</code>。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P5733" rel="noopener noreferrer">洛谷 P5733 — 自动修正</a>；<a href="https://www.luogu.com.cn/problem/P1308" rel="noopener noreferrer">洛谷 P1308 — 统计单词数</a>（进阶，注意完整单词和大小写规则）。</p>
+<h4 id="n-0103">2. vector：连续动态数组</h4>
+<h5 id="n-0104">2.1 连续动态数组与初始化</h5>
+<p><code>vector&lt;T&gt;</code> 保存同类型元素，头文件为 <code>&lt;vector&gt;</code>。除 <code>vector&lt;bool&gt;</code> 的特殊表示外，元素连续存储，支持 <span class="math inline">\(O(1)\)</span> 下标访问。长度可在运行时改变，容器负责申请、搬移和释放存储，适合比赛中的数组、序列和邻接表。</p>
+<p>begin() 表示第一项的位置，end() 表示最后一项之后的边界；它们是迭代器，<code>*位置</code> 才读取元素。<code>[begin(),end())</code> 表示整个半开区间，空数组时两个位置相等。对 vector，<code>begin()+k</code> 表示从起点向后移动 k 项；只有已有元素位置才能读取，end 不能读取。下面先用这些位置复制元素，迭代器小节再统一说明它们的操作。</p>
+<p>下面是初始化片段；在函数中使用，还需 <code>&lt;vector&gt;</code> 和 <code>using namespace std;</code>。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> a<span class="op">;</span>                                  <span class="co">// 空数组，没有可以访问的元素。</span></span>
+<span data-line="2">vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> b<span class="op">(</span><span class="dv">3</span><span class="op">);</span>                               <span class="co">// 三个已有的 int，值都是 0。</span></span>
+<span data-line="3">vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> c<span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">7</span><span class="op">);</span>                            <span class="co">// 三个 7，结果为 [7,7,7]。</span></span>
+<span data-line="4">vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> d<span class="op">{</span><span class="dv">3</span><span class="op">,</span> <span class="dv">7</span><span class="op">};</span>                            <span class="co">// 两个元素 3、7，花括号是元素列表。</span></span>
+<span data-line="5">vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> e<span class="op">(</span>d<span class="op">.</span>begin<span class="op">(),</span> d<span class="op">.</span>end<span class="op">());</span>              <span class="co">// 复制 d 的整个半开区间。</span></span>
+<span data-line="6">vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> grid<span class="op">(</span><span class="dv">2</span><span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">0</span><span class="op">));</span> <span class="co">// 2 行，每行 3 个元素。</span></span></code></pre></div>
+<p><code>vector&lt;int&gt;(3,7)</code> 与 <code>vector&lt;int&gt;{3,7}</code> 的长度不同。二维 vector 的外层保存行容器，每一行分别保存自己的元素，因此各行可以有不同长度；单行元素连续存储，不同行的元素区则分别管理。拷贝一个含 n 项的 vector 通常需 <span class="math inline">\(O(n)\)</span> 时间和独立存储；只读参数优先用 <code>const vector&lt;int&gt;&amp;</code>。</p>
+<h5 id="n-0105">2.2 用引用读入运行时长度的数组</h5>
+<p>现在已经知道 vector(n) 会建立 n 个元素，可以把引用小节的 <code>auto&amp;</code> 输入方式用于它。</p>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>0&lt;=n&lt;=100000</code>，接着输入 n 个 int 范围内的整数，用 vector 保存，再按输入顺序输出一行，元素间一个空格；n=0 时输出空行。</p>
+<p><strong>分析：</strong> <code>vector&lt;int&gt; a(n)</code> 先建立 n 个已有元素，初值为 0；输入循环中的 <code>i</code> 类型为 <code>int&amp;</code>，每轮绑定到下一项。<code>cin &gt;&gt; i</code> 会把数据写入这一项。若写成 <code>auto i</code>，虽然也读掉了输入，a 中的元素仍是原来的 0。范围 for 会按已有长度遍历，不会自动增加元素；空的 <code>vector&lt;int&gt; a;</code> 不会进入循环。这里把引用小节在原生数组上的范围 for 用于已经创建的 vector 元素。</p>
+<figure>
+<img alt="范围 for 每轮绑定当前元素，再通过引用写入输入" decoding="async" loading="lazy" src="../media/notes/syntax-range-for-reference.svg"/>
+<figcaption aria-hidden="true">范围 for 每轮绑定当前元素，再通过引用写入输入</figcaption>
+</figure>
+<p>范围 for 的机制与原生数组相同；图以 n=3、输入 <code>8 5 9</code> 为例。绿色位置是本轮 i 的绑定目标：每轮修改一个真实元素，下一轮再绑定到下一项；i 表示值的别名，不表示下标 0、1、2。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="7">    cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span data-line="8">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> a<span class="op">(</span>n<span class="op">);</span> <span class="co">// 先创建 n 个元素，范围 for 才能遍历它们。</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">&amp;</span>i <span class="op">:</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">        cin <span class="op">&gt;&gt;</span> i<span class="op">;</span> <span class="co">// i 是当前元素的引用，输入直接写回 a。</span></span>
+<span data-line="11">    <span class="op">}</span></span>
+<span data-line="12">    <span class="dt">bool</span> first <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="13">    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;</span>i <span class="op">:</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">        <span class="cf">if</span> <span class="op">(!</span>first<span class="op">)</span></span>
+<span data-line="15">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="16">        cout <span class="op">&lt;&lt;</span> i<span class="op">;</span> <span class="co">// 只读取元素，用 const 引用表达只读意图。</span></span>
+<span data-line="17">        first <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="18">    <span class="op">}</span></span>
+<span data-line="19">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="20"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>3
+8 5 9</code></pre>
+<p>输出：</p>
+<pre class="text"><code>8 5 9</code></pre>
+<p>两次遍历共 <span class="math inline">\(O(n)\)</span> 时间，容器占 <span class="math inline">\(O(n)\)</span> 空间。对较小的 int，只读时按值遍历也很方便；对 string 等较大对象，<code>const auto&amp;</code> 可以避免每轮复制。不要在这个范围 for 里同时 push_back 或 erase，让遍历依赖的位置失效；这些位置失效的规则在本节后面展开。</p>
+<h5 id="n-0106">2.3 size、capacity、reserve 与 resize</h5>
+<p><strong>size 是已有元素数，capacity 是当前存储可以容纳的元素数。</strong> 只有 <code>0…size-1</code> 是已有元素的位置。<code>reserve(k)</code> 请求容量至少为 k，不创建新元素；<code>resize(k,value)</code> 才会改变长度，增长部分填 value，缩小时删去尾部。</p>
+<figure>
+<img alt="预留容量、创建元素、追加与缩短怎样改变有效范围" decoding="async" loading="lazy" src="../media/notes/stl-vector-size-capacity.svg"/>
+<figcaption aria-hidden="true">预留容量、创建元素、追加与缩短怎样改变有效范围</figcaption>
+</figure>
+<p>图从空数组开始预留 4 格，size 仍为 0；<code>resize(3,7)</code> 后才有三个 7；追加 9 后有四项；缩到 2 后只剩两个 7。图中的容量用于示意，实际 capacity 可以大于请求值，不能依赖每次扩容都恰好翻倍。</p>
+<figure>
+<img alt="超过旧容量时重新分配，元素搬到新存储区" decoding="async" loading="lazy" src="../media/notes/vector-reallocation.svg"/>
+<figcaption aria-hidden="true">超过旧容量时重新分配，元素搬到新存储区</figcaption>
+</figure>
+<p>这张图的 <code>reserve(8)</code> 超过旧容量 4，因此发生重新分配。<code>clear()</code> 删除全部元素，但不降低 capacity；<code>shrink_to_fit()</code> 向实现请求缩减容量，实际容量可在调用后用 capacity 查看。容量、长度及重新分配规则见 <a href="https://timsong-cpp.github.io/cppwp/n4659/vector.capacity" rel="noopener noreferrer">C++17 草案：vector.capacity</a>。</p>
+<h5 id="n-0107">2.4 vector 常用操作的时间复杂度</h5>
+<p>以下 n 为当前元素数，元素复制、移动按常数代价估算。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>v.size()</code>、<code>empty()</code>、<code>v[i]</code>、<code>at(i)</code></td>
+<td>状态或单项访问</td>
+<td><span class="math inline">\(O(1)\)</span>；at 检查越界</td>
+</tr>
+<tr>
+<td><code>front()</code>、<code>back()</code></td>
+<td>访问首尾</td>
+<td><span class="math inline">\(O(1)\)</span>，要求非空</td>
+</tr>
+<tr>
+<td><code>push_back(x)</code>、<code>emplace_back(args...)</code></td>
+<td>尾部追加；后者直接构造元素</td>
+<td>均摊 <span class="math inline">\(O(1)\)</span>，扩容的一次可为 <span class="math inline">\(O(n)\)</span></td>
+</tr>
+<tr>
+<td><code>pop_back()</code></td>
+<td>删除最后一项，没有返回值</td>
+<td><span class="math inline">\(O(1)\)</span>，要求非空</td>
+</tr>
+<tr>
+<td><code>insert(it,x)</code></td>
+<td>在位置 it 前插入</td>
+<td>中间通常 <span class="math inline">\(O(n)\)</span>，需要腾出位置</td>
+</tr>
+<tr>
+<td><code>erase(it)</code>、<code>erase(first,last)</code></td>
+<td>删除一项或一个半开区间</td>
+<td>中间通常 <span class="math inline">\(O(n)\)</span>，后缀要左移</td>
+</tr>
+<tr>
+<td><code>resize(k)</code>、<code>assign(k,x)</code></td>
+<td>调整长度、重设内容</td>
+<td>按实际新增、销毁或赋值数量计算</td>
+</tr>
+<tr>
+<td><code>clear()</code></td>
+<td>删除所有元素</td>
+<td><span class="math inline">\(O(n)\)</span>，容量保留</td>
+</tr>
+<tr>
+<td><code>swap(other)</code></td>
+<td>交换两个 vector 的内容与容量</td>
+<td>默认分配器下 <span class="math inline">\(O(1)\)</span>，不逐项复制</td>
+</tr>
+</tbody>
+</table>
+<p>“均摊”看的是一串操作的总费用：多次尾插合计为线性量级，平均每次常数；不是说每一次尾插都固定耗时。若每次都先 <code>reserve(size()+1)</code>，可能破坏正常的增长策略，反复搬移已有元素；知道总量时一次预留即可。</p>
+<figure>
+<img alt="中间插入先右移后缀，区间删除再左移后缀" decoding="async" loading="lazy" src="../media/notes/stl-vector-insert-erase.svg"/>
+<figcaption aria-hidden="true">中间插入先右移后缀，区间删除再左移后缀</figcaption>
+</figure>
+<p><code>[10,20,30,40]</code> 在下标 1 前插入 15，得到 <code>[10,15,20,30,40]</code>；再删 <code>[2,4)</code>，删掉的是 20、30，40 左移，得到 <code>[10,15,40]</code>。位置参数是迭代器，分别写成 <code>begin()+1</code> 和 <code>begin()+2、begin()+4</code>，不能把元素值当位置。</p>
+<h5 id="n-0108">2.5 完整例题：先压紧，再用区间位置删除尾部</h5>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 <code>0&lt;=n&lt;=100000</code> 和 int 范围内的 x，随后输入 n 个 int。删除所有等于 x 的元素，其余保持输入顺序。输出一行剩余数量，下一行输出剩余元素，以单个空格分隔；没有剩余元素时第二行为空。</p>
+<p><strong>分析：</strong> 每次删除一项都会搬移后缀，不如先不改变长度，只在数组内部写出保留结果。read 逐项检查原数据，kept 表示已保留的数量，也就是下一次写入位置。遇到 x 跳过；遇到其他值，写入 kept 后将它加一。kept 始终不超过 read，因此只会写到当前或已经读过的位置，不会覆盖未来尚未检查的数据。</p>
+<figure>
+<img alt="读位置向前检查，写位置只在保留时增加，最后统一删除尾部" decoding="async" loading="lazy" src="../media/notes/stl-vector-manual-compaction.svg"/>
+<figcaption aria-hidden="true">读位置向前检查，写位置只在保留时增加，最后统一删除尾部</figcaption>
+</figure>
+<p>样例 <code>[3,1,3,2,3]</code> 删除 3：跳过下标 0，在读到 1 时写到下标 0，在读到 2 时写到下标 1。扫描结束后 kept=2，结果恰好位于半开区间 <code>[begin(),begin()+2)</code>。此时 size 仍为 5；<code>begin()+kept</code> 是结果之后的边界，用 <code>erase(begin()+kept,end())</code> 一次删掉尾部，才真正改变长度。这就是迭代器区间的用途：把“保留了几项”转成“要删除哪个区间”。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n<span class="op">,</span> x<span class="op">;</span></span>
+<span data-line="7">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> x<span class="op">;</span></span>
+<span data-line="8">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>value <span class="op">:</span> values<span class="op">)</span></span>
+<span data-line="10">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span> <span class="co">// 引用读入已经创建的元素。</span></span>
+<span data-line="11">    <span class="dt">int</span> kept <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="12">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> read <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> read <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>read<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">        <span class="cf">if</span> <span class="op">(</span>values<span class="op">[</span>read<span class="op">]</span> <span class="op">!=</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">            values<span class="op">[</span>kept<span class="op">]</span> <span class="op">=</span> values<span class="op">[</span>read<span class="op">];</span> <span class="co">// 只写到当前或已检查的位置。</span></span>
+<span data-line="15">            <span class="op">++</span>kept<span class="op">;</span>                      <span class="co">// 下一个保留元素将写到这里。</span></span>
+<span data-line="16">        <span class="op">}</span></span>
+<span data-line="17">    <span class="op">}</span></span>
+<span data-line="18">    values<span class="op">.</span>erase<span class="op">(</span>values<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> kept<span class="op">,</span> values<span class="op">.</span>end<span class="op">());</span> <span class="co">// 一次删除无用尾部；空区间也合法。</span></span>
+<span data-line="19">    cout <span class="op">&lt;&lt;</span> values<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="20">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> kept<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="21">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="22">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="23">        cout <span class="op">&lt;&lt;</span> values<span class="op">[</span>i<span class="op">];</span> <span class="co">// 只输出有效前缀。</span></span>
+<span data-line="24">    <span class="op">}</span></span>
+<span data-line="25">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="26"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5 3
+3 1 3 2 3</code></pre>
+<p>输出：</p>
+<pre class="text"><code>2
+1 2</code></pre>
+<p>扫描和一次删除合计 <span class="math inline">\(O(n)\)</span> 时间，保存输入占 <span class="math inline">\(O(n)\)</span> 空间，筛选额外用 <span class="math inline">\(O(1)\)</span>。n=0 时 begin 与 end 相等；全部删除时 kept=0；一个也不删时 kept=n，删除区间为空。算法库小节会在相同过程上解释 remove，先把这次读写想清楚。</p>
+<h5 id="n-0109">2.6 vector 修改与迭代器失效</h5>
+<p>重新分配会使全部旧迭代器、指针、引用失效；插入未重新分配时，插入点之前的访问仍有效，插入点及之后的旧位置不能继续依赖；erase 会使删除点及之后的迭代器、引用失效。尾插即使没有扩容，旧 end 也不能继续当新 end。需要位置时可以先存下标，修改后重新获取迭代器，但插入删除仍可能改变这个下标代表的元素。见 <a href="https://timsong-cpp.github.io/cppwp/n4659/vector.modifiers" rel="noopener noreferrer">C++17 草案：vector.modifiers</a>。</p>
+<p><code>vector&lt;bool&gt;</code> 为节省空间可采用位压缩，单项访问可能是代理对象，不能套用普通 <code>bool&amp;</code> 与 <code>bool*</code> 的假设。需要普通布尔标记数组时，比赛中也常用 <code>vector&lt;char&gt;</code>。</p>
+<h5 id="n-0110">2.7 迭代器的用处：把同一个区间交给不同操作</h5>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。vector 初始为 <code>10、20、30、40、50</code>。复制下标半开区间 <code>[1,3)</code> 到新数组，然后从原数组删除这段区间。依次输出复制结果、原数组剩余结果和删除操作返回位置的元素，各占一行。</p>
+<p><strong>推导：</strong> begin()+1 指 20，begin()+3 指 40；区间包含 20、30，不包含 40。两个位置既可交给 vector 的区间构造，也可交给 erase。复制得到独立存储，不删除原数据；随后 erase 搬移后缀，旧 first、last 都不能继续使用，应接收它返回的新位置。本例返回指向左移后的 40。</p>
+<figure>
+<img alt="同一半开区间先复制再删除，修改后接收新的位置" decoding="async" loading="lazy" src="../media/notes/stl-vector-range-actions.svg"/>
+<figcaption aria-hidden="true">同一半开区间先复制再删除，修改后接收新的位置</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">void</span> print<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>values<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">bool</span> first <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="7">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> value <span class="op">:</span> values<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="cf">if</span> <span class="op">(!</span>first<span class="op">)</span></span>
+<span data-line="9">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="10">        cout <span class="op">&lt;&lt;</span> value<span class="op">;</span></span>
+<span data-line="11">        first <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="12">    <span class="op">}</span></span>
+<span data-line="13">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="14"><span class="op">}</span></span>
+<span data-line="15"></span>
+<span data-line="16"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="17">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">{</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">30</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">50</span><span class="op">};</span></span>
+<span data-line="18">    <span class="kw">auto</span> first <span class="op">=</span> values<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span data-line="19">    <span class="kw">auto</span> last <span class="op">=</span> values<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> <span class="dv">3</span><span class="op">;</span>                <span class="co">// last 是边界，40 不属于 [first,last)。</span></span>
+<span data-line="20">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> middle<span class="op">(</span>first<span class="op">,</span> last<span class="op">);</span>               <span class="co">// 复制到独立数组；values 此时没有改变。</span></span>
+<span data-line="21">    <span class="kw">auto</span> nextPosition <span class="op">=</span> values<span class="op">.</span>erase<span class="op">(</span>first<span class="op">,</span> last<span class="op">);</span> <span class="co">// 接收删除后的有效位置。</span></span>
+<span data-line="22">    print<span class="op">(</span>middle<span class="op">);</span></span>
+<span data-line="23">    print<span class="op">(</span>values<span class="op">);</span></span>
+<span data-line="24">    <span class="cf">if</span> <span class="op">(</span>nextPosition <span class="op">!=</span> values<span class="op">.</span>end<span class="op">())</span></span>
+<span data-line="25">        cout <span class="op">&lt;&lt;</span> <span class="op">*</span>nextPosition <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 本例输出 40；若返回 end 则不能读取。</span></span>
+<span data-line="26"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>20 30
+10 40 50
+40</code></pre>
+<p>复制 k 项需 <span class="math inline">\(O(k)\)</span> 时间和独立空间；删除还要搬移后缀，本例操作及输出总计 <span class="math inline">\(O(n)\)</span> 时间、额外 <span class="math inline">\(O(k)\)</span> 空间。vector 的 <code>it+k</code> 是常数时间的位置跳转；后面 list 的节点迭代器不能这样跳。删除后，从 erase 的返回位置继续处理即可。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1427" rel="noopener noreferrer">洛谷 P1427 — 小鱼的数字游戏</a>（读到题面规定的 0，逆序输出）；<a href="https://www.luogu.com.cn/problem/P5732" rel="noopener noreferrer">洛谷 P5732 — 杨辉三角</a>（二维数组，先推导相邻两项的关系）。</p>
+<h4 id="n-0111">3. pair：成对数据</h4>
+<h5 id="n-0112">3.1 pair 的两个字段与构造</h5>
+<p><code>pair&lt;A,B&gt;</code> 位于 <code>&lt;utility&gt;</code>，它是一项成对数据，不是容器。first 与 second 可以不同类型，例如 <code>pair&lt;int,string&gt;</code> 保存编号与名字；<code>vector&lt;pair&lt;int,int&gt;&gt;</code> 中的每项可以是坐标。后面的 map 会用这种成对记录保存键和值。</p>
+<p>以下是初始化和拆分片段，需 <code>&lt;utility&gt;</code>、<code>&lt;string&gt;</code> 和 <code>using namespace std;</code>。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1">pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> string<span class="op">&gt;</span> a<span class="op">;</span>                   <span class="co">// int 初始化为 0，string 为空。</span></span>
+<span data-line="2">pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> string<span class="op">&gt;</span> b<span class="op">{</span><span class="dv">2</span><span class="op">,</span> <span class="st">"banana"</span><span class="op">};</span>      <span class="co">// 直接给出两个成员。</span></span>
+<span data-line="3"><span class="kw">auto</span> c <span class="op">=</span> make_pair<span class="op">(</span><span class="dv">3</span><span class="op">,</span> string<span class="op">(</span><span class="st">"pear"</span><span class="op">));</span> <span class="co">// 根据实参推导两个类型。</span></span>
+<span data-line="4"><span class="kw">auto</span> <span class="op">[</span>id<span class="op">,</span> name<span class="op">]</span> <span class="op">=</span> b<span class="op">;</span>                   <span class="co">// C++17 结构化绑定得到副本，修改它们不改 b。</span></span>
+<span data-line="5"><span class="kw">auto</span> <span class="op">&amp;[</span>storedId<span class="op">,</span> storedName<span class="op">]</span> <span class="op">=</span> b<span class="op">;</span>      <span class="co">// 引用绑定可以写回 b 的对应成员。</span></span></code></pre></div>
+<p><code>p.first</code>、<code>p.second</code> 访问成员，<code>swap(p,q)</code> 交换两项。对普通整数或字符串字段，<code>&lt;</code> 按字典序：先比较 first，相同再比较 second；<code>==</code> 要求两个成员都相等。不能说所有比较符号都是“只看第一个字段”。</p>
+<h5 id="n-0113">3.2 完整演示：pair 的字典序比较</h5>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。建立 a=<code>(2,8)</code>、b=<code>(1,9)</code>、c=<code>(2,3)</code>、d=<code>(1,9)</code>，依次输出 <code>a&lt;b</code>、<code>a&lt;c</code>、<code>b==d</code> 的判断结果，一项一行；false 输出 0，true 输出 1。</p>
+<p><strong>推导：</strong> a、b 的第一字段不同，2 不小于 1，<code>a&lt;b</code> 为 false，不再比较第二字段。a、c 的第一字段相同，转而比较 8、3，<code>a&lt;c</code> 也为 false。b、d 两个字段都相同，<code>b==d</code> 为 true。把先决字段、下一字段和停止条件拆开，就能读懂字典序。</p>
+<figure>
+<img alt="比较先检查第一字段，只有相等时才转到第二字段" decoding="async" loading="lazy" src="../media/notes/stl-pair-comparison-stages.svg"/>
+<figcaption aria-hidden="true">比较先检查第一字段，只有相等时才转到第二字段</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> a<span class="op">{</span><span class="dv">2</span><span class="op">,</span> <span class="dv">8</span><span class="op">},</span> b<span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">9</span><span class="op">},</span> c<span class="op">{</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">},</span> d<span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">9</span><span class="op">};</span></span>
+<span data-line="7">    cout <span class="op">&lt;&lt;</span> <span class="op">(</span>a <span class="op">&lt;</span> b<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span>  <span class="co">// first 不同，由 2&lt;1 直接决定为 false。</span></span>
+<span data-line="8">    cout <span class="op">&lt;&lt;</span> <span class="op">(</span>a <span class="op">&lt;</span> c<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span>  <span class="co">// first 相同，再判断 second：8&lt;3 为 false。</span></span>
+<span data-line="9">    cout <span class="op">&lt;&lt;</span> <span class="op">(</span>b <span class="op">==</span> d<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 两个字段都相同，结果为 true。</span></span>
+<span data-line="10"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>0
+0
+1</code></pre>
+<p>本例字段为 int，每次比较为 <span class="math inline">\(O(1)\)</span>，额外空间 <span class="math inline">\(O(1)\)</span>；字符串字段还要计入字符比较代价。算法库会把相同的比较规则用于排序，也会展示怎样指定第一字段降序、第二字段升序。pair 自身没有“去重”动作。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1093" rel="noopener noreferrer">洛谷 P1093 — 奖学金</a>（多个排序字段，可以继续学习 tuple 或 struct；按题面完整处理平局）。</p>
+<h4 id="n-0114">4. 迭代器：访问位置与区间</h4>
+<h5 id="n-0115">4.1 位置、元素值与半开区间</h5>
+<p>迭代器表示容器中的一个访问位置，<code>*it</code> 才是该位置的元素；<code>it-&gt;first</code> 等价于 <code>(*it).first</code>。<code>begin()</code> 指向第一项，<code>end()</code> 表示尾后位置；空容器中二者相等。end 可以比较、作为区间边界，不能解引用。</p>
+<figure>
+<img alt="迭代器区间与尾后位置" decoding="async" loading="lazy" src="../media/notes/iterator-half-open-range.svg"/>
+<figcaption aria-hidden="true">迭代器区间与尾后位置</figcaption>
+</figure>
+<p><code>[first,last)</code> 包含 first，不包含 last，遍历条件是 <code>it!=last</code>。反向区间为 <code>[rbegin(),rend())</code>，同样不能读取 rend。反向迭代器的 <code>++it</code> 是沿反向序列前进，不是沿原下标增大。</p>
+<h5 id="n-0116">4.2 迭代器的移动、比较与距离运算</h5>
+<p>先用已经学过的 vector 判断：<code>++it</code> 移到下一项，<code>--it</code> 移到上一项，<code>it+k</code> 跳过 k 项，同一 vector 中的合法位置可以相减。begin 不能再向前，end 可以作边界，不能读取它。</p>
+<p><code>&lt;iterator&gt;</code> 提供 next、prev 和 distance；<code>next(it,k)</code> 返回向前移动 k 项后的新位置，<code>prev(it,k)</code> 返回向后移动后的新位置，distance 求区间长度。对 vector，它们可利用随机访问；其他容器的能力会在学完各容器后统一对照。</p>
+<h5 id="n-0117">4.3 值拷贝、引用与只读遍历</h5>
+<p>下面是函数片段，需 <code>&lt;vector&gt;</code>、<code>&lt;iostream&gt;</code> 和 <code>using namespace std;</code>。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">void</span> changeValues<span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>v<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> x <span class="op">:</span> v<span class="op">)</span></span>
+<span data-line="3">        x <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// x 是副本，这一句不会修改 v。</span></span>
+<span data-line="4">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>x <span class="op">:</span> v<span class="op">)</span></span>
+<span data-line="5">        x <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 引用指向原元素，每项真正增加 1。</span></span>
+<span data-line="6">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">=</span> v<span class="op">.</span>cbegin<span class="op">();</span> it <span class="op">!=</span> v<span class="op">.</span>cend<span class="op">();</span> <span class="op">++</span>it<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">        cout <span class="op">&lt;&lt;</span> <span class="op">*</span>it <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span> <span class="co">// const_iterator 可以读取，不能通过它修改值。</span></span>
+<span data-line="8">    <span class="op">}</span></span>
+<span data-line="9"><span class="op">}</span></span></code></pre></div>
+<p>只读遍历大对象常用 <code>const auto&amp;</code>，避免逐项拷贝。对 vector 中的值，const 迭代器只允许读取；它不承诺后续插入或删除后位置仍有效。</p>
+<h5 id="n-0118">4.4 完整演示：遍历中安全删除</h5>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。用 vector 保存 <code>1、2、3、4</code>，按从前到后的顺序删除偶数，输出剩余元素。删除后还要继续检查紧邻的下一项，不能漏项或使用已删除的位置。</p>
+<figure>
+<img alt="删除当前项后接收返回迭代器，继续检查下一项" decoding="async" loading="lazy" src="../media/notes/stl-vector-iterator-erase-loop.svg"/>
+<figcaption aria-hidden="true">删除当前项后接收返回迭代器，继续检查下一项</figcaption>
+</figure>
+<p><strong>推导：</strong> 在 2 处调用 erase 后，这个位置已失效，返回值指向 3。下一轮应直接检查 3；若再多加一次 <code>++it</code> 就会跳过它。在 4 处删除后返回 end，循环结束。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">};</span></span>
+<span data-line="7">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">=</span> values<span class="op">.</span>begin<span class="op">();</span> it <span class="op">!=</span> values<span class="op">.</span>end<span class="op">();)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="cf">if</span> <span class="op">(*</span>it <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">            it <span class="op">=</span> values<span class="op">.</span>erase<span class="op">(</span>it<span class="op">);</span> <span class="co">// 删除时接收下一位置，此分支不再 ++。</span></span>
+<span data-line="10">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="11">            <span class="op">++</span>it<span class="op">;</span> <span class="co">// 保留当前项，才移动到下一位置。</span></span>
+<span data-line="12">        <span class="op">}</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14">    <span class="dt">bool</span> first <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="15">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> value <span class="op">:</span> values<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(!</span>first<span class="op">)</span></span>
+<span data-line="17">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="18">        cout <span class="op">&lt;&lt;</span> value<span class="op">;</span></span>
+<span data-line="19">        first <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="22"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>1 3</code></pre>
+<p>vector 每次删除都可能搬移后缀，逐项删除最坏需要 <span class="math inline">\(O(n^2)\)</span> 时间。若目标是删掉全部匹配值，手动压紧后统一 erase 可以减少搬移；这里逐项删除，是为了观察返回位置怎样帮助遍历继续。范围 for 会自行维护遍历位置，删除导致位置失效时就难以继续，因此这个过程使用显式迭代器。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1059" rel="noopener noreferrer">洛谷 P1059 — 明明的随机数</a>（用迭代器观察排序和压紧后的有效区间，最后统一删除尾部）。</p>
+<h4 id="n-0119">5. <code>&lt;algorithm&gt;</code>：通过迭代器操作区间</h4>
+<h5 id="n-0120">5.1 算法处理区间，容器提供位置</h5>
+<p>STL 算法通常接收迭代器区间，而不是整个容器对象。算法是否可用，要看迭代器能力：本节先在已学的 vector 和 string 上用 sort，它需要随机访问迭代器。后面的链表和关联容器会说明为什么同一接口不能用于所有容器。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>作用</th>
+<th>条件与复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>min(a,b)</code>、<code>max(a,b)</code></td>
+<td>返回两项中的较小、较大值</td>
+<td>同一模板通常要求一致的实参类型；按比较代价计算</td>
+</tr>
+<tr>
+<td><code>min({a,b,c})</code>、<code>max({a,b,c})</code></td>
+<td>对列表中的多个同类型值取最值</td>
+<td>花括号提供候选列表，不是数组下标；需非空，按候选数计算</td>
+</tr>
+<tr>
+<td><code>sort(first,last)</code></td>
+<td>排序</td>
+<td><span class="math inline">\(O(n\log n)\)</span> 次比较；保留等价项顺序时用 stable_sort</td>
+</tr>
+<tr>
+<td><code>stable_sort(first,last)</code></td>
+<td>保留等价项相对顺序的排序</td>
+<td>足够额外内存时 <span class="math inline">\(O(n\log n)\)</span> 次比较，否则至多 <span class="math inline">\(O(n\log^2 n)\)</span> 次比较</td>
+</tr>
+<tr>
+<td><code>reverse(first,last)</code></td>
+<td>原地逆序</td>
+<td><span class="math inline">\(O(n)\)</span>，要求双向迭代器</td>
+</tr>
+<tr>
+<td><code>find(first,last,x)</code></td>
+<td>逐项找等于 x 的元素</td>
+<td>最多 <span class="math inline">\(O(n)\)</span> 次比较，失败返回 last</td>
+</tr>
+<tr>
+<td><code>lower_bound(first,last,x)</code></td>
+<td>在升序区间找首个不小于 x 的位置</td>
+<td>二分查找，找不到时返回 last</td>
+</tr>
+<tr>
+<td><code>upper_bound(first,last,x)</code></td>
+<td>在升序区间找首个大于 x 的位置</td>
+<td>二分查找，找不到时返回 last</td>
+</tr>
+<tr>
+<td><code>unique(first,last)</code></td>
+<td>压紧相邻的重复项</td>
+<td><span class="math inline">\(O(n)\)</span>；不改容器长度，不去掉不相邻重复</td>
+</tr>
+<tr>
+<td><code>remove(first,last,x)</code></td>
+<td>压紧不等于 x 的元素</td>
+<td><span class="math inline">\(O(n)\)</span>；也需要 erase 才真正缩短序列</td>
+</tr>
+<tr>
+<td><code>min_element</code>、<code>max_element</code></td>
+<td>找最小、最大元素的位置</td>
+<td><span class="math inline">\(O(n)\)</span>；空区间返回 last，不可解引用</td>
+</tr>
+<tr>
+<td><code>fill(first,last,x)</code></td>
+<td>把区间里的每项改为 x</td>
+<td><span class="math inline">\(O(n)\)</span>，逐项赋值</td>
+</tr>
+</tbody>
+</table>
+<p>求和 <code>accumulate</code> 位于 <code>&lt;numeric&gt;</code>。初值决定累计结果类型，例如整数总和可能很大时用 <code>0LL</code>，不能等计算完溢出的 int 后才转为 long long。</p>
+<p>stable_sort 适合要求等价记录保持原先次序的场景，不能默认其额外空间为常数；比较次数与可用内存的关系见 <a href="https://timsong-cpp.github.io/cppwp/n4659/stable.sort" rel="noopener noreferrer">C++17 草案：stable.sort</a>。</p>
+<h5 id="n-0121">5.2 完整例题：去重后统计等值边界</h5>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>0&lt;=n&lt;=100000</code>、int 范围内的查询值 x 和 n 个 int。将数据按升序排序，第一行输出不同值的数量；第二行输出这些不同值。第三行输出 x 在去重数组中的 lower_bound、upper_bound 下标，均从 0 开始；找不到不小于 x 或大于 x 的元素时，对应下标输出数组长度。</p>
+<p><strong>分析：</strong> 先排序使同值相邻；unique 留下每组第一项，返回新结尾；erase 删尾。lower_bound 和 upper_bound 针对当前去重数组查找，返回的是位置，不是元素值。</p>
+<figure>
+<img alt="相邻去重只形成有效前缀，再删除尾部" decoding="async" loading="lazy" src="../media/notes/stl-unique-erase.svg"/>
+<figcaption aria-hidden="true">相邻去重只形成有效前缀，再删除尾部</figcaption>
+</figure>
+<p>样例排序为 <code>[1,1,2,3,3]</code>，压紧后的有效前缀为 <code>[1,2,3]</code>。查询 2 时，首个不小于 2 在下标 1，首个大于 2 在下标 2。若想统计排序前数据中 2 的出现次数，应在删除重复项之前求上下界差。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> n<span class="op">,</span> x<span class="op">;</span></span>
+<span data-line="8">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> x<span class="op">;</span></span>
+<span data-line="9">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="10">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>value <span class="op">:</span> values<span class="op">)</span></span>
+<span data-line="11">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="12">    sort<span class="op">(</span>values<span class="op">.</span>begin<span class="op">(),</span> values<span class="op">.</span>end<span class="op">());</span> <span class="co">// unique 之前让相同值聚到一起。</span></span>
+<span data-line="13">    <span class="kw">auto</span> newEnd <span class="op">=</span> unique<span class="op">(</span>values<span class="op">.</span>begin<span class="op">(),</span> values<span class="op">.</span>end<span class="op">());</span></span>
+<span data-line="14">    values<span class="op">.</span>erase<span class="op">(</span>newEnd<span class="op">,</span> values<span class="op">.</span>end<span class="op">());</span> <span class="co">// unique 自身不会减少 size。</span></span>
+<span data-line="15">    cout <span class="op">&lt;&lt;</span> values<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="16">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>values<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="18">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="19">        cout <span class="op">&lt;&lt;</span> values<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="22">    <span class="kw">auto</span> left <span class="op">=</span> lower_bound<span class="op">(</span>values<span class="op">.</span>begin<span class="op">(),</span> values<span class="op">.</span>end<span class="op">(),</span> x<span class="op">);</span></span>
+<span data-line="23">    <span class="kw">auto</span> right <span class="op">=</span> upper_bound<span class="op">(</span>values<span class="op">.</span>begin<span class="op">(),</span> values<span class="op">.</span>end<span class="op">(),</span> x<span class="op">);</span></span>
+<span data-line="24">    cout <span class="op">&lt;&lt;</span> left <span class="op">-</span> values<span class="op">.</span>begin<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> right <span class="op">-</span> values<span class="op">.</span>begin<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="25"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5 2
+3 1 3 2 1</code></pre>
+<p>输出：</p>
+<pre class="text"><code>3
+1 2 3
+1 2</code></pre>
+<p>排序主导时间 <span class="math inline">\(O(n\log n)\)</span>，vector 中的每次边界查找为 <span class="math inline">\(O(\log n)\)</span>。通用边界查找的比较次数可为对数级，但总费用还受迭代器移动能力影响；后面的 set、map 将使用成员查找接口。</p>
+<h5 id="n-0122">5.3 自定义比较规则</h5>
+<p>对 vector&lt;pair&lt;int,int&gt;&gt; 直接调用 sort(begin,end) 时，会复用 pair 小节的字典序规则：先 first 升序，再 second 升序；重复项仍保留。若希望改变这个规则，再提供比较器。</p>
+<p>比较器回答“a 是否排在 b 前面”。同一项不会排在自己前面，所以 <code>comp(a,a)</code> 为 false；<code>&lt;=</code> 在两项相等时返回 true，与这个含义不同。排序和二分查找使用同一个顺序，就能按排序后的次序定位。下面函数使用 <code>&lt;algorithm&gt;</code>、<code>&lt;utility&gt;</code>、<code>&lt;vector&gt;</code>。lambda 参数中的 auto 会按实际元素分别推导；这里 a、b 都是 pair 的只读引用，第一项降序、第二项升序。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="dt">void</span> sortRecords<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> <span class="op">&amp;</span>records<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="2">    <span class="bu">std::</span>sort<span class="op">(</span>records<span class="op">.</span>begin<span class="op">(),</span> records<span class="op">.</span>end<span class="op">(),</span> <span class="op">[](</span><span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;</span>b<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="3">        <span class="cf">if</span> <span class="op">(</span>a<span class="op">.</span>first <span class="op">!=</span> b<span class="op">.</span>first<span class="op">)</span></span>
+<span data-line="4">            <span class="cf">return</span> a<span class="op">.</span>first <span class="op">&gt;</span> b<span class="op">.</span>first<span class="op">;</span> <span class="co">// 第一项降序。</span></span>
+<span data-line="5">        <span class="cf">return</span> a<span class="op">.</span>second <span class="op">&lt;</span> b<span class="op">.</span>second<span class="op">;</span>   <span class="co">// 相同第一项时，第二项升序。</span></span>
+<span data-line="6">    <span class="op">});</span></span>
+<span data-line="7"><span class="op">}</span></span></code></pre></div>
+<h5 id="n-0123">5.4 从手动压紧到 remove 与 erase</h5>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 <code>0&lt;=n&lt;=100000</code> 和 int 范围内的 x，随后输入 n 个 int。删除所有等于 x 的元素，其余保持输入顺序。输出一行剩余数量，下一行输出剩余元素，以单个空格分隔；没有剩余元素时第二行为空。</p>
+<p><strong>分析：</strong> vector 小节已经用读、写两个位置完成了同一任务。算法库 remove 封装了这次压紧：用 <code>remove</code> 一次扫描，把保留的元素按顺序压到前面，返回有效前缀的新结尾；再用一次区间 erase 真正缩短数组。</p>
+<figure>
+<img alt="remove 形成有效前缀，erase 才删除无用尾部" decoding="async" loading="lazy" src="../media/notes/stl-erase-remove.svg"/>
+<figcaption aria-hidden="true">remove 形成有效前缀，erase 才删除无用尾部</figcaption>
+</figure>
+<p>样例 <code>[3,1,3,2,3]</code> 删除 3，保留 1、2。<code>remove</code> 返回下标 2 对应的位置，但此时 size 仍为 5；尾部内容不作为结果，不承诺具体值。<code>erase(newEnd,end())</code> 后 size 才变为 2。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> n<span class="op">,</span> x<span class="op">;</span></span>
+<span data-line="8">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> x<span class="op">;</span></span>
+<span data-line="9">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="10">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>value <span class="op">:</span> values<span class="op">)</span></span>
+<span data-line="11">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span>                                      <span class="co">// 引用把输入写回已有元素。</span></span>
+<span data-line="12">    <span class="kw">auto</span> newEnd <span class="op">=</span> remove<span class="op">(</span>values<span class="op">.</span>begin<span class="op">(),</span> values<span class="op">.</span>end<span class="op">(),</span> x<span class="op">);</span> <span class="co">// 只压紧，不改 size。</span></span>
+<span data-line="13">    values<span class="op">.</span>erase<span class="op">(</span>newEnd<span class="op">,</span> values<span class="op">.</span>end<span class="op">());</span>                    <span class="co">// 删除整个无用尾部；空区间也合法。</span></span>
+<span data-line="14">    cout <span class="op">&lt;&lt;</span> values<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="15">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>values<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="17">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="18">        cout <span class="op">&lt;&lt;</span> values<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="19">    <span class="op">}</span></span>
+<span data-line="20">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="21"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5 3
+3 1 3 2 3</code></pre>
+<p>输出：</p>
+<pre class="text"><code>2
+1 2</code></pre>
+<p>总时间 <span class="math inline">\(O(n)\)</span>，保存输入占 <span class="math inline">\(O(n)\)</span> 空间，删除过程额外使用 <span class="math inline">\(O(1)\)</span>。全部删除、一个也不删、n=0 都由同一段代码处理。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1177" rel="noopener noreferrer">洛谷 P1177 — 排序</a>、<a href="https://www.luogu.com.cn/problem/P1059" rel="noopener noreferrer">洛谷 P1059 — 明明的随机数</a>、<a href="https://www.luogu.com.cn/problem/P2249" rel="noopener noreferrer">洛谷 P2249 — 查找</a>（原题找第一次出现且从 1 编号，不能先去重后直接交本节程序）。</p>
+<h4 id="n-0124">6. STL 头文件与包含方式</h4>
+<p><code>#include &lt;bits/stdc++.h&gt;</code> 是 GNU libstdc++ 的实现扩展，在提供它的竞赛环境中很方便。通用 C++17 程序也可以按需包含 <code>&lt;vector&gt;</code>、<code>&lt;string&gt;</code>、<code>&lt;algorithm&gt;</code> 等标准头文件。它们只引入声明，不会替你创建容器；<code>using namespace std;</code> 只影响名字查找，也不会导入缺失的头文件。</p>
+<h4 id="n-0125">7. list：双向链表</h4>
+<h5 id="n-0126">7.1 list 的节点存储与双向连接</h5>
+<p><code>list&lt;T&gt;</code> 是双向链表，头文件为 <code>&lt;list&gt;</code>。每项在节点中保存，节点以连接关系形成顺序，元素不要求物理相邻。找到一个有效迭代器后，前后单项移动、插入或删除都为常数；但从开头找第 k 项要走 k 步。因此“频繁插入删除”还要问：是否已经知道位置。</p>
+<figure>
+<img alt="在已知位置调整前驱与后继连接" decoding="async" loading="lazy" src="../media/notes/list-insert-links.svg"/>
+<figcaption aria-hidden="true">在已知位置调整前驱与后继连接</figcaption>
+</figure>
+<p>插入只修改邻近连接，其他节点不用整体搬移；节点连接与分配也有额外内存代价。list 没有 <code>[]</code>，不能用 <code>begin()+k</code>，也不能调用通用 sort。</p>
+<h5 id="n-0127">7.2 list 的插入、删除与节点移动</h5>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>push_front/back</code>、<code>pop_front/back</code></td>
+<td>两端插入删除</td>
+<td>单项 <span class="math inline">\(O(1)\)</span>；pop 要求非空</td>
+</tr>
+<tr>
+<td><code>front()</code>、<code>back()</code>、<code>size()</code>、<code>empty()</code></td>
+<td>两端或状态访问</td>
+<td><span class="math inline">\(O(1)\)</span>；读取两端要求非空</td>
+</tr>
+<tr>
+<td><code>insert(it,x)</code></td>
+<td>在 it 前插入，返回新节点位置</td>
+<td>已有位置时 <span class="math inline">\(O(1)\)</span>，it 可以是 end</td>
+</tr>
+<tr>
+<td><code>erase(it)</code></td>
+<td>删除该节点，返回下一位置</td>
+<td><span class="math inline">\(O(1)\)</span>，it 不能是 end</td>
+</tr>
+<tr>
+<td><code>remove(x)</code>、<code>remove_if(pred)</code></td>
+<td>遍历并真正删除匹配项</td>
+<td><span class="math inline">\(O(n)\)</span>；不是算法库 remove 的“仅压紧”</td>
+</tr>
+<tr>
+<td><code>sort()</code></td>
+<td>成员排序，保留等价项顺序</td>
+<td><span class="math inline">\(O(n\log n)\)</span> 次比较</td>
+</tr>
+<tr>
+<td><code>unique()</code></td>
+<td>真正删除相邻重复项</td>
+<td><span class="math inline">\(O(n)\)</span>；全部去重通常先 sort</td>
+</tr>
+<tr>
+<td><code>splice(pos,other,it)</code></td>
+<td>将 other 中单个节点移到 pos 前</td>
+<td><span class="math inline">\(O(1)\)</span>，默认分配器下可直接使用</td>
+</tr>
+</tbody>
+</table>
+<p><code>merge(other)</code> 可合并两张按同一规则排好序的 list，节点转移后 other 变空；它不会自动先排序。插入不使其他节点的迭代器、引用失效；删除只使被删节点相关访问失效。单节点 splice 的访问继续指向原节点，只是节点归属改变；其他 splice 重载的复杂度可能不同。见 <a href="https://timsong-cpp.github.io/cppwp/n4659/list.ops" rel="noopener noreferrer">C++17 草案：list.ops</a>。</p>
+<h5 id="n-0128">7.3 完整演示：定位、插入、删除和移动节点</h5>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。A 初始为 <code>10、20、30</code>，B 初始为 <code>7、8</code>。在 A 的 20 前插入 15，删除 20，将 B 的第一个节点移到 A 的 30 前，最后分别输出 A、B 的元素，以空格分隔；再用保存的迭代器输出先前插入的 15 与移来的 7，验证它们仍指向原节点。</p>
+<figure>
+<img alt="位置查找与修改连接分开，移走节点后源列表同步改变" decoding="async" loading="lazy" src="../media/notes/stl-list-saved-iterators.svg"/>
+<figcaption aria-hidden="true">位置查找与修改连接分开，移走节点后源列表同步改变</figcaption>
+</figure>
+<p><strong>分析：</strong> 先用 find 确定 20 的位置；用 inserted 保存 insert 返回的 15 位置，同时原 target 仍指 20；erase 删除 20 后返回 30，改用这个返回位置。用 moved 保存 B 中 7 的位置，再 splice 到 A；moved 仍指同一个 7，但现在属于 A。图中移动的是节点，B 的 7 不再留在源列表。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;list&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">void</span> print<span class="op">(</span><span class="at">const</span> list<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&amp;</span>values<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">bool</span> first <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="8">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> value <span class="op">:</span> values<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(!</span>first<span class="op">)</span></span>
+<span data-line="10">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="11">        cout <span class="op">&lt;&lt;</span> value<span class="op">;</span></span>
+<span data-line="12">        first <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="15"><span class="op">}</span></span>
+<span data-line="16"></span>
+<span data-line="17"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="18">    list<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> a<span class="op">{</span><span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">30</span><span class="op">},</span> b<span class="op">{</span><span class="dv">7</span><span class="op">,</span> <span class="dv">8</span><span class="op">};</span></span>
+<span data-line="19">    <span class="kw">auto</span> target <span class="op">=</span> find<span class="op">(</span>a<span class="op">.</span>begin<span class="op">(),</span> a<span class="op">.</span>end<span class="op">(),</span> <span class="dv">20</span><span class="op">);</span> <span class="co">// 找位置本身要扫描。</span></span>
+<span data-line="20">    <span class="cf">if</span> <span class="op">(</span>target <span class="op">==</span> a<span class="op">.</span>end<span class="op">())</span></span>
+<span data-line="21">        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="22">    <span class="kw">auto</span> inserted <span class="op">=</span> a<span class="op">.</span>insert<span class="op">(</span>target<span class="op">,</span> <span class="dv">15</span><span class="op">);</span> <span class="co">// 原 target 仍指向 20。</span></span>
+<span data-line="23">    <span class="kw">auto</span> nextPosition <span class="op">=</span> a<span class="op">.</span>erase<span class="op">(</span>target<span class="op">);</span>  <span class="co">// target 已失效，改用返回的 30 位置。</span></span>
+<span data-line="24">    <span class="kw">auto</span> moved <span class="op">=</span> b<span class="op">.</span>begin<span class="op">();</span>               <span class="co">// 保存 7 的位置，之后不再从头寻找它。</span></span>
+<span data-line="25">    a<span class="op">.</span>splice<span class="op">(</span>nextPosition<span class="op">,</span> b<span class="op">,</span> moved<span class="op">);</span>     <span class="co">// 转移一个节点，b 只剩 8。</span></span>
+<span data-line="26">    print<span class="op">(</span>a<span class="op">);</span></span>
+<span data-line="27">    print<span class="op">(</span>b<span class="op">);</span></span>
+<span data-line="28">    cout <span class="op">&lt;&lt;</span> <span class="op">*</span>inserted <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> <span class="op">*</span>moved <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 15、7 的位置仍有效；target 不再使用。</span></span>
+<span data-line="29"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>10 15 7 30
+8
+15 7</code></pre>
+<p>定位和输出扫描节点，总时间 <span class="math inline">\(O(n)\)</span>；已知位置的三个修改动作均为常数。保存位置的用处是把“找到节点”与“操作节点”分开：一次定位后，可以在它附近连续插入、删除或转移，不必每次重扫。target 所指节点被删除后，它的位置也随之失效；moved 所指节点转移到了 A，后续遍历从 A 中继续。做大量按值查找时，list 不会因为删除快就自动比 vector 或 map 更合适。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1160" rel="noopener noreferrer">洛谷 P1160 — 队列安排</a>（按编号保存位置，可避免每次从头找；删除标记要防止重复删除）。</p>
+<h4 id="n-0129">8. stack：栈</h4>
+<h5 id="n-0130">8.1 栈顶、栈底与后进先出</h5>
+<p><code>stack&lt;T&gt;</code> 是容器适配器，头文件为 <code>&lt;stack&gt;</code>，默认用 deque 保存数据。适配器为底层容器提供受限接口：栈只允许操作栈顶，不允许下标或普通迭代器遍历。最后放入的元素最先移走，这叫后进先出（LIFO）。</p>
+<p>可以把栈想成一叠盘子，栈顶是当前最上方的盘子：每次放入或取走，都在顶部进行。<code>push(x)</code> 把 x 放到顶部，<code>top()</code> 访问顶部，<code>pop()</code> 删除顶部。top 不会删除，pop 不返回值；要保存再删除，先读 top，再 pop。</p>
+<figure>
+<img alt="栈与队列连续操作时元素和操作端的变化" decoding="async" loading="lazy" src="../media/notes/stack-queue.svg"/>
+<figcaption aria-hidden="true">栈与队列连续操作时元素和操作端的变化</figcaption>
+</figure>
+<p>栈的四个状态按顺序执行：初始顶为 3，压入 4 后顶为 4，第一次 pop 删除 4，第二次才删除 3。top 返回引用，非 const 栈可以修改顶部，但其他位置没有直接修改接口。若想遍历并保留栈，可以复制后逐项出栈，复制和扫描需 <span class="math inline">\(O(n)\)</span>。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+<th>默认底层容器下的复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>push(x)</code>、<code>emplace(args...)</code></td>
+<td>入栈或在顶部构造元素</td>
+<td><span class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td><code>top()</code>、<code>pop()</code></td>
+<td>读取或删除顶部</td>
+<td><span class="math inline">\(O(1)\)</span>，通常配合 empty 判断后使用</td>
+</tr>
+<tr>
+<td><code>empty()</code>、<code>size()</code></td>
+<td>判空、数量</td>
+<td><span class="math inline">\(O(1)\)</span></td>
+</tr>
+</tbody>
+</table>
+<h5 id="n-0131">8.2 完整例题：按出栈顺序输出</h5>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>0&lt;=n&lt;=100000</code>，随后 n 个 int 范围内的整数；按读入顺序入栈，输出全部出栈值，以单个空格分隔。n=0 时输出空行。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;stack&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="7">    cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span data-line="8">    stack<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> pending<span class="op">;</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">        <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="11">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="12">        pending<span class="op">.</span>push<span class="op">(</span>value<span class="op">);</span> <span class="co">// 后读入的数盖在前面的数上。</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14">    <span class="dt">bool</span> first <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="15">    <span class="cf">while</span> <span class="op">(!</span>pending<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(!</span>first<span class="op">)</span></span>
+<span data-line="17">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="18">        cout <span class="op">&lt;&lt;</span> pending<span class="op">.</span>top<span class="op">();</span> <span class="co">// 先访问，不会删除。</span></span>
+<span data-line="19">        pending<span class="op">.</span>pop<span class="op">();</span>         <span class="co">// 再删除，循环会清空整个栈。</span></span>
+<span data-line="20">        first <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="21">    <span class="op">}</span></span>
+<span data-line="22">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="23"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5
+1 2 3 4 5</code></pre>
+<p>输出：</p>
+<pre class="text"><code>5 4 3 2 1</code></pre>
+<p>每项入栈、出栈各一次，时间与最大存储量均为 <span class="math inline">\(O(n)\)</span>。默认底层 deque 的尾部操作为常数时间；换成 vector 后，尾插偶尔会扩容并移动已有项，一连串尾插按均摊常数时间计算。</p>
+<h5 id="n-0132">8.3 完整例题：用栈进行括号匹配</h5>
+<p><strong>题目原文（自拟）：</strong> 输入一整行长度不超过 100000 的字符串，只含 <code>(</code>、<code>)</code>、<code>[</code>、<code>]</code>，可以为空。判断是否每个右括号都匹配到最近的未匹配左括号，且最终没有剩余左括号。满足输出 YES，否则输出 NO；空串满足要求。</p>
+<figure>
+<img alt="左括号入栈，右括号只能匹配当前栈顶" decoding="async" loading="lazy" src="../media/notes/stl-stack-bracket-stages.svg"/>
+<figcaption aria-hidden="true">左括号入栈，右括号只能匹配当前栈顶</figcaption>
+</figure>
+<p><strong>推导：</strong> 对 <code>([])</code>，先压入左圆括号，再压入左方括号；读到右方括号时，栈顶恰好是左方括号，配对后弹出。接着读到右圆括号，栈顶已恢复为左圆括号，也能配对。对 <code>([)]</code>，读到右圆括号时栈顶却是左方括号，配对失败。栈中一直按出现顺序保存尚未匹配的左括号，最新的一项就在顶部。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;stack&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">bool</span> balanced<span class="op">(</span><span class="at">const</span> string <span class="op">&amp;</span>text<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    stack<span class="op">&lt;</span><span class="dt">char</span><span class="op">&gt;</span> pending<span class="op">;</span></span>
+<span data-line="8">    <span class="cf">for</span> <span class="op">(</span><span class="dt">char</span> ch <span class="op">:</span> text<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>ch <span class="op">==</span> <span class="ch">'('</span> <span class="op">||</span> ch <span class="op">==</span> <span class="ch">'['</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">            pending<span class="op">.</span>push<span class="op">(</span>ch<span class="op">);</span> <span class="co">// 新的左括号比之前的更晚，应优先匹配。</span></span>
+<span data-line="11">        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span data-line="12">            <span class="cf">if</span> <span class="op">(</span>pending<span class="op">.</span>empty<span class="op">())</span></span>
+<span data-line="13">                <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// 没有左括号，不能读 top。</span></span>
+<span data-line="14">            <span class="dt">char</span> expected <span class="op">=</span> ch <span class="op">==</span> <span class="ch">')'</span> <span class="op">?</span> <span class="ch">'('</span> <span class="op">:</span> <span class="ch">'['</span><span class="op">;</span></span>
+<span data-line="15">            <span class="cf">if</span> <span class="op">(</span>pending<span class="op">.</span>top<span class="op">()</span> <span class="op">!=</span> expected<span class="op">)</span></span>
+<span data-line="16">                <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="17">            pending<span class="op">.</span>pop<span class="op">();</span> <span class="co">// 当前一对匹配完，恢复外层的待匹配状态。</span></span>
+<span data-line="18">        <span class="op">}</span></span>
+<span data-line="19">    <span class="op">}</span></span>
+<span data-line="20">    <span class="cf">return</span> pending<span class="op">.</span>empty<span class="op">();</span> <span class="co">// 剩下的左括号没有右括号与它们匹配。</span></span>
+<span data-line="21"><span class="op">}</span></span>
+<span data-line="22"></span>
+<span data-line="23"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="24">    string text<span class="op">;</span></span>
+<span data-line="25">    getline<span class="op">(</span>cin<span class="op">,</span> text<span class="op">);</span> <span class="co">// 一整行输入，允许空串。</span></span>
+<span data-line="26">    cout <span class="op">&lt;&lt;</span> <span class="op">(</span>balanced<span class="op">(</span>text<span class="op">)</span> <span class="op">?</span> <span class="st">"YES"</span> <span class="op">:</span> <span class="st">"NO"</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="27"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>([])</code></pre>
+<p>输出：</p>
+<pre class="text"><code>YES</code></pre>
+<p>先配对内层 <code>[]</code>，再配对外层 <code>()</code>；输入 <code>([)]</code>、<code>]</code>、<code>((</code> 都输出 NO。总时间 <span class="math inline">\(O(n)\)</span>，最多 n 个未匹配左括号，额外空间 <span class="math inline">\(O(n)\)</span>。题目输入由这三种括号组成，每个字符都参与配对。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1449" rel="noopener noreferrer">洛谷 P1449 — 后缀表达式</a>（遇运算符取栈顶两个操作数，注意减除的左右顺序）；<a href="https://www.luogu.com.cn/problem/P1241" rel="noopener noreferrer">洛谷 P1241 — 括号序列</a>（进阶，原题还需给未配对括号补字符）。</p>
+<h4 id="n-0133">9. queue：队列</h4>
+<h5 id="n-0134">9.1 队头、队尾与先进先出</h5>
+<p><code>queue&lt;T&gt;</code> 位于 <code>&lt;queue&gt;</code>，也是容器适配器，默认底层为 deque。队尾接收新元素，队头移走最早进入的元素，这叫先进先出（FIFO）。它适合等待处理的任务和 BFS 的待扩展顶点。</p>
+<p><code>push(x)</code> 在尾部加 x；<code>front()</code>、<code>back()</code> 分别访问两端；<code>pop()</code> 删除队头，不返回值。这三种访问或删除要求队列非空。队列不提供 <code>[]</code>、迭代器或任意删除；遍历出队会清空内容，想保留时先复制。默认底层下，以上操作与 size、empty 均为 <span class="math inline">\(O(1)\)</span>。</p>
+<p>在前面栈与队列的图中，队列从 <code>[1,2,3]</code> 追加 4 后为 <code>[1,2,3,4]</code>，pop 删除 1，变成 <code>[2,3,4]</code>。队列中的先后取决于进入次序，与元素数值大小无关。</p>
+<h5 id="n-0135">9.2 完整例题：循环报数出队</h5>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>1&lt;=n&lt;=100、1&lt;=m&lt;=1000</code>。编号 1…n 的人按顺序围成一圈，从队头开始报数；前 m-1 人各移动到队尾，第 m 人出圈，下一人重新从 1 报数。输出所有出圈编号，以单个空格分隔，直到队列为空。</p>
+<figure>
+<img alt="将队头移动到队尾相当于绕圈，报到指定数才删除" decoding="async" loading="lazy" src="../media/notes/stl-queue-rotation.svg"/>
+<figcaption aria-hidden="true">将队头移动到队尾相当于绕圈，报到指定数才删除</figcaption>
+</figure>
+<p><strong>分析：</strong> n=5、m=3 时，先将 1、2 依次移到尾部，队列为 <code>[3,4,5,1,2]</code>，删除 3；接着将 4、5 移到尾部，删除 1。队头始终就是下一轮报数的起点，不需要真的把末尾指向开头。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span data-line="7">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span data-line="8">    queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> pending<span class="op">;</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> id <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> id <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>id<span class="op">)</span></span>
+<span data-line="10">        pending<span class="op">.</span>push<span class="op">(</span>id<span class="op">);</span></span>
+<span data-line="11">    <span class="dt">bool</span> first <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="12">    <span class="cf">while</span> <span class="op">(!</span>pending<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="13">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> count <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> count <span class="op">&lt;</span> m<span class="op">;</span> <span class="op">++</span>count<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">            <span class="dt">int</span> id <span class="op">=</span> pending<span class="op">.</span>front<span class="op">();</span> <span class="co">// 先保存，pop 后不能依赖旧引用。</span></span>
+<span data-line="15">            pending<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="16">            pending<span class="op">.</span>push<span class="op">(</span>id<span class="op">);</span> <span class="co">// 没有出圈，只移动到尾部。</span></span>
+<span data-line="17">        <span class="op">}</span></span>
+<span data-line="18">        <span class="cf">if</span> <span class="op">(!</span>first<span class="op">)</span></span>
+<span data-line="19">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="20">        cout <span class="op">&lt;&lt;</span> pending<span class="op">.</span>front<span class="op">();</span> <span class="co">// 当前是报到 m 的人。</span></span>
+<span data-line="21">        pending<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="22">        first <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="23">    <span class="op">}</span></span>
+<span data-line="24">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="25"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5 3</code></pre>
+<p>输出：</p>
+<pre class="text"><code>3 1 5 2 4</code></pre>
+<p>每轮删一人，执行 m-1 次轮转，总时间 <span class="math inline">\(O(nm)\)</span>，队列空间 <span class="math inline">\(O(n)\)</span>。m=1 时不轮转，按原编号输出。m 特别大时这种逐次模拟就不够快，需要结合剩余人数取模或其他推导。</p>
+<table>
+<thead>
+<tr>
+<th>结构</th>
+<th>下一个被处理的元素</th>
+<th>典型用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stack</td>
+<td>最近进入者</td>
+<td>括号匹配、递归的待返回状态</td>
+</tr>
+<tr>
+<td>queue</td>
+<td>最早进入者</td>
+<td>分层搜索、按到达次序处理任务</td>
+</tr>
+<tr>
+<td>priority_queue</td>
+<td>当前比较规则下最优先者</td>
+<td>最值调度、堆与最短路</td>
+</tr>
+</tbody>
+</table>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1996" rel="noopener noreferrer">洛谷 P1996 — 约瑟夫问题</a>、<a href="https://www.luogu.com.cn/problem/P1540" rel="noopener noreferrer">洛谷 P1540 — 机器翻译</a>（先进先出的缓存淘汰，另需判断是否已缓存）。</p>
+<h4 id="n-0136">10. map：有序键值映射</h4>
+<h5 id="n-0137">10.1 键、值与有序查找</h5>
+<p><code>map&lt;Key,Value&gt;</code> 位于 <code>&lt;map&gt;</code>。每个键对应一个值，键按比较器有序且唯一；默认从小到大遍历键。可以把它想成“用名字查记录”的表，键用于定位，值保存统计结果或其他信息。常见实现使用平衡搜索树，让按键查找、插入和删除保持对数复杂度。</p>
+<p>“键唯一”按比较规则判断：若 <code>comp(a,b)</code>、<code>comp(b,a)</code> 都为 false，说明两者在这个顺序中等价，map 将它们视为同一键。查询、按键插入删除和成员边界查找通常为 <span class="math inline">\(O(\log n)\)</span> 次比较；字符串键还要计入一次比较的字符代价。</p>
+<figure>
+<img alt="有序容器按比较规则判断两个键是否等价" decoding="async" loading="lazy" src="../media/notes/ordered-map-set-equivalence.svg"/>
+<figcaption aria-hidden="true">有序容器按比较规则判断两个键是否等价</figcaption>
+</figure>
+<p>图中只比较成绩时，同分的两条记录等价；加入编号的第二关键字，才能保存两条同分但不同编号的记录。这不仅影响排序，还影响“重复键”的判定。</p>
+<h5 id="n-0138">10.2 查询与写入的区别</h5>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>返回或效果</th>
+<th>关键区别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mp.find(key)</code></td>
+<td>指向该键的迭代器，失败返回 end</td>
+<td>不创建缺失键</td>
+</tr>
+<tr>
+<td><code>mp.count(key)</code></td>
+<td>0 或 1</td>
+<td>判断键存在，不是读取 value 中的频次</td>
+</tr>
+<tr>
+<td><code>mp.at(key)</code></td>
+<td>已存在键的值引用</td>
+<td>缺失抛 <code>out_of_range</code>，不插入</td>
+</tr>
+<tr>
+<td><code>mp[key]</code></td>
+<td>值引用；缺失时先创建默认值</td>
+<td>int 初值为 0，string 初值为空</td>
+</tr>
+<tr>
+<td><code>mp.insert({key,value})</code>、<code>emplace(key,value)</code></td>
+<td><code>(迭代器,是否插入)</code></td>
+<td>等价键已存在则不覆盖旧值</td>
+</tr>
+<tr>
+<td><code>mp.insert_or_assign(key,value)</code></td>
+<td>C++17：插入或更新</td>
+<td>有键也会覆盖 value</td>
+</tr>
+<tr>
+<td><code>mp.try_emplace(key,args...)</code></td>
+<td>C++17：仅缺失时构造 value</td>
+<td>已存在时保留 value</td>
+</tr>
+<tr>
+<td><code>mp.erase(key)</code></td>
+<td>删除数，map 为 0 或 1</td>
+<td>删除键，而不是删除第 key 项</td>
+</tr>
+<tr>
+<td><code>mp.erase(it)</code></td>
+<td>删除迭代器所指项，返回下一位置</td>
+<td>单位置删除为均摊常数</td>
+</tr>
+<tr>
+<td><code>lower_bound</code>、<code>upper_bound</code></td>
+<td>按键找边界</td>
+<td>默认首个 &gt;=key、&gt;key，不要求 key 已存在</td>
+</tr>
+<tr>
+<td><code>size()</code>、<code>empty()</code>、<code>clear()</code></td>
+<td>数量、判空、清空</td>
+<td>前两者 <span class="math inline">\(O(1)\)</span>，clear 为 <span class="math inline">\(O(n)\)</span></td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="find 缺失不插入，下标访问缺失会创建，insert 不覆盖" decoding="async" loading="lazy" src="../media/notes/stl-map-read-write.svg"/>
+<figcaption aria-hidden="true">find 缺失不插入，下标访问缺失会创建，insert 不覆盖</figcaption>
+</figure>
+<p>已有 <code>apple→3</code> 时，<code>find("pear")</code> 失败但大小仍为 1；读取 <code>mp["pear"]</code> 会建立 <code>pear→0</code>，大小变成 2；<code>insert({"apple",9})</code> 不改旧 3，<code>mp["apple"]=9</code> 才会更新。只想问是否存在时，不要用下标读取，尤其不能用 <code>mp[key]!=0</code> 代替“存在”：合法值可能就是 0。下标语义见 <a href="https://timsong-cpp.github.io/cppwp/n4659/map.access" rel="noopener noreferrer">C++17 草案：map.access</a>。</p>
+<h5 id="n-0139">10.3 完整例题：统计后查询单词次数</h5>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 <code>0&lt;=n,q&lt;=100000</code>。接着 n 个长度 1…20 的小写英文单词，然后 q 个查询单词。先按字典序输出每个不同单词及出现次数，一项一行；再依查询顺序输出次数，未出现输出 0。查询不能创建新的单词记录。</p>
+<p><strong>分析：</strong> 统计时 <code>++frequency[word]</code> 正好需要“缺失时从 0 开始”；查询时用 find，成功读 second，失败直接输出 0。遍历中 <code>first</code> 是单词，<code>second</code> 是累计次数，<code>count(word)</code> 只有 0、1，不能代替次数。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;map&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> n<span class="op">,</span> q<span class="op">;</span></span>
+<span data-line="8">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> q<span class="op">;</span></span>
+<span data-line="9">    map<span class="op">&lt;</span>string<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> frequency<span class="op">;</span></span>
+<span data-line="10">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">        string word<span class="op">;</span></span>
+<span data-line="12">        cin <span class="op">&gt;&gt;</span> word<span class="op">;</span></span>
+<span data-line="13">        <span class="op">++</span>frequency<span class="op">[</span>word<span class="op">];</span> <span class="co">// 缺失单词创建为 0，再加到 1。</span></span>
+<span data-line="14">    <span class="op">}</span></span>
+<span data-line="15">    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;[</span>word<span class="op">,</span> times<span class="op">]</span> <span class="op">:</span> frequency<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">        cout <span class="op">&lt;&lt;</span> word <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> times <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 按键字典序，不是出现先后。</span></span>
+<span data-line="17">    <span class="op">}</span></span>
+<span data-line="18">    <span class="cf">while</span> <span class="op">(</span>q<span class="op">--)</span> <span class="op">{</span></span>
+<span data-line="19">        string word<span class="op">;</span></span>
+<span data-line="20">        cin <span class="op">&gt;&gt;</span> word<span class="op">;</span></span>
+<span data-line="21">        <span class="kw">auto</span> it <span class="op">=</span> frequency<span class="op">.</span>find<span class="op">(</span>word<span class="op">);</span></span>
+<span data-line="22">        cout <span class="op">&lt;&lt;</span> <span class="op">(</span>it <span class="op">==</span> frequency<span class="op">.</span>end<span class="op">()</span> <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> it<span class="op">-&gt;</span>second<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 查询不插入。</span></span>
+<span data-line="23">    <span class="op">}</span></span>
+<span data-line="24"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5 2
+pear apple pear banana apple
+apple orange</code></pre>
+<p>输出：</p>
+<pre class="text"><code>apple 2
+banana 1
+pear 2
+2
+0</code></pre>
+<p>设 u 为不同单词数，长度上限固定时，总时间 <span class="math inline">\(O((n+q)\log(u+1)+u)\)</span>，存储 <span class="math inline">\(O(u)\)</span> 条记录。插入不使已有元素的迭代器、引用失效，删除只使被删项相关访问失效；不能通过迭代器改 first。需要修改值时可用 <code>auto &amp;[key,value]</code>；<code>auto [key,value]</code> 是拷贝，改它不会写回。</p>
+<h5 id="n-0140">10.4 迭代器的用处：定位一次，修改值或沿有序区间前进</h5>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。map 中已有 <code>10→2、20→3、30→4、40→5</code>。找到键 20，将它的值加 7；输出键位于闭区间 <code>[15,35]</code> 内的记录，每项占一行。随后从这一区间中删除值为偶数的记录，再输出全部剩余记录；两个阶段之间输出一行 <code>--</code>。</p>
+<p><strong>分析：</strong> find 返回的不只是“找到了”，还是这个键值记录的位置，因此可直接修改 <code>it-&gt;second</code>，不用再次查找。键 first 参与有序组织，不能通过迭代器改它。lower_bound(15) 返回首个不小于 15 的键 20；upper_bound(35) 返回首个大于 35 的键 40。于是题意的闭区间 <code>[15,35]</code> 转成容器的半开迭代器区间 <code>[first,last)</code>，恰好覆盖 20、30。</p>
+<figure>
+<img alt="按键定位边界，逐项访问区间，删除后使用返回位置" decoding="async" loading="lazy" src="../media/notes/stl-map-iterator-range.svg"/>
+<figcaption aria-hidden="true">按键定位边界，逐项访问区间，删除后使用返回位置</figcaption>
+</figure>
+<p><strong>继续删除怎样避免漏项？</strong> 20 的值由 3 变成 10，是偶数；erase 返回 30，下一轮立即检查 30，再删除其值 4，返回 40。此时 <code>it==last</code>，停止。last 指向不在删除范围内的 40，因此这些删除不会使它失效；如果区间延伸到末尾，<code>last=end</code> 也作为有效边界。空区间则从开始就满足 <code>first==last</code>，不进入循环。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;map&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    map<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> records<span class="op">{{</span><span class="dv">10</span><span class="op">,</span> <span class="dv">2</span><span class="op">},</span> <span class="op">{</span><span class="dv">20</span><span class="op">,</span> <span class="dv">3</span><span class="op">},</span> <span class="op">{</span><span class="dv">30</span><span class="op">,</span> <span class="dv">4</span><span class="op">},</span> <span class="op">{</span><span class="dv">40</span><span class="op">,</span> <span class="dv">5</span><span class="op">}};</span></span>
+<span data-line="7">    <span class="kw">auto</span> found <span class="op">=</span> records<span class="op">.</span>find<span class="op">(</span><span class="dv">20</span><span class="op">);</span></span>
+<span data-line="8">    <span class="cf">if</span> <span class="op">(</span>found <span class="op">!=</span> records<span class="op">.</span>end<span class="op">())</span></span>
+<span data-line="9">        found<span class="op">-&gt;</span>second <span class="op">+=</span> <span class="dv">7</span><span class="op">;</span> <span class="co">// 修改已有值，不再使用下标二次查找；first 不能改。</span></span>
+<span data-line="10"></span>
+<span data-line="11">    <span class="kw">auto</span> first <span class="op">=</span> records<span class="op">.</span>lower_bound<span class="op">(</span><span class="dv">15</span><span class="op">);</span> <span class="co">// 首个键 &gt;=15，即 20。</span></span>
+<span data-line="12">    <span class="kw">auto</span> last <span class="op">=</span> records<span class="op">.</span>upper_bound<span class="op">(</span><span class="dv">35</span><span class="op">);</span>  <span class="co">// 首个键 &gt;35，即 40；40 不在区间中。</span></span>
+<span data-line="13">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">=</span> first<span class="op">;</span> it <span class="op">!=</span> last<span class="op">;</span> <span class="op">++</span>it<span class="op">)</span></span>
+<span data-line="14">        cout <span class="op">&lt;&lt;</span> it<span class="op">-&gt;</span>first <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> it<span class="op">-&gt;</span>second <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// ++ 按键顺序到下一条。</span></span>
+<span data-line="15">    cout <span class="op">&lt;&lt;</span> <span class="st">"--</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span></span>
+<span data-line="16"></span>
+<span data-line="17">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> it <span class="op">=</span> first<span class="op">;</span> it <span class="op">!=</span> last<span class="op">;)</span> <span class="op">{</span></span>
+<span data-line="18">        <span class="cf">if</span> <span class="op">(</span>it<span class="op">-&gt;</span>second <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="19">            it <span class="op">=</span> records<span class="op">.</span>erase<span class="op">(</span>it<span class="op">);</span> <span class="co">// 当前位置已失效，接收下一位置，不再 ++。</span></span>
+<span data-line="20">        <span class="cf">else</span></span>
+<span data-line="21">            <span class="op">++</span>it<span class="op">;</span> <span class="co">// 只在保留当前项时前进。</span></span>
+<span data-line="22">    <span class="op">}</span></span>
+<span data-line="23">    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;[</span>key<span class="op">,</span> value<span class="op">]</span> <span class="op">:</span> records<span class="op">)</span></span>
+<span data-line="24">        cout <span class="op">&lt;&lt;</span> key <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> value <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 输出未删除的 10、40。</span></span>
+<span data-line="25"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>20 10
+30 4
+--
+10 2
+40 5</code></pre>
+<p>设总记录数 n、选中记录数 k，find 和两次成员边界查找合计 <span class="math inline">\(O(\log n)\)</span>，区间遍历与按位置删除合计 <span class="math inline">\(O(k)\)</span>；最后输出全部剩余记录至多还要 <span class="math inline">\(O(n)\)</span>，所以本程序总时间 <span class="math inline">\(O(n+\log n)\)</span>，存储 <span class="math inline">\(O(n)\)</span>、额外 <span class="math inline">\(O(1)\)</span>。一般边界查询加区间处理为 <span class="math inline">\(O(\log n+k)\)</span>，不能把访问 k 项也算成常数。map 迭代器支持 ++、–，没有 <code>it+3</code>；移动三项需三次前进，不能通过两位置相减求数量。边界与失效规则见 <a href="https://timsong-cpp.github.io/cppwp/n4659/associative.reqmts" rel="noopener noreferrer">C++17 草案：关联容器要求</a>。</p>
+<p><strong>练习题：</strong> <a href="https://codeforces.com/problemset/problem/4/C" rel="noopener noreferrer">CF 4C — Registration System</a>、<a href="https://www.luogu.com.cn/problem/P5266" rel="noopener noreferrer">洛谷 P5266 — 学籍管理</a>。</p>
+<h4 id="n-0141">11. set：有序键集合</h4>
+<h5 id="n-0142">11.1 有序、不重复的键集合</h5>
+<p><code>set&lt;T&gt;</code> 位于 <code>&lt;set&gt;</code>，只保存键，没有另外的 value。插入等价键时保留一项；默认升序遍历，<code>*it</code> 读取键。它适合动态去重、存在性查询和有序的前驱后继查找。与 map 一样，唯一性由严格弱序比较器决定，常见实现为平衡搜索树。</p>
+<p><code>set&lt;int,greater&lt;int&gt;&gt;</code> 按降序组织键，需要 <code>&lt;functional&gt;</code>。边界查找也随比较器改变，此时 lower_bound(x) 找首个“不排在 x 前”的键，即数值 &lt;=x，不能继续解释为 &gt;=x。</p>
+<h5 id="n-0143">11.2 set 的插入、删除与定位</h5>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>insert(x)</code></td>
+<td>返回 <code>(位置,是否新插入)</code></td>
+<td><span class="math inline">\(O(\log n)\)</span></td>
+</tr>
+<tr>
+<td><code>find(x)</code>、<code>count(x)</code></td>
+<td>查存在；count 为 0 或 1</td>
+<td><span class="math inline">\(O(\log n)\)</span></td>
+</tr>
+<tr>
+<td><code>erase(x)</code></td>
+<td>删除等价键，返回 0 或 1</td>
+<td><span class="math inline">\(O(\log n)\)</span></td>
+</tr>
+<tr>
+<td><code>erase(it)</code></td>
+<td>删除一个有效位置，返回下一位置</td>
+<td>均摊 <span class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td><code>lower_bound(x)</code>、<code>upper_bound(x)</code></td>
+<td>按比较规则找边界</td>
+<td><span class="math inline">\(O(\log n)\)</span></td>
+</tr>
+<tr>
+<td><code>begin()</code>、<code>rbegin()</code></td>
+<td>默认升序下定位最小、最大</td>
+<td><span class="math inline">\(O(1)\)</span>，empty 可判断是否有元素</td>
+</tr>
+<tr>
+<td><code>size()</code>、<code>empty()</code>、<code>clear()</code></td>
+<td>数量、判空、清空</td>
+<td>前两者 <span class="math inline">\(O(1)\)</span>，clear 为 <span class="math inline">\(O(n)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>set 没有下标，无法直接读“第 k 小”。<code>advance(it,k)</code> 会移动 k 次，反复用它查询排名可能很慢。要删除默认升序下闭区间 <code>[L,R]</code>，L&lt;=R 时可用 <code>erase(lower_bound(L),upper_bound(R))</code>；用 find(L) 当左端会要求 L 恰好存在，若返回 end 而右端在前面，还可能构成非法区间。</p>
+<figure>
+<img alt="边界位置指向哪里，怎样从它得到严格前驱" decoding="async" loading="lazy" src="../media/notes/stl-set-neighbor-stages.svg"/>
+<figcaption aria-hidden="true">边界位置指向哪里，怎样从它得到严格前驱</figcaption>
+</figure>
+<h5 id="n-0144">11.3 完整例题：严格前驱与不小于查询值的后继</h5>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 <code>0&lt;=n,q&lt;=100000</code>，接着 n 个 int，再接着 q 个 int 查询。将数据作为升序去重集合；每次输出“小于 x 的最大值”和“不小于 x 的最小值”，中间一个空格。某侧不存在时输出 NA。查询不修改集合。</p>
+<p><strong>推导：</strong> lower_bound(x) 就是不小于 x 的首项；若它不是 begin，前一个位置便是严格前驱。x 比所有值大时 lower_bound 返回 end，仍可在非空集合中向前一步取最大值；空集合中 begin=end，两侧都不存在。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iterator&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;set&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> n<span class="op">,</span> q<span class="op">;</span></span>
+<span data-line="8">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> q<span class="op">;</span></span>
+<span data-line="9">    set<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">;</span></span>
+<span data-line="10">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">        <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="12">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="13">        values<span class="op">.</span>insert<span class="op">(</span>value<span class="op">);</span> <span class="co">// 重复输入只保存一次。</span></span>
+<span data-line="14">    <span class="op">}</span></span>
+<span data-line="15">    <span class="cf">while</span> <span class="op">(</span>q<span class="op">--)</span> <span class="op">{</span></span>
+<span data-line="16">        <span class="dt">int</span> x<span class="op">;</span></span>
+<span data-line="17">        cin <span class="op">&gt;&gt;</span> x<span class="op">;</span></span>
+<span data-line="18">        <span class="kw">auto</span> it <span class="op">=</span> values<span class="op">.</span>lower_bound<span class="op">(</span>x<span class="op">);</span></span>
+<span data-line="19">        <span class="cf">if</span> <span class="op">(</span>it <span class="op">==</span> values<span class="op">.</span>begin<span class="op">())</span></span>
+<span data-line="20">            cout <span class="op">&lt;&lt;</span> <span class="st">"NA"</span><span class="op">;</span></span>
+<span data-line="21">        <span class="cf">else</span></span>
+<span data-line="22">            cout <span class="op">&lt;&lt;</span> <span class="op">*</span>prev<span class="op">(</span>it<span class="op">);</span> <span class="co">// end 可向前一步，但 begin 不能再向前。</span></span>
+<span data-line="23">        cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="24">        <span class="cf">if</span> <span class="op">(</span>it <span class="op">==</span> values<span class="op">.</span>end<span class="op">())</span></span>
+<span data-line="25">            cout <span class="op">&lt;&lt;</span> <span class="st">"NA"</span><span class="op">;</span></span>
+<span data-line="26">        <span class="cf">else</span></span>
+<span data-line="27">            cout <span class="op">&lt;&lt;</span> <span class="op">*</span>it<span class="op">;</span> <span class="co">// end 只作边界，不能解引用。</span></span>
+<span data-line="28">        cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="29">    <span class="op">}</span></span>
+<span data-line="30"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>4 3
+10 20 30 40
+25 10 50</code></pre>
+<p>输出：</p>
+<pre class="text"><code>20 30
+NA 10
+40 NA</code></pre>
+<p>建集合与查询共 <span class="math inline">\(O((n+q)\log(u+1))\)</span>，u 为不同值数，空间 <span class="math inline">\(O(u)\)</span>。插入保留已有迭代器，删除只使被删项失效；通过迭代器直接改键会破坏排序，因此接口不允许这样写。</p>
+<h5 id="n-0145">11.4 自定义记录的排序与唯一性</h5>
+<p>下面是类型片段，需 <code>&lt;set&gt;</code>、<code>&lt;string&gt;</code>。比较顺序为成绩降序、姓名升序、年龄升序；三项都等价时视为同一记录。struct 中的 <code>operator()</code> 定义“把对象当函数调用”时执行的操作，例如 <code>StudentLess compare; compare(a,b);</code>。末尾 const 表示比较不修改比较器对象；同一个元素的各字段都相等，因此与自身比较返回 false。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="kw">struct</span> Student <span class="op">{</span></span>
+<span data-line="2">    <span class="bu">std::</span>string name<span class="op">;</span></span>
+<span data-line="3">    <span class="dt">int</span> age<span class="op">;</span></span>
+<span data-line="4">    <span class="dt">double</span> score<span class="op">;</span></span>
+<span data-line="5"><span class="op">};</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="kw">struct</span> StudentLess <span class="op">{</span></span>
+<span data-line="8">    <span class="dt">bool</span> <span class="kw">operator</span><span class="op">()(</span><span class="at">const</span> Student <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> Student <span class="op">&amp;</span>b<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>a<span class="op">.</span>score <span class="op">!=</span> b<span class="op">.</span>score<span class="op">)</span></span>
+<span data-line="10">            <span class="cf">return</span> a<span class="op">.</span>score <span class="op">&gt;</span> b<span class="op">.</span>score<span class="op">;</span> <span class="co">// 成绩不同时按降序比较；相同时继续比较后面的字段。</span></span>
+<span data-line="11">        <span class="cf">if</span> <span class="op">(</span>a<span class="op">.</span>name <span class="op">!=</span> b<span class="op">.</span>name<span class="op">)</span></span>
+<span data-line="12">            <span class="cf">return</span> a<span class="op">.</span>name <span class="op">&lt;</span> b<span class="op">.</span>name<span class="op">;</span></span>
+<span data-line="13">        <span class="cf">return</span> a<span class="op">.</span>age <span class="op">&lt;</span> b<span class="op">.</span>age<span class="op">;</span> <span class="co">// 继续比较第三字段，满足严格弱序。</span></span>
+<span data-line="14">    <span class="op">}</span></span>
+<span data-line="15"><span class="op">};</span></span></code></pre></div>
+<p>在函数中用 <code>std::set&lt;Student,StudentLess&gt; students;</code> 创建容器，再用 <code>students.insert({"Alice",18,90.0});</code> 插入记录。插入同分的 Bob 会保留，两次插入完全相同的 Alice 则只留一项。若希望同名同龄同分的两条记录也能共存，改用 multiset，或给每条记录增加独立编号。保存“名字→成绩”通常用 map；只保存唯一的名字用 set；保存全部学生再统一排序通常用 vector，按需求选结构。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1059" rel="noopener noreferrer">洛谷 P1059 — 明明的随机数</a>、<a href="https://www.luogu.com.cn/problem/P2234" rel="noopener noreferrer">洛谷 P2234 — 营业额统计</a>（进阶，边插入边找邻近值）。</p>
+<h4 id="n-0146">12. unordered_map：哈希键值映射</h4>
+<h5 id="n-0147">12.1 哈希先定位桶，再比较键</h5>
+<p><code>unordered_map&lt;Key,Value&gt;</code> 位于 <code>&lt;unordered_map&gt;</code>，保存唯一键到值的映射，按哈希值组织桶，遍历时依次访问桶中的元素。查找先由 hash 定位候选桶，再用键相等规则核对实际键；不同键可以发生哈希冲突，哈希值相等不等于键相等。</p>
+<figure>
+<img alt="同桶候选还要逐个比较实际键，找到或全部失败才返回" decoding="async" loading="lazy" src="../media/notes/stl-hash-bucket-search.svg"/>
+<figcaption aria-hidden="true">同桶候选还要逐个比较实际键，找到或全部失败才返回</figcaption>
+</figure>
+<p>图用教学哈希 <code>h(x)=x</code>、桶下标 <code>h(x)%10</code> 说明冲突，12、22、32 同在桶 2；查 22 时比较 12 失败、22 成功，查 42 要检查全部候选。标准库不承诺采用取模 10 或这组实际桶编号。</p>
+<p>查找、单项插入和按键删除平均为 <span class="math inline">\(O(1)\)</span>，最坏可为 <span class="math inline">\(O(n)\)</span>，还需计入哈希和比较键的代价。它适合不依赖键顺序的统计与查询；没有 lower_bound、upper_bound，也不能从 begin 得到数值最小键。</p>
+<h5 id="n-0148">12.2 下标、负载与访问失效</h5>
+<p>find、count、at、下标、insert、emplace、insert_or_assign、try_emplace 的“查询、默认插入、是否覆盖”含义与 map 相同，只是组织方式和复杂度不同。清空为 <span class="math inline">\(O(n)\)</span>，size、empty 为常数。</p>
+<p><code>load_factor()</code> 为元素数除以桶数；<code>max_load_factor(x)</code> 设负载上限，<code>reserve(k)</code> 按预计元素数安排桶，<code>rehash(b)</code> 请求桶数。它们不会创建 k 个键值对，也不能保证消除冲突。已知要插入很多记录时，可先设负载上限，再 reserve，减少增长过程中的重建。</p>
+<figure>
+<img alt="桶数量改变后重新组织位置，元素键值仍保留" decoding="async" loading="lazy" src="../media/notes/hash-rehash-buckets.svg"/>
+<figcaption aria-hidden="true">桶数量改变后重新组织位置，元素键值仍保留</figcaption>
+</figure>
+<p>发生 rehash 会使旧迭代器失效，但指向已有元素的引用、指针仍有效；删除只使被删项相关访问失效。插入若触发 rehash，就不能继续使用保存的旧迭代器。见 <a href="https://timsong-cpp.github.io/cppwp/n4659/unord.req" rel="noopener noreferrer">C++17 草案：无序关联容器要求</a>。不要在遍历中不断插入新键，又默认旧迭代器一直有效。</p>
+<h5 id="n-0149">12.3 完整例题：按查询顺序输出频次</h5>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 <code>0&lt;=n,q&lt;=100000</code>，接着 n 个 int，再接着 q 个 int 查询。每次输出这个数在前 n 项中的出现次数，没有则输出 0。只需按查询顺序输出，不要求遍历键或按键排序。</p>
+<p><strong>分析：</strong> 统计使用下标累加，查询使用 find。输出次序由输入查询决定，不依赖哈希容器遍历，因此答案稳定。reserve 只是容量规划，n=0 时表仍为空。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;unordered_map&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n<span class="op">,</span> q<span class="op">;</span></span>
+<span data-line="7">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> q<span class="op">;</span></span>
+<span data-line="8">    unordered_map<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> frequency<span class="op">;</span></span>
+<span data-line="9">    frequency<span class="op">.</span>max_load_factor<span class="op">(</span><span class="fl">0.7</span><span class="bu">f</span><span class="op">);</span> <span class="co">// 先设置负载，再按预计元素数预留桶。</span></span>
+<span data-line="10">    frequency<span class="op">.</span>reserve<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="11">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">        <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="13">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="14">        <span class="op">++</span>frequency<span class="op">[</span>value<span class="op">];</span> <span class="co">// 已存在则累加，不存在从 0 起。</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16">    <span class="cf">while</span> <span class="op">(</span>q<span class="op">--)</span> <span class="op">{</span></span>
+<span data-line="17">        <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="18">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="19">        <span class="kw">auto</span> it <span class="op">=</span> frequency<span class="op">.</span>find<span class="op">(</span>value<span class="op">);</span></span>
+<span data-line="20">        cout <span class="op">&lt;&lt;</span> <span class="op">(</span>it <span class="op">==</span> frequency<span class="op">.</span>end<span class="op">()</span> <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> it<span class="op">-&gt;</span>second<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="21">    <span class="op">}</span></span>
+<span data-line="22"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5 3
+3 1 3 2 1
+3 9 1</code></pre>
+<p>输出：</p>
+<pre class="text"><code>2
+0
+2</code></pre>
+<p>整数键下，平均总时间 <span class="math inline">\(O(n+q)\)</span>，若冲突集中，最坏可能退化到 <span class="math inline">\(O((n+q)(u+1))\)</span>，u 是不同键数。存储计入元素与桶；代码按 n 预留，空间上界 <span class="math inline">\(O(n+1)\)</span>。需要有序邻近查询、稳定的对数查找界或有序输出时，应考虑 map，不能只按“哈希一定更快”选择。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P5266" rel="noopener noreferrer">洛谷 P5266 — 学籍管理</a>（可以分别用 map 与 unordered_map 比较）；<a href="https://codeforces.com/problemset/problem/4/C" rel="noopener noreferrer">CF 4C — Registration System</a>。</p>
+<h4 id="n-0150">13. unordered_set：哈希键集合</h4>
+<h5 id="n-0151">13.1 unordered_set 的存在性查询</h5>
+<p><code>unordered_set&lt;T&gt;</code> 位于 <code>&lt;unordered_set&gt;</code>，只保存唯一键，没有关联 value。insert 返回 <code>(位置,是否新插入)</code>，find 失败返回 end，count 为 0 或 1。平均单项插入、查找、按键删除为 <span class="math inline">\(O(1)\)</span>，最坏 <span class="math inline">\(O(n)\)</span>。需要统计次数时用 unordered_map，不能把集合的 count 当输入中的重复次数。</p>
+<p>哈希集合按桶组织元素，遍历次序通常与输入顺序、数值大小都不同。它适合维护“已经见过哪些值”；若还需要首次出现顺序，可以把新值同时记入 vector。reserve、rehash 和访问失效规则与上一节一致。</p>
+<h5 id="n-0152">13.2 完整例题：按首次出现顺序去重</h5>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>0&lt;=n&lt;=100000</code> 和 n 个 int，按第一次出现的先后输出各个不同值，中间单个空格。n=0 时输出空行。不能按数值排序。</p>
+<figure>
+<img alt="每次插入检查是否为新键，通过后才写入输出序列" decoding="async" loading="lazy" src="../media/notes/stl-first-seen-order.svg"/>
+<figcaption aria-hidden="true">每次插入检查是否为新键，通过后才写入输出序列</figcaption>
+</figure>
+<p><strong>推导：</strong> <code>[3,1,3,2,1]</code> 的插入结果依次为成功、成功、重复、成功、重复；只有成功时追加到输出 vector，所以输出为 <code>3 1 2</code>。哈希集合用于判重，vector 用于保存题面要求的顺序。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;unordered_set&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="8">    cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span data-line="9">    unordered_set<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> seen<span class="op">;</span></span>
+<span data-line="10">    seen<span class="op">.</span>reserve<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="11">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> order<span class="op">;</span></span>
+<span data-line="12">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">        <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="14">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="15">        <span class="kw">auto</span> <span class="op">[</span>it<span class="op">,</span> inserted<span class="op">]</span> <span class="op">=</span> seen<span class="op">.</span>insert<span class="op">(</span>value<span class="op">);</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(</span>inserted<span class="op">)</span></span>
+<span data-line="17">            order<span class="op">.</span>push_back<span class="op">(</span>value<span class="op">);</span> <span class="co">// 重复键不改变首次出现的顺序。</span></span>
+<span data-line="18">    <span class="op">}</span></span>
+<span data-line="19">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>order<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="20">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="21">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="22">        cout <span class="op">&lt;&lt;</span> order<span class="op">[</span>i<span class="op">];</span> <span class="co">// 这里遍历有序记录，不是遍历 seen。</span></span>
+<span data-line="23">    <span class="op">}</span></span>
+<span data-line="24">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="25"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>5
+3 1 3 2 1</code></pre>
+<p>输出：</p>
+<pre class="text"><code>3 1 2</code></pre>
+<p>保留的是首次出现顺序，不是数值顺序。平均时间 <span class="math inline">\(O(n)\)</span>，最坏可能 <span class="math inline">\(O(n^2)\)</span>，预留桶、判重集合和输出序列合计 <span class="math inline">\(O(n)\)</span> 空间。</p>
+<h5 id="n-0153">13.3 自定义类型的相等与哈希要一致</h5>
+<p>例如学生按编号 id 判重，名字仅是附加信息。下面是类型片段，需 <code>&lt;string&gt;</code>、<code>&lt;functional&gt;</code>、<code>&lt;unordered_set&gt;</code>、<code>&lt;cstddef&gt;</code>。<code>operator==</code> 定义 Student 之间的相等判断。<code>std::hash&lt;int&gt;{}</code> 创建整数哈希函数对象，再用 <code>(student.id)</code> 调用它；返回的 std::size_t 是表示大小的无符号整数类型，声明由 <code>&lt;cstddef&gt;</code> 提供。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="kw">struct</span> Student <span class="op">{</span></span>
+<span data-line="2">    <span class="bu">std::</span>string name<span class="op">;</span></span>
+<span data-line="3">    <span class="dt">int</span> id<span class="op">;</span></span>
+<span data-line="4">    <span class="dt">bool</span> <span class="kw">operator</span><span class="op">==(</span><span class="at">const</span> Student <span class="op">&amp;</span>other<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span data-line="5">        <span class="cf">return</span> id <span class="op">==</span> other<span class="op">.</span>id<span class="op">;</span> <span class="co">// 同一编号就是同一键，即使名字不同。</span></span>
+<span data-line="6">    <span class="op">}</span></span>
+<span data-line="7"><span class="op">};</span></span>
+<span data-line="8"></span>
+<span data-line="9"><span class="kw">struct</span> StudentHash <span class="op">{</span></span>
+<span data-line="10">    <span class="bu">std::</span>size_t <span class="kw">operator</span><span class="op">()(</span><span class="at">const</span> Student <span class="op">&amp;</span>student<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span data-line="11">        <span class="cf">return</span> <span class="bu">std::</span>hash<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;{}(</span>student<span class="op">.</span>id<span class="op">);</span> <span class="co">// 按用于判等的学号计算哈希值。</span></span>
+<span data-line="12">    <span class="op">}</span></span>
+<span data-line="13"><span class="op">};</span></span></code></pre></div>
+<p>在函数中创建 <code>std::unordered_set&lt;Student,StudentHash&gt; students;</code>，依次用 insert 插入 <code>{"Alice",1}</code>、<code>{"Bob",2}</code>、<code>{"Ann",1}</code> 后只有两个键，编号 1 保留先插入的 Alice，不会自动换成 Ann。若 equality 只比较 id，hash 却还依赖 name，同 id 不同名可能被分到不同桶，破坏容器要求；相反，不同键得到相同 hash 是允许的，交给相等比较继续区分。</p>
+<p>set 判断唯一性靠比较器的等价关系，unordered_set 靠相等规则；两者都不允许通过迭代器随意改键。只需判存在选集合，要携带并修改附加数据选映射，要重复保存同键选 multi 版本。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P3370" rel="noopener noreferrer">洛谷 P3370 — 字符串哈希</a>（可先用 <code>unordered_set&lt;string&gt;</code> 按完整字符串判重，再学习自行哈希时的碰撞问题）；<a href="https://www.luogu.com.cn/problem/P1059" rel="noopener noreferrer">洛谷 P1059 — 明明的随机数</a>（原题需排序，判重后还要 sort，不能直接输出哈希遍历结果）。</p>
+<h4 id="n-0154">14. priority_queue：优先队列</h4>
+<h5 id="n-0155">14.1 从堆顶读取优先级最高的一项</h5>
+<p><code>priority_queue&lt;T,Container,Compare&gt;</code> 位于 <code>&lt;queue&gt;</code>，默认底层为 <code>vector&lt;T&gt;</code>、比较器为 <code>less&lt;T&gt;</code>。默认堆顶是最大值；取出后重新调整，保证下一次 top 仍是当前最大。底层序列只保持堆序，不能当成完整排序数组，也没有普通迭代器接口。</p>
+<figure>
+<img alt="小根堆只要求父节点不大于孩子，层序数组可能无序" decoding="async" loading="lazy" src="../media/notes/min-heap-property.svg"/>
+<figcaption aria-hidden="true">小根堆只要求父节点不大于孩子，层序数组可能无序</figcaption>
+</figure>
+<p>本图使用小根堆解释结构，<code>[1,4,2,9,7,3,5]</code> 中 4 在 2 前面也合法；只有根 1 保证是最小值。从 0 编号时，父位置为 <code>(i-1)/2</code>，孩子为 <code>2i+1、2i+2</code>。这描述常见二叉堆实现，不承诺标准库内部采用某个固定数组布局。</p>
+<figure>
+<img alt="新元素先放末尾，逐层与父节点比较并向上调整" decoding="async" loading="lazy" src="../media/notes/stl-heap-push-repair.svg"/>
+<figcaption aria-hidden="true">新元素先放末尾，逐层与父节点比较并向上调整</figcaption>
+</figure>
+<p>对小根堆 <code>[2,4,3,9,7,5]</code> 追加 1，先与父值 3 交换，再与根 2 交换，得到 <code>[1,4,2,9,7,5,3]</code>。只沿祖先链移动，层数为 <span class="math inline">\(O(\log n)\)</span>。</p>
+<figure>
+<img alt="移走堆顶，末尾补位后与较小孩子交换" decoding="async" loading="lazy" src="../media/notes/heap-pop-adjust.svg"/>
+<figcaption aria-hidden="true">移走堆顶，末尾补位后与较小孩子交换</figcaption>
+</figure>
+<p>从 <code>[1,4,2,9,7,3,5]</code> 删除根 1，末尾 5 补到根；先选较小孩子 2 交换，再与 3 交换，得到 <code>[2,4,3,9,7,5]</code>。选择错误孩子可能仍违反堆序，所以不能随便向一边下移。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+<th>默认 vector 底层下的费用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>top()</code></td>
+<td>当前最优先元素的 const 引用</td>
+<td><span class="math inline">\(O(1)\)</span>；配合 empty 判断后读取</td>
+</tr>
+<tr>
+<td><code>push(x)</code>、<code>emplace(args...)</code></td>
+<td>插入后向上调整</td>
+<td><span class="math inline">\(O(\log n)\)</span> 次堆比较；单次扩容还可能搬移 <span class="math inline">\(O(n)\)</span> 项</td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>删除当前堆顶，不返回值</td>
+<td><span class="math inline">\(O(\log n)\)</span>，要求非空</td>
+</tr>
+<tr>
+<td><code>size()</code>、<code>empty()</code></td>
+<td>数量、判空</td>
+<td><span class="math inline">\(O(1)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>若要改变已有任务的优先级，标准接口没有直接定位修改的操作；可另存最新状态，插入新记录，取出过期记录时跳过，Dijkstra 章节就使用这个思路。不能修改比较器所依赖的外部状态，又默认旧堆已经自动重排。</p>
+<h5 id="n-0156">14.2 大根堆、小根堆与比较器</h5>
+<p><code>&lt;functional&gt;</code> 的 less<t>、greater<t> 是标准比较函数对象类型：<code>less&lt;int&gt;{}(a,b)</code> 判断 a&lt;b，<code>greater&lt;int&gt;{}(a,b)</code> 判断 a&gt;b。第三个模板参数填写比较器类型，容器创建后用它进行比较。以下是定义片段，需要 <code>&lt;queue&gt;</code>、<code>&lt;vector&gt;</code>、<code>&lt;functional&gt;</code>。</t></t></p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="bu">std::</span>priority_queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> maxHeap<span class="op">;</span>                                      <span class="co">// less&lt;int&gt;，较大值优先。</span></span>
+<span data-line="2"><span class="bu">std::</span>priority_queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;,</span> <span class="bu">std::</span>greater<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> minHeap<span class="op">;</span> <span class="co">// 较小值优先。</span></span></code></pre></div>
+<figure>
+<img alt="比较器在优先队列中决定谁应更晚被取出" decoding="async" loading="lazy" src="../media/notes/priority-queue-comparator.svg"/>
+<figcaption aria-hidden="true">比较器在优先队列中决定谁应更晚被取出</figcaption>
+</figure>
+<p>对整数，less 使最大值在 top，greater 使最小值在 top。理解自定义规则时，可问“a 是否比 b 更晚处理”；它与 sort 中“a 排在 b 前面”的使用直觉不同。比较器按同一个先后关系安排元素，堆才能持续找到优先级最高的一项。接口与默认底层见 <a href="https://timsong-cpp.github.io/cppwp/n4659/priority.queue" rel="noopener noreferrer">C++17 草案：priority.queue</a>。</p>
+<h5 id="n-0157">14.3 完整例题：优先级与平局顺序</h5>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>0&lt;=n&lt;=100000</code>，随后 n 行各含唯一编号 id 和 int 范围内的优先级 priority。按优先级从大到小取出；同优先级先取编号较小者。每次输出一行 id，直至全部取完。</p>
+<figure>
+<img alt="先比较优先级，平局再比较编号，逐次弹出后更新堆顶" decoding="async" loading="lazy" src="../media/notes/stl-priority-tie-order.svg"/>
+<figcaption aria-hidden="true">先比较优先级，平局再比较编号，逐次弹出后更新堆顶</figcaption>
+</figure>
+<p><strong>分析：</strong> a 优先级更小时应更晚；优先级相同时，a 编号更大也应更晚。样例任务 <code>(1,3)、(2,5)、(3,5)</code> 依次取 2、3、1，不能只按 priority 比较后期望自动按编号稳定排序。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="kw">struct</span> Task <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> id<span class="op">;</span></span>
+<span data-line="8">    <span class="dt">int</span> priority<span class="op">;</span></span>
+<span data-line="9"><span class="op">};</span></span>
+<span data-line="10"></span>
+<span data-line="11"><span class="kw">struct</span> Later <span class="op">{</span></span>
+<span data-line="12">    <span class="dt">bool</span> <span class="kw">operator</span><span class="op">()(</span><span class="at">const</span> Task <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> Task <span class="op">&amp;</span>b<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span data-line="13">        <span class="cf">if</span> <span class="op">(</span>a<span class="op">.</span>priority <span class="op">!=</span> b<span class="op">.</span>priority<span class="op">)</span></span>
+<span data-line="14">            <span class="cf">return</span> a<span class="op">.</span>priority <span class="op">&lt;</span> b<span class="op">.</span>priority<span class="op">;</span> <span class="co">// 小者更晚。</span></span>
+<span data-line="15">        <span class="cf">return</span> a<span class="op">.</span>id <span class="op">&gt;</span> b<span class="op">.</span>id<span class="op">;</span>                 <span class="co">// 同优先级，大编号更晚。</span></span>
+<span data-line="16">    <span class="op">}</span></span>
+<span data-line="17"><span class="op">};</span></span>
+<span data-line="18"></span>
+<span data-line="19"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="20">    <span class="dt">int</span> n<span class="op">;</span></span>
+<span data-line="21">    cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span data-line="22">    priority_queue<span class="op">&lt;</span>Task<span class="op">,</span> vector<span class="op">&lt;</span>Task<span class="op">&gt;,</span> Later<span class="op">&gt;</span> pending<span class="op">;</span></span>
+<span data-line="23">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="24">        Task task<span class="op">;</span></span>
+<span data-line="25">        cin <span class="op">&gt;&gt;</span> task<span class="op">.</span>id <span class="op">&gt;&gt;</span> task<span class="op">.</span>priority<span class="op">;</span></span>
+<span data-line="26">        pending<span class="op">.</span>push<span class="op">(</span>task<span class="op">);</span></span>
+<span data-line="27">    <span class="op">}</span></span>
+<span data-line="28">    <span class="cf">while</span> <span class="op">(!</span>pending<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="29">        cout <span class="op">&lt;&lt;</span> pending<span class="op">.</span>top<span class="op">().</span>id <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span> <span class="co">// 先读堆顶，不能修改其比较字段。</span></span>
+<span data-line="30">        pending<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="31">    <span class="op">}</span></span>
+<span data-line="32"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>3
+1 3
+2 5
+3 5</code></pre>
+<p>输出：</p>
+<pre class="text"><code>2
+3
+1</code></pre>
+<p>共 n 次插入、删除，总时间 <span class="math inline">\(O(n\log(n+1))\)</span>，空间 <span class="math inline">\(O(n)\)</span>。若元素是成绩记录，可以同样按 score 降序、名字等字段处理平局；不要让相等项同时满足两个方向的比较。</p>
+<h5 id="n-0158">14.4 完整例题：用小根堆保留最大的 k 项</h5>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>1&lt;=k&lt;=n&lt;=100000</code> 和 n 个 int，保留按数值最大的 k 个元素，重复值按不同输入位置计入。最后按降序输出这 k 个值，以空格分隔。</p>
+<figure>
+<img alt="堆满后只与当前入选最小值比较，决定替换或跳过" decoding="async" loading="lazy" src="../media/notes/stl-topk-heap-stages.svg"/>
+<figcaption aria-hidden="true">堆满后只与当前入选最小值比较，决定替换或跳过</figcaption>
+</figure>
+<p><strong>推导：</strong> 保留集合中最小的一项是入选门槛。小根堆不足 k 项时直接放入；已经满时，若新值大于 top，删掉门槛并插入它，否则跳过。对 <code>5、1、9、3、9、2</code>、k=3，最终保留 <code>5、9、9</code>。图按升序列出入选值便于比较，不表示真实堆数组已排序。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;functional&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="5"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="8">    <span class="dt">int</span> n<span class="op">,</span> k<span class="op">;</span></span>
+<span data-line="9">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> k<span class="op">;</span></span>
+<span data-line="10">    priority_queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;,</span> greater<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> kept<span class="op">;</span></span>
+<span data-line="11">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">        <span class="dt">int</span> value<span class="op">;</span></span>
+<span data-line="13">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="14">        <span class="cf">if</span> <span class="op">(</span><span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>kept<span class="op">.</span>size<span class="op">())</span> <span class="op">&lt;</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="15">            kept<span class="op">.</span>push<span class="op">(</span>value<span class="op">);</span> <span class="co">// 尚有名额，先保存。</span></span>
+<span data-line="16">        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>value <span class="op">&gt;</span> kept<span class="op">.</span>top<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="17">            kept<span class="op">.</span>pop<span class="op">();</span> <span class="co">// 移走入选集合中最小的那项。</span></span>
+<span data-line="18">            kept<span class="op">.</span>push<span class="op">(</span>value<span class="op">);</span></span>
+<span data-line="19">        <span class="op">}</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> answer<span class="op">;</span></span>
+<span data-line="22">    <span class="cf">while</span> <span class="op">(!</span>kept<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="23">        answer<span class="op">.</span>push_back<span class="op">(</span>kept<span class="op">.</span>top<span class="op">());</span> <span class="co">// 小根堆弹出顺序为升序。</span></span>
+<span data-line="24">        kept<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="25">    <span class="op">}</span></span>
+<span data-line="26">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>answer<span class="op">.</span>size<span class="op">())</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">--</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="27">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">+</span> <span class="dv">1</span> <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>answer<span class="op">.</span>size<span class="op">()))</span></span>
+<span data-line="28">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="29">        cout <span class="op">&lt;&lt;</span> answer<span class="op">[</span>i<span class="op">];</span> <span class="co">// 反向输出，才符合题面的降序。</span></span>
+<span data-line="30">    <span class="op">}</span></span>
+<span data-line="31">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="32"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>6 3
+5 1 9 3 9 2</code></pre>
+<p>输出：</p>
+<pre class="text"><code>9 9 5</code></pre>
+<p>不变量是“处理前 i 项后，堆中保存其中最大的 min(i,k) 项”；新项不够门槛便不能改善集合，超过门槛则只需替换最小者。输出时另有 k 次弹堆，因 k&lt;=n，总时间仍为 <span class="math inline">\(O(n\log(k+1))\)</span>，空间 <span class="math inline">\(O(k)\)</span>。重复值保留，负数也正常参与比较。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P3378" rel="noopener noreferrer">洛谷 P3378 — 堆</a>、<a href="https://www.luogu.com.cn/problem/P1090" rel="noopener noreferrer">洛谷 P1090 — 合并果子</a>；<a href="https://www.luogu.com.cn/problem/P1631" rel="noopener noreferrer">洛谷 P1631 — 序列合并</a>（进阶，堆中还需保存来源位置）。</p>
+<h4 id="n-0159">15. deque：双端队列</h4>
+<h5 id="n-0160">15.1 双端操作与随机访问</h5>
+<p><code>deque&lt;T&gt;</code> 位于 <code>&lt;deque&gt;</code>，是可以直接遍历和下标访问的双端队列，和只暴露队头、队尾接口的 queue 不同。两端单项插入、删除为常数级，随机访问为 <span class="math inline">\(O(1)\)</span>，中间插入、删除通常为 <span class="math inline">\(O(n)\)</span>。</p>
+<p>deque 常用多个存储块组织元素，通过下标访问时由容器定位对应位置，因此 <code>dq[i]</code> 可以快速找到元素。整个序列没有像 vector 那样的连续存储要求，也没有 reserve、capacity 接口。</p>
+<figure>
+<img alt="两侧加入或删除时逻辑顺序怎样改变" decoding="async" loading="lazy" src="../media/notes/deque-end-operations.svg"/>
+<figcaption aria-hidden="true">两侧加入或删除时逻辑顺序怎样改变</figcaption>
+</figure>
+<p>从 <code>[2,3]</code> 开始，先前插 1 得到 <code>[1,2,3]</code>，后插 4 得到 <code>[1,2,3,4]</code>，再前删、后删回到 <code>[2,3]</code>。push_front/back、pop_front/back 和 front/back 要分清“改变内容”与“只读取”，pop 与端点读取都要求非空。</p>
+<p>两端插入会使旧迭代器失效，但已有元素的引用仍有效；中间插入会使全部旧迭代器、引用失效。pop_front 删除的不是最后一项时，只使被删项相关访问失效；删最后一项还使旧 end 失效。中间删除应重新获取访问位置，不能照搬 list 的规则。见 <a href="https://timsong-cpp.github.io/cppwp/n4659/deque.modifiers" rel="noopener noreferrer">C++17 草案：deque.modifiers</a>。</p>
+<h5 id="n-0161">15.2 完整例题：滑动窗口最小值</h5>
+<p><strong>题目原文（自拟）：</strong> 输入 <code>1&lt;=k&lt;=n&lt;=100000</code> 和 n 个 int。对每个连续长度为 k 的窗口输出最小值，从最左窗口向右移动，每次一步，输出一行 <code>n-k+1</code> 个整数，以空格分隔。</p>
+<p><strong>先分析普通做法：</strong> 每个窗口重新扫 k 项，时间为 <span class="math inline">\(O(nk)\)</span>。窗口右移后，最左旧项过期，右端新项加入，deque 可以同时在两端处理候选，但还需要知道哪些候选以后已不可能成为最小值。</p>
+<p><strong>为什么可以从后面删除候选？</strong> 若较早下标 j 的值不小于刚到的值，新的值更小或相等，而且过期更晚。以后只要旧 j 仍在窗口，新的下标也在窗口，旧 j 就没有独有优势，可以删除。于是 deque 保存下标，按时间递增、对应值严格递增；前端便是当前最小值。保存下标才能判定过期，不能只存数值。</p>
+<figure>
+<img alt="先删过期队头，再删被新值支配的队尾，加入新下标后读队头" decoding="async" loading="lazy" src="../media/notes/stl-deque-window-stages.svg"/>
+<figcaption aria-hidden="true">先删过期队头，再删被新值支配的队尾，加入新下标后读队头</figcaption>
+</figure>
+<p>图中 k=3，读到下标 2 的 -1 时，队尾值 3、1 都被更小的新值取代；读到下标 5 的 3 时，队尾值 5 被取代，但前面的 -3 仍保留；到下标 6 时，-3 的下标 3 已离开 <code>[4,6]</code>，从前端弹出这个过期下标后，新的队首对应 3，它就是当前窗口的最小值。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;deque&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> n<span class="op">,</span> k<span class="op">;</span></span>
+<span data-line="8">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> k<span class="op">;</span></span>
+<span data-line="9">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="10">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> <span class="op">&amp;</span>value <span class="op">:</span> values<span class="op">)</span></span>
+<span data-line="11">        cin <span class="op">&gt;&gt;</span> value<span class="op">;</span></span>
+<span data-line="12">    deque<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> candidates<span class="op">;</span> <span class="co">// 保存下标，队内值严格递增。</span></span>
+<span data-line="13">    <span class="dt">bool</span> first <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="14">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="15">        <span class="cf">while</span> <span class="op">(!</span>candidates<span class="op">.</span>empty<span class="op">()</span> <span class="op">&amp;&amp;</span> candidates<span class="op">.</span>front<span class="op">()</span> <span class="op">&lt;=</span> i <span class="op">-</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">            candidates<span class="op">.</span>pop_front<span class="op">();</span> <span class="co">// 当前窗口左端是 i-k+1，旧下标过期。</span></span>
+<span data-line="17">        <span class="op">}</span></span>
+<span data-line="18">        <span class="cf">while</span> <span class="op">(!</span>candidates<span class="op">.</span>empty<span class="op">()</span> <span class="op">&amp;&amp;</span> values<span class="op">[</span>candidates<span class="op">.</span>back<span class="op">()]</span> <span class="op">&gt;=</span> values<span class="op">[</span>i<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="19">            candidates<span class="op">.</span>pop_back<span class="op">();</span> <span class="co">// 新值不大且过期更晚，旧候选没有优势。</span></span>
+<span data-line="20">        <span class="op">}</span></span>
+<span data-line="21">        candidates<span class="op">.</span>push_back<span class="op">(</span>i<span class="op">);</span></span>
+<span data-line="22">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;=</span> k <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="23">            <span class="cf">if</span> <span class="op">(!</span>first<span class="op">)</span></span>
+<span data-line="24">                cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="25">            cout <span class="op">&lt;&lt;</span> values<span class="op">[</span>candidates<span class="op">.</span>front<span class="op">()];</span> <span class="co">// 当前最小值在前端。</span></span>
+<span data-line="26">            first <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="27">        <span class="op">}</span></span>
+<span data-line="28">    <span class="op">}</span></span>
+<span data-line="29">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="30"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>8 3
+1 3 -1 -3 5 3 6 7</code></pre>
+<p>输出：</p>
+<pre class="text"><code>-1 -3 -3 -3 3 3</code></pre>
+<p>每个下标只加入一次，删除后不会重新加入，虽然有两个 while，总处理次数仍为 <span class="math inline">\(O(n)\)</span>。候选队列最多 k 项，占 <span class="math inline">\(O(k)\)</span>，本程序另保存整个输入数组，占 <span class="math inline">\(O(n)\)</span>。k=1 时每个元素自己就是答案；重复值保留更晚出现的下标，不改变最小值。若改求最大值，队尾淘汰条件改为旧值 &lt;= 新值，维护递减队列。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1886" rel="noopener noreferrer">洛谷 P1886 — 单调队列 / 滑动窗口</a>（同时输出最小值和最大值）；<a href="https://www.luogu.com.cn/problem/P1440" rel="noopener noreferrer">洛谷 P1440 — 求 m 区间内的最小值</a>（窗口是当前项之前的若干项，输出时机与本例不同）。</p>
+<h4 id="n-0162">16. array：定长数组</h4>
+<p><code>array&lt;T,N&gt;</code> 位于 <code>&lt;array&gt;</code>，长度 N 写在类型中，适合大小编译时已知的序列。它连续存储，支持下标、at、迭代器、size 与 empty，也能使用 sort、fill、reverse。它没有 push_back、resize 或 reserve，复制时复制全部 N 项；大数组作局部变量还要考虑栈空间。</p>
+<p><code>array&lt;int,5&gt; a{};</code> 的五项为 0；<code>array&lt;int,5&gt; a;</code> 中基本整数元素没有自动清零，不能在赋值前读取。需要运行时决定长度时用 vector，不能把输入的普通变量 n 直接写成标准 C++ 的 <code>array&lt;int,n&gt;</code>。</p>
+<p><strong>题目原文（自拟演示）：</strong> 程序无需输入。建立长度 5 的全零 array，将每项设为 7，再将下标 2 设为 3，只对下标半开区间 [1,4) 升序排序，输出全部元素。</p>
+<p><strong>分析：</strong> 花括号负责初始清零，fill 对所有已有元素赋值，最后的下标赋值只改变第三项；这些动作都不会改变长度。之后 begin()+1 指下标 1，end()-1 指下标 4；sort 处理两位置之间的 [1,4)，不动下标 0、4。array 的位置也支持随机跳转，因此可以直接复用算法库接口。</p>
+<figure>
+<img alt="固定数组用迭代器指定局部区间，排序只改变区间内元素" decoding="async" loading="lazy" src="../media/notes/stl-array-iterator-range.svg"/>
+<figcaption aria-hidden="true">固定数组用迭代器指定局部区间，排序只改变区间内元素</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;array&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    array<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">5</span><span class="op">&gt;</span> values<span class="op">{};</span> <span class="co">// 花括号使整数元素先初始化为 0。</span></span>
+<span data-line="8">    values<span class="op">.</span>fill<span class="op">(</span><span class="dv">7</span><span class="op">);</span>         <span class="co">// 对五个已有位置赋值，不改变长度。</span></span>
+<span data-line="9">    values<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span data-line="10">    sort<span class="op">(</span>values<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> values<span class="op">.</span>end<span class="op">()</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span> <span class="co">// 只排序 [1,4)，两端保持 7。</span></span>
+<span data-line="11">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>values<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="13">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="14">        cout <span class="op">&lt;&lt;</span> values<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>7 3 7 7 7</code></pre>
+<p>这里排序区间的三项由 [7,3,7] 变成 [3,7,7]，迭代器把“处理哪几项”交给算法。成员 fill(x) 填全部元素，算法库 fill(first,last,x) 也可只填选定区间。访问单项为 <span class="math inline">\(O(1)\)</span>，填充、复制、完整遍历均为 <span class="math inline">\(O(N)\)</span>；本例加上排序总时间为 <span class="math inline">\(O(N+k\log(k+1))\)</span>，k 是选中区间长度。空的 <code>array&lt;T,0&gt;</code> 允许存在，但不能读取首尾。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1428" rel="noopener noreferrer">洛谷 P1428 — 小鱼比可爱</a>（可按题面最大规模准备固定数组，再用实际 n 控制遍历）。</p>
+<h4 id="n-0163">17. multiset 与 multimap：保存重复键</h4>
+<h5 id="n-0164">17.1 重复是多个独立元素</h5>
+<p><code>multiset&lt;T&gt;</code> 与 set 都位于 <code>&lt;set&gt;</code>，<code>multimap&lt;Key,Value&gt;</code> 与 map 都位于 <code>&lt;map&gt;</code>。它们按比较器有序，但允许多个等价键；重复项仍各占一个元素，size 包含全部记录。multimap 没有下标运算符：同一个键可能对应多个值，不能用 <code>mp[key]</code> 唯一确定其中一个。</p>
+<p><code>count(key)</code> 返回等价项数量，费用为 <span class="math inline">\(O(\log n+c)\)</span>，c 为匹配数；<code>equal_range(key)</code> 返回 <code>[lower_bound(key),upper_bound(key))</code>，用于遍历全部等价项。find 找到某个等价项或 end，不代表得到完整分组。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>操作</th>
+<th>set / map</th>
+<th>multiset / multimap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>insert</code></td>
+<td>返回 <code>(位置,是否成功)</code>，等价键不再插入</td>
+<td>返回新项位置，等价键也插入</td>
+</tr>
+<tr>
+<td><code>count(key)</code></td>
+<td>0 或 1</td>
+<td>可能大于 1</td>
+</tr>
+<tr>
+<td><code>erase(key)</code></td>
+<td>删除至多一项</td>
+<td>删除全部等价项，<span class="math inline">\(O(\log n+c)\)</span></td>
+</tr>
+<tr>
+<td><code>erase(it)</code></td>
+<td>删除指定一项</td>
+<td>仍只删除该一项，均摊常数</td>
+</tr>
+<tr>
+<td>下标访问</td>
+<td>map 有，set 没有</td>
+<td>两者都没有</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="按迭代器只删一项，按键则删完全部等价项" decoding="async" loading="lazy" src="../media/notes/stl-multiset-erase-stages.svg"/>
+<figcaption aria-hidden="true">按迭代器只删一项，按键则删完全部等价项</figcaption>
+</figure>
+<h5 id="n-0165">17.2 完整演示：重复删除与按键分组</h5>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。multiset 初始保存 <code>2、2、3</code>，输出 2 的个数；删除找到的一项 2，再输出 2 的个数；随后按键删除所有 2，输出删除数量及剩余总量。multimap 插入 <code>A→10、A→20、B→30</code>，输出所有键 A 对应的值，保持它们的插入先后。</p>
+<p><strong>分析：</strong> 第一次 erase 传迭代器，只删一个 2；第二次 erase 传整数键，删剩下的全部 2。multimap 的等价键元素按插入次序排列，通过 equal_range 取出整个 A 分组，而不是只调用一次 find。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;map&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;set&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span data-line="5"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="6"></span>
+<span data-line="7"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="8">    multiset<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">{</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
+<span data-line="9">    cout <span class="op">&lt;&lt;</span> values<span class="op">.</span>count<span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="10">    <span class="kw">auto</span> it <span class="op">=</span> values<span class="op">.</span>find<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span data-line="11">    <span class="cf">if</span> <span class="op">(</span>it <span class="op">!=</span> values<span class="op">.</span>end<span class="op">())</span></span>
+<span data-line="12">        values<span class="op">.</span>erase<span class="op">(</span>it<span class="op">);</span> <span class="co">// 只删这一项，不能 erase(end())。</span></span>
+<span data-line="13">    cout <span class="op">&lt;&lt;</span> values<span class="op">.</span>count<span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="14">    <span class="kw">auto</span> removed <span class="op">=</span> values<span class="op">.</span>erase<span class="op">(</span><span class="dv">2</span><span class="op">);</span> <span class="co">// 按键删除所有等价项。</span></span>
+<span data-line="15">    cout <span class="op">&lt;&lt;</span> removed <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> values<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="16"></span>
+<span data-line="17">    multimap<span class="op">&lt;</span>string<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> records<span class="op">;</span></span>
+<span data-line="18">    records<span class="op">.</span>emplace<span class="op">(</span><span class="st">"A"</span><span class="op">,</span> <span class="dv">10</span><span class="op">);</span></span>
+<span data-line="19">    records<span class="op">.</span>emplace<span class="op">(</span><span class="st">"A"</span><span class="op">,</span> <span class="dv">20</span><span class="op">);</span></span>
+<span data-line="20">    records<span class="op">.</span>emplace<span class="op">(</span><span class="st">"B"</span><span class="op">,</span> <span class="dv">30</span><span class="op">);</span></span>
+<span data-line="21">    <span class="kw">auto</span> <span class="op">[</span>first<span class="op">,</span> last<span class="op">]</span> <span class="op">=</span> records<span class="op">.</span>equal_range<span class="op">(</span><span class="st">"A"</span><span class="op">);</span></span>
+<span data-line="22">    <span class="dt">bool</span> separator <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="23">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> position <span class="op">=</span> first<span class="op">;</span> position <span class="op">!=</span> last<span class="op">;</span> <span class="op">++</span>position<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="24">        <span class="cf">if</span> <span class="op">(</span>separator<span class="op">)</span></span>
+<span data-line="25">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="26">        cout <span class="op">&lt;&lt;</span> position<span class="op">-&gt;</span>second<span class="op">;</span> <span class="co">// 同键可以有多个独立值。</span></span>
+<span data-line="27">        separator <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="28">    <span class="op">}</span></span>
+<span data-line="29">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="30"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>2
+1
+1 1
+10 20</code></pre>
+<p>unordered_multiset、unordered_multimap 分别位于 <code>&lt;unordered_set&gt;</code>、<code>&lt;unordered_map&gt;</code>，也允许重复键，但无全局排序；要统计大量重复频次，映射到计数往往比保存每份重复记录更合适。不要为了“需要重复”一律选择 multi，先看是否要保留每项附加信息。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P2234" rel="noopener noreferrer">洛谷 P2234 — 营业额统计</a>（有序邻近查找）；<a href="https://www.luogu.com.cn/problem/P2073" rel="noopener noreferrer">洛谷 P2073 — 送花</a>（按价格维护记录，重复价格如何处理以题面为准）。</p>
+<h4 id="n-0166">18. forward_list：单向链表</h4>
+<p><code>forward_list&lt;T&gt;</code> 位于 <code>&lt;forward_list&gt;</code>，是单向链表，只支持向前迭代，没有下标、back、push_back 或 size。它提供 <code>before_begin()</code> 表示第一个节点之前的位置，便于在头节点前插入或删除；该位置不能解引用。</p>
+<p><code>insert_after(it,x)</code> 在 it 后插入；<code>erase_after(it)</code> 删除 it 后的一项，返回后续位置。这与 list 的“在 it 前插入、删除 it 本身”不同。已知前驱时单项修改为 <span class="math inline">\(O(1)\)</span>，找前驱仍需扫描。也有 sort、unique、remove 等成员操作，普通比赛代码更常用 vector 或 list，了解接口差异即可。</p>
+<p><strong>题目原文（自拟演示）：</strong> 程序无需输入。单向链表初始为 <code>1、3</code>，在头部插入 2，再删除 2 后面的一项，输出剩余序列。</p>
+<p><strong>分析：</strong> before_begin 位于首项之前，在它后面插入就得到 <code>2、1、3</code>。此时 begin 指向 2，erase_after(begin()) 删除的是下一项 1，结果为 <code>2、3</code>，不是删除 2 本身。</p>
+<figure>
+<img alt="单向迭代器保存前驱，插入和删除作用于它后面的节点" decoding="async" loading="lazy" src="../media/notes/stl-forward-list-predecessor.svg"/>
+<figcaption aria-hidden="true">单向迭代器保存前驱，插入和删除作用于它后面的节点</figcaption>
+</figure>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;forward_list&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    forward_list<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="dv">3</span><span class="op">};</span></span>
+<span data-line="7">    values<span class="op">.</span>insert_after<span class="op">(</span>values<span class="op">.</span>before_begin<span class="op">(),</span> <span class="dv">2</span><span class="op">);</span> <span class="co">// 变为 [2,1,3]。</span></span>
+<span data-line="8">    values<span class="op">.</span>erase_after<span class="op">(</span>values<span class="op">.</span>begin<span class="op">());</span>            <span class="co">// begin 指向 2，实际删除它后面的 1。</span></span>
+<span data-line="9">    <span class="dt">bool</span> first <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span data-line="10">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> value <span class="op">:</span> values<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">        <span class="cf">if</span> <span class="op">(!</span>first<span class="op">)</span></span>
+<span data-line="12">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="13">        cout <span class="op">&lt;&lt;</span> value<span class="op">;</span></span>
+<span data-line="14">        first <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span data-line="15">    <span class="op">}</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>2 3</code></pre>
+<p>单链表迭代器沿 next 向后走，所以只有 ++it。erase_after 删除前驱后面的那一项；图中先找到 20 的前驱 10，再由这个位置删除 20。频繁操作尾部时，可以保存尾部位置，或选择提供尾部接口的容器。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1160" rel="noopener noreferrer">洛谷 P1160 — 队列安排</a>（需要左右插入时对比单、双向连接的差异，不能直接照搬本节的两次操作）。</p>
+<h4 id="n-0167">19. 根据操作选择容器</h4>
+<h5 id="n-0168">19.1 操作需求与容器选择</h5>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>需求</th>
+<th>常见选择</th>
+<th>判断依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大小固定、编译时已知</td>
+<td>array</td>
+<td>固定长度，连续存储</td>
+</tr>
+<tr>
+<td>按下标访问，主要尾部追加</td>
+<td>vector</td>
+<td>连续动态数组，尾插均摊常数</td>
+</tr>
+<tr>
+<td>两端都频繁加入或移除</td>
+<td>deque</td>
+<td>两端常数操作，可随机访问</td>
+</tr>
+<tr>
+<td>已知节点位置后频繁插入、删除、移动</td>
+<td>list</td>
+<td>不需搬移整个后缀；定位成本另计</td>
+</tr>
+<tr>
+<td>只需后进先出</td>
+<td>stack</td>
+<td>只暴露栈顶接口，状态约束清楚</td>
+</tr>
+<tr>
+<td>只需先进先出</td>
+<td>queue</td>
+<td>队头出、队尾入</td>
+</tr>
+<tr>
+<td>动态取当前最优先项</td>
+<td>priority_queue</td>
+<td>不维护全序，只保证堆顶</td>
+</tr>
+<tr>
+<td>动态有序去重、前驱后继</td>
+<td>set</td>
+<td>有序键，成员边界查找对数时间</td>
+</tr>
+<tr>
+<td>有序键到值的映射</td>
+<td>map</td>
+<td>保存键值关系，可按键遍历</td>
+</tr>
+<tr>
+<td>只需判重、查频次，不依赖键顺序</td>
+<td>unordered_set / unordered_map</td>
+<td>平均常数查找，最坏退化另计</td>
+</tr>
+<tr>
+<td>相同键的多项都要分别保存</td>
+<td>multi 版本</td>
+<td>明确重复项的删除与分组语义</td>
+</tr>
+</tbody>
+</table>
+<p>静态数据一次排序、多次二分查询，通常 vector 就足够；反复向有序序列中间插入则要计入移动费用。set 不提供高效的第 k 小接口，priority_queue 不支持任意定位删除，unordered 容器不提供有序边界，不能因一个接口方便就假设其他操作也很快。</p>
+<h5 id="n-0169">19.2 学完各容器后对照迭代器能力</h5>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>所属容器</th>
+<th>可以做什么</th>
+<th>不支持什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vector、string、deque、array</td>
+<td><code>++it</code>、<code>--it</code>、<code>it+k</code>、合法同序列位置相减</td>
+<td>越过合法边界再读元素</td>
+</tr>
+<tr>
+<td>list、set、map 及其 multi 版本</td>
+<td>前后逐项移动；<code>next(it,k)</code> 需走 k 步</td>
+<td><code>it+k</code>、<code>it2-it1</code>、通用 sort</td>
+</tr>
+<tr>
+<td>forward_list、unordered 容器</td>
+<td>向前逐项移动</td>
+<td><code>--it</code>、随机跳转；unordered 不提供有序边界查找</td>
+</tr>
+<tr>
+<td>stack、queue、priority_queue</td>
+<td>通过各自接口访问指定端</td>
+<td>普通迭代器和下标遍历</td>
+</tr>
+</tbody>
+</table>
+<p><code>distance(first,last)</code> 对随机访问迭代器可直接相减，对其他迭代器一般要逐项移动。<code>next</code>、<code>prev</code> 位于 <code>&lt;iterator&gt;</code>；它们不会让链表突然获得 <span class="math inline">\(O(1)\)</span> 的下标访问。</p>
+<h5 id="n-0170">19.3 从元素与迭代器理解修改后的访问</h5>
+<ol type="1">
+<li><strong>访问是否存在：</strong> 下标小于 size；front、back、top、pop 前非空；find 结果与 end 比较；区间方向和开闭正确。</li>
+<li><strong>修改是否改变题意：</strong> 下标查询 map 是否意外插入；set 是否丢失本应保留的重复项；unordered 遍历是否被误当输入顺序；pair 的平局规则是否满足要求。</li>
+<li><strong>旧位置是否还能用：</strong> vector 扩容和后缀移动、deque 两端或中间修改、哈希 rehash 各有失效规则；使用 erase 返回值继续遍历，不能继续读被删项。</li>
+</ol>
+<p><code>clear()</code> 后元素不存在，即使容量还在也不能按旧下标访问。size 为无符号类型，空容器上的 <code>size()-1</code> 会先下溢；倒序遍历可以用反向迭代器，或在范围已知可放进 int 时先转为有符号下标。竞赛宏把 int 改成 long long 后，元素存储也会变宽，应按实际类型与容量估算内存。</p>
+<p>这些规则的容器类型区分见 <a href="https://timsong-cpp.github.io/cppwp/n4659/associative.reqmts" rel="noopener noreferrer">C++17 草案：关联容器要求</a>。学习时先独立运行各节的小例题，再把容器与后面的搜索、二分、贪心和图算法结合起来。</p>
+<h4 id="n-0171">20. <code>&lt;numeric&gt;</code>：填值、求和与求公约数</h4>
+<p>已经能遍历数组，每次写“从起点依次加一”和“把所有元素相加”仍会重复。<code>&lt;numeric&gt;</code> 提供这些常用操作，可以用已经认识的迭代器区间调用。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>接口</th>
+<th>参数含义</th>
+<th>返回值或效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>iota(first,last,start)</code></td>
+<td>对已有的半开区间从 start 连续赋值</td>
+<td>不创建元素，依次写 start、start+1…</td>
+</tr>
+<tr>
+<td><code>accumulate(first,last,initial)</code></td>
+<td>从 initial 开始累计</td>
+<td>初值的类型决定累计类型；求整数总和常用 0LL</td>
+</tr>
+<tr>
+<td><code>gcd(a,b)</code></td>
+<td>两个整数</td>
+<td>最大公约数，<code>gcd(0,0)</code> 为 0</td>
+</tr>
+<tr>
+<td><code>lcm(a,b)</code></td>
+<td>两个整数</td>
+<td>最小公倍数，任一参数为 0 时结果为 0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。建立四项整数数组，连续填为 1、2、3、4；第一行输出全部元素，第二行输出总和、12 与 18 的最大公约数和最小公倍数，以空格分隔。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;numeric&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">(</span><span class="dv">4</span><span class="op">);</span>                 <span class="co">// 先建立已有区间，iota 不会增长长度。</span></span>
+<span data-line="8">    iota<span class="op">(</span>values<span class="op">.</span>begin<span class="op">(),</span> values<span class="op">.</span>end<span class="op">(),</span> <span class="dv">1</span><span class="op">);</span> <span class="co">// 依次填入 1、2、3、4。</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">4</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span data-line="11">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="12">        cout <span class="op">&lt;&lt;</span> values<span class="op">[</span>i<span class="op">];</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="15">    <span class="dt">long</span> <span class="dt">long</span> total <span class="op">=</span> accumulate<span class="op">(</span>values<span class="op">.</span>begin<span class="op">(),</span> values<span class="op">.</span>end<span class="op">(),</span> <span class="dv">0</span><span class="bu">LL</span><span class="op">);</span> <span class="co">// 按 long long 累计。</span></span>
+<span data-line="16">    cout <span class="op">&lt;&lt;</span> total <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> gcd<span class="op">(</span><span class="dv">12</span><span class="op">,</span> <span class="dv">18</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> lcm<span class="op">(</span><span class="dv">12</span><span class="op">,</span> <span class="dv">18</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="17"><span class="op">}</span></span></code></pre></div>
+<p>输出：</p>
+<pre class="text"><code>1 2 3 4
+10 6 36</code></pre>
+<p>填值、求和各遍历一次，共 <span class="math inline">\(O(n)\)</span> 时间。gcd、lcm 从 C++17 起提供，分别返回最大公约数与最小公倍数；结果类型由传入的整数类型决定。数论章节会通过辗转相除继续推导公约数算法。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1029" rel="noopener noreferrer">洛谷 P1029 — 最大公约数和最小公倍数问题</a>（先检查给定两数能否形成所需关系，再枚举符合条件的数对；可在数论章节学完后回做）。</p>
+<h4 id="n-0172">21. tuple：多字段记录</h4>
+<p>pair 能保存两个字段。若一条记录要同时保存行、列和代价，可以用 <code>&lt;tuple&gt;</code> 的 <code>tuple&lt;int,int,long long&gt;</code>；各类型按字段顺序列在尖括号里。</p>
+<p><strong>题目原文（自拟）：</strong> 程序无需输入。保存记录 <code>(2,3,5)</code>，先输出全部字段；再通过结构化绑定得到副本，把副本中的行改成 9，输出副本。原记录不能改变。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;tuple&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    tuple<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> record<span class="op">{</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">};</span> <span class="co">// 三个类型分别对应三个字段。</span></span>
+<span data-line="7">    cout <span class="op">&lt;&lt;</span> get<span class="op">&lt;</span><span class="dv">0</span><span class="op">&gt;(</span>record<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> get<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;(</span>record<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> get<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;(</span>record<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="8">    <span class="kw">auto</span> <span class="op">[</span>row<span class="op">,</span> column<span class="op">,</span> cost<span class="op">]</span> <span class="op">=</span> record<span class="op">;</span> <span class="co">// 值绑定得到副本。</span></span>
+<span data-line="9">    row <span class="op">=</span> <span class="dv">9</span><span class="op">;</span></span>
+<span data-line="10">    cout <span class="op">&lt;&lt;</span> row <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> column <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> cost <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="11"><span class="op">}</span></span></code></pre></div>
+<p>输出为 <code>2 3 5</code>、<code>9 3 5</code>，各占一行。<code>get&lt;0&gt;(record)</code> 是函数模板调用：0 是编译期字段编号，从 0 开始，不是运行时下标运算。要修改原记录可用 <code>get&lt;0&gt;(record)=9</code> 或引用绑定；成员名较多且有明确含义时，自己定义 struct 通常更易读。</p>
+<p>tuple 默认按字段依次进行字典序比较，与 pair 的思路相同。DP 的区间恢复和图论的边记录会用到它；遇到 <code>auto [left,right,sum]</code> 时，先核对返回 tuple 的字段排列。</p>
+<h4 id="n-0173">22. <code>&lt;sstream&gt;</code>：从一行文本读取数据</h4>
+<p>有时题目一行包含若干整数，但没有告诉这一行有几个。先把整行读进 string，再像读取 cin 一样从这段文本里解析整数，可以把“行的边界”与“数值的读取”分开。</p>
+<p><strong>题目原文（自拟）：</strong> 输入一行，只含合法的整数和空白，允许空行；整数及累计总和都在 long long 范围内。输出这一行整数的总和，空行输出 0。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;sstream&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="7">    string line<span class="op">;</span></span>
+<span data-line="8">    getline<span class="op">(</span>cin<span class="op">,</span> line<span class="op">);</span>        <span class="co">// 首次读取就是整行，没有前一次数字输入残留的换行。</span></span>
+<span data-line="9">    istringstream input<span class="op">(</span>line<span class="op">);</span> <span class="co">// &lt;sstream&gt; 把这段字符串作为输入来源。</span></span>
+<span data-line="10">    <span class="dt">long</span> <span class="dt">long</span> value<span class="op">,</span> total <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="11">    <span class="cf">while</span> <span class="op">(</span>input <span class="op">&gt;&gt;</span> value<span class="op">)</span></span>
+<span data-line="12">        total <span class="op">+=</span> value<span class="op">;</span> <span class="co">// 读完整行或解析失败时停止。</span></span>
+<span data-line="13">    cout <span class="op">&lt;&lt;</span> total <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="14"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>12 -5 7</code></pre>
+<p>输出：</p>
+<pre class="text"><code>14</code></pre>
+<p>istringstream 只读取已经保存的文本，不会越过这一行去取 cin 中下一行的数据。它仍遵守整数解析规则；若题面允许非法字符，要另外检查，不应把遇到非法字符后的部分误认为已经全部处理。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-01-14.html"><small>上一节</small>（十四） 模板入门：从相同操作到类型参数 T</a><a href="../chapters/part-01-16.html"><small>下一节</small>（十六） std::function：保存、传递和更换计算动作</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0099">1. string：字符串</a><a class="level-5" href="#n-0100">1.1 用 string 保存和访问文本</a><a class="level-5" href="#n-0101">1.2 string 操作的参数与返回值</a><a class="level-5" href="#n-0102">1.3 完整演示：查找后修改一个片段</a><a class="level-4" href="#n-0103">2. vector：连续动态数组</a><a class="level-5" href="#n-0104">2.1 连续动态数组与初始化</a><a class="level-5" href="#n-0105">2.2 用引用读入运行时长度的数组</a><a class="level-5" href="#n-0106">2.3 size、capacity、reserve 与 resize</a><a class="level-5" href="#n-0107">2.4 vector 常用操作的时间复杂度</a><a class="level-5" href="#n-0108">2.5 完整例题：先压紧，再用区间位置删除尾部</a><a class="level-5" href="#n-0109">2.6 vector 修改与迭代器失效</a><a class="level-5" href="#n-0110">2.7 迭代器的用处：把同一个区间交给不同操作</a><a class="level-4" href="#n-0111">3. pair：成对数据</a><a class="level-5" href="#n-0112">3.1 pair 的两个字段与构造</a><a class="level-5" href="#n-0113">3.2 完整演示：pair 的字典序比较</a><a class="level-4" href="#n-0114">4. 迭代器：访问位置与区间</a><a class="level-5" href="#n-0115">4.1 位置、元素值与半开区间</a><a class="level-5" href="#n-0116">4.2 迭代器的移动、比较与距离运算</a><a class="level-5" href="#n-0117">4.3 值拷贝、引用与只读遍历</a><a class="level-5" href="#n-0118">4.4 完整演示：遍历中安全删除</a><a class="level-4" href="#n-0119">5. &lt;algorithm&gt;：通过迭代器操作区间</a><a class="level-5" href="#n-0120">5.1 算法处理区间，容器提供位置</a><a class="level-5" href="#n-0121">5.2 完整例题：去重后统计等值边界</a><a class="level-5" href="#n-0122">5.3 自定义比较规则</a><a class="level-5" href="#n-0123">5.4 从手动压紧到 remove 与 erase</a><a class="level-4" href="#n-0124">6. STL 头文件与包含方式</a><a class="level-4" href="#n-0125">7. list：双向链表</a><a class="level-5" href="#n-0126">7.1 list 的节点存储与双向连接</a><a class="level-5" href="#n-0127">7.2 list 的插入、删除与节点移动</a><a class="level-5" href="#n-0128">7.3 完整演示：定位、插入、删除和移动节点</a><a class="level-4" href="#n-0129">8. stack：栈</a><a class="level-5" href="#n-0130">8.1 栈顶、栈底与后进先出</a><a class="level-5" href="#n-0131">8.2 完整例题：按出栈顺序输出</a><a class="level-5" href="#n-0132">8.3 完整例题：用栈进行括号匹配</a><a class="level-4" href="#n-0133">9. queue：队列</a><a class="level-5" href="#n-0134">9.1 队头、队尾与先进先出</a><a class="level-5" href="#n-0135">9.2 完整例题：循环报数出队</a><a class="level-4" href="#n-0136">10. map：有序键值映射</a><a class="level-5" href="#n-0137">10.1 键、值与有序查找</a><a class="level-5" href="#n-0138">10.2 查询与写入的区别</a><a class="level-5" href="#n-0139">10.3 完整例题：统计后查询单词次数</a><a class="level-5" href="#n-0140">10.4 迭代器的用处：定位一次，修改值或沿有序区间前进</a><a class="level-4" href="#n-0141">11. set：有序键集合</a><a class="level-5" href="#n-0142">11.1 有序、不重复的键集合</a><a class="level-5" href="#n-0143">11.2 set 的插入、删除与定位</a><a class="level-5" href="#n-0144">11.3 完整例题：严格前驱与不小于查询值的后继</a><a class="level-5" href="#n-0145">11.4 自定义记录的排序与唯一性</a><a class="level-4" href="#n-0146">12. unordered_map：哈希键值映射</a><a class="level-5" href="#n-0147">12.1 哈希先定位桶，再比较键</a><a class="level-5" href="#n-0148">12.2 下标、负载与访问失效</a><a class="level-5" href="#n-0149">12.3 完整例题：按查询顺序输出频次</a><a class="level-4" href="#n-0150">13. unordered_set：哈希键集合</a><a class="level-5" href="#n-0151">13.1 unordered_set 的存在性查询</a><a class="level-5" href="#n-0152">13.2 完整例题：按首次出现顺序去重</a><a class="level-5" href="#n-0153">13.3 自定义类型的相等与哈希要一致</a><a class="level-4" href="#n-0154">14. priority_queue：优先队列</a><a class="level-5" href="#n-0155">14.1 从堆顶读取优先级最高的一项</a><a class="level-5" href="#n-0156">14.2 大根堆、小根堆与比较器</a><a class="level-5" href="#n-0157">14.3 完整例题：优先级与平局顺序</a><a class="level-5" href="#n-0158">14.4 完整例题：用小根堆保留最大的 k 项</a><a class="level-4" href="#n-0159">15. deque：双端队列</a><a class="level-5" href="#n-0160">15.1 双端操作与随机访问</a><a class="level-5" href="#n-0161">15.2 完整例题：滑动窗口最小值</a><a class="level-4" href="#n-0162">16. array：定长数组</a><a class="level-4" href="#n-0163">17. multiset 与 multimap：保存重复键</a><a class="level-5" href="#n-0164">17.1 重复是多个独立元素</a><a class="level-5" href="#n-0165">17.2 完整演示：重复删除与按键分组</a><a class="level-4" href="#n-0166">18. forward_list：单向链表</a><a class="level-4" href="#n-0167">19. 根据操作选择容器</a><a class="level-5" href="#n-0168">19.1 操作需求与容器选择</a><a class="level-5" href="#n-0169">19.2 学完各容器后对照迭代器能力</a><a class="level-5" href="#n-0170">19.3 从元素与迭代器理解修改后的访问</a><a class="level-4" href="#n-0171">20. &lt;numeric&gt;：填值、求和与求公约数</a><a class="level-4" href="#n-0172">21. tuple：多字段记录</a><a class="level-4" href="#n-0173">22. &lt;sstream&gt;：从一行文本读取数据</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>

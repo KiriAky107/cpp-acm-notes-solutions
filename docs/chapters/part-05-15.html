@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 C++ 基础、题意建模到搜索、动态规划与图论，配逐步推导、过程图与 111 份带注释题解。"><title>（十五） 图论入门 · C++ / ACM 自学笔记</title><link rel="canonical" href="https://kiriaky107.github.io/cpp-acm-notes-solutions/chapters/part-05-15.html"><link rel="icon" href="../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../static/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('cpp-notes-theme')||'light'}catch{}</script><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"},startup:{typeset:false}};</script><script defer src="../static/vendor/tex-svg.js"></script><script defer src="../static/site.js"></script></head>
+<body data-site-root="../" data-page-url="chapters/part-05-15.html" data-page-title="（十五） 图论入门" data-page-kind="chapter"><a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html">C++ / ACM <small>自学笔记 · v5.0</small></a><nav class="topnav" aria-label="主导航"><a href="../index.html" class="">首页</a><a href="../chapters/part-00.html" class="active">完整笔记</a><a href="../answers/index.html" class="">练习题解</a><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub ↗</a></nav><div class="top-actions"><button class="search-open" data-search-open type="button">搜索<kbd>⌘ K</kbd></button><button class="icon-button" type="button" data-theme-toggle aria-label="切换深浅主题">深色</button><button class="icon-button menu-toggle" type="button" aria-controls="chapter-nav" aria-expanded="false">目录</button></div></header><div class="page-layout"><nav class="sidebar" id="chapter-nav" aria-label="笔记目录"><p class="sidebar-title">阅读目录</p><details><summary>序言</summary><a class="overview-link" href="../chapters/part-00.html" >本部分导读</a><a class="" href="../chapters/part-00-01.html" >使用方法</a><a class="" href="../chapters/part-00-02.html" >按学习目标选择必读路线</a><a class="" href="../chapters/part-00-03.html" >分阶段练习索引</a><a class="" href="../chapters/part-00-04.html" >快速 I/O 与竞赛模板</a><a class="" href="../chapters/part-00-05.html" >C 与 C++ 的关系</a></details><details><summary>一、C++ 语法基础</summary><a class="overview-link" href="../chapters/part-01.html" >本部分导读</a><a class="" href="../chapters/part-01-01.html" >（一） 程序结构与编译</a><a class="" href="../chapters/part-01-02.html" >（二） 变量、数据类型与初始化</a><a class="" href="../chapters/part-01-03.html" >（三） 常量、类型转换与整数溢出</a><a class="" href="../chapters/part-01-04.html" >（四） 运算符与位运算</a><a class="" href="../chapters/part-01-05.html" >（五） 条件与循环</a><a class="" href="../chapters/part-01-06.html" >（六） 原生数组与枚举</a><a class="" href="../chapters/part-01-07.html" >（七） 函数、参数与作用域</a><a class="" href="../chapters/part-01-08.html" >（八） 指针、引用与对象生命周期</a><a class="" href="../chapters/part-01-09.html" >（九） auto、lambda 与结构化绑定</a><a class="" href="../chapters/part-01-10.html" >（十） 输入细节、文件与异常</a><a class="" href="../chapters/part-01-11.html" >（十一） 命名空间、头文件与多文件程序</a><a class="" href="../chapters/part-01-12.html" >（十二） 常用数学函数与数值计算</a><a class="" href="../chapters/part-01-13.html" >（十三） 常用标准流与输出格式</a><a class="" href="../chapters/part-01-14.html" >（十四） 模板入门：从相同操作到类型参数 T</a><a class="" href="../chapters/part-01-15.html" >（十五） STL：容器、迭代器与算法</a><a class="" href="../chapters/part-01-16.html" >（十六） std::function：保存、传递和更换计算动作</a></details><details><summary>二、面向对象编程</summary><a class="overview-link" href="../chapters/part-02.html" >本部分导读</a><a class="" href="../chapters/part-02-01.html" >（一） 类与对象</a><a class="" href="../chapters/part-02-02.html" >（二） 封装与访问控制</a><a class="" href="../chapters/part-02-03.html" >（三） 构造函数、初始化列表与析构函数</a><a class="" href="../chapters/part-02-04.html" >（四） this、const 成员函数与 static 成员</a><a class="" href="../chapters/part-02-05.html" >（五） 继承与组合</a><a class="" href="../chapters/part-02-06.html" >（六） 虚函数、重写与多态</a><a class="" href="../chapters/part-02-07.html" >（七） 拷贝、移动与资源自动管理</a><a class="" href="../chapters/part-02-08.html" >（八） 运算符重载与比较规则</a><a class="" href="../chapters/part-02-09.html" >（九） 面向对象部分的练习</a></details><details><summary>三、解题方法论：从题意到代码</summary><a class="overview-link" href="../chapters/part-03.html" >本部分导读</a><a class="" href="../chapters/part-03-01.html" >（一） 先提取对象、变量、限制和目标</a><a class="" href="../chapters/part-03-02.html" >（二） 把关键词翻译成条件</a><a class="" href="../chapters/part-03-03.html" >（三） 从要处理的对象确定循环</a><a class="" href="../chapters/part-03-04.html" >（四） 必要条件、充分条件与等价条件</a><a class="" href="../chapters/part-03-05.html" >（五） 从文字规则整理优先级</a><a class="" href="../chapters/part-03-06.html" >（六） 从计数要求推导向上取整</a><a class="" href="../chapters/part-03-07.html" >（七） 把最优化改成可行性判断</a><a class="" href="../chapters/part-03-08.html" >（八） 用不变量和反例检查推导</a><a class="" href="../chapters/part-03-09.html" >（九） 建模与推导中的典型反例</a><a class="" href="../chapters/part-03-10.html" >（十） 从样例猜想到证明与构造</a><a class="" href="../chapters/part-03-11.html" >（十一） 从输出目标确定状态信息</a><a class="" href="../chapters/part-03-12.html" >（十二） 一题多建模与最优方法的选择过程</a><a class="" href="../chapters/part-03-13.html" >（十三） 复杂题面到事件模拟的完整推导</a><a class="" href="../chapters/part-03-14.html" >（十四） 从推导到程序职责与错误定位</a><a class="" href="../chapters/part-03-15.html" >（十五） 反例构造、缩小输入与小规模对拍</a><a class="" href="../chapters/part-03-16.html" >（十六） 从 WA 回到题面与模型</a><a class="" href="../chapters/part-03-17.html" >（十七） 解题复盘与模型迁移</a></details><details><summary>四、批量输入、大整数运算与提交检查</summary><a class="overview-link" href="../chapters/part-04.html" >本部分导读</a><a class="" href="../chapters/part-04-01.html" >（一） fread 整数输入模板</a><a class="" href="../chapters/part-04-02.html" >（二） 大整数的加减乘除</a><a class="" href="../chapters/part-04-03.html" >（三） 解题和自查顺序</a></details><details open><summary>五、数据结构与算法</summary><a class="overview-link" href="../chapters/part-05.html" >本部分导读</a><a class="" href="../chapters/part-05-01.html" >（一） 时间复杂度与空间复杂度</a><a class="" href="../chapters/part-05-02.html" >（二） 枚举与模拟</a><a class="" href="../chapters/part-05-03.html" >（三） 前缀和与差分</a><a class="" href="../chapters/part-05-04.html" >（四） 排序与离散化</a><a class="" href="../chapters/part-05-05.html" >（五） 基础数论</a><a class="" href="../chapters/part-05-06.html" >（六） 快速幂</a><a class="" href="../chapters/part-05-07.html" >（七） 哈希（散列）表</a><a class="" href="../chapters/part-05-08.html" >（八） 二叉树</a><a class="" href="../chapters/part-05-09.html" >（九） 双指针与滑动窗口（尺取法）</a><a class="" href="../chapters/part-05-10.html" >（十） 二分与三分搜索</a><a class="" href="../chapters/part-05-11.html" >（十一） 贪心算法</a><a class="" href="../chapters/part-05-12.html" >（十二） 搜索：递归、回溯、DFS、BFS 与记忆化</a><a class="" href="../chapters/part-05-13.html" >（十三） 动态规划（DP）基础</a><a class="" href="../chapters/part-05-14.html" >（十四） 并查集</a><a class="current" href="../chapters/part-05-15.html" aria-current=page>（十五） 图论入门</a></details><details><summary>后记</summary><a class="overview-link" href="../chapters/part-06.html" >本部分导读</a><a class="" href="../chapters/part-06-01.html" >从读懂题目到独立完成一道题</a><a class="" href="../chapters/part-06-02.html" >留给继续练习的你</a><a class="" href="../chapters/part-06-03.html" >按学习阶段选择推荐书籍</a><a class="" href="../chapters/part-06-04.html" >后续学习路线</a><a class="" href="../chapters/part-06-05.html" >牛客周赛与 Codeforces 分级训练</a><a class="" href="../chapters/part-06-06.html" >国内 ACM 与 OI 类竞赛</a><a class="" href="../chapters/part-06-07.html" >阅读、做题与复盘的安排</a></details><details><summary>附录</summary><a class="overview-link" href="../chapters/part-07.html" >本部分导读</a><a class="" href="../chapters/part-07-01.html" >题解仓库入口</a><a class="" href="../chapters/part-07-02.html" >按章节与题号查阅</a><a class="" href="../chapters/part-07-03.html" >从提示回到独立解题</a></details><a href="../answers/index.html">练习题解 · 111 份</a></nav><div class="reading-layout"><main id="main" class="article"><div class="breadcrumb"><a href="../index.html">首页</a> / 五、数据结构与算法</div><div class="article-meta"><span>笔记 v5.0</span><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions/blob/main/notes/C艹学习笔记v5.0.md">查看 Markdown</a><span>图解可点击放大 · 代码可复制</span></div><article><h3 id="n-0432">（十五） 图论入门</h3>
+<p>并查集能回答是否连通，却不记录从哪里经过哪些道路或路程多长。把道路写成边、地点写成点，再复用 DFS、BFS、堆和 DP 处理路径与依赖问题。</p>
+<p>图论研究“对象之间怎样连接”。先把题目中的对象抽象为顶点，把允许的一步关系抽象为边，再选择算法；道路长度、任务先后和格子移动虽然都能建图，所求的答案却可能完全不同。</p>
+<h4 id="n-0433">1. 顶点、边、路径与连通性</h4>
+<h5 id="n-0434">1.1 先建立准确的图模型</h5>
+<p>记图为 <span class="math inline">\(G=(V,E)\)</span>，V 是顶点集合，E 是边的集合。本章用 n 表示顶点数、m 表示题目输入的边数，编号为 <code>0…n-1</code>。有向边记为 <code>u→v</code>；无向边连接 u、v 两端，允许双向通过，但输入时通常只写一次。</p>
+<table>
+<thead>
+<tr>
+<th>题目对象</th>
+<th>顶点</th>
+<th>边的含义</th>
+<th>常见目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>城市与道路</td>
+<td>城市</td>
+<td>可以直接行驶的一条道路</td>
+<td>能否到达、最短距离</td>
+</tr>
+<tr>
+<td>人与朋友关系</td>
+<td>人</td>
+<td>两人之间直接的关系</td>
+<td>连通块、是否同组</td>
+</tr>
+<tr>
+<td>迷宫</td>
+<td>可走格子</td>
+<td>一次合法移动</td>
+<td>可达性、最少步数</td>
+</tr>
+<tr>
+<td>课程或任务</td>
+<td>课程、任务</td>
+<td>u 必须先于 v 完成</td>
+<td>合法执行顺序</td>
+</tr>
+</tbody>
+</table>
+<p>“有关系”不自动表示“能走”。若关系是“互相不能同组”，边表示约束，适合二分图染色；若是道路，边表示允许移动。边的定义决定后面的判断如何写。</p>
+<p><strong>有向与无向：</strong> <code>u→v</code> 表示从 u 到 v 的方向；从 v 回 u 则要再找相反方向的路径。一条双向道路可表示为无向边，也可在邻接表中存两条反向记录。存储记录数加倍，题目输入的边数 m 不变。</p>
+<p><strong>无权与带权：</strong> 无权最短路通常数边数，每步代价统一；带权图的边附有时间、长度、费用等权值，例如路线总费用是沿途边权相加；若题目问一路最高的费用，就沿途取最大边权。先写出题目怎样计算一条路径的值，再决定怎样比较和更新。零权边是存在且费用为 0 的边，不能用 0 同时表示“没有边”。</p>
+<figure>
+<img alt="道路模型和任务依赖模型" decoding="async" loading="lazy" src="../media/notes/graph-directed-weighted-model.svg"/>
+<figcaption aria-hidden="true">道路模型和任务依赖模型</figcaption>
+</figure>
+<p>道路的方向与权值限制移动，依赖边则要求先完成起点任务。</p>
+<h5 id="n-0435">1.2 度、自环、重边与简单图</h5>
+<p>无向图中，<strong>度 deg(u)</strong> 是连接到 u 的边端点数量。边 (u,v) 各给两端增加 1；自环 (u,u) 在同一顶点贡献 2。因此所有顶点的度之和为 <span class="math inline">\(2m\)</span>，因为每条边有两个端点。孤立点的度为 0，它仍然是图中的一个顶点。</p>
+<p>有向图分入度和出度：<code>u→v</code> 给 u 的出度加 1、v 的入度加 1；所有入度之和与所有出度之和均为 m。入度为 0 不等于孤立，它可以有出边；出度为 0 也可能有入边。</p>
+<p><strong>自环</strong>的两端相同，<strong>重边</strong>是同一对端点之间存在多条边。无自环、无重边的图称为简单图；有向图的 u→v 与 v→u 是不同方向，不能把它们当作同一条重边。</p>
+<p>无向图存自环时也写两次，邻接表长度与度相符；最短路可以保留重边或取最小边权；拓扑排序读入一条记录时给终点入度加一，处理起点时再沿这条记录给终点入度减一。二分图中的自环直接造成矛盾，因为顶点不能与自己颜色不同。</p>
+<figure>
+<img alt="无向图的度与连通块" decoding="async" loading="lazy" src="../media/notes/graph-degrees-components.svg"/>
+<figcaption aria-hidden="true">无向图的度与连通块</figcaption>
+</figure>
+<p>每条边给两端各贡献一次度；孤立点单独构成一个连通块。</p>
+<h5 id="n-0436">1.3 走法、路径、环与距离</h5>
+<p>一串按边连接的顶点 <code>v0→v1→…→vk</code> 是合法走法。一般走法允许重复顶点或边；<strong>简单路径</strong>不重复顶点。不同教材对“路径”的用词略有差别，解题时应明确题目是否允许重复，本章求非负最短路时可以选取不绕环的最优路径。</p>
+<p>路径的边数长度为 k，不是 k+1；加权费用是 k 条边权之和。例如 <code>0→2→1→3</code> 经过 4 个顶点、3 条边，边权为 1、2、1 时费用为 4。<strong>环</strong>是在合法方向下绕行回到起点的关系；无向图沿同一条边走过去再回来，不算由不同边构成的普通环。判断无向环时需要区别父边与额外边，重边还需要区别具体的边记录。</p>
+<p><strong>可达</strong>表示存在至少一条合法路径；<strong>距离</strong>是所有合法路径中最小的长度或代价。没有路径时用 <code>-1</code> 或 INF 表示不可达。起点到自己允许不走任何边，费用为 0。</p>
+<p>负权边不等于负环。若能从起点到一个负环，再从该环到目标，反复绕环可让费用无限降低，目标没有有限最短距离。下面的道路费用都是非负数，多走一条边不会让累计费用降低，Dijkstra 正是利用这个性质逐步确定最短距离。Floyd 则枚举中转点组合路径；负环对路径的影响，会从“反复绕环”的变化来判断。</p>
+<h5 id="n-0437">1.4 连通性、树与 DAG</h5>
+<p>无向图中，彼此可达的顶点构成一个<strong>连通块</strong>，不同块之间没有边。只有一个连通块的无向图是连通图；孤立点独自构成一个块。</p>
+<p>有向图的箭头决定行走方向。例如只有 <code>0→1</code> 时，0 能到 1，1 没有返回 0 的边。任意两点互相可达叫强连通；忽略箭头后连通叫弱连通。从起点做一次 DFS 会得到这个起点能到达的点；在 <code>0→1</code> 中两点都被访问，但它们没有互相可达，因此是两个强连通分量。</p>
+<p><strong>树</strong>是连通且无环的无向图，n 个顶点恰有 n-1 条边，两点间有唯一简单路径。<strong>森林</strong>无环但可以不连通，有 c 个连通块时边数为 n-c。仅“边数为 n-1”不足以判断是树：一个三角形加一个孤立点有 4 个顶点、3 条边，却不连通且有环。</p>
+<p><strong>DAG（有向无环图）</strong>有方向且无有向环。忽略方向后仍可能含环，例如 <code>0→1、0→2、1→3、2→3</code>；沿方向不能绕回起点，因此是 DAG，可以用拓扑序安排状态计算。</p>
+<figure>
+<img alt="树、DAG 与有向环" decoding="async" loading="lazy" src="../media/notes/graph-tree-dag-cycle.svg"/>
+<figcaption aria-hidden="true">树、DAG 与有向环</figcaption>
+</figure>
+<p>树的无环与 DAG 的无有向环不是相同条件。</p>
+<h4 id="n-0438">2. 建图过程与存储方式选择</h4>
+<h5 id="n-0439">2.1 邻接表、邻接矩阵与边表</h5>
+<p>图的输入通常是一组边，但搜索时经常要回答“从顶点 u 可以直接走到哪些点”。<strong>建图</strong>就是把输入整理成方便回答这些问题的数据结构。顶点编号只是下标约定，不代表空间位置；下面统一使用 <code>0…n-1</code>。</p>
+<h6 id="n-0440">2.1.1 邻接表：每个顶点有一张邻居列表</h6>
+<p>可以把邻接表想成一本通讯录：每个顶点有自己的条目，条目内只记它能直接到达的邻居。<code>vector&lt;vector&lt;int&gt;&gt; graph(n)</code> 的外层有 n 个位置，<code>graph[u]</code> 是顶点 u 的内层动态数组，开始时为空；每读到一条边，就向对应列表追加终点。</p>
+<p>这里的“表”指邻居列表，本例用 vector 实现；学习邻接表时，要先理解“每个顶点分别保存自己的邻居”，再看它采用哪种容器。</p>
+<p>例如无向边为 <code>(0,1)、(0,2)、(1,3)</code>，最终得到：</p>
+<table>
+<thead>
+<tr>
+<th>外层下标</th>
+<th>该顶点的邻居列表</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code>[1,2]</code></td>
+<td>从 0 可以一步到 1 或 2</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>[0,3]</code></td>
+<td>从 1 可以一步到 0 或 3</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>[0]</code></td>
+<td>从 2 可以一步到 0</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>[1]</code></td>
+<td>从 3 可以一步到 1</td>
+</tr>
+</tbody>
+</table>
+<p><code>graph[0][1]=2</code> 的意思是“顶点 0 的第二个邻居是 2”，第二个下标是<strong>列表里的位置</strong>，不是目标顶点编号。因此，不能用 <code>graph[u][v]</code> 直接判断 u 与 v 是否有边；要在 <code>graph[u]</code> 中查找值 v。没有邻居的顶点仍有一个空列表。</p>
+<figure>
+<img alt="从空邻接表开始，逐条读边并向两端追加邻居" decoding="async" loading="lazy" src="../media/notes/graph-list-build-stages.svg"/>
+<figcaption aria-hidden="true">从空邻接表开始，逐条读边并向两端追加邻居</figcaption>
+</figure>
+<p>读 <code>(0,1)</code> 时，向 <code>graph[0]</code> 追加 1、向 <code>graph[1]</code> 追加 0；读 <code>(0,2)</code> 后，只改变第 0、2 行；读 <code>(1,3)</code> 后，只改变第 1、3 行。每一步只保存这条边真正涉及的邻居。</p>
+<p>无向边允许从两端互相到达，所以追加两次；有向边 <code>u→v</code> 只向 <code>graph[u]</code> 追加 v。普通 vector 邻接表按追加顺序存储，不会自动排序。它也会保留重边；无向自环执行两次追加，正好对应自环对度的两次贡献。</p>
+<h6 id="n-0441">2.1.2 邻接矩阵：每一对顶点预留一个格子</h6>
+<p>邻接矩阵是一张 n 行、n 列的表。<strong>行 u 表示出发点，列 v 表示到达点</strong>，<code>matrix[u][v]</code> 直接回答这一对顶点的关系。在无权“是否有边”的版本中，先全部填 0；读到 <code>u→v</code> 后写 1。</p>
+<p>同一组无向边得到：</p>
+<table>
+<thead>
+<tr>
+<th>出发点  到达点</th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>例如 <code>matrix[0][2]=1</code> 表示 0、2 直接相邻；<code>matrix[1][2]=0</code> 表示没有直接边，即使它们能经 0 到达，也不能把这一格写成 1。这里记录的是<strong>直接边</strong>，不是整个图的可达关系。</p>
+<figure>
+<img alt="从全零矩阵开始，逐条读边并填写两个对称格子" decoding="async" loading="lazy" src="../media/notes/graph-matrix-build-stages.svg"/>
+<figcaption aria-hidden="true">从全零矩阵开始，逐条读边并填写两个对称格子</figcaption>
+</figure>
+<p>无向边 <code>(0,1)</code> 要写 <code>matrix[0][1]=1</code> 与 <code>matrix[1][0]=1</code>，因此无向图的矩阵关于主对角线对称。有向边只写规定方向，矩阵不一定对称。普通无权存在性矩阵遇到重边仍写 1，只保留“存在”，不保留条数；若需要重边数量，应另约定格子存计数并累加。</p>
+<p>这个版本的对角线初始为 0，读到自环后对应格子变成 1。不能把它与后面最短路矩阵的“对角线为 0”混淆：那里 0 表示不移动的空路径代价，格子的含义已经改变。</p>
+<h6 id="n-0442">2.1.3 边表：每条输入边单独存一条记录</h6>
+<p>边表直接保存 <code>(u,v)</code> 或 <code>(u,v,w)</code>，像把输入行收进一个数组。它方便枚举全部边、按权值排序，所以 Kruskal 常用边表；但若每次想找 u 的邻居，通常要扫过全部记录。无向边在边表中可只保存一次，“写两个方向”是为了邻居查询，不能把所有表示都机械地加倍。</p>
+<figure>
+<img alt="同一张图的邻接表与邻接矩阵对照" decoding="async" loading="lazy" src="../media/notes/graph-list-matrix.svg"/>
+<figcaption aria-hidden="true">同一张图的邻接表与邻接矩阵对照</figcaption>
+</figure>
+<p>图的结构相同，存储位置的含义不同。邻接表的各行长度随邻居数变化；矩阵的每行固定有 n 格，包括没有边的位置。</p>
+<table>
+<colgroup>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+</colgroup>
+<thead>
+<tr>
+<th>表示</th>
+<th>空间</th>
+<th>枚举 u 的邻居</th>
+<th>查询 u、v 是否直接相邻</th>
+<th>常见场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>邻接表</td>
+<td><span class="math inline">\(O(n+m)\)</span></td>
+<td><span class="math inline">\(O(\deg(u))\)</span>；有向图看出度</td>
+<td>普通 vector 需扫描 u 的列表</td>
+<td>搜索、Dijkstra、拓扑排序</td>
+</tr>
+<tr>
+<td>邻接矩阵</td>
+<td><span class="math inline">\(O(n^2)\)</span></td>
+<td>扫描第 u 行，<span class="math inline">\(O(n)\)</span></td>
+<td>读一个格子，<span class="math inline">\(O(1)\)</span></td>
+<td>小规模稠密图、Floyd</td>
+</tr>
+<tr>
+<td>边表</td>
+<td><span class="math inline">\(O(m)\)</span>，另计顶点数据</td>
+<td>通常需扫全部边，<span class="math inline">\(O(m)\)</span></td>
+<td>通常需扫全部边</td>
+<td>Kruskal 全边排序</td>
+</tr>
+</tbody>
+</table>
+<p>n=100000、m=200000 时，邻接表随 n+m 增长；矩阵却有 10¹⁰ 个格子，每格 4 B 时约 37.25 GiB。存储选择先看规模和需要的操作：仅有少量边、主要枚举邻居时用邻接表；需要频繁读取所有点对且 n 较小时再考虑矩阵。空间还要计入 vector 对象、分配容量、队列和距离数组。</p>
+<h5 id="n-0443">2.2 完整例题：读入并输出邻接表</h5>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 n m，<code>1&lt;=n&lt;=1000、0&lt;=m&lt;=10000</code>；随后 m 行各输入 u v，编号在 <code>0…n-1</code>，表示无向边，允许重边、自环。保留全部边记录，按顶点编号逐行输出 <code>u:</code>，后面按输入顺序输出 u 的所有邻居；没有邻居只输出 <code>u:</code>。</p>
+<p><strong>推导：</strong> 先创建 n 个空列表，每条无向边对 u 写 v、对 v 写 u。自环同样写两次；m 是输入边数，所有列表合计有 2m 条记录。每条边都按图中的两个追加动作处理。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span data-line="7">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span data-line="8">    vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> graph<span class="op">(</span>n<span class="op">);</span> <span class="co">// 外层 n 个顶点，内层邻居列表初始为空。</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">        <span class="dt">int</span> u<span class="op">,</span> v<span class="op">;</span></span>
+<span data-line="11">        cin <span class="op">&gt;&gt;</span> u <span class="op">&gt;&gt;</span> v<span class="op">;</span></span>
+<span data-line="12">        graph<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">(</span>v<span class="op">);</span> <span class="co">// 从 u 可以直接到 v。</span></span>
+<span data-line="13">        graph<span class="op">[</span>v<span class="op">].</span>push_back<span class="op">(</span>u<span class="op">);</span> <span class="co">// 无向边还允许反方向；自环也按此写两次。</span></span>
+<span data-line="14">    <span class="op">}</span></span>
+<span data-line="15">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> u <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>u<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">        cout <span class="op">&lt;&lt;</span> u <span class="op">&lt;&lt;</span> <span class="ch">':'</span><span class="op">;</span></span>
+<span data-line="17">        <span class="co">// v 是邻居编号，依次取出 graph[u] 的元素即可枚举出边。</span></span>
+<span data-line="18">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> graph<span class="op">[</span>u<span class="op">])</span> cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span> <span class="op">&lt;&lt;</span> v<span class="op">;</span></span>
+<span data-line="19">        cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>4 3
+0 1
+0 2
+1 3</code></pre>
+<p>输出：</p>
+<pre class="text"><code>0: 1 2
+1: 0 3
+2: 0
+3: 1</code></pre>
+<p><strong>代码与复杂度：</strong> <code>graph[u].push_back(v)</code> 新建一条从 u 到 v 的邻接记录；输出时枚举顶点，再枚举该列表。建图和输出共 <span class="math inline">\(O(n+m)\)</span> 时间、<span class="math inline">\(O(n+m)\)</span> 空间。m=0 时仍输出 n 行空列表。有向图只保留第一条追加语句；题目按 1 编号时可读入后减一，或统一开 n+1 个位置并枚举 1…n，不能只改一处。</p>
+<h5 id="n-0444">2.3 完整例题：读入并输出邻接矩阵</h5>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 n m，<code>1&lt;=n&lt;=1000、0&lt;=m&lt;=10000</code>；随后 m 行输入 <code>0…n-1</code> 范围内的 u v，表示无向边，允许重边、自环。输出 n 行，每行 n 个整数，用空格分隔；第 u 行第 v 个整数为 1 当且仅当 u、v 之间存在直接边，否则为 0。重边只表示一次存在，自环使对应对角格为 1。</p>
+<p><strong>分析：</strong> 每个点对预留一格，初值全为 0。输入 <code>(u,v)</code> 时填写两个对称位置；重复赋 1 不会增加数值。读取 <code>matrix[u][v]</code> 可直接判定是否有边，枚举 u 的全部邻居则需检查整行的 n 个格子。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span data-line="7">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span data-line="8">    vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> matrix<span class="op">(</span>n<span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>n<span class="op">,</span> <span class="dv">0</span><span class="op">));</span> <span class="co">// 每个点对都有一个格子。</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">        <span class="dt">int</span> u<span class="op">,</span> v<span class="op">;</span></span>
+<span data-line="11">        cin <span class="op">&gt;&gt;</span> u <span class="op">&gt;&gt;</span> v<span class="op">;</span></span>
+<span data-line="12">        matrix<span class="op">[</span>u<span class="op">][</span>v<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 行是出发点，列是到达点。</span></span>
+<span data-line="13">        matrix<span class="op">[</span>v<span class="op">][</span>u<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 无向边要对称填写；自环是对同一格赋值。</span></span>
+<span data-line="14">    <span class="op">}</span></span>
+<span data-line="15">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> u <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>u<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> v <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>v<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">            <span class="cf">if</span> <span class="op">(</span>v <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="18">            cout <span class="op">&lt;&lt;</span> matrix<span class="op">[</span>u<span class="op">][</span>v<span class="op">];</span> <span class="co">// 0 表示没有直接边，不表示两点完全不可达。</span></span>
+<span data-line="19">        <span class="op">}</span></span>
+<span data-line="20">        cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="21">    <span class="op">}</span></span>
+<span data-line="22"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>4 3
+0 1
+0 2
+1 3</code></pre>
+<p>输出：</p>
+<pre class="text"><code>0 1 1 0
+1 0 0 1
+1 0 0 0
+0 1 0 0</code></pre>
+<p><strong>样例推导与复杂度：</strong> 逐边填写的位置正是矩阵过程图中的绿色格；<code>(0,2)</code> 只写第 0 行第 2 列及第 2 行第 0 列，不会产生 <code>(1,2)</code>。初始化与完整输出都访问 n² 格，总时间 <span class="math inline">\(O(n^2+m)\)</span>，额外空间 <span class="math inline">\(O(n^2)\)</span>。矩阵中的行、列下标都是顶点编号，与邻接表的第二下标含义不同。</p>
+<h5 id="n-0445">2.4 带权图的终点、权值与重边存储</h5>
+<p>带权邻接表不能只保存终点，因为最短路还需要知道这条边的代价。把一条记录定义为 <code>{to,weight}</code>，<code>graph[u]</code> 中的每个元素就同时包含终点和权值。边的两个端点相同而权值不同，仍是两条记录。</p>
+<p>用于最短路的初始矩阵则保存“目前已知的最小代价”：对角线设 0，表示空路径；没有直接边的其他位置设 <code>INF</code>；读入重边时取最小权值。<strong>零权边是合法边，不能用 0 表示没有边。</strong> 这种矩阵会合并重边，也不保留“对角线为 0 是否源于自环”的明细；需要边的完整信息时保留邻接表或边表。</p>
+<figure>
+<img alt="逐条保存带权记录，矩阵对重边取最小并保留零权边" decoding="async" loading="lazy" src="../media/notes/graph-weighted-build-stages.svg"/>
+<figcaption aria-hidden="true">逐条保存带权记录，矩阵对重边取最小并保留零权边</figcaption>
+</figure>
+<p>例如有向边 <code>(0,1,5)、(0,1,2)、(1,2,0)</code>：第 0 个邻接表保留 <code>(1,5)、(1,2)</code>，矩阵中 <code>initialDistance[0][1]</code> 从 INF 改为 5，再改为 2；第 1 个列表保存 <code>(2,0)</code>，矩阵的 <code>(1,2)</code> 为 0，确实存在一条免费边。</p>
+<p><strong>代码示例（建图函数）：</strong> 输入 n 个顶点、合法边三元组及方向标志，返回两种表示，便于小图对照。此教学函数约定 <code>1&lt;=n&lt;=1000</code>、权值在 <code>[0,10^9]</code>；大规模图按需求单独构造邻接表。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;tuple&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="kw">struct</span> WeightedEdge <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> to<span class="op">;</span>           <span class="co">// 终点，不是邻接表内的位置。</span></span>
+<span data-line="8">    <span class="dt">long</span> <span class="dt">long</span> weight<span class="op">;</span> <span class="co">// 从所属列表的顶点走向 to 的代价。</span></span>
+<span data-line="9"><span class="op">};</span></span>
+<span data-line="10"></span>
+<span data-line="11"><span class="kw">struct</span> WeightedGraph <span class="op">{</span></span>
+<span data-line="12">    vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>WeightedEdge<span class="op">&gt;&gt;</span> list<span class="op">;</span></span>
+<span data-line="13">    vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;&gt;</span> initialDistance<span class="op">;</span></span>
+<span data-line="14"><span class="op">};</span></span>
+<span data-line="15"></span>
+<span data-line="16">WeightedGraph buildWeightedGraph<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span> <span class="at">const</span> vector<span class="op">&lt;</span>tuple<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;&gt;</span> <span class="op">&amp;</span>edges<span class="op">,</span></span>
+<span data-line="17">                                 <span class="dt">bool</span> directed<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="18">    <span class="kw">constexpr</span> <span class="dt">long</span> <span class="dt">long</span> INF <span class="op">=</span> <span class="dv">1</span><span class="bu">LL</span> <span class="op">&lt;&lt;</span> <span class="dv">60</span><span class="op">;</span> <span class="co">// 无直接路径，与合法的零权边区分。</span></span>
+<span data-line="19">    WeightedGraph result<span class="op">{</span>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>WeightedEdge<span class="op">&gt;&gt;(</span>n<span class="op">),</span></span>
+<span data-line="20">                         vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;&gt;(</span>n<span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;(</span>n<span class="op">,</span> INF<span class="op">))};</span></span>
+<span data-line="21">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> u <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>u<span class="op">)</span> result<span class="op">.</span>initialDistance<span class="op">[</span>u<span class="op">][</span>u<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 空路径代价。</span></span>
+<span data-line="22">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>u<span class="op">,</span> v<span class="op">,</span> w<span class="op">]</span> <span class="op">:</span> edges<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="23">        result<span class="op">.</span>list<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">({</span>v<span class="op">,</span> w<span class="op">});</span> <span class="co">// 每条边都保留完整记录，包括重边。</span></span>
+<span data-line="24">        result<span class="op">.</span>initialDistance<span class="op">[</span>u<span class="op">][</span>v<span class="op">]</span> <span class="op">=</span> min<span class="op">(</span>result<span class="op">.</span>initialDistance<span class="op">[</span>u<span class="op">][</span>v<span class="op">],</span> w<span class="op">);</span></span>
+<span data-line="25">        <span class="cf">if</span> <span class="op">(!</span>directed<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="26">            result<span class="op">.</span>list<span class="op">[</span>v<span class="op">].</span>push_back<span class="op">({</span>u<span class="op">,</span> w<span class="op">});</span> <span class="co">// 无向图补反方向；有向图不补。</span></span>
+<span data-line="27">            result<span class="op">.</span>initialDistance<span class="op">[</span>v<span class="op">][</span>u<span class="op">]</span> <span class="op">=</span> min<span class="op">(</span>result<span class="op">.</span>initialDistance<span class="op">[</span>v<span class="op">][</span>u<span class="op">],</span> w<span class="op">);</span></span>
+<span data-line="28">        <span class="op">}</span></span>
+<span data-line="29">    <span class="op">}</span></span>
+<span data-line="30">    <span class="cf">return</span> result<span class="op">;</span></span>
+<span data-line="31"><span class="op">}</span></span></code></pre></div>
+<p><strong>调用与解释：</strong> <code>buildWeightedGraph(3, {{0,1,5},{0,1,2},{1,2,0}}, true)</code> 得到图中列表和初始矩阵 <code>[[0,2,INF],[INF,0,0],[INF,INF,0]]</code>。<code>initialDistance[0][2]</code> 仍是 INF，因为尚未执行最短路；通过 1 到 2 的费用 2，要由后面的算法推导出来。若方向标志改为 false，每条边再向相反方向存一次。</p>
+<p><strong>复杂度：</strong> 构造列表部分为 <span class="math inline">\(O(n+m)\)</span>，构造矩阵部分为 <span class="math inline">\(O(n^2+m)\)</span>；同时返回两者时，总时间与额外空间均为 <span class="math inline">\(O(n^2+m)\)</span>。后续遍历带权邻接表时，使用 <code>for (auto [v,w] : graph[u])</code> 取出邻居和权值，不要把一条记录当成单个编号。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/B3643" rel="noopener noreferrer">洛谷 B3643 — 图的存储</a>（同时练习矩阵与列表，注意按题面调整编号、排序和输出格式）。</p>
+<h4 id="n-0446">3. 用搜索标记无向图的连通块</h4>
+<p><strong>题目原文（自拟）：</strong> 输入无向图邻接表 <code>graph</code>，n&gt;=1，编号合法，允许重边与自环。返回各顶点所在连通块编号；按枚举起点 <code>0…n-1</code> 的顺序，从 0 开始给块编号，孤立点也应得到编号。</p>
+<p><strong>思路：</strong> 从未标记顶点做一次 BFS，得到且仅得到这个起点可达的整块顶点，给它们同一个编号；再寻找下一个未标记顶点。只搜 0 会漏掉其他块，外层起点枚举不能省略。</p>
+<figure>
+<img alt="连通块搜索逐次覆盖" decoding="async" loading="lazy" src="../media/notes/graph-component-flood.svg"/>
+<figcaption aria-hidden="true">连通块搜索逐次覆盖</figcaption>
+</figure>
+<p>一次搜索覆盖一个完整块，下一起点必然属于尚未覆盖的块。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="3"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="4"></span>
+<span data-line="5">vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> componentIds<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> <span class="op">&amp;</span>graph<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="6">    <span class="dt">int</span> n <span class="op">=</span> graph<span class="op">.</span>size<span class="op">(),</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="7">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> id<span class="op">(</span>n<span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span data-line="8">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> start <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> start <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>start<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>id<span class="op">[</span>start<span class="op">]</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span data-line="10">        queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span data-line="11">        id<span class="op">[</span>start<span class="op">]</span> <span class="op">=</span> count<span class="op">;</span> <span class="co">// 当前起点对应一个新连通块。</span></span>
+<span data-line="12">        q<span class="op">.</span>push<span class="op">(</span>start<span class="op">);</span></span>
+<span data-line="13">        <span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="14">            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span data-line="15">            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="16">            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> graph<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="17">                <span class="cf">if</span> <span class="op">(</span>id<span class="op">[</span>v<span class="op">]</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span data-line="18">                id<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> count<span class="op">;</span> <span class="co">// 入队时标记，每个顶点只处理一次。</span></span>
+<span data-line="19">                q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span data-line="20">            <span class="op">}</span></span>
+<span data-line="21">        <span class="op">}</span></span>
+<span data-line="22">        <span class="op">++</span>count<span class="op">;</span></span>
+<span data-line="23">    <span class="op">}</span></span>
+<span data-line="24">    <span class="cf">return</span> id<span class="op">;</span></span>
+<span data-line="25"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例推导：</strong> n=6，边为 <code>(0,1)、(1,2)、(3,4)</code>，结果为 <code>[0,0,0,1,1,2]</code>。从 0 搜到 1、2；枚举到 1、2 时跳过；从 3 搜到 4；最后 5 独自成为第三块。两点编号相同当且仅当它们在无向图中连通。</p>
+<p><strong>复杂度为什么不是 n 次 BFS？</strong> 每点标记后不再展开，每条邻接表记录也只在所属顶点处理时检查一次，所有搜索总时间 <span class="math inline">\(O(n+m)\)</span>，额外空间 <span class="math inline">\(O(n)\)</span>，另计图存储。静态图搜索可保留父边；动态加边并查询连通时可用并查集。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1451" rel="noopener noreferrer">洛谷 P1451 — 求细胞数量</a>、<a href="https://www.luogu.com.cn/problem/P1596" rel="noopener noreferrer">洛谷 P1596 — 湖计数</a>（允许八方向连接）。</p>
+<h4 id="n-0447">4. 二分图：沿边给相邻顶点分组</h4>
+<p>二分图能把顶点分为两个互不相交的集合，使每条边的两端属于不同集合。它是约束能否成立的性质，和把图画在纸的左右两侧无关。</p>
+<p><strong>题目原文（自拟）：</strong> 输入无向图邻接表 <code>graph</code>，n&gt;=1、编号合法，允许重边和自环。能否给所有顶点赋 0 或 1，使每条边两端异色？返回 <code>pair&lt;bool,vector&lt;int&gt;&gt;</code>；可行时为 true 和一种染色，否则为 false 和空数组。</p>
+<p><strong>分析：</strong> 每个未染色连通块任选一个起点为 0，沿边要求邻居为相反颜色。未染色则赋值，已染色则核对要求；遇到同色边立即失败。整块颜色全部翻转也不能消除同色边。</p>
+<figure>
+<img alt="二分图染色与奇环冲突" decoding="async" loading="lazy" src="../media/notes/graph-bipartite-odd-cycle.svg"/>
+<figcaption aria-hidden="true">二分图染色与奇环冲突</figcaption>
+</figure>
+<p>图按 BFS 实际执行三角形 <code>(0,1)、(0,2)、(1,2)</code>：先给 0 染色 0，出队后把 1、2 都染成 1 并入队；处理 1 时，邻居 2 已是 1，和当前颜色相同，立即返回失败。不是事后把三角形涂色得出结论，而是每次检查边都要求两端异色。四边形样例则可以完整通过这些检查。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6">pair<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> bipartiteColors<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> <span class="op">&amp;</span>graph<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> color<span class="op">(</span>graph<span class="op">.</span>size<span class="op">(),</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span data-line="8">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> start <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> start <span class="op">&lt;</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>graph<span class="op">.</span>size<span class="op">());</span> <span class="op">++</span>start<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="9">        <span class="cf">if</span> <span class="op">(</span>color<span class="op">[</span>start<span class="op">]</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span>
+<span data-line="10">        queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span data-line="11">        color<span class="op">[</span>start<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 不同连通块分别选起点颜色。</span></span>
+<span data-line="12">        q<span class="op">.</span>push<span class="op">(</span>start<span class="op">);</span></span>
+<span data-line="13">        <span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="14">            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span data-line="15">            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="16">            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> graph<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="17">                <span class="cf">if</span> <span class="op">(</span>color<span class="op">[</span>v<span class="op">]</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="18">                    color<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> color<span class="op">[</span>u<span class="op">]</span> <span class="op">^</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 在 0、1 之间翻转。</span></span>
+<span data-line="19">                    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span data-line="20">                <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>color<span class="op">[</span>v<span class="op">]</span> <span class="op">==</span> color<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="21">                    <span class="cf">return</span> <span class="op">{</span><span class="kw">false</span><span class="op">,</span> <span class="op">{}};</span> <span class="co">// 当前边的异色约束无法满足。</span></span>
+<span data-line="22">                <span class="op">}</span></span>
+<span data-line="23">            <span class="op">}</span></span>
+<span data-line="24">        <span class="op">}</span></span>
+<span data-line="25">    <span class="op">}</span></span>
+<span data-line="26">    <span class="cf">return</span> <span class="op">{</span><span class="kw">true</span><span class="op">,</span> color<span class="op">};</span></span>
+<span data-line="27"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例：</strong> 边 <code>(0,1)、(1,2)、(2,3)、(3,0)</code> 返回 <code>[0,1,0,1]</code>。若再加 <code>(0,2)</code>，两点都与 1 相邻，染成了同一种颜色，但新增边要求异色，返回失败。</p>
+<p><strong>奇环为什么失败？</strong> 沿每条边翻转一次，走奇数条边回到起点会要求起点与自身异色；偶数环绕回时没有这个矛盾。反过来，同色冲突边结合搜索树中两端的路径会构成奇环。无向图可二染色当且仅当无奇环，自环也应失败。</p>
+<p><strong>代码与复杂度：</strong> 外层枚举覆盖所有块和孤立点，<code>^1</code> 仅用于已经确定为 0、1 的颜色。每点和每条边记录检查一次，时间 <span class="math inline">\(O(n+m)\)</span>，额外空间 <span class="math inline">\(O(n)\)</span>。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1330" rel="noopener noreferrer">洛谷 P1330 — 封锁阳光大学</a>（每块统计两侧人数，选择较少一侧，奇环无解）。</p>
+<h4 id="n-0448">5. Dijkstra：非负边权单源最短路</h4>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 n m start，<code>1&lt;=n&lt;=100000、0&lt;=m&lt;=200000</code>，start 和顶点编号在 <code>0…n-1</code>。随后 m 行输入 u v weight，表示有向边，<code>0&lt;=weight&lt;=10⁹</code>，允许重边、自环。求固定起点 start 到每个顶点的最短费用，按顶点顺序输出；不可达输出 -1。起点到自己费用为 0。</p>
+<p><strong>单源究竟求什么？</strong> “单”限制起点只有一个，不是只求一个终点。固定起点 0 后，会得到到 0、1、2、… 的整份距离数组；改成从 2 出发，要重新计算对应答案。下面用 8 个顶点、14 条边，有替代路线、双向关系、有向环和一个孤立点。</p>
+<p><strong>状态与松弛：</strong> <code>distance[v]</code> 是目前找到的起点到 v 的最小候选费用，初始只有起点为 0，其余 INF。已知一条到 u 的路径，再走边 u→v 可构造候选 <code>distance[u]</code>+weight；更小时替换旧值，这叫松弛。例如先沿直接边 0→1 得到费用 6，之后发现 0→2→1 只花 2+1=3，就把候选从 6 更新为 3。</p>
+<figure>
+<img alt="Dijkstra 在 8 点 14 边图中的全部松弛轮次" decoding="async" loading="lazy" src="../media/notes/dijkstra-relaxation.svg"/>
+<figcaption aria-hidden="true">Dijkstra 在 8 点 14 边图中的全部松弛轮次</figcaption>
+</figure>
+<p>图中起点始终为 0，绿色边组成它的最短路径树；格外注意到 3 与到 4 的路线发生分叉，孤立点 7 保持不可达。</p>
+<p><strong>为什么取出最小有效候选就能确定距离？</strong> 设已确定点集为 S，即将处理顶点 u 的候选为 d。假设存在更短路径，从起点沿它找到第一个不属于 S 的顶点 v；进入 v 的前驱在 S 中，它确定时已松弛这条边。由于后续边权非负，v 的候选不大于这条更短路径的总费用，也就小于 d；堆应先处理 v，与 u 当前最小矛盾。因此 d 已是最终距离。负边会破坏“后续费用不再降低”的条件。</p>
+<table>
+<thead>
+<tr>
+<th>有效取出记录</th>
+<th>本轮得到的新候选</th>
+<th>distance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初始化</td>
+<td>只有起点 0 的距离为 0</td>
+<td>[0,INF,INF,INF,INF,INF,INF,INF]</td>
+</tr>
+<tr>
+<td>取出 (0,0)</td>
+<td>1←6、2←2、3←9</td>
+<td>[0,6,2,9,INF,INF,INF,INF]</td>
+</tr>
+<tr>
+<td>取出 (2,2)</td>
+<td>1←3、3←6、4←9</td>
+<td>[0,3,2,6,9,INF,INF,INF]</td>
+</tr>
+<tr>
+<td>取出 (3,1)</td>
+<td>4←6</td>
+<td>[0,3,2,6,6,INF,INF,INF]</td>
+</tr>
+<tr>
+<td>取出 (6,3)</td>
+<td>5←14</td>
+<td>[0,3,2,6,6,14,INF,INF]</td>
+</tr>
+<tr>
+<td>取出 (6,4)</td>
+<td>5←7、6←11</td>
+<td>[0,3,2,6,6,7,11,INF]</td>
+</tr>
+<tr>
+<td>取出 (7,5)</td>
+<td>6←8</td>
+<td>[0,3,2,6,6,7,8,INF]</td>
+</tr>
+<tr>
+<td>取出 (8,6)</td>
+<td>出边不再改善距离</td>
+<td>[0,3,2,6,6,7,8,INF]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>旧记录为什么仍在堆里？</strong> 更新顶点 1 时，把新记录 (3,1) 加入堆，旧记录 (6,1) 仍存在。后续取出旧项发现 <code>current!=distance[1]</code>，直接跳过，不重复扫描出边。其他过期记录同理。零权边可使用；只有严格改善时入堆，避免相等候选反复扩展。</p>
+<p><strong>恢复路径：</strong> 每次松弛成功时另记 <code>parent[v]</code>=u。终点可达时沿父指针回到起点并反转；不可达时不回溯。只求距离的示例省略 parent，图中的绿色边展示这一来源关系。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;functional&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;limits&gt;</span></span>
+<span data-line="5"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="6"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="7"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="8"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="9"><span class="kw">using</span> ll <span class="op">=</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">;</span></span>
+<span data-line="10"><span class="kw">constexpr</span> ll INF <span class="op">=</span> numeric_limits<span class="op">&lt;</span>ll<span class="op">&gt;::</span>max<span class="op">()</span> <span class="op">/</span> <span class="dv">4</span><span class="op">;</span></span>
+<span data-line="11"></span>
+<span data-line="12"><span class="kw">struct</span> Edge <span class="op">{</span></span>
+<span data-line="13">    <span class="dt">int</span> to<span class="op">;</span></span>
+<span data-line="14">    ll weight<span class="op">;</span></span>
+<span data-line="15"><span class="op">};</span></span>
+<span data-line="16"></span>
+<span data-line="17">vector<span class="op">&lt;</span>ll<span class="op">&gt;</span> dijkstra<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>Edge<span class="op">&gt;&gt;</span> <span class="op">&amp;</span>graph<span class="op">,</span> <span class="dt">int</span> start<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="18">    vector<span class="op">&lt;</span>ll<span class="op">&gt;</span> distance<span class="op">(</span>graph<span class="op">.</span>size<span class="op">(),</span> INF<span class="op">);</span></span>
+<span data-line="19">    priority_queue<span class="op">&lt;</span>pair<span class="op">&lt;</span>ll<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;,</span> vector<span class="op">&lt;</span>pair<span class="op">&lt;</span>ll<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;,</span> greater<span class="op">&lt;</span>pair<span class="op">&lt;</span>ll<span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;&gt;</span> pending<span class="op">;</span></span>
+<span data-line="20">    distance<span class="op">[</span>start<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="21">    pending<span class="op">.</span>push<span class="op">({</span><span class="dv">0</span><span class="op">,</span> start<span class="op">});</span></span>
+<span data-line="22">    <span class="cf">while</span> <span class="op">(!</span>pending<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="23">        <span class="kw">auto</span> <span class="op">[</span>current<span class="op">,</span> u<span class="op">]</span> <span class="op">=</span> pending<span class="op">.</span>top<span class="op">();</span></span>
+<span data-line="24">        pending<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="25">        <span class="co">// 堆中可能有旧候选距离，过期记录直接跳过。</span></span>
+<span data-line="26">        <span class="cf">if</span> <span class="op">(</span>current <span class="op">!=</span> distance<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="27">            <span class="cf">continue</span><span class="op">;</span></span>
+<span data-line="28">        <span class="op">}</span></span>
+<span data-line="29">        <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> Edge <span class="op">&amp;</span>edge <span class="op">:</span> graph<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="30">            <span class="cf">if</span> <span class="op">(</span>edge<span class="op">.</span>weight <span class="op">&lt;</span> INF <span class="op">-</span> current <span class="op">&amp;&amp;</span> current <span class="op">+</span> edge<span class="op">.</span>weight <span class="op">&lt;</span> distance<span class="op">[</span>edge<span class="op">.</span>to<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="31">                distance<span class="op">[</span>edge<span class="op">.</span>to<span class="op">]</span> <span class="op">=</span> current <span class="op">+</span> edge<span class="op">.</span>weight<span class="op">;</span></span>
+<span data-line="32">                pending<span class="op">.</span>push<span class="op">({</span>distance<span class="op">[</span>edge<span class="op">.</span>to<span class="op">],</span> edge<span class="op">.</span>to<span class="op">});</span></span>
+<span data-line="33">            <span class="op">}</span></span>
+<span data-line="34">        <span class="op">}</span></span>
+<span data-line="35">    <span class="op">}</span></span>
+<span data-line="36">    <span class="cf">return</span> distance<span class="op">;</span></span>
+<span data-line="37"><span class="op">}</span></span>
+<span data-line="38"></span>
+<span data-line="39"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="40">    <span class="dt">int</span> n<span class="op">,</span> m<span class="op">,</span> start<span class="op">;</span></span>
+<span data-line="41">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m <span class="op">&gt;&gt;</span> start<span class="op">;</span></span>
+<span data-line="42">    vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>Edge<span class="op">&gt;&gt;</span> graph<span class="op">(</span>n<span class="op">);</span></span>
+<span data-line="43">    <span class="cf">while</span> <span class="op">(</span>m<span class="op">--)</span> <span class="op">{</span></span>
+<span data-line="44">        <span class="dt">int</span> u<span class="op">,</span> v<span class="op">;</span></span>
+<span data-line="45">        ll weight<span class="op">;</span></span>
+<span data-line="46">        cin <span class="op">&gt;&gt;</span> u <span class="op">&gt;&gt;</span> v <span class="op">&gt;&gt;</span> weight<span class="op">;</span></span>
+<span data-line="47">        graph<span class="op">[</span>u<span class="op">].</span>push_back<span class="op">({</span>v<span class="op">,</span> weight<span class="op">});</span></span>
+<span data-line="48">    <span class="op">}</span></span>
+<span data-line="49">    <span class="kw">auto</span> distance <span class="op">=</span> dijkstra<span class="op">(</span>graph<span class="op">,</span> start<span class="op">);</span></span>
+<span data-line="50">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="51">        <span class="cf">if</span> <span class="op">(</span>i <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="52">            cout <span class="op">&lt;&lt;</span> <span class="ch">' '</span><span class="op">;</span></span>
+<span data-line="53">        <span class="op">}</span></span>
+<span data-line="54">        cout <span class="op">&lt;&lt;</span> <span class="op">(</span>distance<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> INF <span class="op">?</span> <span class="op">-</span><span class="dv">1</span> <span class="op">:</span> distance<span class="op">[</span>i<span class="op">]);</span></span>
+<span data-line="55">    <span class="op">}</span></span>
+<span data-line="56">    cout <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="57"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>8 14 0
+0 1 6
+0 2 2
+0 3 9
+1 2 2
+1 4 3
+2 1 1
+2 3 4
+2 4 7
+3 4 2
+3 5 8
+4 5 1
+4 6 5
+5 6 1
+6 3 2</code></pre>
+<p>输出：</p>
+<pre class="text"><code>0 3 2 6 6 7 8 -1</code></pre>
+<p><strong>样例解释：</strong> 到 1 为 0→2→1，费用 3；到 3 为 0→2→3，费用 6；到 6 为 0→2→1→4→5→6，费用 2+1+3+1+1=8。到 7 无路，图中 INF 对应程序输出 -1。换起点 2，距离为 [INF,1,0,4,4,5,6,INF]，这与下一节矩阵的第 2 行对应。</p>
+<p><strong>代码与复杂度：</strong> 堆中保存 (候选费用,顶点)，先取费用较小的记录；发现更短路径后重新入堆，取到过期记录时跳过。INF 用来标记尚未找到路径的点，代码把实际路径费用与这个标记分开处理。重复入堆实现的时间为 <span class="math inline">\(O((n+m)\log(n+m))\)</span>、空间 <span class="math inline">\(O(n+m)\)</span>；简单图常写 <span class="math inline">\(O((n+m)\log n)\)</span>。无向道路在邻接表中保存两个方向，处理过程相同。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P3371" rel="noopener noreferrer">洛谷 P3371 — 单源最短路径（弱化版）</a>、<a href="https://www.luogu.com.cn/problem/P4779" rel="noopener noreferrer">洛谷 P4779 — 单源最短路径（标准版）</a>。</p>
+<h4 id="n-0449">6. Floyd：所有点对最短路与距离矩阵</h4>
+<p><strong>题目原文（自拟）：</strong> 输入一个 n×n 的有向图距离矩阵 distance，<code>1&lt;=n&lt;=500</code>。对角线为 0，非负边权不超过 10⁹，无边用 <code>numeric_limits&lt;long long&gt;::max()/4</code> 表示，重边预先取最小权值。求任意起点到任意终点的最短费用，原地更新矩阵；不可达格仍为 INF。示例使用与上一节完全相同的 8 点 14 边图。</p>
+<p><strong>所有点对的结果长什么样？</strong> 让每个顶点分别作起点，求它到每个终点的距离，得到所有点对最短路，也称全源最短路。<code>distance[i][j]</code> 的行 i 是起点，列 j 是终点；整张矩阵包含 n 份单源答案。第 0 行等于上一节从 0 出发的数组，第 2 行等于从 2 出发的数组。即使某个点与起点 0 无法互达，也有以它为起点的一行，记录它到其他各点的距离。</p>
+<figure>
+<img alt="Floyd 在 8 点 14 边图中由直接边矩阵推导全部点对距离" decoding="async" loading="lazy" src="../media/notes/floyd-intermediate-vertex.svg"/>
+<figcaption aria-hidden="true">Floyd 在 8 点 14 边图中由直接边矩阵推导全部点对距离</figcaption>
+</figure>
+<p>图中每个节点都可作为起点。初始只知道直接边，最终矩阵保存绕中转点后的距离；橙色第 0 行说明单源结果只是完整矩阵中的一行。</p>
+<p><strong>从具体路线到中转状态：</strong> 计算同图中 <code>0→4</code> 的距离。允许中转点 1 后，路线 <code>0→1→4</code> 费用为 <code>6+3=9</code>；从 2 到 4 则可经 <code>2→1→4</code>，费用为 <code>1+3=4</code>。现在新增允许中转点 2，出现新的路线 <code>0→2→1→4</code>。</p>
+<figure>
+<img alt="固定起终点与本轮新增中转点，在中转处分段并比较两类路线" decoding="async" loading="lazy" src="../media/notes/floyd-state-split-derivation.svg"/>
+<figcaption aria-hidden="true">固定起终点与本轮新增中转点，在中转处分段并比较两类路线</figcaption>
+</figure>
+<p>把候选路线在 2 处分开，前半段 <code>0→2</code> 费用 2，后半段 <code>2→1→4</code> 费用 4。两段的内部顶点仍只使用上一轮允许的点，因此前驱已经算好，接起来得到 <code>2+4=6</code>。再与不使用新增点 2 的旧答案 9 比较，当前距离改为 6。</p>
+<p>这里单独记录 <code>(i,j)</code> 还没有交代“哪些中转点已经可以使用”。完整状态写成 <code>D_k(i,j)</code>：起点 i、终点 j，路径内部顶点只从 <code>0…k</code> 中选择的最短费用。起终点本身不受这个中转范围限制，例如上一轮也可以把 2 作为终点。</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>本轮候选类别</th>
+<th>允许的内部点</th>
+<th>前驱与合并</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不使用新增中转点 k</td>
+<td>仍从 <code>0…k-1</code> 选择</td>
+<td>沿用 <code>D_{k-1}(i,j)</code></td>
+</tr>
+<tr>
+<td>使用新增中转点 k</td>
+<td>在 k 处分段，两段内部点仍从 <code>0…k-1</code> 选择</td>
+<td><code>D_{k-1}(i,k)+D_{k-1}(k,j)</code></td>
+</tr>
+</tbody>
+</table>
+<p>任意经过 k 的最短路线都能在 k 处分成两段。若某段不是相应状态的最短路线，用更短的同起终点路线替换，再拼上另一段，完整费用也会减少。非负权图中的重复绕行可以去掉，因此可以保留各段的最短费用。两段费用相加得到这一类的候选，再与不经过 k 的类别取最小：</p>
+<p><span class="math display">\[D_k(i,j)=\min\bigl(D_{k-1}(i,j),\ D_{k-1}(i,k)+D_{k-1}(k,j)\bigr).\]</span></p>
+<p>还没有允许任何内部顶点时，只能使用直接边，起终点相同时为空路线费用 0。这就是初始距离矩阵。<code>k</code> 是求解过程的阶段，因此放在最外层循环；这一轮完成后，所有点对一起进入允许更多中转点的下一阶段。</p>
+<p>先找到 i 到 k、k 到 j 的两段路径，才能把它们接成一条候选路径；所以遇到 INF 时跳过这次拼接。外层固定 k，这一轮所有点对都尝试同一个中转点。对角线为 0，经过 k 再到 k 的空段不会改变费用，于是这一轮可以直接更新当前矩阵。</p>
+<table>
+<thead>
+<tr>
+<th>允许的新中转点</th>
+<th>对哪些起点和终点起作用</th>
+<th>候选的具体计算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>k=1</td>
+<td>0→4、2→4</td>
+<td>6+3=9；1+3=4</td>
+</tr>
+<tr>
+<td>k=2</td>
+<td>0→1、0→3、0→4</td>
+<td>2+1=3；2+4=6；2+4=6</td>
+</tr>
+<tr>
+<td>k=4</td>
+<td>多个起点到 5</td>
+<td>例如 0→5 为 6+1=7</td>
+</tr>
+<tr>
+<td>k=5</td>
+<td>多个起点到 6</td>
+<td>例如 0→6 为 7+1=8</td>
+</tr>
+<tr>
+<td>k=6</td>
+<td>4→3、5→3</td>
+<td>2+2=4；1+2=3</td>
+</tr>
+</tbody>
+</table>
+<p>后两行说明并非始终从 0 出发：同一轮同时更新多个起点的答案。后面继续依次尝试其他中转点，某轮没有更短路线时就保留原距离。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;limits&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6"><span class="dt">void</span> floyd<span class="op">(</span>vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;&gt;</span> <span class="op">&amp;</span>distance<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="kw">constexpr</span> <span class="dt">long</span> <span class="dt">long</span> INF <span class="op">=</span> numeric_limits<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;::</span>max<span class="op">()</span> <span class="op">/</span> <span class="dv">4</span><span class="op">;</span></span>
+<span data-line="8">    <span class="dt">int</span> n <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>distance<span class="op">.</span>size<span class="op">());</span></span>
+<span data-line="9">    <span class="co">// k 在最外层：当前轮只新增顶点 k 作为允许的中转点。</span></span>
+<span data-line="10">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>k<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="12">            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>j<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="13">                <span class="cf">if</span> <span class="op">(</span>distance<span class="op">[</span>i<span class="op">][</span>k<span class="op">]</span> <span class="op">&lt;</span> INF <span class="op">&amp;&amp;</span> distance<span class="op">[</span>k<span class="op">][</span>j<span class="op">]</span> <span class="op">&lt;</span> INF<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="14">                    distance<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> min<span class="op">(</span>distance<span class="op">[</span>i<span class="op">][</span>j<span class="op">],</span> distance<span class="op">[</span>i<span class="op">][</span>k<span class="op">]</span> <span class="op">+</span> distance<span class="op">[</span>k<span class="op">][</span>j<span class="op">]);</span></span>
+<span data-line="15">                <span class="op">}</span></span>
+<span data-line="16">            <span class="op">}</span></span>
+<span data-line="17">        <span class="op">}</span></span>
+<span data-line="18">    <span class="op">}</span></span>
+<span data-line="19"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例输入矩阵（函数参数）：</strong> INF 使用上面约定的数值哨兵。</p>
+<pre class="text"><code>0 6 2 9 INF INF INF INF
+INF 0 2 INF 3 INF INF INF
+INF 1 0 4 7 INF INF INF
+INF INF INF 0 2 8 INF INF
+INF INF INF INF 0 1 5 INF
+INF INF INF INF INF 0 1 INF
+INF INF INF 2 INF INF 0 INF
+INF INF INF INF INF INF INF 0</code></pre>
+<p><strong>调用 floyd(distance) 后的矩阵：</strong></p>
+<pre class="text"><code>0 3 2 6 6 7 8 INF
+INF 0 2 6 3 4 5 INF
+INF 1 0 4 4 5 6 INF
+INF INF INF 0 2 3 4 INF
+INF INF INF 4 0 1 2 INF
+INF INF INF 3 5 0 1 INF
+INF INF INF 2 4 5 0 INF
+INF INF INF INF INF INF INF 0</code></pre>
+<p><strong>怎样读答案？</strong> 第 0 行为 [0,3,2,6,6,7,8,INF]；第 2 行为 [INF,1,0,4,4,5,6,INF]；第 4 行说明 4→3 要经 4→5→6→3，费用 4。第 7 行只有自身为 0。<code>distance[0][1]</code>=3，<code>distance[1][0]</code>=INF，方向使矩阵不对称，不能把它当无向图读。</p>
+<p><strong>代码与复杂度：</strong> 三层循环依次枚举中转点、起点和终点，时间为 <span class="math inline">\(O(n^3)\)</span>，距离矩阵占 <span class="math inline">\(O(n^2)\)</span> 空间。例如 n=500 时，核心循环约有 <code>500³=1.25×10⁸</code> 次，每次比较候选路线；矩阵有 25 万项。建表时对角线写 0，没有边的位置写 INF，重边取最小权值；零权边写 0，与 INF 区分。随后每一轮沿前面的松弛过程更新矩阵。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/B3647" rel="noopener noreferrer">洛谷 B3647 — Floyd</a>。</p>
+<h4 id="n-0450">7. 拓扑排序</h4>
+<p><strong>题目原文（自拟示例）：</strong> 给定有向图，用边 <code>u→v</code> 表示任务 <code>u</code> 必须先于任务 <code>v</code> 完成。返回一个满足所有依赖的顶点排列；若有环，返回失败。顶点编号为 <code>0</code> 到 <code>n-1</code>。</p>
+<p><strong>思路分析：</strong> 没有前置依赖的顶点入度为 <code>0</code>，可以先处理。删除它的出边后，新的入度为 <code>0</code> 的顶点继续入队。</p>
+<figure>
+<img alt="拓扑排序删除前置依赖后更新入度" decoding="async" loading="lazy" src="../media/notes/topological-indegree.svg"/>
+<figcaption aria-hidden="true">拓扑排序删除前置依赖后更新入度</figcaption>
+</figure>
+<p>顶点 2 有来自 0、1 的两条依赖，初始入度为 2。处理其中一个前置任务后，入度变为 1；另一个也处理完后，入度变为 0，才把 2 加入队列。</p>
+<figure>
+<img alt="逐个取出零入度顶点，只在依赖数降至零时入队" decoding="async" loading="lazy" src="../media/notes/topological-queue-decisions.svg"/>
+<figcaption aria-hidden="true">逐个取出零入度顶点，只在依赖数降至零时入队</figcaption>
+</figure>
+<p>对边 <code>0→2、1→2、2→3</code>，初始入度 <code>[0,0,2,1]</code>、队列 <code>[0,1]</code>。处理 0 只把 2 的入度减到 1，不能入队；处理 1 才减到 0，把 2 加入；处理 2 后解锁 3。若队列耗尽而输出数少于 n，剩余顶点仍互相依赖，存在有向环；孤立点初始入度为 0，也要加入。</p>
+<p><strong>入度记录“还有几个前置依赖没完成”。</strong> 入度为 0 的任务现在就可执行，先放进队列。处理顶点 <code>u</code> 后，它的每条出边 <code>u→v</code> 表示的一项依赖已经满足，令 <code>indegree[v]</code> 减一；只有减到 0，才说明所有前置任务都已完成，可以把 <code>v</code> 加入队列。</p>
+<p>样例初始入度为 <code>[0,0,2,1]</code>，队列含 <code>0、1</code>。处理 <code>0</code> 后，顶点 2 的入度从 2 变成 1，还不能入队；处理 <code>1</code> 后降为 0，才入队；然后处理 <code>2</code> 解锁 <code>3</code>。</p>
+<p>若有有向环，环上每个顶点都依赖尚未完成的环上前驱，无法靠删除环外边清掉这些依赖，所以它们不会被全部处理。反过来，如果还有顶点却没有入度 0 的点，在有限的剩余图中不断追溯前驱必会重复顶点，形成环。因此“处理数小于 <code>n</code>”既能发现有环，也不会误判 DAG。</p>
+<p>多种合法顺序都可以满足依赖。若题目只要任意拓扑序，普通队列即可；要求字典序最小，则每次从全部可执行任务中选择编号最小者，需要小根堆，并重新计入堆操作的复杂度。</p>
+<p><strong>有环时怎样停住？</strong> 对 0→1、1→2、2→1，开始只有 0 入度为 0。处理它之后，1 仍依赖 2，2 仍依赖 1，队列为空但两点未处理，返回失败。未输出顶点可能在环内，也可能只是依赖于环，不能把全部剩余点都断言为环内点。</p>
+<p>拓扑序把每条依赖边的起点排在终点之前。两个互不依赖的任务可以交换位置，所以同一个图可能有多种拓扑序。顺序中的相邻任务也可能没有边连接；这个排列表示执行次序，路径则表示沿边经过的顶点。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6">pair<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> topologicalOrder<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> <span class="op">&amp;</span>graph<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    <span class="dt">int</span> n <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>graph<span class="op">.</span>size<span class="op">());</span></span>
+<span data-line="8">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> indegree<span class="op">(</span>n<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span data-line="9">    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;</span>edges <span class="op">:</span> graph<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> edges<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="11">            <span class="op">++</span>indegree<span class="op">[</span>v<span class="op">];</span></span>
+<span data-line="12">        <span class="op">}</span></span>
+<span data-line="13">    <span class="op">}</span></span>
+<span data-line="14">    queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> pending<span class="op">;</span></span>
+<span data-line="15">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> u <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>u<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="16">        <span class="cf">if</span> <span class="op">(</span>indegree<span class="op">[</span>u<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="17">            pending<span class="op">.</span>push<span class="op">(</span>u<span class="op">);</span></span>
+<span data-line="18">        <span class="op">}</span></span>
+<span data-line="19">    <span class="op">}</span></span>
+<span data-line="20">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> order<span class="op">;</span></span>
+<span data-line="21">    <span class="cf">while</span> <span class="op">(!</span>pending<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="22">        <span class="dt">int</span> u <span class="op">=</span> pending<span class="op">.</span>front<span class="op">();</span></span>
+<span data-line="23">        pending<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="24">        order<span class="op">.</span>push_back<span class="op">(</span>u<span class="op">);</span></span>
+<span data-line="25">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> graph<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="26">            <span class="co">// 当前顶点已经完成，删除它的依赖后，入度为 0 的邻居可处理。</span></span>
+<span data-line="27">            <span class="cf">if</span> <span class="op">(--</span>indegree<span class="op">[</span>v<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span data-line="28">                pending<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span data-line="29">            <span class="op">}</span></span>
+<span data-line="30">        <span class="op">}</span></span>
+<span data-line="31">    <span class="op">}</span></span>
+<span data-line="32">    <span class="co">// 没处理完所有顶点时，剩余依赖中存在环。</span></span>
+<span data-line="33">    <span class="dt">bool</span> acyclic <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>order<span class="op">.</span>size<span class="op">())</span> <span class="op">==</span> n<span class="op">;</span></span>
+<span data-line="34">    <span class="cf">return</span> <span class="op">{</span>acyclic<span class="op">,</span> order<span class="op">};</span></span>
+<span data-line="35"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例：</strong> 依赖为 <code>0→2</code>、<code>1→2</code>、<code>2→3</code>，可以输出 <code>0 1 2 3</code>；加入 <code>3→0</code> 后存在环。</p>
+<p><strong>代码解释：</strong> 如果最终处理的顶点数小于 <code>n</code>，说明有顶点被环上的依赖阻塞。若要字典序最小的拓扑序，把普通队列换为小根堆。普通版本时间 <span class="math inline">\(O(V+E)\)</span>，额外空间 <span class="math inline">\(O(V)\)</span>。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/B3644" rel="noopener noreferrer">洛谷 B3644 — 拓扑排序 / 家谱树</a>。</p>
+<h4 id="n-0451">8. DAG 上的 DP：用拓扑序安排状态转移</h4>
+<p><strong>题目原文（自拟）：</strong> 输入有向图邻接表 <code>graph</code>，每条记录为 <code>(终点,整数边权)</code>，及合法起点 start。<code>1&lt;=n&lt;=100000、0&lt;=m&lt;=200000</code>，边权绝对值不超过 10⁹。若图有环，函数返回 false 和空数组；无环时返回 true 和起点到各点的最长路径费用。不可达用 <code>numeric_limits&lt;long long&gt;::lowest()/4</code> 标记，起点空路径费用为 0。</p>
+<p><strong>状态与推导：</strong> 令 <code>dp[v]</code> 表示从固定起点 <code>start</code> 到 v 的路径中最大费用。先看起点 0，边为 <code>0→1:2、0→2:5、1→2:4、1→3:-1、2→3:1</code>。</p>
+<p>到 3 有三条路线：<code>0→1→3</code> 费用 1，<code>0→2→3</code> 费用 6，<code>0→1→2→3</code> 费用 7。按最后一条边分组，把这条边拿掉：</p>
+<table>
+<thead>
+<tr>
+<th>最后一条边</th>
+<th>删去后允许的前驱路线</th>
+<th>前驱的最大费用</th>
+<th>接回后的候选</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1→3</code>，权值 -1</td>
+<td><code>0→1</code></td>
+<td><code>dp[1]=2</code></td>
+<td><code>2-1=1</code></td>
+</tr>
+<tr>
+<td><code>2→3</code>，权值 1</td>
+<td><code>0→2</code> 或 <code>0→1→2</code></td>
+<td><code>dp[2]=max(5,6)=6</code></td>
+<td><code>6+1=7</code></td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img alt="实际路线按末边拆分，比较前驱费用并沿拓扑顺序接回" decoding="async" loading="lazy" src="../media/notes/graph-dag-longest-dp.svg"/>
+<figcaption aria-hidden="true">实际路线按末边拆分，比较前驱费用并沿拓扑顺序接回</figcaption>
+</figure>
+<p>同一组最后都经过同一条边，它的权值不变，因此最大前驱加这条边，也得到该组的最大费用。换成更好的到 u 路线后仍能接 <code>u→v</code>：在 DAG 中，如果前驱路线已经经过 v，再接回来就会产生有向环，所以这里不存在这种冲突。枚举全部入边，覆盖所有非空路径，再比较各组最大费用。</p>
+<p><span class="math display">\[dp[v]=\max_{\substack{u\to v\\u\text{ 从起点可达}}}\bigl(dp[u]+w(u,v)\bigr).\]</span></p>
+<p><code>dp[u]</code> 是前一段的费用，<code>w(u,v)</code> 是接回末边的费用。只有能从起点到达 u，才有实际路径可以接入。</p>
+<p>起点不走边的空路径费用为 0，其他点先写 <code>NEG</code> 表示还没有路径。例如只有边 <code>0→1:-2</code>，到 1 的答案应为 -2；如果先把它写成 0，这个没有路线支持的 0 就会压过真实费用。所以初值是起点 0、其余 <code>NEG</code>。</p>
+<p>拓扑序保证 v 的所有前驱都在它之前。代码采用“处理 u 时向后继传播候选”的方式：处理 0 得 <code>[0,2,5,NEG]</code>；处理 1 时，将到 2 的 5 改成 6，并产生到 3 的候选 1；处理 2 时，再将到 3 的 1 改成 7。轮到 3 时，它的入边候选全部到齐。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;limits&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="5"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="6"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="7"></span>
+<span data-line="8">pair<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span> vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;&gt;</span> dagLongest<span class="op">(</span></span>
+<span data-line="9">    <span class="at">const</span> vector<span class="op">&lt;</span>vector<span class="op">&lt;</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;&gt;</span> <span class="op">&amp;</span>graph<span class="op">,</span> <span class="dt">int</span> start<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">    <span class="at">const</span> <span class="dt">long</span> <span class="dt">long</span> NEG <span class="op">=</span> numeric_limits<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;::</span>lowest<span class="op">()</span> <span class="op">/</span> <span class="dv">4</span><span class="op">;</span></span>
+<span data-line="11">    <span class="dt">int</span> n <span class="op">=</span> graph<span class="op">.</span>size<span class="op">();</span></span>
+<span data-line="12">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> indegree<span class="op">(</span>n<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span data-line="13">    <span class="cf">for</span> <span class="op">(</span><span class="at">const</span> <span class="kw">auto</span> <span class="op">&amp;</span>edges <span class="op">:</span> graph<span class="op">)</span></span>
+<span data-line="14">        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>v<span class="op">,</span> w<span class="op">]</span> <span class="op">:</span> edges<span class="op">)</span> <span class="op">++</span>indegree<span class="op">[</span>v<span class="op">];</span></span>
+<span data-line="15">    queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span data-line="16">    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> u <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> u <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>u<span class="op">)</span> <span class="cf">if</span> <span class="op">(</span>indegree<span class="op">[</span>u<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> q<span class="op">.</span>push<span class="op">(</span>u<span class="op">);</span></span>
+<span data-line="17">    vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> dp<span class="op">(</span>n<span class="op">,</span> NEG<span class="op">);</span></span>
+<span data-line="18">    dp<span class="op">[</span>start<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// 起点的空路径费用为 0，其余尚不可达。</span></span>
+<span data-line="19">    <span class="dt">int</span> processed <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="20">    <span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="21">        <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span data-line="22">        q<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="23">        <span class="op">++</span>processed<span class="op">;</span></span>
+<span data-line="24">        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>v<span class="op">,</span> w<span class="op">]</span> <span class="op">:</span> graph<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="25">            <span class="cf">if</span> <span class="op">(</span>dp<span class="op">[</span>u<span class="op">]</span> <span class="op">!=</span> NEG<span class="op">)</span> dp<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> max<span class="op">(</span>dp<span class="op">[</span>v<span class="op">],</span> dp<span class="op">[</span>u<span class="op">]</span> <span class="op">+</span> w<span class="op">);</span></span>
+<span data-line="26">            <span class="cf">if</span> <span class="op">(--</span>indegree<span class="op">[</span>v<span class="op">]</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span> <span class="co">// 所有前驱处理完才展开后继。</span></span>
+<span data-line="27">        <span class="op">}</span></span>
+<span data-line="28">    <span class="op">}</span></span>
+<span data-line="29">    <span class="cf">if</span> <span class="op">(</span>processed <span class="op">!=</span> n<span class="op">)</span> <span class="cf">return</span> <span class="op">{</span><span class="kw">false</span><span class="op">,</span> <span class="op">{}};</span> <span class="co">// 有环时不提供 DAG 答案。</span></span>
+<span data-line="30">    <span class="cf">return</span> <span class="op">{</span><span class="kw">true</span><span class="op">,</span> dp<span class="op">};</span></span>
+<span data-line="31"><span class="op">}</span></span></code></pre></div>
+<p><strong>手算样例：</strong> start=0，边为 <code>0→1:2、0→2:5、1→2:4、1→3:-1、2→3:1</code>。初值 <code>[0,NEG,NEG,NEG]</code>；处理 0 得 <code>[0,2,5,NEG]</code>；处理 1 得 <code>[0,2,6,1]</code>；处理 2 得 <code>[0,2,6,7]</code>。到 3 最长为 <code>0→1→2→3</code>，费用 2+4+1=7。</p>
+<p><strong>代码与复杂度：</strong> indegree 记录还剩多少前置任务，dp 记录当前最长路径费用。处理一个顶点时，先删除它对后继的依赖；如果从起点能到它，再把路径费用传给后继。这样任务顺序与路径计算分别完成，时间 <span class="math inline">\(O(n+m)\)</span>，额外空间 <span class="math inline">\(O(n)\)</span>，另计图存储。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P1807" rel="noopener noreferrer">洛谷 P1807 — 最长路</a>。</p>
+<h4 id="n-0452">9. 无向树的根、父节点与深度计算</h4>
+<p>无向树本来没有父子关系。指定根后，从根通向各点的唯一简单路径决定父节点：沿路径靠近根的一端为父，另一端为子。换根会改变父子与深度，却不改变边。二叉树最多有两个有次序的孩子，图论中的树允许任意多个孩子；邻接表记录的是双向邻居。</p>
+<p><strong>题目原文（自拟）：</strong> 输入有 n&gt;=1 个顶点的无向树，每条边在邻接表 tree 中双向保存，并给定根 root。返回各点的 parent 与 depth；根的 parent 为 -1，深度为 0，其余点的深度是根到该点路径的边数。</p>
+<p><strong>分析：</strong> 从根 BFS。首次发现 v 时当前 u 就是父节点，深度比 u 多 1。反向记录会指回父节点，已发现判断将其跳过。因为树中路径唯一，这次发现的父关系没有歧义。</p>
+<figure>
+<img alt="无向树选择根后确定父子关系" decoding="async" loading="lazy" src="../media/notes/graph-rooted-tree.svg"/>
+<figcaption aria-hidden="true">无向树选择根后确定父子关系</figcaption>
+</figure>
+<p>根为 0 时，通向 4 的唯一路径是 0→1→4，深度为 2。</p>
+<figure>
+<img alt="BFS 首次发现邻居时，立即写入父节点与深度" decoding="async" loading="lazy" src="../media/notes/tree-parent-bfs-writes.svg"/>
+<figcaption aria-hidden="true">BFS 首次发现邻居时，立即写入父节点与深度</figcaption>
+</figure>
+<p>根 0 出队时发现 1、2，写 <code>parent[1]=parent[2]=0</code>、深度均为 1；节点 1 出队时先跳过已发现的 0，再发现 3、4，写父节点为 1、深度为 2。父指针的写入来自这次首次发现，不是事后看到树形就填答案。无向边会产生反方向记录，访问判断防止重新入队。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="4"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="5"></span>
+<span data-line="6">pair<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;,</span> vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> rootTree<span class="op">(</span><span class="at">const</span> vector<span class="op">&lt;</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&gt;</span> <span class="op">&amp;</span>tree<span class="op">,</span> <span class="dt">int</span> root<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="7">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> parent<span class="op">(</span>tree<span class="op">.</span>size<span class="op">(),</span> <span class="op">-</span><span class="dv">1</span><span class="op">),</span> depth<span class="op">(</span>tree<span class="op">.</span>size<span class="op">(),</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span data-line="8">    queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span data-line="9">    depth<span class="op">[</span>root<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="10">    q<span class="op">.</span>push<span class="op">(</span>root<span class="op">);</span></span>
+<span data-line="11">    <span class="cf">while</span> <span class="op">(!</span>q<span class="op">.</span>empty<span class="op">())</span> <span class="op">{</span></span>
+<span data-line="12">        <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span data-line="13">        q<span class="op">.</span>pop<span class="op">();</span></span>
+<span data-line="14">        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> tree<span class="op">[</span>u<span class="op">])</span> <span class="op">{</span></span>
+<span data-line="15">            <span class="cf">if</span> <span class="op">(</span>depth<span class="op">[</span>v<span class="op">]</span> <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span> <span class="co">// 跳过已发现节点，避免沿反向边重复入队。</span></span>
+<span data-line="16">            parent<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> u<span class="op">;</span></span>
+<span data-line="17">            depth<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> depth<span class="op">[</span>u<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 根深度为 0，按边数计深度。</span></span>
+<span data-line="18">            q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span data-line="19">        <span class="op">}</span></span>
+<span data-line="20">    <span class="op">}</span></span>
+<span data-line="21">    <span class="cf">return</span> <span class="op">{</span>parent<span class="op">,</span> depth<span class="op">};</span></span>
+<span data-line="22"><span class="op">}</span></span></code></pre></div>
+<p><strong>样例：</strong> 边 <code>(0,1)、(0,2)、(1,3)、(1,4)</code>，root=0 时 parent=<code>[-1,0,0,1,1]</code>、depth=<code>[0,1,1,2,2]</code>。root=3 时 3→1→0 的父子方向改变，0 的深度变为 2。</p>
+<p><strong>复杂度：</strong> 树有 n-1 条边，每个节点与连接处理一次，时间和额外空间为 <span class="math inline">\(O(n)\)</span>。对一般图搜索时，首次发现的连接形成一棵搜索树；其他连接仍保存在原图中。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P3884" rel="noopener noreferrer">洛谷 P3884 — 二叉树问题</a>（按题面调整深度与路径代价）、<a href="https://www.luogu.com.cn/problem/P4913" rel="noopener noreferrer">洛谷 P4913 — 二叉树深度</a>。</p>
+<h4 id="n-0453">10. 最小生成树：Kruskal 按权值选边</h4>
+<p>生成树从连通无向图中选边，保留全部顶点并使其连通且无环；最小生成树使所选边权和最小。它优化整张网络的总建造费用，和某起点到各点的最短距离是不同目标。</p>
+<p><strong>题目原文（自拟）：</strong> 第一行输入 n m，<code>1&lt;=n&lt;=100000、0&lt;=m&lt;=200000</code>。随后 m 行输入 u v w，表示无向边，编号为 <code>0…n-1</code>，权值绝对值不超过 10⁹，允许重边、自环。选择一些边连接全部顶点，输出最小总边权；无法连接全部顶点时输出 <code>IMPOSSIBLE</code>。只有一个顶点时空边集费用为 0。</p>
+<p><strong>算法：</strong> 初始每个点独自成块。边按权值升序，连接不同块就选并合并，连接同块就跳过，因为会形成环。选到 n-1 条时完成生成树；全部边检查后仍不足则不连通。</p>
+<figure>
+<img alt="Kruskal 逐条检查边并合并连通块" decoding="async" loading="lazy" src="../media/notes/graph-kruskal-edge-selection.svg"/>
+<figcaption aria-hidden="true">Kruskal 逐条检查边并合并连通块</figcaption>
+</figure>
+<p>小权边先连接不同块，已连通两端之间的边会成环而跳过。</p>
+<p><strong>为什么能选当前最小的跨块边？</strong> 固定已选边形成的某块 C，当前边 e 跨出 C，且在这个切分的边中权值最小。考虑一棵包含此前选择的最优生成树：若有 e 无需改变；若没有，加入 e 会成环，环上必有另一条跨出 C 的边 f。f 不是此前已选的块内边，权值不小于 e。删 f 后仍是生成树，费用不增，并保留此前选择与 e。因此存在一个最优解能接受本次选择，逐步交换即可证明正确。</p>
+<h5 id="n-0454">10.1 排序与并查集选边</h5>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span data-line="2"><span class="pp">#include </span><span class="im">&lt;functional&gt;</span></span>
+<span data-line="3"><span class="pp">#include </span><span class="im">&lt;numeric&gt;</span></span>
+<span data-line="4"><span class="pp">#include </span><span class="im">&lt;tuple&gt;</span></span>
+<span data-line="5"><span class="pp">#include </span><span class="im">&lt;utility&gt;</span></span>
+<span data-line="6"><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span data-line="7"><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span data-line="8"></span>
+<span data-line="9">pair<span class="op">&lt;</span><span class="dt">bool</span><span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> kruskal<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span> vector<span class="op">&lt;</span>tuple<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> edges<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="10">    sort<span class="op">(</span>edges<span class="op">.</span>begin<span class="op">(),</span> edges<span class="op">.</span>end<span class="op">());</span> <span class="co">// 元组第一项是权值，升序检查。</span></span>
+<span data-line="11">    vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> parent<span class="op">(</span>n<span class="op">),</span> size<span class="op">(</span>n<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span data-line="12">    iota<span class="op">(</span>parent<span class="op">.</span>begin<span class="op">(),</span> parent<span class="op">.</span>end<span class="op">(),</span> <span class="dv">0</span><span class="op">);</span></span>
+<span data-line="13">    function<span class="op">&lt;</span><span class="dt">int</span><span class="op">(</span><span class="dt">int</span><span class="op">)&gt;</span> find <span class="op">=</span> <span class="op">[&amp;](</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span data-line="14">        <span class="cf">if</span> <span class="op">(</span>parent<span class="op">[</span>x<span class="op">]</span> <span class="op">!=</span> x<span class="op">)</span> parent<span class="op">[</span>x<span class="op">]</span> <span class="op">=</span> find<span class="op">(</span>parent<span class="op">[</span>x<span class="op">]);</span> <span class="co">// 路径压缩。</span></span>
+<span data-line="15">        <span class="cf">return</span> parent<span class="op">[</span>x<span class="op">];</span></span>
+<span data-line="16">    <span class="op">};</span></span>
+<span data-line="17">    <span class="dt">long</span> <span class="dt">long</span> total <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="18">    <span class="dt">int</span> used <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span data-line="19">    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>weight<span class="op">,</span> u<span class="op">,</span> v<span class="op">]</span> <span class="op">:</span> edges<span class="op">)</span> <span class="op">{</span></span>
+<span data-line="20">        <span class="dt">int</span> a <span class="op">=</span> find<span class="op">(</span>u<span class="op">),</span> b <span class="op">=</span> find<span class="op">(</span>v<span class="op">);</span></span>
+<span data-line="21">        <span class="cf">if</span> <span class="op">(</span>a <span class="op">==</span> b<span class="op">)</span> <span class="cf">continue</span><span class="op">;</span> <span class="co">// 已连通，选这条边会成环。</span></span>
+<span data-line="22">        <span class="cf">if</span> <span class="op">(</span>size<span class="op">[</span>a<span class="op">]</span> <span class="op">&lt;</span> size<span class="op">[</span>b<span class="op">])</span> swap<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span>
+<span data-line="23">        parent<span class="op">[</span>b<span class="op">]</span> <span class="op">=</span> a<span class="op">;</span> <span class="co">// 只合并根，小树接到大树。</span></span>
+<span data-line="24">        size<span class="op">[</span>a<span class="op">]</span> <span class="op">+=</span> size<span class="op">[</span>b<span class="op">];</span></span>
+<span data-line="25">        total <span class="op">+=</span> weight<span class="op">;</span></span>
+<span data-line="26">        <span class="cf">if</span> <span class="op">(++</span>used <span class="op">==</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="cf">break</span><span class="op">;</span></span>
+<span data-line="27">    <span class="op">}</span></span>
+<span data-line="28">    <span class="cf">return</span> <span class="op">{</span>used <span class="op">==</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> total<span class="op">};</span> <span class="co">// 失败时 total 仅是森林费用。</span></span>
+<span data-line="29"><span class="op">}</span></span></code></pre></div>
+<p>并查集含义与前一章相同，函数内部直接保存父指针和集合大小。edges 按值传入，排序不改变调用者的边表。</p>
+<h5 id="n-0455">10.2 读入与输出</h5>
+<p>下面片段与上面的头文件和函数依次放在同一 <code>.cpp</code> 中。</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span data-line="1"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span data-line="2"><span class="co">// main 之前放入上面的头文件和 kruskal 实现。</span></span>
+<span data-line="3"><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span data-line="4">    <span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span data-line="5">    cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span data-line="6">    vector<span class="op">&lt;</span>tuple<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;&gt;</span> edges<span class="op">;</span></span>
+<span data-line="7">    <span class="cf">while</span> <span class="op">(</span>m<span class="op">--)</span> <span class="op">{</span></span>
+<span data-line="8">        <span class="dt">int</span> u<span class="op">,</span> v<span class="op">;</span></span>
+<span data-line="9">        <span class="dt">long</span> <span class="dt">long</span> w<span class="op">;</span></span>
+<span data-line="10">        cin <span class="op">&gt;&gt;</span> u <span class="op">&gt;&gt;</span> v <span class="op">&gt;&gt;</span> w<span class="op">;</span></span>
+<span data-line="11">        edges<span class="op">.</span>push_back<span class="op">({</span>w<span class="op">,</span> u<span class="op">,</span> v<span class="op">});</span> <span class="co">// 无向边在边表中只保存一次。</span></span>
+<span data-line="12">    <span class="op">}</span></span>
+<span data-line="13">    <span class="kw">auto</span> <span class="op">[</span>connected<span class="op">,</span> total<span class="op">]</span> <span class="op">=</span> kruskal<span class="op">(</span>n<span class="op">,</span> edges<span class="op">);</span></span>
+<span data-line="14">    <span class="cf">if</span> <span class="op">(</span>connected<span class="op">)</span> cout <span class="op">&lt;&lt;</span> total <span class="op">&lt;&lt;</span> <span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">;</span></span>
+<span data-line="15">    <span class="cf">else</span> cout <span class="op">&lt;&lt;</span> <span class="st">"IMPOSSIBLE</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span></span>
+<span data-line="16"><span class="op">}</span></span></code></pre></div>
+<p>输入：</p>
+<pre class="text"><code>4 5
+0 1 1
+1 2 2
+0 2 3
+2 3 4
+0 3 10</code></pre>
+<p>输出：</p>
+<pre class="text"><code>7</code></pre>
+<p><strong>样例推导：</strong> 选 (0,1,1) 得块 <code>{0,1}</code>；选 (1,2,2) 得 <code>{0,1,2}</code>；(0,2,3) 两端已连通，跳过；选 (2,3,4) 后全部连通，费用 1+2+4=7。平权边可能有多种最优选择，负权边仍可按相同规则处理，自环总被跳过。</p>
+<p><strong>复杂度：</strong> 排序 <span class="math inline">\(O(m\log m)\)</span>，初始化 <span class="math inline">\(O(n)\)</span>，所有边查询合并共 <span class="math inline">\(O(m\alpha(n))\)</span>，总时间 <span class="math inline">\(O(n+m\log m)\)</span>，空间 <span class="math inline">\(O(n+m)\)</span>，包括排序的边表副本。失败时不能把森林费用输出为连接全图的答案。</p>
+<p><strong>练习题：</strong> <a href="https://www.luogu.com.cn/problem/P3366" rel="noopener noreferrer">洛谷 P3366 — 最小生成树</a>（顶点按 1 编号，不连通输出 <code>orz</code>）。</p>
+<h4 id="n-0456">11. 图算法的选择与题目对应</h4>
+<p>先明确点、边、方向、权值、是否有环以及答案含义，再对照本章完整例题。规模写为 n、m，不能只看顶点数而忽略稠密图的边数。</p>
+<table>
+<thead>
+<tr>
+<th>问题模型</th>
+<th>对应方法</th>
+<th>核心思路</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无向图可达、连通块</td>
+<td>DFS、BFS、并查集</td>
+<td>覆盖可达集合，或维护集合合并</td>
+</tr>
+<tr>
+<td>每步代价相同的最少步数</td>
+<td>BFS</td>
+<td>较短层先处理</td>
+</tr>
+<tr>
+<td>非负边权、单起点最短路</td>
+<td>Dijkstra</td>
+<td>最小有效候选不会被未处理路径改善</td>
+</tr>
+<tr>
+<td>点很少、任意两点最短路</td>
+<td>Floyd</td>
+<td>逐轮允许中转点，时间 <span class="math inline">\(O(n^3)\)</span></td>
+</tr>
+<tr>
+<td>任务依赖排列、有无有向环</td>
+<td>拓扑排序</td>
+<td>依次删除无前置依赖的顶点</td>
+</tr>
+<tr>
+<td>把相邻对象分到不同组</td>
+<td>二分图染色</td>
+<td>沿边交替颜色并检查矛盾</td>
+</tr>
+<tr>
+<td>DAG 最长路径</td>
+<td>拓扑序 DP</td>
+<td>全部前驱先计算</td>
+</tr>
+<tr>
+<td>连接全图的最小总费用</td>
+<td>最小生成树</td>
+<td>连接不同块，交换论证保证最优</td>
+</tr>
+</tbody>
+</table>
+<p><strong>提交检查：</strong> 无向边是否双向存储？编号是否统一转换？不可达是否与 0 费用区分？多组图与数组是否重建？自环、重边、不连通如何处理？递归深度是否可能等于顶点数？沿具体输入运行一遍，观察每个判断怎样改变图、队列和距离。</p>
+</article><nav class="next-prev" aria-label="相邻章节"><a href="../chapters/part-05-14.html"><small>上一节</small>（十四） 并查集</a><a href="../chapters/part-06.html"><small>下一节</small>后记</a></nav><footer class="footer"><a href="https://github.com/KiriAky107/cpp-acm-notes-solutions">GitHub 仓库</a><a href="../downloads/C艹学习笔记v5.0-页码版.pdf" download>下载 PDF</a><span>从手算、推导和反例中理解算法。</span></footer></main><aside class="page-toc" aria-label="本页目录"><p>本页内容</p><a class="level-4" href="#n-0433">1. 顶点、边、路径与连通性</a><a class="level-5" href="#n-0434">1.1 先建立准确的图模型</a><a class="level-5" href="#n-0435">1.2 度、自环、重边与简单图</a><a class="level-5" href="#n-0436">1.3 走法、路径、环与距离</a><a class="level-5" href="#n-0437">1.4 连通性、树与 DAG</a><a class="level-4" href="#n-0438">2. 建图过程与存储方式选择</a><a class="level-5" href="#n-0439">2.1 邻接表、邻接矩阵与边表</a><a class="level-6" href="#n-0440">2.1.1 邻接表：每个顶点有一张邻居列表</a><a class="level-6" href="#n-0441">2.1.2 邻接矩阵：每一对顶点预留一个格子</a><a class="level-6" href="#n-0442">2.1.3 边表：每条输入边单独存一条记录</a><a class="level-5" href="#n-0443">2.2 完整例题：读入并输出邻接表</a><a class="level-5" href="#n-0444">2.3 完整例题：读入并输出邻接矩阵</a><a class="level-5" href="#n-0445">2.4 带权图的终点、权值与重边存储</a><a class="level-4" href="#n-0446">3. 用搜索标记无向图的连通块</a><a class="level-4" href="#n-0447">4. 二分图：沿边给相邻顶点分组</a><a class="level-4" href="#n-0448">5. Dijkstra：非负边权单源最短路</a><a class="level-4" href="#n-0449">6. Floyd：所有点对最短路与距离矩阵</a><a class="level-4" href="#n-0450">7. 拓扑排序</a><a class="level-4" href="#n-0451">8. DAG 上的 DP：用拓扑序安排状态转移</a><a class="level-4" href="#n-0452">9. 无向树的根、父节点与深度计算</a><a class="level-4" href="#n-0453">10. 最小生成树：Kruskal 按权值选边</a><a class="level-5" href="#n-0454">10.1 排序与并查集选边</a><a class="level-5" href="#n-0455">10.2 读入与输出</a><a class="level-4" href="#n-0456">11. 图算法的选择与题目对应</a></aside></div></div><div class="mobile-backdrop"></div><dialog id="search-dialog" aria-label="搜索笔记与题解"><div class="search-header"><input type="search" placeholder="搜索主题、接口或题号…" aria-label="搜索关键词" autocomplete="off"><button type="button" aria-label="关闭搜索">Esc</button></div><p class="search-help">查阅笔记正文与全部题解 · Ctrl / ⌘ K</p><div class="search-results" aria-live="polite"></div></dialog><dialog class="image-dialog" id="image-dialog" aria-label="放大过程图"><button type="button">关闭</button><img alt=""></dialog></body></html>
