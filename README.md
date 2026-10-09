@@ -167,29 +167,3 @@ g++ -std=gnu++17 -O2 code/P1182.cpp -o solution
 ## （五） 从答案回到独立解题
 
 做完一题后，记下自己卡住的具体步骤。比如迷宫回溯时忘了撤销标记，就拿一张小地图重新手算返回过程，再独立完成一道相近的题。复习时先运行之前留下的错误输入，看看现在能否解释当时的问题。
-
-## （六） 仓库文件与网页更新
-
-| 目录 | 用途 |
-| --- | --- |
-| `notes/` | 完整笔记、PDF、正文插图和写作规范 `agent.md` |
-| `solutions/`、`code/` | 题解 Markdown 和对应的独立 C++ 源文件 |
-| `assets/` | 题解中的过程图 |
-| `tests/`、`manifest.json` | 题目索引、样例与本地核对程序 |
-| `tools/` | 网页构建脚本与页面样式 |
-| `docs/` | 生成的静态网页，由 GitHub Pages 发布 |
-
-构建脚本用 Python 和 Pandoc 将 Markdown 转成网页，公式与 Mermaid 图解的运行库随站点本地托管。修改笔记或题解后，在仓库根目录执行：
-
-```shell
-# 安装网页构建依赖；Pandoc 需已安装并加入 PATH。
-python -m pip install -r tools/requirements-site.txt
-# 按现有正文重新生成章节、题解页和搜索索引。
-python tools/build_site.py
-# 检查站点内部链接、章节锚点、插图与下载文件。
-python tools/check_site.py
-# 启动本地预览，浏览器打开 http://localhost:8000。
-python -m http.server 8000 --directory docs
-```
-
-GitHub Pages 的发布目录为 `main` 分支下的 `/docs`。更新正文后，把重新生成的 `docs/` 一起提交，网页便会随之更新。公式与图解运行库的版本、来源及许可证见 [运行库说明](docs/static/vendor/README.md)。
