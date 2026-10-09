@@ -1,9 +1,9 @@
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
+#define int long long   // 统一使用较大的整数类型。
+#define endl '\n'       // 普通输出换行，避免逐行刷新。
 using namespace std;
 
-
-
-int main() {
+void solve() {
     double distance, capacity, per, initial; int n;
     cin >> distance >> capacity >> per >> initial >> n;
     vector<pair<double,double>> raw{{0, initial}, {distance, 0}};
@@ -15,8 +15,8 @@ int main() {
             station.back().second = min(station.back().second, x.second);
         else station.push_back(x);
     }
-    if (distance == 0) { cout << "0.00\n"; return 0; }
-    if (capacity == 0 || per == 0) { cout << "No Solution\n"; return 0; }
+    if (distance == 0) { cout << "0.00\n"; return; }
+    if (capacity == 0 || per == 0) { cout << "No Solution\n"; return; }
     double fuel = 0, answer = 0;
     for (int i = 0; i + 1 < (int)station.size();) {
         int cheaper = -1, cheapest = -1;
@@ -25,7 +25,7 @@ int main() {
             if (cheapest == -1 || station[j].second < station[cheapest].second) cheapest = j;
             if (station[j].second < station[i].second) { cheaper = j; break; }
         }
-        if (cheapest == -1) { cout << "No Solution\n"; return 0; }
+        if (cheapest == -1) { cout << "No Solution\n"; return; }
         int next = cheaper == -1 ? cheapest : cheaper;
         double required = (station[next].first - station[i].first) / per;
         double target = cheaper == -1 ? min(capacity, (distance - station[i].first) / per) : required;
@@ -34,4 +34,14 @@ int main() {
         i = next;
     }
     cout << fixed << setprecision(2) << answer << '\n';
+}
+
+signed main() {
+    ios::sync_with_stdio(false); // 关闭同步，使用 cin 与 cout 完成输入输出。
+    cin.tie(0), cout.tie(0);
+
+    int T = 1; // 本题读入一组数据。
+    // cin >> T; // 题目给出测试组数时开启，并在 solve 中处理一组。
+    while (T--)
+        solve();
 }

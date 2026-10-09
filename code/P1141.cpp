@@ -1,10 +1,9 @@
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> // 竞赛模板中的常用标准库工具。
+#define int long long   // 统一使用较大的整数类型。
+#define endl '\n'       // 普通输出换行，避免逐行刷新。
 using namespace std;
 
-
-
-int main() {
-    ios::sync_with_stdio(false); cin.tie(nullptr);
+void solve() {
     int n, qn; cin >> n >> qn;
     vector<string> a(n); for (auto& row : a) cin >> row;
     vector<vector<int>> id(n, vector<int>(n, -1)); vector<int> sizes;
@@ -25,4 +24,14 @@ int main() {
         sizes.push_back(count);
     }
     while (qn--) { int x,y; cin >> x >> y; cout << sizes[id[x-1][y-1]] << '\n'; }
+}
+
+signed main() {
+    ios::sync_with_stdio(false); // 关闭同步，使用 cin 与 cout 完成输入输出。
+    cin.tie(0), cout.tie(0);
+
+    int T = 1; // 本题读入一组数据。
+    // cin >> T; // 题目给出测试组数时开启，并在 solve 中处理一组。
+    while (T--)
+        solve();
 }
