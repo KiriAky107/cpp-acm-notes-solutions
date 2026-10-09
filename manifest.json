@@ -1,0 +1,2893 @@
+[
+  {
+    "id": "P1001",
+    "title": "A+B Problem",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P1001",
+    "cpp": "code/P1001.cpp",
+    "explanation": "solutions/01-language/P1001.md",
+    "chapters": [
+      "一、C++ 语法基础 → （一） 程序结构与编译"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "20 30\n",
+        "output": "50\n",
+        "kind": "official"
+      },
+      {
+        "input": "3 5\n",
+        "output": "8\n",
+        "kind": "worked"
+      },
+      {
+        "input": "-1000000000 -1000000000\n",
+        "output": "-2000000000\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5703",
+    "title": "苹果采购",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5703",
+    "cpp": "code/P5703.cpp",
+    "explanation": "solutions/01-language/P5703.md",
+    "chapters": [
+      "一、C++ 语法基础 → （三） 常量、类型转换与整数溢出"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "5 3\n",
+        "output": "15\n",
+        "kind": "official"
+      },
+      {
+        "input": "4 3\n",
+        "output": "12\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5710",
+    "title": "数的性质",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5710",
+    "cpp": "code/P5710.cpp",
+    "explanation": "solutions/01-language/P5710.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "一、C++ 语法基础 → （四） 运算符与位运算",
+      "三、解题方法论：从题意到代码 → （五） 从文字规则整理优先级"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "12",
+        "output": "1 1 0 0",
+        "kind": "official"
+      },
+      {
+        "input": "6\n",
+        "output": "1 1 0 0\n",
+        "kind": "worked"
+      },
+      {
+        "input": "4\n",
+        "output": "0 1 1 0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1100",
+    "title": "高低位交换",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P1100",
+    "cpp": "code/P1100.cpp",
+    "explanation": "solutions/01-language/P1100.md",
+    "chapters": [
+      "一、C++ 语法基础 → （四） 运算符与位运算"
+    ],
+    "diagram": "bit-swap",
+    "tests": [
+      {
+        "input": "1314520\n",
+        "output": "249036820\n",
+        "kind": "official"
+      },
+      {
+        "input": "65536\n",
+        "output": "1\n",
+        "kind": "worked"
+      },
+      {
+        "input": "1314520\n",
+        "output": "249036820\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5712",
+    "title": "Apples",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5712",
+    "cpp": "code/P5712.cpp",
+    "explanation": "solutions/01-language/P5712.md",
+    "chapters": [
+      "一、C++ 语法基础 → （五） 条件与循环"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "1",
+        "output": "Today, I ate 1 apple.",
+        "kind": "official"
+      },
+      {
+        "input": "3",
+        "output": "Today, I ate 3 apples.",
+        "kind": "official"
+      },
+      {
+        "input": "0\n",
+        "output": "Today, I ate 0 apple.\n",
+        "kind": "worked"
+      },
+      {
+        "input": "2\n",
+        "output": "Today, I ate 2 apples.\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5721",
+    "title": "数字直角三角形",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5721",
+    "cpp": "code/P5721.cpp",
+    "explanation": "solutions/01-language/P5721.md",
+    "chapters": [
+      "一、C++ 语法基础 → （五） 条件与循环"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "5",
+        "output": "0102030405\n06070809\n101112\n1314\n15",
+        "kind": "official"
+      },
+      {
+        "input": "3\n",
+        "output": "010203\n0405\n06\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5723",
+    "title": "质数口袋",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5723",
+    "cpp": "code/P5723.cpp",
+    "explanation": "solutions/01-language/P5723.md",
+    "chapters": [
+      "一、C++ 语法基础 → （五） 条件与循环"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "100",
+        "output": "2\n3\n5\n7\n11\n13\n17\n19\n23\n9",
+        "kind": "official"
+      },
+      {
+        "input": "5",
+        "output": "2\n3\n2",
+        "kind": "official"
+      },
+      {
+        "input": "11",
+        "output": "2\n3\n5\n3",
+        "kind": "official"
+      },
+      {
+        "input": "10\n",
+        "output": "2\n3\n5\n3\n",
+        "kind": "worked"
+      },
+      {
+        "input": "1\n",
+        "output": "0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1428",
+    "title": "小鱼比可爱",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P1428",
+    "cpp": "code/P1428.cpp",
+    "explanation": "solutions/01-language/P1428.md",
+    "chapters": [
+      "一、C++ 语法基础 → （六） 原生数组与枚举",
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "6\n4 3 0 5 1 2\n",
+        "output": "0 0 0 3 1 2",
+        "kind": "official"
+      },
+      {
+        "input": "4\n3 1 3 4\n",
+        "output": "0 0 1 3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5732",
+    "title": "杨辉三角",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5732",
+    "cpp": "code/P5732.cpp",
+    "explanation": "solutions/01-language/P5732.md",
+    "chapters": [
+      "一、C++ 语法基础 → （六） 原生数组与枚举",
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "pascal",
+    "tests": [
+      {
+        "input": "6",
+        "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1\n",
+        "kind": "official"
+      },
+      {
+        "input": "4\n",
+        "output": "1\n1 1\n1 2 1\n1 3 3 1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1554",
+    "title": "梦中的统计",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P1554",
+    "cpp": "code/P1554.cpp",
+    "explanation": "solutions/01-language/P1554.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "五、数据结构与算法 → （二） 枚举与模拟"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "129 137",
+        "output": "1 10 2 9 1 1 1 1 0 1",
+        "kind": "official"
+      },
+      {
+        "input": "10 12\n",
+        "output": "1 4 1 0 0 0 0 0 0 0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "CF4-A",
+    "title": "Watermelon",
+    "group": "01-language",
+    "source": "https://codeforces.com/problemset/problem/4/A",
+    "cpp": "code/CF4-A.cpp",
+    "explanation": "solutions/01-language/CF4-A.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （四） 必要条件、充分条件与等价条件",
+      "三、解题方法论：从题意到代码 → （十） 从样例猜想到证明与构造"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "8\n",
+        "output": "YES\n",
+        "kind": "worked"
+      },
+      {
+        "input": "2\n",
+        "output": "NO\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5711",
+    "title": "闰年判断",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5711",
+    "cpp": "code/P5711.cpp",
+    "explanation": "solutions/01-language/P5711.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （五） 从文字规则整理优先级"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "1926",
+        "output": "0",
+        "kind": "official"
+      },
+      {
+        "input": "1900",
+        "output": "0",
+        "kind": "official"
+      },
+      {
+        "input": "2000",
+        "output": "1",
+        "kind": "official"
+      },
+      {
+        "input": "1996",
+        "output": "1",
+        "kind": "official"
+      },
+      {
+        "input": "1900\n",
+        "output": "0\n",
+        "kind": "worked"
+      },
+      {
+        "input": "2000\n",
+        "output": "1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5709",
+    "title": "苹果和虫子",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5709",
+    "cpp": "code/P5709.cpp",
+    "explanation": "solutions/01-language/P5709.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （六） 从计数要求推导向上取整"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "50 10 200",
+        "output": "30",
+        "kind": "official"
+      },
+      {
+        "input": "5 3 4\n",
+        "output": "3\n",
+        "kind": "worked"
+      },
+      {
+        "input": "5 0 4\n",
+        "output": "0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1046",
+    "title": "陶陶摘苹果",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P1046",
+    "cpp": "code/P1046.cpp",
+    "explanation": "solutions/01-language/P1046.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （八） 用不变量和反例检查推导"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "100 200 150 140 129 134 167 198 200 111\n110\n",
+        "output": "5",
+        "kind": "official"
+      },
+      {
+        "input": "130 131 1 2 3 4 5 6 7 8\n100\n",
+        "output": "9\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5717",
+    "title": "三角形分类",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P5717",
+    "cpp": "code/P5717.cpp",
+    "explanation": "solutions/01-language/P5717.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （八） 用不变量和反例检查推导",
+      "三、解题方法论：从题意到代码 → （十） 从样例猜想到证明与构造"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "3 3 3",
+        "output": "Acute triangle\nIsosceles triangle\nEquilateral triangle",
+        "kind": "official"
+      },
+      {
+        "input": "3 4 5\n",
+        "output": "Right triangle",
+        "kind": "official"
+      },
+      {
+        "input": "6 10 6\n",
+        "output": "Obtuse triangle\nIsosceles triangle",
+        "kind": "official"
+      },
+      {
+        "input": "1 14 5\n",
+        "output": "Not triangle",
+        "kind": "official"
+      },
+      {
+        "input": "3 4 5\n",
+        "output": "Right triangle\n",
+        "kind": "worked"
+      },
+      {
+        "input": "2 2 2\n",
+        "output": "Acute triangle\nIsosceles triangle\nEquilateral triangle\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1085",
+    "title": "不高兴的津津",
+    "group": "01-language",
+    "source": "https://www.luogu.com.cn/problem/P1085",
+    "cpp": "code/P1085.cpp",
+    "explanation": "solutions/01-language/P1085.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （八） 用不变量和反例检查推导"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "5 3\n6 2\n7 2\n5 3\n5 4\n0 4\n0 6\n",
+        "output": "3",
+        "kind": "official"
+      },
+      {
+        "input": "5 4\n6 3\n0 0\n0 0\n0 0\n0 0\n0 0\n",
+        "output": "1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5733",
+    "title": "自动修正",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P5733",
+    "cpp": "code/P5733.cpp",
+    "explanation": "solutions/02-stl/P5733.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "Luogu4!",
+        "output": "LUOGU4!",
+        "kind": "official"
+      },
+      {
+        "input": "aB3z\n",
+        "output": "AB3Z\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1427",
+    "title": "小鱼的数字游戏",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1427",
+    "cpp": "code/P1427.cpp",
+    "explanation": "solutions/02-stl/P1427.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "3 65 23 5 34 1 30 0",
+        "output": "30 1 34 5 23 65 3",
+        "kind": "official"
+      },
+      {
+        "input": "3 8 5 0\n",
+        "output": "5 8 3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1308",
+    "title": "统计单词数",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1308",
+    "cpp": "code/P1308.cpp",
+    "explanation": "solutions/02-stl/P1308.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "To\nto be or not to be is a question\n",
+        "output": "2 0\n\n",
+        "kind": "official"
+      },
+      {
+        "input": "to\nDid the Ottoman Empire lose its power at that time",
+        "output": "-1",
+        "kind": "official"
+      },
+      {
+        "input": "to\nToday to TO\n",
+        "output": "2 6\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1093",
+    "title": "奖学金",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1093",
+    "cpp": "code/P1093.cpp",
+    "explanation": "solutions/02-stl/P1093.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "6\n90 67 80\n87 66 91\n78 89 91\n88 99 77\n67 89 64\n78 89 98\n",
+        "output": "6 265\n4 264\n3 258\n2 244\n1 237",
+        "kind": "official"
+      },
+      {
+        "input": "8\n80 89 89\n88 98 78\n90 67 80\n87 66 91\n78 89 91\n88 99 77\n67 89 64\n78 89 98",
+        "output": "8 265\n2 264\n6 264\n1 258\n5 258",
+        "kind": "official"
+      },
+      {
+        "input": "5\n90 90 90\n95 85 90\n80 90 100\n90 80 90\n100 100 100\n",
+        "output": "5 300\n2 270\n1 270\n3 270\n4 260\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1177",
+    "title": "排序",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1177",
+    "cpp": "code/P1177.cpp",
+    "explanation": "solutions/02-stl/P1177.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法",
+      "五、数据结构与算法 → （一） 时间复杂度与空间复杂度",
+      "五、数据结构与算法 → （四） 排序与离散化"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "5\n4 2 4 5 1",
+        "output": "1 2 4 4 5",
+        "kind": "official"
+      },
+      {
+        "input": "4\n3 1 3 2\n",
+        "output": "1 2 3 3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1059",
+    "title": "明明的随机数",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1059",
+    "cpp": "code/P1059.cpp",
+    "explanation": "solutions/02-stl/P1059.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法",
+      "五、数据结构与算法 → （九） 双指针与滑动窗口（尺取法）"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "10\n20 40 32 67 40 20 89 300 400 15\n",
+        "output": "8\n15 20 32 40 67 89 300 400\n",
+        "kind": "official"
+      },
+      {
+        "input": "4\n3 1 3 2\n",
+        "output": "3\n1 2 3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1160",
+    "title": "队列安排",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1160",
+    "cpp": "code/P1160.cpp",
+    "explanation": "solutions/02-stl/P1160.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "list-insert",
+    "tests": [
+      {
+        "input": "4\n1 0\n2 1\n1 0\n2\n3\n3",
+        "output": "2 4 1",
+        "kind": "official"
+      },
+      {
+        "input": "3\n1 0\n2 1\n2\n3\n3\n",
+        "output": "2 1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1449",
+    "title": "后缀表达式",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1449",
+    "cpp": "code/P1449.cpp",
+    "explanation": "solutions/02-stl/P1449.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "postfix",
+    "tests": [
+      {
+        "input": "3.5.2.-*7.+@",
+        "output": "16",
+        "kind": "official"
+      },
+      {
+        "input": "10.28.30./*7.-@",
+        "output": "-7",
+        "kind": "official"
+      },
+      {
+        "input": "8.3.-@\n",
+        "output": "5\n",
+        "kind": "worked"
+      },
+      {
+        "input": "3.5.2.-*7.+@\n",
+        "output": "16\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1241",
+    "title": "括号序列",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1241",
+    "cpp": "code/P1241.cpp",
+    "explanation": "solutions/02-stl/P1241.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "brackets",
+    "tests": [
+      {
+        "input": "([()\n",
+        "output": "()[]()\n",
+        "kind": "official"
+      },
+      {
+        "input": "([)",
+        "output": "()[]()",
+        "kind": "official"
+      },
+      {
+        "input": "([)]\n",
+        "output": "()[()]\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1996",
+    "title": "约瑟夫问题",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1996",
+    "cpp": "code/P1996.cpp",
+    "explanation": "solutions/02-stl/P1996.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "10 3",
+        "output": "3 6 9 2 7 1 8 5 10 4",
+        "kind": "official"
+      },
+      {
+        "input": "5 2\n",
+        "output": "2 4 1 5 3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1540",
+    "title": "机器翻译",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1540",
+    "cpp": "code/P1540.cpp",
+    "explanation": "solutions/02-stl/P1540.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "fifo",
+    "tests": [
+      {
+        "input": "3 7\n1 2 1 5 4 4 1\n",
+        "output": "5\n",
+        "kind": "official"
+      },
+      {
+        "input": "2 5\n1 2 1 3 1\n",
+        "output": "4\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "CF4-C",
+    "title": "Registration System",
+    "group": "02-stl",
+    "source": "https://codeforces.com/problemset/problem/4/C",
+    "cpp": "code/CF4-C.cpp",
+    "explanation": "solutions/02-stl/CF4-C.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法",
+      "五、数据结构与算法 → （七） 哈希（散列）表"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "4\nab\nab\ncd\nab\n",
+        "output": "OK\nab1\nOK\nab2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5266",
+    "title": "学籍管理",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P5266",
+    "cpp": "code/P5266.cpp",
+    "explanation": "solutions/02-stl/P5266.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "5\n1 lxl 10\n2 lxl\n3 lxl\n2 lxl\n4",
+        "output": "OK\n10\nDeleted successfully\nNot found\n0\n",
+        "kind": "official"
+      },
+      {
+        "input": "5\n1 a 10\n2 a\n3 a\n2 a\n4\n",
+        "output": "OK\n10\nDeleted successfully\nNot found\n0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2234",
+    "title": "营业额统计",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P2234",
+    "cpp": "code/P2234.cpp",
+    "explanation": "solutions/02-stl/P2234.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "neighbors",
+    "tests": [
+      {
+        "input": "6\n5\n1\n2\n5\n4\n6\n",
+        "output": "12",
+        "kind": "official"
+      },
+      {
+        "input": "6\n5\n1\n2\n5\n4\n6\n",
+        "output": "12\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3370",
+    "title": "字符串哈希",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P3370",
+    "cpp": "code/P3370.cpp",
+    "explanation": "solutions/02-stl/P3370.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法",
+      "五、数据结构与算法 → （七） 哈希（散列）表"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "5\nabc\naaaa\nabc\nabcc\n12345",
+        "output": "4",
+        "kind": "official"
+      },
+      {
+        "input": "4\na\nab\na\nba\n",
+        "output": "3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3378",
+    "title": "堆",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P3378",
+    "cpp": "code/P3378.cpp",
+    "explanation": "solutions/02-stl/P3378.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "5\n1 2\n1 5\n2\n3\n2\n",
+        "output": "2\n5",
+        "kind": "official"
+      },
+      {
+        "input": "5\n1 5\n1 2\n2\n3\n2\n",
+        "output": "2\n5\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1631",
+    "title": "序列合并",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1631",
+    "cpp": "code/P1631.cpp",
+    "explanation": "solutions/02-stl/P1631.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "merge-chains",
+    "tests": [
+      {
+        "input": "3\n2 6 6\n1 4 8",
+        "output": "3 6 7",
+        "kind": "official"
+      },
+      {
+        "input": "2\n1 3\n2 4\n",
+        "output": "3 5\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1886",
+    "title": "滑动窗口",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1886",
+    "cpp": "code/P1886.cpp",
+    "explanation": "solutions/02-stl/P1886.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "monotone-window",
+    "tests": [
+      {
+        "input": "8 3\n1 3 -1 -3 5 3 6 7",
+        "output": "-1 -3 -3 -3 3 3\n3 3 5 5 6 7",
+        "kind": "official"
+      },
+      {
+        "input": "4 2\n3 1 2 0\n",
+        "output": "1 1 0\n3 2 2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1440",
+    "title": "求 m 区间内的最小值",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P1440",
+    "cpp": "code/P1440.cpp",
+    "explanation": "solutions/02-stl/P1440.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": "monotone-window",
+    "tests": [
+      {
+        "input": "6 2\n7 8 1 4 3 2\n",
+        "output": "0\n7\n7\n1\n1\n3 \n",
+        "kind": "official"
+      },
+      {
+        "input": "4 2\n3 1 2 0\n",
+        "output": "0\n3\n1\n1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2073",
+    "title": "送花",
+    "group": "02-stl",
+    "source": "https://www.luogu.com.cn/problem/P2073",
+    "cpp": "code/P2073.cpp",
+    "explanation": "solutions/02-stl/P2073.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "1 1 1\n1 2 5\n2\n1 3 3\n3\n1 5 2\n-1\n",
+        "output": "8 5",
+        "kind": "official"
+      },
+      {
+        "input": "1 5 10\n1 8 20\n1 100 10\n2\n-1\n",
+        "output": "5 10\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1102",
+    "title": "A-B 数对",
+    "group": "03-modeling",
+    "source": "https://www.luogu.com.cn/problem/P1102",
+    "cpp": "code/P1102.cpp",
+    "explanation": "solutions/03-modeling/P1102.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （十二） 一题多建模与最优方法的选择过程",
+      "三、解题方法论：从题意到代码 → （十七） 解题复盘与模型迁移",
+      "五、数据结构与算法 → （一） 时间复杂度与空间复杂度",
+      "五、数据结构与算法 → （九） 双指针与滑动窗口（尺取法）",
+      "五、数据结构与算法 → （十） 二分与三分搜索"
+    ],
+    "diagram": "pair-count",
+    "tests": [
+      {
+        "input": "4 1\n1 1 2 3\n",
+        "output": "3",
+        "kind": "official"
+      },
+      {
+        "input": "5 2\n1 1 3 3 3\n",
+        "output": "6\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "CF702-B",
+    "title": "Powers of Two",
+    "group": "03-modeling",
+    "source": "https://codeforces.com/problemset/problem/702/B",
+    "cpp": "code/CF702-B.cpp",
+    "explanation": "solutions/03-modeling/CF702-B.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （十二） 一题多建模与最优方法的选择过程",
+      "三、解题方法论：从题意到代码 → （十七） 解题复盘与模型迁移"
+    ],
+    "diagram": "history-count",
+    "tests": [
+      {
+        "input": "3\n1 1 1\n",
+        "output": "3\n",
+        "kind": "worked"
+      },
+      {
+        "input": "4\n7 3 2 1\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2058",
+    "title": "海港",
+    "group": "03-modeling",
+    "source": "https://www.luogu.com.cn/problem/P2058",
+    "cpp": "code/P2058.cpp",
+    "explanation": "solutions/03-modeling/P2058.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （十三） 复杂题面到事件模拟的完整推导",
+      "三、解题方法论：从题意到代码 → （十七） 解题复盘与模型迁移"
+    ],
+    "diagram": "port-window",
+    "tests": [
+      {
+        "input": "3\n1 4 4 1 2 2\n2 2 2 3\n10 1 3",
+        "output": "3\n4\n4\n",
+        "kind": "official"
+      },
+      {
+        "input": "4\n1 4 1 2 2 3\n3 2 2 3\n86401 2 3 4\n86402 1 5",
+        "output": "3\n3\n3\n4",
+        "kind": "official"
+      },
+      {
+        "input": "2\n1 2 1 2\n86401 1 3\n",
+        "output": "2\n1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1065",
+    "title": "作业调度方案",
+    "group": "03-modeling",
+    "source": "https://www.luogu.com.cn/problem/P1065",
+    "cpp": "code/P1065.cpp",
+    "explanation": "solutions/03-modeling/P1065.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （十三） 复杂题面到事件模拟的完整推导",
+      "三、解题方法论：从题意到代码 → （十七） 解题复盘与模型迁移"
+    ],
+    "diagram": "schedule",
+    "tests": [
+      {
+        "input": "2 3\n1 1 2 3 3 2\n1 2 \n1 2 \n2 1\n3 2 \n2 5 \n2 4\n",
+        "output": "10",
+        "kind": "official"
+      },
+      {
+        "input": "1 2\n1 2\n1\n1\n3\n2\n",
+        "output": "5\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1601",
+    "title": "高精度加法",
+    "group": "04-bigint",
+    "source": "https://www.luogu.com.cn/problem/P1601",
+    "cpp": "code/P1601.cpp",
+    "explanation": "solutions/04-bigint/P1601.md",
+    "chapters": [
+      "四、批量输入、大整数运算与提交检查 → （二） 大整数的加减乘除"
+    ],
+    "diagram": "big-add",
+    "tests": [
+      {
+        "input": "1\n1",
+        "output": "2",
+        "kind": "official"
+      },
+      {
+        "input": "1001\n9099",
+        "output": "10100",
+        "kind": "official"
+      },
+      {
+        "input": "999\n1\n",
+        "output": "1000\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2142",
+    "title": "高精度减法",
+    "group": "04-bigint",
+    "source": "https://www.luogu.com.cn/problem/P2142",
+    "cpp": "code/P2142.cpp",
+    "explanation": "solutions/04-bigint/P2142.md",
+    "chapters": [
+      "四、批量输入、大整数运算与提交检查 → （二） 大整数的加减乘除"
+    ],
+    "diagram": "big-subtract",
+    "tests": [
+      {
+        "input": "2\n1",
+        "output": "1",
+        "kind": "official"
+      },
+      {
+        "input": "1000\n1\n",
+        "output": "999\n",
+        "kind": "worked"
+      },
+      {
+        "input": "1\n1000\n",
+        "output": "-999\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1303",
+    "title": "A*B Problem",
+    "group": "04-bigint",
+    "source": "https://www.luogu.com.cn/problem/P1303",
+    "cpp": "code/P1303.cpp",
+    "explanation": "solutions/04-bigint/P1303.md",
+    "chapters": [
+      "四、批量输入、大整数运算与提交检查 → （二） 大整数的加减乘除"
+    ],
+    "diagram": "big-multiply",
+    "tests": [
+      {
+        "input": "1 \n2",
+        "output": "2",
+        "kind": "official"
+      },
+      {
+        "input": "12\n34\n",
+        "output": "408\n",
+        "kind": "worked"
+      },
+      {
+        "input": "0\n999\n",
+        "output": "0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1480",
+    "title": "A/B Problem",
+    "group": "04-bigint",
+    "source": "https://www.luogu.com.cn/problem/P1480",
+    "cpp": "code/P1480.cpp",
+    "explanation": "solutions/04-bigint/P1480.md",
+    "chapters": [
+      "四、批量输入、大整数运算与提交检查 → （二） 大整数的加减乘除"
+    ],
+    "diagram": "big-division",
+    "tests": [
+      {
+        "input": "10\n2",
+        "output": "5",
+        "kind": "official"
+      },
+      {
+        "input": "987\n23\n",
+        "output": "42\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1932",
+    "title": "大整数五种运算",
+    "group": "04-bigint",
+    "source": "https://www.luogu.com.cn/problem/P1932",
+    "cpp": "code/P1932.cpp",
+    "explanation": "solutions/04-bigint/P1932.md",
+    "chapters": [
+      "四、批量输入、大整数运算与提交检查 → （二） 大整数的加减乘除"
+    ],
+    "diagram": "big-all",
+    "tests": [
+      {
+        "input": "1\n1",
+        "output": "2\n0\n1\n1\n0",
+        "kind": "official"
+      },
+      {
+        "input": "987\n23\n",
+        "output": "1010\n964\n22701\n42\n21\n",
+        "kind": "worked"
+      },
+      {
+        "input": "1\n1\n",
+        "output": "2\n0\n1\n1\n0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2089",
+    "title": "烤鸡",
+    "group": "05-basics",
+    "source": "https://www.luogu.com.cn/problem/P2089",
+    "cpp": "code/P2089.cpp",
+    "explanation": "solutions/05-basics/P2089.md",
+    "chapters": [
+      "五、数据结构与算法 → （二） 枚举与模拟"
+    ],
+    "diagram": "choices",
+    "tests": [
+      {
+        "input": "11",
+        "output": "10\n1 1 1 1 1 1 1 1 1 2 \n1 1 1 1 1 1 1 1 2 1 \n1 1 1 1 1 1 1 2 1 1 \n1 1 1 1 1 1 2 1 1 1 \n1 1 1 1 1 2 1 1 1 1 \n1 1 1 1 2 1 1 1 1 1 \n1 1 1 2 1 1 1 1 1 1 \n1 1 2 1 1 1 1 1 1 1 \n1 2 1 1 1 1 1 1 1 1 \n2 1 1 1 1 1 1 1 1 1 ",
+        "kind": "official"
+      },
+      {
+        "input": "10\n",
+        "output": "1\n1 1 1 1 1 1 1 1 1 1\n",
+        "kind": "worked"
+      },
+      {
+        "input": "31\n",
+        "output": "0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P8218",
+    "title": "求区间和",
+    "group": "05-basics",
+    "source": "https://www.luogu.com.cn/problem/P8218",
+    "cpp": "code/P8218.cpp",
+    "explanation": "solutions/05-basics/P8218.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "五、数据结构与算法 → （三） 前缀和与差分"
+    ],
+    "diagram": "prefix",
+    "tests": [
+      {
+        "input": "4\n4 3 2 1\n2\n1 4\n2 3",
+        "output": "10\n5",
+        "kind": "official"
+      },
+      {
+        "input": "4\n1 2 3 4\n2\n1 4\n2 3\n",
+        "output": "10\n5\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2367",
+    "title": "语文成绩",
+    "group": "05-basics",
+    "source": "https://www.luogu.com.cn/problem/P2367",
+    "cpp": "code/P2367.cpp",
+    "explanation": "solutions/05-basics/P2367.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "五、数据结构与算法 → （三） 前缀和与差分"
+    ],
+    "diagram": "difference",
+    "tests": [
+      {
+        "input": "3 2\n1 1 1\n1 2 1\n2 3 1",
+        "output": "2\n",
+        "kind": "official"
+      },
+      {
+        "input": "3 1\n5 2 4\n2 3 3\n",
+        "output": "5\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3397",
+    "title": "地毯",
+    "group": "05-basics",
+    "source": "https://www.luogu.com.cn/problem/P3397",
+    "cpp": "code/P3397.cpp",
+    "explanation": "solutions/05-basics/P3397.md",
+    "chapters": [
+      "五、数据结构与算法 → （三） 前缀和与差分"
+    ],
+    "diagram": "difference-2d",
+    "tests": [
+      {
+        "input": "5 3\n2 2 3 3\n3 3 5 5\n1 2 1 4",
+        "output": "0 1 1 1 0\n0 1 1 0 0\n0 1 2 1 1\n0 0 1 1 1\n0 0 1 1 1",
+        "kind": "official"
+      },
+      {
+        "input": "2 2\n1 1 2 2\n2 2 2 2\n",
+        "output": "1 1\n1 2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1908",
+    "title": "逆序对",
+    "group": "05-basics",
+    "source": "https://www.luogu.com.cn/problem/P1908",
+    "cpp": "code/P1908.cpp",
+    "explanation": "solutions/05-basics/P1908.md",
+    "chapters": [
+      "五、数据结构与算法 → （四） 排序与离散化"
+    ],
+    "diagram": "inversions",
+    "tests": [
+      {
+        "input": "6\n5 4 2 6 3 1\n",
+        "output": "11",
+        "kind": "official"
+      },
+      {
+        "input": "4\n2 4 1 3\n",
+        "output": "3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1496",
+    "title": "火烧赤壁",
+    "group": "05-basics",
+    "source": "https://www.luogu.com.cn/problem/P1496",
+    "cpp": "code/P1496.cpp",
+    "explanation": "solutions/05-basics/P1496.md",
+    "chapters": [
+      "五、数据结构与算法 → （四） 排序与离散化"
+    ],
+    "diagram": "interval-merge",
+    "tests": [
+      {
+        "input": "3\n-1 1\n5 11\n2 9",
+        "output": "11",
+        "kind": "official"
+      },
+      {
+        "input": "3\n1 4\n3 6\n8 9\n",
+        "output": "6\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1029",
+    "title": "最大公约数和最小公倍数问题",
+    "group": "06-number",
+    "source": "https://www.luogu.com.cn/problem/P1029",
+    "cpp": "code/P1029.cpp",
+    "explanation": "solutions/06-number/P1029.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法",
+      "五、数据结构与算法 → （五） 基础数论"
+    ],
+    "diagram": "gcd-pairs",
+    "tests": [
+      {
+        "input": "3 60\n",
+        "output": "4\n",
+        "kind": "official"
+      },
+      {
+        "input": "3 60\n",
+        "output": "4\n",
+        "kind": "worked"
+      },
+      {
+        "input": "3 3\n",
+        "output": "1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3383",
+    "title": "线性筛素数",
+    "group": "06-number",
+    "source": "https://www.luogu.com.cn/problem/P3383",
+    "cpp": "code/P3383.cpp",
+    "explanation": "solutions/06-number/P3383.md",
+    "chapters": [
+      "五、数据结构与算法 → （五） 基础数论"
+    ],
+    "diagram": "linear-sieve",
+    "tests": [
+      {
+        "input": "100 5\n1\n2\n3\n4\n5",
+        "output": "2\n3\n5\n7\n11",
+        "kind": "official"
+      },
+      {
+        "input": "10 2\n1\n4\n",
+        "output": "2\n7\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1075",
+    "title": "质因数分解",
+    "group": "06-number",
+    "source": "https://www.luogu.com.cn/problem/P1075",
+    "cpp": "code/P1075.cpp",
+    "explanation": "solutions/06-number/P1075.md",
+    "chapters": [
+      "五、数据结构与算法 → （五） 基础数论"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "21",
+        "output": "7",
+        "kind": "official"
+      },
+      {
+        "input": "21\n",
+        "output": "7\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1226",
+    "title": "快速幂",
+    "group": "06-number",
+    "source": "https://www.luogu.com.cn/problem/P1226",
+    "cpp": "code/P1226.cpp",
+    "explanation": "solutions/06-number/P1226.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "五、数据结构与算法 → （六） 快速幂"
+    ],
+    "diagram": "binary-power",
+    "tests": [
+      {
+        "input": "2 10 9\n",
+        "output": "2^10 mod 9=7\n",
+        "kind": "official"
+      },
+      {
+        "input": "2 10 9\n",
+        "output": "2^10 mod 9=7\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "CF742-A",
+    "title": "Arpa’s hard exam and Mehrdad’s naive cheat",
+    "group": "06-number",
+    "source": "https://codeforces.com/problemset/problem/742/A",
+    "cpp": "code/CF742-A.cpp",
+    "explanation": "solutions/06-number/CF742-A.md",
+    "chapters": [
+      "五、数据结构与算法 → （六） 快速幂"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "0\n",
+        "output": "1\n",
+        "kind": "worked"
+      },
+      {
+        "input": "2\n",
+        "output": "4\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1217",
+    "title": "回文质数",
+    "group": "06-number",
+    "source": "https://www.luogu.com.cn/problem/P1217",
+    "cpp": "code/P1217.cpp",
+    "explanation": "solutions/06-number/P1217.md",
+    "chapters": [
+      "五、数据结构与算法 → （九） 双指针与滑动窗口（尺取法）"
+    ],
+    "diagram": "palindrome",
+    "tests": [
+      {
+        "input": "5 500\n",
+        "output": "5\n7\n11\n101\n131\n151\n181\n191\n313\n353\n373\n383\n",
+        "kind": "official"
+      },
+      {
+        "input": "5 20\n",
+        "output": "5\n7\n11\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "CF279-B",
+    "title": "Books",
+    "group": "07-pointers",
+    "source": "https://codeforces.com/problemset/problem/279/B",
+    "cpp": "code/CF279-B.cpp",
+    "explanation": "solutions/07-pointers/CF279-B.md",
+    "chapters": [
+      "五、数据结构与算法 → （九） 双指针与滑动窗口（尺取法）"
+    ],
+    "diagram": "books-window",
+    "tests": [
+      {
+        "input": "4 4\n3 1 2 1\n",
+        "output": "3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1638",
+    "title": "逛画展",
+    "group": "07-pointers",
+    "source": "https://www.luogu.com.cn/problem/P1638",
+    "cpp": "code/P1638.cpp",
+    "explanation": "solutions/07-pointers/P1638.md",
+    "chapters": [
+      "五、数据结构与算法 → （九） 双指针与滑动窗口（尺取法）"
+    ],
+    "diagram": "cover-window",
+    "tests": [
+      {
+        "input": "12 5\n2 5 3 1 3 2 4 1 1 5 4 3\n",
+        "output": "2 7",
+        "kind": "official"
+      },
+      {
+        "input": "4 3\n1 2 1 3\n",
+        "output": "2 4\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1182",
+    "title": "数列分段 Section II",
+    "group": "07-pointers",
+    "source": "https://www.luogu.com.cn/problem/P1182",
+    "cpp": "code/P1182.cpp",
+    "explanation": "solutions/07-pointers/P1182.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "三、解题方法论：从题意到代码 → （七） 把最优化改成可行性判断",
+      "三、解题方法论：从题意到代码 → （九） 建模与推导中的典型反例",
+      "五、数据结构与算法 → （十） 二分与三分搜索"
+    ],
+    "diagram": "partition-search",
+    "tests": [
+      {
+        "input": "5 3\n4 2 4 5 1",
+        "output": "6",
+        "kind": "official"
+      },
+      {
+        "input": "5 3\n4 2 4 5 1\n",
+        "output": "6\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1873",
+    "title": "砍树",
+    "group": "07-pointers",
+    "source": "https://www.luogu.com.cn/problem/P1873",
+    "cpp": "code/P1873.cpp",
+    "explanation": "solutions/07-pointers/P1873.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （七） 把最优化改成可行性判断",
+      "五、数据结构与算法 → （十） 二分与三分搜索"
+    ],
+    "diagram": "wood-search",
+    "tests": [
+      {
+        "input": "4 7\n20 15 10 17",
+        "output": "15",
+        "kind": "official"
+      },
+      {
+        "input": "5 20\n4 42 40 26 46",
+        "output": "36",
+        "kind": "official"
+      },
+      {
+        "input": "4 7\n20 15 10 17\n",
+        "output": "15\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2678",
+    "title": "跳石头",
+    "group": "07-pointers",
+    "source": "https://www.luogu.com.cn/problem/P2678",
+    "cpp": "code/P2678.cpp",
+    "explanation": "solutions/07-pointers/P2678.md",
+    "chapters": [
+      "五、数据结构与算法 → （十） 二分与三分搜索"
+    ],
+    "diagram": "stones",
+    "tests": [
+      {
+        "input": "25 5 2 \n2\n11\n14\n17 \n21",
+        "output": "4",
+        "kind": "official"
+      },
+      {
+        "input": "10 2 1\n4\n7\n",
+        "output": "4\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3382",
+    "title": "三分",
+    "group": "07-pointers",
+    "source": "https://www.luogu.com.cn/problem/P3382",
+    "cpp": "code/P3382.cpp",
+    "explanation": "solutions/07-pointers/P3382.md",
+    "chapters": [
+      "五、数据结构与算法 → （十） 二分与三分搜索"
+    ],
+    "diagram": "ternary",
+    "tests": [
+      {
+        "input": "3 -0.9981 0.5\n1 -3 -3 1",
+        "output": "-0.41421",
+        "kind": "official"
+      },
+      {
+        "input": "6 0 4\n0 0 0 0 -1 4 0\n",
+        "output": "2.00000000\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2249",
+    "title": "查找",
+    "group": "07-pointers",
+    "source": "https://www.luogu.com.cn/problem/P2249",
+    "cpp": "code/P2249.cpp",
+    "explanation": "solutions/07-pointers/P2249.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法",
+      "五、数据结构与算法 → （十） 二分与三分搜索"
+    ],
+    "diagram": "lower-bound",
+    "tests": [
+      {
+        "input": "11 3\n1 3 3 3 5 7 9 11 13 15 15\n1 3 6",
+        "output": "1 2 -1 ",
+        "kind": "official"
+      },
+      {
+        "input": "4 3\n1 2 2 5\n2 3 1\n",
+        "output": "2 -1 1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "CF996-A",
+    "title": "Hit the Lottery",
+    "group": "08-greedy",
+    "source": "https://codeforces.com/problemset/problem/996/A",
+    "cpp": "code/CF996-A.cpp",
+    "explanation": "solutions/08-greedy/CF996-A.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （九） 建模与推导中的典型反例"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "125\n",
+        "output": "3\n",
+        "kind": "worked"
+      },
+      {
+        "input": "43\n",
+        "output": "5\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1803",
+    "title": "线段覆盖",
+    "group": "08-greedy",
+    "source": "https://www.luogu.com.cn/problem/P1803",
+    "cpp": "code/P1803.cpp",
+    "explanation": "solutions/08-greedy/P1803.md",
+    "chapters": [
+      "五、数据结构与算法 → （十一） 贪心算法"
+    ],
+    "diagram": "interval-greedy",
+    "tests": [
+      {
+        "input": "3\n0 2\n2 4\n1 3\n",
+        "output": "2\n",
+        "kind": "official"
+      },
+      {
+        "input": "3\n0 3\n0 2\n2 4\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1090",
+    "title": "合并果子",
+    "group": "08-greedy",
+    "source": "https://www.luogu.com.cn/problem/P1090",
+    "cpp": "code/P1090.cpp",
+    "explanation": "solutions/08-greedy/P1090.md",
+    "chapters": [
+      "一、C++ 语法基础 → （十五） STL：容器、迭代器与算法",
+      "五、数据结构与算法 → （十一） 贪心算法"
+    ],
+    "diagram": "fruit-merge",
+    "tests": [
+      {
+        "input": "3 \n1 2 9 \n",
+        "output": "15\n",
+        "kind": "official"
+      },
+      {
+        "input": "3\n1 2 4\n",
+        "output": "10\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2240",
+    "title": "部分背包问题",
+    "group": "08-greedy",
+    "source": "https://www.luogu.com.cn/problem/P2240",
+    "cpp": "code/P2240.cpp",
+    "explanation": "solutions/08-greedy/P2240.md",
+    "chapters": [
+      "五、数据结构与算法 → （十一） 贪心算法"
+    ],
+    "diagram": "fractional",
+    "tests": [
+      {
+        "input": "4 50\n10 60\n20 100\n25 100\n15 45\n",
+        "output": "240.00",
+        "kind": "official"
+      },
+      {
+        "input": "2 5\n3 9\n4 8\n",
+        "output": "13.00\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1016",
+    "title": "旅行家的预算",
+    "group": "08-greedy",
+    "source": "https://www.luogu.com.cn/problem/P1016",
+    "cpp": "code/P1016.cpp",
+    "explanation": "solutions/08-greedy/P1016.md",
+    "chapters": [
+      "五、数据结构与算法 → （十一） 贪心算法"
+    ],
+    "diagram": "fuel",
+    "tests": [
+      {
+        "input": "275.6 11.9 27.4 2.8 2\n102.0 2.9\n220.0 2.2\n",
+        "output": "26.95\n",
+        "kind": "official"
+      },
+      {
+        "input": "10 10 1 5 1\n4 2\n",
+        "output": "32.00\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1036",
+    "title": "选数",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1036",
+    "cpp": "code/P1036.cpp",
+    "explanation": "solutions/09-search/P1036.md",
+    "chapters": [
+      "五、数据结构与算法 → （二） 枚举与模拟",
+      "五、数据结构与算法 → （五） 基础数论",
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "choose-number",
+    "tests": [
+      {
+        "input": "4 3\n3 7 12 19\n",
+        "output": "1\n",
+        "kind": "official"
+      },
+      {
+        "input": "3 2\n1 2 3\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1219",
+    "title": "八皇后",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1219",
+    "cpp": "code/P1219.cpp",
+    "explanation": "solutions/09-search/P1219.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "queens-backtrack",
+    "tests": [
+      {
+        "input": "6\n",
+        "output": "2 4 6 1 3 5\n3 6 2 5 1 4\n4 1 5 2 6 3\n4\n",
+        "kind": "official"
+      },
+      {
+        "input": "4\n",
+        "output": "2 4 1 3\n3 1 4 2\n2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1605",
+    "title": "迷宫",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1605",
+    "cpp": "code/P1605.cpp",
+    "explanation": "solutions/09-search/P1605.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "maze-backtrack",
+    "tests": [
+      {
+        "input": "2 2 1\n1 1 2 2\n1 2\n",
+        "output": "1",
+        "kind": "official"
+      },
+      {
+        "input": "2 2 0\n1 1 2 2\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P5318",
+    "title": "查找文献",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P5318",
+    "cpp": "code/P5318.cpp",
+    "explanation": "solutions/09-search/P5318.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "dfs-bfs",
+    "tests": [
+      {
+        "input": "8 9\n1 2\n1 3\n1 4\n2 5\n2 6\n3 7\n4 7\n4 8\n7 8",
+        "output": "1 2 5 6 3 7 8 4 \n1 2 3 4 5 6 7 8 ",
+        "kind": "official"
+      },
+      {
+        "input": "4 3\n1 2\n1 3\n2 4\n",
+        "output": "1 2 4 3\n1 2 3 4\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1451",
+    "title": "求细胞数量",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1451",
+    "cpp": "code/P1451.cpp",
+    "explanation": "solutions/09-search/P1451.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化",
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "components",
+    "tests": [
+      {
+        "input": "4 10\n0234500067\n1034560500\n2045600671\n0000000089\n",
+        "output": "4",
+        "kind": "official"
+      },
+      {
+        "input": "2 2\n10\n01\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1596",
+    "title": "湖计数",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1596",
+    "cpp": "code/P1596.cpp",
+    "explanation": "solutions/09-search/P1596.md",
+    "chapters": [
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "components",
+    "tests": [
+      {
+        "input": "10 12\nW........WW.\n.WWW.....WWW\n....WW...WW.\n.........WW.\n.........W..\n..W......W..\n.W.W.....WW.\nW.W.W.....W.\n.W.W......W.\n..W.......W.\n",
+        "output": "3\n",
+        "kind": "official"
+      },
+      {
+        "input": "2 2\nW.\n.W\n",
+        "output": "1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1162",
+    "title": "填涂颜色",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1162",
+    "cpp": "code/P1162.cpp",
+    "explanation": "solutions/09-search/P1162.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "outside-fill",
+    "tests": [
+      {
+        "input": "6\n0 0 0 0 0 0\n0 0 1 1 1 1\n0 1 1 0 0 1\n1 1 0 0 0 1\n1 0 0 0 0 1\n1 1 1 1 1 1\n",
+        "output": "0 0 0 0 0 0\n0 0 1 1 1 1\n0 1 1 2 2 1\n1 1 2 2 2 1\n1 2 2 2 2 1\n1 1 1 1 1 1\n",
+        "kind": "official"
+      },
+      {
+        "input": "3\n1 1 1\n1 0 1\n1 1 1\n",
+        "output": "1 1 1\n1 2 1\n1 1 1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1141",
+    "title": "01 迷宫",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1141",
+    "cpp": "code/P1141.cpp",
+    "explanation": "solutions/09-search/P1141.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "binary-components",
+    "tests": [
+      {
+        "input": "2 2\n01\n10\n1 1\n2 2\n",
+        "output": "4\n4\n",
+        "kind": "official"
+      },
+      {
+        "input": "2 2\n01\n10\n1 1\n2 2\n",
+        "output": "4\n4\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1443",
+    "title": "马的遍历",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1443",
+    "cpp": "code/P1443.cpp",
+    "explanation": "solutions/09-search/P1443.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "knight-bfs",
+    "tests": [
+      {
+        "input": "3 3 1 1\n",
+        "output": "0 3 2    \n3 -1 1    \n2 1 4    ",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "P1135",
+    "title": "奇怪的电梯",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1135",
+    "cpp": "code/P1135.cpp",
+    "explanation": "solutions/09-search/P1135.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "elevator",
+    "tests": [
+      {
+        "input": "5 1 5\n3 3 1 2 5\n",
+        "output": "3\n",
+        "kind": "official"
+      },
+      {
+        "input": "5 1 5\n3 3 1 2 5\n",
+        "output": "3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1434",
+    "title": "滑雪",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1434",
+    "cpp": "code/P1434.cpp",
+    "explanation": "solutions/09-search/P1434.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "ski-memo",
+    "tests": [
+      {
+        "input": "5 5\n1 2 3 4 5\n16 17 18 19 6\n15 24 25 20 7\n14 23 22 21 8\n13 12 11 10 9\n",
+        "output": "25",
+        "kind": "official"
+      },
+      {
+        "input": "2 2\n4 3\n1 2\n",
+        "output": "4\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1242",
+    "title": "新汉诺塔",
+    "group": "09-search",
+    "source": "https://www.luogu.com.cn/problem/P1242",
+    "cpp": "code/P1242.cpp",
+    "explanation": "solutions/09-search/P1242.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化"
+    ],
+    "diagram": "hanoi-two-routes",
+    "tests": [
+      {
+        "input": "5\n3 3 2 1\n2 5 4\n0\n1 2\n3 5 4 3\n1 1",
+        "output": "move 1 from A to B\nmove 2 from A to C\nmove 1 from B to C\nmove 3 from A to B\nmove 1 from C to B\nmove 2 from C to A\nmove 1 from B to C\n7",
+        "kind": "official"
+      },
+      {
+        "input": "2\n2 2 1\n0\n0\n0\n0\n2 2 1\n",
+        "output": "",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1255",
+    "title": "数楼梯",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1255",
+    "cpp": "code/P1255.cpp",
+    "explanation": "solutions/10-dp/P1255.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "stairs-dp",
+    "tests": [
+      {
+        "input": "4",
+        "output": "5",
+        "kind": "official"
+      },
+      {
+        "input": "3\n",
+        "output": "3\n",
+        "kind": "worked"
+      },
+      {
+        "input": "5\n",
+        "output": "8\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1115",
+    "title": "最大子段和",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1115",
+    "cpp": "code/P1115.cpp",
+    "explanation": "solutions/10-dp/P1115.md",
+    "chapters": [
+      "三、解题方法论：从题意到代码 → （九） 建模与推导中的典型反例",
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "max-subarray",
+    "tests": [
+      {
+        "input": "7\n2 -4 3 -1 2 -4 3\n",
+        "output": "4",
+        "kind": "official"
+      },
+      {
+        "input": "4\n-2 3 -1 2\n",
+        "output": "4\n",
+        "kind": "worked"
+      },
+      {
+        "input": "2\n-5 -2\n",
+        "output": "-2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1387",
+    "title": "最大正方形",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1387",
+    "cpp": "code/P1387.cpp",
+    "explanation": "solutions/10-dp/P1387.md",
+    "chapters": [
+      "五、数据结构与算法 → （三） 前缀和与差分"
+    ],
+    "diagram": "square-dp",
+    "tests": [
+      {
+        "input": "4 4\n0 1 1 1\n1 1 1 0\n0 1 1 0\n1 1 0 1\n",
+        "output": "2\n",
+        "kind": "official"
+      },
+      {
+        "input": "3 3\n1 1 1\n1 1 1\n1 1 0\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1020",
+    "title": "导弹拦截",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1020",
+    "cpp": "code/P1020.cpp",
+    "explanation": "solutions/10-dp/P1020.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "missiles",
+    "tests": [
+      {
+        "input": "389 207 155 300 299 170 158 65",
+        "output": "6\n2\n",
+        "kind": "official"
+      },
+      {
+        "input": "5 5 3\n",
+        "output": "3\n1\n",
+        "kind": "worked"
+      },
+      {
+        "input": "1 2 3\n",
+        "output": "1\n3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1439",
+    "title": "两个排列的最长公共子序列",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1439",
+    "cpp": "code/P1439.cpp",
+    "explanation": "solutions/10-dp/P1439.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "permutation-lcs",
+    "tests": [
+      {
+        "input": "5 \n3 2 1 4 5\n1 2 3 4 5\n",
+        "output": "3",
+        "kind": "official"
+      },
+      {
+        "input": "3\n3 1 2\n1 3 2\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1435",
+    "title": "回文字串",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1435",
+    "cpp": "code/P1435.cpp",
+    "explanation": "solutions/10-dp/P1435.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "palindrome-dp",
+    "tests": [
+      {
+        "input": "Ab3bd",
+        "output": "2",
+        "kind": "official"
+      },
+      {
+        "input": "ab\n",
+        "output": "1\n",
+        "kind": "worked"
+      },
+      {
+        "input": "Ab3bd\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2758",
+    "title": "编辑距离",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P2758",
+    "cpp": "code/P2758.cpp",
+    "explanation": "solutions/10-dp/P2758.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "edit-distance",
+    "tests": [
+      {
+        "input": "sfdqxbw\ngfdgw\n",
+        "output": "4\n",
+        "kind": "official"
+      },
+      {
+        "input": "ab\nac\n",
+        "output": "1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1048",
+    "title": "采药",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1048",
+    "cpp": "code/P1048.cpp",
+    "explanation": "solutions/10-dp/P1048.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "zero-one-knapsack",
+    "tests": [
+      {
+        "input": "70 3\n71 100\n69 1\n1 2\n",
+        "output": "3",
+        "kind": "official"
+      },
+      {
+        "input": "5 1\n2 3\n",
+        "output": "3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1049",
+    "title": "装箱问题",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1049",
+    "cpp": "code/P1049.cpp",
+    "explanation": "solutions/10-dp/P1049.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化",
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "zero-one-knapsack",
+    "tests": [
+      {
+        "input": "24\n6\n8\n3\n12\n7\n9\n7\n",
+        "output": "0\n",
+        "kind": "official"
+      },
+      {
+        "input": "5\n2\n2\n4\n",
+        "output": "1\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1616",
+    "title": "疯狂的采药",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1616",
+    "cpp": "code/P1616.cpp",
+    "explanation": "solutions/10-dp/P1616.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "complete-knapsack",
+    "tests": [
+      {
+        "input": "70 3\n71 100\n69 1\n1 2\n",
+        "output": "140\n",
+        "kind": "official"
+      },
+      {
+        "input": "5 1\n2 3\n",
+        "output": "6\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1164",
+    "title": "小 A 点菜",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1164",
+    "cpp": "code/P1164.cpp",
+    "explanation": "solutions/10-dp/P1164.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "count-knapsack",
+    "tests": [
+      {
+        "input": "4 4\n1 1 2 2\n",
+        "output": "3\n",
+        "kind": "official"
+      },
+      {
+        "input": "2 2\n2 2\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2842",
+    "title": "纸币问题 1",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P2842",
+    "cpp": "code/P2842.cpp",
+    "explanation": "solutions/10-dp/P2842.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "coin-min",
+    "tests": [
+      {
+        "input": "6 15\n1 5 10 20 50 100",
+        "output": "2",
+        "kind": "official"
+      },
+      {
+        "input": "3 15\n1 5 11",
+        "output": "3",
+        "kind": "official"
+      },
+      {
+        "input": "3 15\n1 5 11\n",
+        "output": "3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1002",
+    "title": "过河卒",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P1002",
+    "cpp": "code/P1002.cpp",
+    "explanation": "solutions/10-dp/P1002.md",
+    "chapters": [
+      "五、数据结构与算法 → （十二） 搜索：递归、回溯、DFS、BFS 与记忆化",
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "grid-paths",
+    "tests": [
+      {
+        "input": "6 6 3 3\n",
+        "output": "6\n",
+        "kind": "official"
+      },
+      {
+        "input": "2 2 20 20\n",
+        "output": "6\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P2679",
+    "title": "子串",
+    "group": "10-dp",
+    "source": "https://www.luogu.com.cn/problem/P2679",
+    "cpp": "code/P2679.cpp",
+    "explanation": "solutions/10-dp/P2679.md",
+    "chapters": [
+      "五、数据结构与算法 → （十三） 动态规划（DP）基础"
+    ],
+    "diagram": "substring-dp",
+    "tests": [
+      {
+        "input": "6 3 1 \naabaab \naab",
+        "output": "2",
+        "kind": "official"
+      },
+      {
+        "input": "6 3 2 \naabaab \naab",
+        "output": "7",
+        "kind": "official"
+      },
+      {
+        "input": "6 3 3 \naabaab \naab",
+        "output": "7",
+        "kind": "official"
+      },
+      {
+        "input": "3 3 2\naaa\naaa\n",
+        "output": "2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P4913",
+    "title": "二叉树深度",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P4913",
+    "cpp": "code/P4913.cpp",
+    "explanation": "solutions/11-graph/P4913.md",
+    "chapters": [
+      "五、数据结构与算法 → （八） 二叉树",
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "tree-depth",
+    "tests": [
+      {
+        "input": "7\n2 7\n3 6\n4 5\n0 0\n0 0\n0 0\n0 0",
+        "output": "4",
+        "kind": "official"
+      },
+      {
+        "input": "3\n2 0\n3 0\n0 0\n",
+        "output": "3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3884",
+    "title": "二叉树问题",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P3884",
+    "cpp": "code/P3884.cpp",
+    "explanation": "solutions/11-graph/P3884.md",
+    "chapters": [
+      "五、数据结构与算法 → （八） 二叉树",
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "tree-distance",
+    "tests": [
+      {
+        "input": "10                                \n1 2                            \n1 3                            \n2 4\n2 5\n3 6\n3 7\n5 8\n5 9\n6 10\n8 6\n",
+        "output": "4\n4\n8",
+        "kind": "official"
+      },
+      {
+        "input": "3\n1 2\n1 3\n2 3\n",
+        "output": "2\n2\n3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3367",
+    "title": "并查集",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P3367",
+    "cpp": "code/P3367.cpp",
+    "explanation": "solutions/11-graph/P3367.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "五、数据结构与算法 → （十四） 并查集"
+    ],
+    "diagram": "dsu",
+    "tests": [
+      {
+        "input": "4 7\n2 1 2\n1 1 2\n2 1 2\n1 3 4\n2 1 4\n1 2 3\n2 1 4",
+        "output": "N\nY\nN\nY\n",
+        "kind": "official"
+      },
+      {
+        "input": "4 4\n1 1 2\n1 2 3\n2 1 3\n2 1 4\n",
+        "output": "Y\nN\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1551",
+    "title": "亲戚",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P1551",
+    "cpp": "code/P1551.cpp",
+    "explanation": "solutions/11-graph/P1551.md",
+    "chapters": [
+      "五、数据结构与算法 → （十四） 并查集"
+    ],
+    "diagram": "dsu",
+    "tests": [
+      {
+        "input": "6 5 3\n1 2\n1 5\n3 4\n5 2\n1 3\n1 4\n2 3\n5 6",
+        "output": "Yes\nYes\nNo",
+        "kind": "official"
+      },
+      {
+        "input": "4 2 2\n1 2\n2 3\n1 3\n1 4\n",
+        "output": "Yes\nNo\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "B3643",
+    "title": "图的存储",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/B3643",
+    "cpp": "code/B3643.cpp",
+    "explanation": "solutions/11-graph/B3643.md",
+    "chapters": [
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "graph-storage",
+    "tests": [
+      {
+        "input": "5 5\n1 2\n2 3\n3 5\n1 3\n3 4",
+        "output": "0 1 1 0 0\n1 0 1 0 0\n1 1 0 1 1\n0 0 1 0 0\n0 0 1 0 0\n2 2 3\n2 1 3\n4 1 2 4 5\n1 3\n1 3",
+        "kind": "official"
+      },
+      {
+        "input": "3 2\n1 2\n2 3\n",
+        "output": "0 1 0\n1 0 1\n0 1 0\n1 2\n2 1 3\n1 2\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1330",
+    "title": "封锁阳光大学",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P1330",
+    "cpp": "code/P1330.cpp",
+    "explanation": "solutions/11-graph/P1330.md",
+    "chapters": [
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "bipartite",
+    "tests": [
+      {
+        "input": "3 3\n1 2\n1 3\n2 3\n",
+        "output": "Impossible\n",
+        "kind": "official"
+      },
+      {
+        "input": "3 2\n1 2\n2 3\n",
+        "output": "1",
+        "kind": "official"
+      },
+      {
+        "input": "3 2\n1 2\n2 3\n",
+        "output": "1\n",
+        "kind": "worked"
+      },
+      {
+        "input": "3 3\n1 2\n2 3\n3 1\n",
+        "output": "Impossible\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3371",
+    "title": "单源最短路径（弱化版）",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P3371",
+    "cpp": "code/P3371.cpp",
+    "explanation": "solutions/11-graph/P3371.md",
+    "chapters": [
+      "序言 → 建议的自学顺序与练习",
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "dijkstra",
+    "tests": [
+      {
+        "input": "4 6 1\n1 2 2\n2 3 2\n2 4 1\n1 3 5\n3 4 3\n1 4 4",
+        "output": "0 2 4 3",
+        "kind": "official"
+      },
+      {
+        "input": "3 3 1\n1 2 7\n1 3 2\n3 2 1\n",
+        "output": "0 3 2\n",
+        "kind": "worked"
+      },
+      {
+        "input": "7 12 1\n1 2 7\n1 3 2\n1 4 9\n3 2 1\n3 4 3\n2 5 3\n3 5 8\n4 5 1\n4 6 4\n5 6 2\n5 7 6\n6 7 1\n",
+        "output": "0 3 2 5 6 8 9\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P4779",
+    "title": "单源最短路径（标准版）",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P4779",
+    "cpp": "code/P4779.cpp",
+    "explanation": "solutions/11-graph/P4779.md",
+    "chapters": [
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "dijkstra",
+    "tests": [
+      {
+        "input": "4 6 1\n1 2 2\n2 3 2\n2 4 1\n1 3 5\n3 4 3\n1 4 4",
+        "output": "0 2 4 3",
+        "kind": "official"
+      },
+      {
+        "input": "3 3 1\n1 2 7\n1 3 2\n3 2 1\n",
+        "output": "0 3 2\n",
+        "kind": "worked"
+      },
+      {
+        "input": "7 12 1\n1 2 7\n1 3 2\n1 4 9\n3 2 1\n3 4 3\n2 5 3\n3 5 8\n4 5 1\n4 6 4\n5 6 2\n5 7 6\n6 7 1\n",
+        "output": "0 3 2 5 6 8 9\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "B3647",
+    "title": "Floyd",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/B3647",
+    "cpp": "code/B3647.cpp",
+    "explanation": "solutions/11-graph/B3647.md",
+    "chapters": [
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "floyd",
+    "tests": [
+      {
+        "input": "4 4\n1 2 1\n2 3 1\n3 4 1\n4 1 1",
+        "output": "0 1 2 1\n1 0 1 2\n2 1 0 1\n1 2 1 0",
+        "kind": "official"
+      },
+      {
+        "input": "3 3\n1 2 2\n2 3 3\n1 3 10\n",
+        "output": "0 2 5\n2 0 3\n5 3 0\n",
+        "kind": "worked"
+      },
+      {
+        "input": "7 12\n1 2 7\n1 3 2\n1 4 9\n3 2 1\n3 4 3\n2 5 3\n3 5 8\n4 5 1\n4 6 4\n5 6 2\n5 7 6\n6 7 1\n",
+        "output": "0 3 2 5 6 8 9\n3 0 1 4 3 5 6\n2 1 0 3 4 6 7\n5 4 3 0 1 3 4\n6 3 4 1 0 2 3\n8 5 6 3 2 0 1\n9 6 7 4 3 1 0\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "B3644",
+    "title": "拓扑排序／家谱树",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/B3644",
+    "cpp": "code/B3644.cpp",
+    "explanation": "solutions/11-graph/B3644.md",
+    "chapters": [
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "topological",
+    "tests": [
+      {
+        "input": "5\n0\n4 5 1 0\n1 0\n5 3 0\n3 0",
+        "output": "2 4 5 3 1",
+        "kind": "official"
+      },
+      {
+        "input": "3\n2 3 0\n0\n0\n",
+        "output": "1 2 3\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P1807",
+    "title": "最长路",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P1807",
+    "cpp": "code/P1807.cpp",
+    "explanation": "solutions/11-graph/P1807.md",
+    "chapters": [
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "dag-longest",
+    "tests": [
+      {
+        "input": "2 1\n1 2 1",
+        "output": "1",
+        "kind": "official"
+      },
+      {
+        "input": "3 3\n1 2 -2\n2 3 5\n1 3 1\n",
+        "output": "3\n",
+        "kind": "worked"
+      },
+      {
+        "input": "2 1\n1 2 -5\n",
+        "output": "-5\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "P3366",
+    "title": "最小生成树",
+    "group": "11-graph",
+    "source": "https://www.luogu.com.cn/problem/P3366",
+    "cpp": "code/P3366.cpp",
+    "explanation": "solutions/11-graph/P3366.md",
+    "chapters": [
+      "五、数据结构与算法 → （十五） 图论入门"
+    ],
+    "diagram": "kruskal",
+    "tests": [
+      {
+        "input": "4 5\n1 2 2\n1 3 2\n1 4 3\n2 3 4\n3 4 3",
+        "output": "7",
+        "kind": "official"
+      },
+      {
+        "input": "3 3\n1 2 1\n2 3 2\n1 3 5\n",
+        "output": "3\n",
+        "kind": "worked"
+      },
+      {
+        "input": "3 1\n1 2 1\n",
+        "output": "orz\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "OOP1",
+    "title": "学生信息排序",
+    "group": "12-objects",
+    "source": null,
+    "cpp": "code/OOP1.cpp",
+    "explanation": "solutions/12-objects/OOP1.md",
+    "chapters": [
+      "二、面向对象编程 → （九）面向对象部分的练习"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "3\n3 90\n1 90\n2 95\n",
+        "output": "2 95\n1 90\n3 90\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "OOP2",
+    "title": "成绩类的修改检查",
+    "group": "12-objects",
+    "source": null,
+    "cpp": "code/OOP2.cpp",
+    "explanation": "solutions/12-objects/OOP2.md",
+    "chapters": [
+      "二、面向对象编程 → （九）面向对象部分的练习"
+    ],
+    "diagram": null,
+    "tests": [
+      {
+        "input": "3\n80 120 60\n",
+        "output": "OK 80\nRejected 80\nOK 60\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "OOP3",
+    "title": "通过 Shape 调用 Triangle 面积",
+    "group": "12-objects",
+    "source": null,
+    "cpp": "code/OOP3.cpp",
+    "explanation": "solutions/12-objects/OOP3.md",
+    "chapters": [
+      "二、面向对象编程 → （九）面向对象部分的练习"
+    ],
+    "diagram": "object-polymorphism",
+    "tests": [
+      {
+        "input": "",
+        "output": "6.00\n15.00\n",
+        "kind": "worked"
+      }
+    ]
+  },
+  {
+    "id": "OOP4",
+    "title": "二叉树节点的所有权",
+    "group": "12-objects",
+    "source": null,
+    "cpp": "code/OOP4.cpp",
+    "explanation": "solutions/12-objects/OOP4.md",
+    "chapters": [
+      "二、面向对象编程 → （九）面向对象部分的练习"
+    ],
+    "diagram": "object-ownership",
+    "tests": [
+      {
+        "input": "",
+        "output": "1 2 3\n",
+        "kind": "worked"
+      }
+    ]
+  }
+]
