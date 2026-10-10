@@ -6,7 +6,7 @@
 
 | 目录 | 用途 |
 | --- | --- |
-| `notes/` | 完整笔记、PDF、正文插图和写作规范 `agent.md` |
+| `notes/` | 完整笔记、PDF和正文插图 |
 | `solutions/`、`code/` | 题解 Markdown 和对应的独立 C++ 源文件 |
 | `assets/` | 题解中的过程图 |
 | `tests/`、`manifest.json` | 题目索引、样例与本地核对程序 |
